@@ -2213,9 +2213,16 @@ body:has(.menu-bar[open]) {
 }
 
 /* 焦点状态 */
-#wmd-preview .focus,
-#wmd-preview .focus * {
+#wmd-preview .focus {
     background-color: var(--booadmin-highlight-warm) !important;
+}
+
+#wmd-preview .focus img,
+#wmd-preview .focus video,
+#wmd-preview .focus iframe,
+#wmd-preview .focus svg,
+#wmd-preview .focus canvas {
+    background-color: transparent !important;
 }
 @keyframes fullscreen-upload {
 	0% {

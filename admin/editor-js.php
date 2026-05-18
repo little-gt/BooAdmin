@@ -129,44 +129,89 @@ $(document).ready(function () {
         return DOMPurify.sanitize(html, {USE_PROFILES: {html: true}});
     });
 
+    const mathRenderOptions = {
+        delimiters: [
+            { left: "$$", right: "$$", display: true },
+            { left: "$", right: "$", display: false },
+            { left: "\\(", right: "\\)", display: false },
+            { left: "\\[", right: "\\]", display: true }
+        ],
+        throwOnError: false
+    };
+    let previewSyncTimer = null;
+    function syncPreviewAfterLayout() {
+        if (previewSyncTimer) {
+            clearTimeout(previewSyncTimer);
+        }
+
+        // 等待布局稳定后再同步，降低图片尺寸变化造成的偏移
+        previewSyncTimer = setTimeout(function () {
+            previewSyncTimer = null;
+
+            if (typeof renderMathInElement === 'function') {
+                renderMathInElement(preview[0], mathRenderOptions);
+            }
+
+            reloadScroll(true);
+        }, 30);
+    }
+
     editor.hooks.chain('onPreviewRefresh', function () {
         const images = $('img', preview);
-        let count = images.length;
+        let pending = 0;
+        let finished = false;
+        let fallbackTimer = null;
 
-        if (count === 0) {
-            renderMathInElement(preview[0], {
-                delimiters: [
-                    { left: "$$", right: "$$", display: true },
-                    { left: "$", right: "$", display: false },
-                    { left: "\\(", right: "\\)", display: false },
-                    { left: "\\[", right: "\\]", display: true }
-                ],
-                throwOnError: false
-            });
-            reloadScroll(true);
-        } else {
-            images.bind('load error', function () {
-                count --;
+        const finish = function () {
+            if (finished) {
+                return;
+            }
 
-                if (count === 0) {
-                    renderMathInElement(preview[0], {
-                        delimiters: [
-                            { left: "$$", right: "$$", display: true },
-                            { left: "$", right: "$", display: false },
-                            { left: "\\(", right: "\\)", display: false },
-                            { left: "\\[", right: "\\]", display: true }
-                        ],
-                        throwOnError: false
-                    });
-                    reloadScroll(true);
+            finished = true;
+
+            if (fallbackTimer) {
+                clearTimeout(fallbackTimer);
+                fallbackTimer = null;
+            }
+
+            syncPreviewAfterLayout();
+        };
+
+        if (images.length === 0) {
+            finish();
+            return;
+        }
+
+        images.each(function () {
+            const img = this;
+            const loaded = img.complete && (typeof img.naturalWidth === 'undefined' || img.naturalWidth > 0);
+
+            if (loaded) {
+                return;
+            }
+
+            pending ++;
+
+            $(img).one('load error', function () {
+                pending --;
+
+                if (pending <= 0) {
+                    finish();
                 }
             });
+        });
+
+        // 某些缓存/异常图片不会再触发 load/error，超时后兜底同步
+        fallbackTimer = setTimeout(finish, 1200);
+
+        if (pending === 0) {
+            finish();
         }
     });
 
     <?php \Typecho\Plugin::factory('admin/editor-js.php')->call('markdownEditor', $content); ?>
 
-    let th = textarea.height(), ph = preview.height();
+    let th = textarea.height();
     const uploadBtn = $('<button type="button" id="btn-fullscreen-upload" class="btn btn-link">'
             + '<i class="i-upload"><?php _e('附件'); ?></i></button>')
             .prependTo('.submit .right')
@@ -182,7 +227,6 @@ $(document).ready(function () {
 
     editor.hooks.chain('enterFakeFullScreen', function () {
         th = textarea.height();
-        ph = preview.height();
         $(document.body).addClass('fullscreen');
         const h = $(window).height() - toolbar.outerHeight();
         
@@ -203,7 +247,7 @@ $(document).ready(function () {
     editor.hooks.chain('exitFullScreen', function () {
         $(document.body).removeClass('fullscreen');
         textarea.height(th);
-        preview.height(ph);
+        preview.css('height', '');
         isFullScreen = false;
     });
 
@@ -267,7 +311,10 @@ $(document).ready(function () {
         }
 
         adjustToolbarHeight();
-        $(window).on('resize', adjustToolbarHeight);
+        $(window).on('resize', function () {
+            adjustToolbarHeight();
+            syncPreviewAfterLayout();
+        });
 
         // 编辑预览切换
         const edittab = $('#wmd-button-bar').append('<div class="wmd-edittab"><a href="#wmd-editarea" class="active"><?php _e('撰写'); ?></a><a href="#wmd-preview"><?php _e('预览'); ?></a></div>'),
@@ -286,17 +333,7 @@ $(document).ready(function () {
                 $("#wmd-button-row").addClass("wmd-visualhide");
 
                 // 确保预览时 LaTeX 公式已渲染
-                if (typeof renderMathInElement === 'function') {
-                    renderMathInElement(preview[0], {
-                        delimiters: [
-                            { left: "$$", right: "$$", display: true },
-                            { left: "$", right: "$", display: false },
-                            { left: "\\(", right: "\\)", display: false },
-                            { left: "\\[", right: "\\]", display: true }
-                        ],
-                        throwOnError: false
-                    });
-                }
+                syncPreviewAfterLayout();
             } else {
                 $("#wmd-button-row").removeClass("wmd-visualhide");
             }
@@ -305,7 +342,13 @@ $(document).ready(function () {
             adjustToolbarHeight();
 
             // 预览和编辑窗口高度一致
-            $("#wmd-preview").outerHeight($("#wmd-editarea").innerHeight());
+            if (!isFullScreen) {
+                $("#wmd-preview").css("height", "");
+            }
+
+            if (selected_tab === "#wmd-preview") {
+                syncPreviewAfterLayout();
+            }
 
             return false;
         });
