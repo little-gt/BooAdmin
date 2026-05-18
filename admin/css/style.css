@@ -1805,81 +1805,417 @@ body:has(.menu-bar[open]) {
 	height:1px;
 	background-color:var(--booadmin-border)
 }
+/* ========================================
+ * Markdown 预览区域 - #wmd-preview
+ * 参考 preview.php 设计，统一视觉风格
+ * ======================================== */
+
 #wmd-preview {
-	background:var(--booadmin-surface);
-	margin:1em 0;
-	padding:0 15px;
-	word-wrap:break-word;
-	overflow:auto;
-	
+    background: var(--booadmin-surface);
+    margin: 0;
+    padding: 24px 20px 28px;
+    word-wrap: break-word;
+    overflow-wrap: anywhere;
+    overflow-x: hidden;
+    overflow-y: auto;
+    line-height: 1.8;
+    font-size: 0.9375rem;
+    color: var(--booadmin-text);
+    text-rendering: optimizeLegibility;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
 }
+
+#wmd-preview > *:first-child {
+    margin-top: 0;
+}
+
+#wmd-preview > *:last-child {
+    margin-bottom: 0;
+}
+
+/* 链接样式 */
+#wmd-preview a {
+    color: var(--booadmin-accent);
+    text-decoration: none;
+    text-underline-offset: 0.18em;
+    transition: color 0.18s ease, border-color 0.18s ease, background-color 0.18s ease;
+}
+
+#wmd-preview a:hover {
+    text-decoration: underline;
+}
+
+/* 图片和媒体 */
+#wmd-preview img,
+#wmd-preview svg,
+#wmd-preview video,
+#wmd-preview canvas,
+#wmd-preview iframe {
+    max-width: 100%;
+}
+
 #wmd-preview img {
-	max-width:100%
+    display: block;
+    height: auto;
+    border: 1px solid var(--booadmin-border);
+    background: var(--booadmin-surface-2);
 }
-#wmd-preview code,#wmd-preview pre {
-	padding:2px 4px;
-	background:var(--booadmin-border);
-	font-size:14px
+
+/* 段落和基础元素 */
+#wmd-preview p,
+#wmd-preview ul,
+#wmd-preview ol,
+#wmd-preview blockquote,
+#wmd-preview pre,
+#wmd-preview table,
+#wmd-preview dl,
+#wmd-preview figure,
+#wmd-preview details {
+    margin: 1.2rem 0;
 }
-#wmd-preview code {
-	color:var(--booadmin-danger)
+
+/* 标题样式 */
+#wmd-preview h1,
+#wmd-preview h2,
+#wmd-preview h3,
+#wmd-preview h4,
+#wmd-preview h5,
+#wmd-preview h6 {
+    margin: 2rem 0 0.9rem;
+    color: var(--booadmin-text);
+    line-height: 1.28;
+    font-weight: 800;
+    letter-spacing: -0.02em;
 }
-#wmd-preview pre {
-	padding:1em
+
+#wmd-preview h1 {
+    font-size: 1.75rem;
+    padding-bottom: 0.5rem;
+    border-bottom: 1px solid var(--booadmin-border);
 }
-#wmd-preview pre code {
-	padding:0;
-	color:var(--booadmin-text)
+
+#wmd-preview h2 {
+    font-size: 1.45rem;
+    padding-bottom: 0.4rem;
+    border-bottom: 1px solid var(--booadmin-border);
 }
+
+#wmd-preview h3 {
+    font-size: 1.2rem;
+}
+
+#wmd-preview h4 {
+    font-size: 1.08rem;
+}
+
+#wmd-preview h5,
+#wmd-preview h6 {
+    font-size: 1rem;
+}
+
+/* 列表样式 */
+#wmd-preview ul,
+#wmd-preview ol {
+    padding-left: 1.5rem;
+}
+
+#wmd-preview li + li {
+    margin-top: 0.45rem;
+}
+
+#wmd-preview li > ul,
+#wmd-preview li > ol {
+    margin-top: 0.55rem;
+    margin-bottom: 0.55rem;
+}
+
+/* 引用块 */
 #wmd-preview blockquote {
-	margin:1em 1.5em;
-	padding-left:1.5em;
-	border-left:4px solid var(--booadmin-surface-2);
-	color:var(--booadmin-muted)
+    padding: 1rem 1.1rem;
+    border-left: 4px solid var(--booadmin-accent);
+    background: var(--booadmin-surface-2);
+    color: var(--booadmin-muted);
+    margin: 1.2rem 0;
 }
-#wmd-preview hr {
-	margin:2em auto;
-	width:100px;
-	border:1px solid var(--booadmin-surface-2);
-	border-width:2px 0 0 0
+
+#wmd-preview blockquote > *:first-child {
+    margin-top: 0;
 }
-#wmd-preview .summary:after {
-	display:block;
-	margin:2em 0;
-	background:var(--booadmin-highlight-warm);
-	color:var(--booadmin-warning);
-	font-size:.85714em;
-	text-align:center;
-	content:"- more -"
+
+#wmd-preview blockquote > *:last-child {
+    margin-bottom: 0;
 }
-#wmd-preview .embed {
-	border:1px solid var(--booadmin-border);
-	height:40px;
-	overflow:hidden;
-	line-height:40px;
-	text-align:center;
-	font-size:12px;
-	color:var(--booadmin-muted)
+
+#wmd-preview blockquote blockquote {
+    margin: 0.9rem 0 0;
+    background: transparent;
+    border-left-color: var(--booadmin-border-strong);
 }
+
+/* 代码样式 */
+#wmd-preview code,
+#wmd-preview kbd,
+#wmd-preview samp {
+    font-family: "Cascadia Code", Menlo, Monaco, Consolas, "Courier New", monospace;
+    font-size: 0.9em;
+}
+
+#wmd-preview code {
+    padding: 0.18rem 0.42rem;
+    background: var(--booadmin-surface-muted);
+    color: var(--booadmin-text);
+    border: 1px solid var(--booadmin-border);
+    border-radius: 0;
+}
+
+#wmd-preview pre {
+    padding: 16px 18px;
+    overflow-x: auto;
+    background: var(--booadmin-surface-2);
+    color: var(--booadmin-text);
+    border: 1px solid var(--booadmin-border);
+    line-height: 1.7;
+    tab-size: 4;
+    margin: 1.2rem 0;
+    border-radius: 0;
+}
+
+#wmd-preview pre code {
+    padding: 0;
+    border: 0;
+    background: transparent;
+    color: inherit;
+    font-size: 0.92rem;
+}
+
+/* 表格样式 */
 #wmd-preview table {
-	width:100%
+    display: block;
+    width: 100%;
+    overflow-x: auto;
+    border-collapse: collapse;
+    border: 1px solid var(--booadmin-border);
+    background: var(--booadmin-surface);
+    margin: 1.2rem 0;
 }
-#wmd-preview table th,#wmd-preview table td {
-	border:1px solid var(--booadmin-border);
-	padding:5px 8px;
-	word-break:break-all
+
+#wmd-preview thead {
+    background: var(--booadmin-table-head);
 }
-#wmd-preview table th {
-	background:var(--booadmin-border)
+
+#wmd-preview th,
+#wmd-preview td {
+    padding: 12px 14px;
+    border: 1px solid var(--booadmin-border);
+    text-align: left;
+    vertical-align: top;
+    white-space: nowrap;
 }
+
+#wmd-preview th {
+    color: var(--booadmin-text);
+    font-weight: 700;
+}
+
+#wmd-preview tbody tr:nth-child(even) {
+    background: var(--booadmin-table-row-even);
+}
+
+#wmd-preview tbody tr:hover {
+    background: var(--booadmin-table-row-hover);
+}
+
+/* 图片和图表容器 */
+#wmd-preview figure {
+    margin-left: 0;
+    margin-right: 0;
+}
+
+#wmd-preview figcaption {
+    margin-top: 0.75rem;
+    color: var(--booadmin-muted);
+    font-size: 0.92rem;
+    text-align: center;
+}
+
+/* 强调文本 */
+#wmd-preview strong {
+    color: var(--booadmin-text);
+    font-weight: 700;
+}
+
+#wmd-preview mark {
+    background: var(--booadmin-highlight-warm);
+    color: inherit;
+    padding: 0.08em 0.22em;
+}
+
+/* 键盘按键 */
+#wmd-preview kbd {
+    display: inline-flex;
+    align-items: center;
+    min-height: 1.7rem;
+    padding: 0 0.45rem;
+    border: 1px solid var(--booadmin-border-strong);
+    background: var(--booadmin-surface);
+    color: var(--booadmin-text);
+    box-shadow: none;
+    border-radius: 0;
+}
+
+/* 缩写 */
+#wmd-preview abbr[title] {
+    text-decoration-style: dotted;
+    cursor: help;
+}
+
+/* 定义列表 */
+#wmd-preview dl dt {
+    margin-top: 1rem;
+    font-weight: 700;
+    color: var(--booadmin-text);
+}
+
+#wmd-preview dl dd {
+    margin: 0.35rem 0 0 1.25rem;
+    color: var(--booadmin-muted);
+}
+
+/* 详情/摘要 */
+#wmd-preview details {
+    border: 1px solid var(--booadmin-border);
+    background: var(--booadmin-surface-2);
+    border-radius: 0;
+}
+
+#wmd-preview summary {
+    cursor: pointer;
+    padding: 0.9rem 1rem;
+    font-weight: 600;
+    color: var(--booadmin-text);
+}
+
+#wmd-preview details > :not(summary) {
+    padding: 0 1rem 1rem;
+}
+
+/* 复选框和任务列表 */
+#wmd-preview input[type="checkbox"] {
+    width: 1rem;
+    height: 1rem;
+    margin-right: 0.45rem;
+    accent-color: var(--booadmin-accent);
+    vertical-align: -0.12rem;
+}
+
+#wmd-preview .contains-task-list,
+#wmd-preview .task-list {
+    list-style: none;
+    padding-left: 0;
+}
+
+#wmd-preview .contains-task-list li,
+#wmd-preview .task-list li {
+    padding-left: 0.15rem;
+}
+
+/* 分割线 */
+#wmd-preview hr {
+    margin: 2rem 0;
+    border: 0;
+    border-top: 1px solid var(--booadmin-border);
+}
+
+/* iframe 和视频 */
+#wmd-preview iframe,
+#wmd-preview video {
+    display: block;
+    width: 100%;
+    min-height: 360px;
+    border: 1px solid var(--booadmin-border);
+    background: var(--booadmin-surface-2);
+}
+
+/* 表格包裹器 */
+#wmd-preview .table-wrap {
+    margin: 1.2rem 0;
+    overflow-x: auto;
+}
+
+#wmd-preview .table-wrap table {
+    margin: 0;
+}
+
+/* 摘要分割线 (<!--more-->) */
+#wmd-preview .summary:after {
+    display: block;
+    margin: 2em 0;
+    background: var(--booadmin-highlight-warm);
+    color: var(--booadmin-warning);
+    font-size: .85714em;
+    text-align: center;
+    content: "- more -";
+    padding: 0.5rem 1rem;
+    border-radius: 0;
+}
+
+/* 嵌入内容占位符 */
+#wmd-preview .embed {
+    border: 1px solid var(--booadmin-border);
+    height: 40px;
+    overflow: hidden;
+    line-height: 40px;
+    text-align: center;
+    font-size: 12px;
+    color: var(--booadmin-muted);
+    background: var(--booadmin-surface-2);
+    padding: 0 1rem;
+}
+
+/* KaTeX 数学公式样式 */
+#wmd-preview .katex {
+    font-size: 1.02em;
+}
+
+#wmd-preview .katex-display {
+    margin: 1.5rem 0;
+    overflow-x: auto;
+    overflow-y: hidden;
+    padding: 0.2rem 0.1rem;
+}
+
+/* 脚注样式 */
+#wmd-preview .footnotes {
+    margin-top: 2.4rem;
+    padding-top: 1.1rem;
+    border-top: 1px solid var(--booadmin-border);
+    color: var(--booadmin-muted);
+    font-size: 0.94rem;
+}
+
+#wmd-preview .footnotes hr {
+    display: none;
+}
+
+#wmd-preview .footnote-ref,
+#wmd-preview .footnote-backref {
+    color: var(--booadmin-accent);
+    text-decoration: none;
+}
+
+/* 行内元素 */
 #wmd-preview span.line {
-	display:inline;
-	height:1px;
-	line-height:1px;
-	position:absolute
+    display: inline;
+    height: 1px;
+    line-height: 1px;
+    position: absolute;
 }
-#wmd-preview .focus,#wmd-preview .focus * {
-	background-color:var(--booadmin-highlight-warm) !important
+
+/* 焦点状态 */
+#wmd-preview .focus,
+#wmd-preview .focus * {
+    background-color: var(--booadmin-highlight-warm) !important;
 }
 @keyframes fullscreen-upload {
 	0% {
@@ -1910,14 +2246,16 @@ body:has(.menu-bar[open]) {
 	outline:none
 }
 .fullscreen #wmd-preview {
-	top:53px;
-	right:0;
-	margin:0;
-	padding:5px 20px;
-	border:none;
-	border-left:1px solid var(--booadmin-surface-2);
-	background:var(--booadmin-bg);
-	overflow:auto
+    top: 53px;
+    right: 0;
+    margin: 0;
+    padding: 20px 24px;
+    border: none;
+    border-left: 1px solid var(--booadmin-border);
+    background: var(--booadmin-bg);
+    overflow-x: hidden;
+    overflow-y: auto;
+    line-height: 1.8;
 }
 .fullscreen .submit {
 	right:0;
@@ -3716,6 +4054,49 @@ button:not(.view-toggle button),.btn:not(.view-toggle button),a.btn {
 
 .booadmin-copyright-popup .action a.secondary:hover {
 	background-color:var(--booadmin-border-strong);
+}
+
+/* ========================================
+ * Markdown 预览区域 - 响应式优化
+ * ======================================== */
+
+@media (max-width: 720px) {
+    #wmd-preview {
+        padding: 16px 14px 20px;
+        font-size: 0.875rem;
+    }
+
+    #wmd-preview h1 {
+        font-size: 1.5rem;
+    }
+
+    #wmd-preview h2 {
+        font-size: 1.25rem;
+    }
+
+    #wmd-preview h3 {
+        font-size: 1.1rem;
+    }
+
+    #wmd-preview pre {
+        padding: 12px 14px;
+        font-size: 0.85rem;
+    }
+
+    #wmd-preview table th,
+    #wmd-preview table td {
+        padding: 8px 10px;
+        font-size: 0.85rem;
+    }
+
+    #wmd-preview iframe,
+    #wmd-preview video {
+        min-height: 220px;
+    }
+
+    #wmd-preview blockquote {
+        padding: 0.85rem 0.95rem;
+    }
 }
 
 @media (max-width: 768px) {

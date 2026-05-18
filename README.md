@@ -4,8 +4,8 @@
 
 一款使用 TailwindCSS 精心重构的 Typecho 现代化后台主题。完全支持 Typecho 1.3.0，采用 GARFIELDTOM'S NEST CDN 进行资源加速分发，提供稳定且高效的加载体验。
 
-[![BooAdmin](https://img.shields.io/badge/BooAdmin-v1.2.0-blue?style=for-the-badge)](https://github.com/little-gt/THEME-BooAdmin/releases)
-[![License](https://img.shields.io/badge/License-GPLv3-blue?style=for-the-badge)](LICENSE)
+![BooAdmin](https://img.shields.io/badge/BooAdmin-v1.2.1-blue?style=for-the-badge)
+![License](https://img.shields.io/badge/License-GPLv3-blue?style=for-the-badge)
 ![LTS](https://img.shields.io/badge/Status-LTS%20Stable-blue?style=for-the-badge)
 
 ![登录页面](https://cnb.cool/little-gt/BooAdmin/-/git/raw/main/screenshot/screenshot0.png)
@@ -124,29 +124,16 @@
 
 ---
 
-## 🚀 v1.2.0 版本更新速递
-
-> 感谢提出的关于对主题文件校验的建议，经过实验发现，这个校验做成独立的之后比较麻烦，以及 CDN 等权威资源更新等比较麻烦，考虑到本主题完全开源，且搜索一下 BooAdmin 就可以找到我们的权威仓库的话，就算了吧。
+## 🚀 v1.2.1 版本更新速递
 
 ### 🎨 样式架构
 
-* 重构通知系统框架，统一结构与状态管理逻辑；
-* 重构 NProgress 实现，规范生命周期与触发机制；
-* 修复管理用户、分类页面多选状态显示问题。
+* 优化了撰写文章和撰写独立页面的预览功能的 Markdown 解析器的能力，优化撰写体验；
+* 优化了登录和注册页面的设计，使得更加统一和权重一致。
 
 ### 🛠️ 内核质量
 
-* 系统性清理并整合历史遗留样式，消除不一致与冗余定义；
-* 重构 `table-js` 模块：
-
-  * 对齐 BooAdmin 现代化设计范式；
-  * 移除不稳定的原生依赖逻辑，修复偶发性功能与样式异常；
-* 重构预览功能：
-
-  * 替换历史实现方案；
-  * 解耦旧逻辑，提升可维护性与稳定性；
-* 合并重复样式单元，降低资源体积与加载开销；
-* 重新整理样式文件结构，优化模块划分与引用关系。
+* 升级了 `editor-js` 模块，使得边写边预览功能支持解析 LaTex 公式。
 
 ### 🔧 对 Typecho.js 修正的说明
 

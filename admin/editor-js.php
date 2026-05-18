@@ -31,6 +31,12 @@
 <script src="<?php $options->adminStaticUrl('js', 'hyperdown.js'); ?>"></script>
 <script src="<?php $options->adminStaticUrl('js', 'pagedown.js'); ?>"></script>
 <script src="<?php $options->adminStaticUrl('js', 'purify.js'); ?>"></script>
+
+<!-- KaTeX Resources -->
+<link rel="stylesheet" href="https://cdn.garfieldtom.cool/resource/libs/KaTeX/0.16.38/katex.min.css">
+<script src="https://cdn.garfieldtom.cool/resource/libs/KaTeX/0.16.38/katex.min.js"></script>
+<script src="https://cdn.garfieldtom.cool/resource/libs/KaTeX/0.16.38/contrib/auto-render.min.js"></script>
+
 <script>
 $(document).ready(function () {
     const textarea = $('#text'),
@@ -128,12 +134,30 @@ $(document).ready(function () {
         let count = images.length;
 
         if (count === 0) {
+            renderMathInElement(preview[0], {
+                delimiters: [
+                    { left: "$$", right: "$$", display: true },
+                    { left: "$", right: "$", display: false },
+                    { left: "\\(", right: "\\)", display: false },
+                    { left: "\\[", right: "\\]", display: true }
+                ],
+                throwOnError: false
+            });
             reloadScroll(true);
         } else {
             images.bind('load error', function () {
                 count --;
 
                 if (count === 0) {
+                    renderMathInElement(preview[0], {
+                        delimiters: [
+                            { left: "$$", right: "$$", display: true },
+                            { left: "$", right: "$", display: false },
+                            { left: "\\(", right: "\\)", display: false },
+                            { left: "\\[", right: "\\]", display: true }
+                        ],
+                        throwOnError: false
+                    });
                     reloadScroll(true);
                 }
             });
@@ -253,13 +277,26 @@ $(document).ready(function () {
             $(".wmd-edittab a").removeClass('active');
             $(this).addClass("active");
             $("#wmd-editarea, #wmd-preview").addClass("wmd-hidetab");
-            
+
             const selected_tab = $(this).attr("href"),
                 selected_el = $(selected_tab).removeClass("wmd-hidetab");
 
             // 预览时隐藏编辑器按钮
             if (selected_tab === "#wmd-preview") {
                 $("#wmd-button-row").addClass("wmd-visualhide");
+
+                // 确保预览时 LaTeX 公式已渲染
+                if (typeof renderMathInElement === 'function') {
+                    renderMathInElement(preview[0], {
+                        delimiters: [
+                            { left: "$$", right: "$$", display: true },
+                            { left: "$", right: "$", display: false },
+                            { left: "\\(", right: "\\)", display: false },
+                            { left: "\\[", right: "\\]", display: true }
+                        ],
+                        throwOnError: false
+                    });
+                }
             } else {
                 $("#wmd-button-row").removeClass("wmd-visualhide");
             }
