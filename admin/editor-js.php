@@ -138,6 +138,33 @@ $(document).ready(function () {
         ],
         throwOnError: false
     };
+
+    function ensurePreviewOverflowContainers() {
+        preview.find('table, pre, .katex-display').each(function () {
+            const target = $(this);
+
+            if (target.parent('.wmd-overflow-wrap').length > 0) {
+                return;
+            }
+
+            if (target.is('table') && target.parent('.table-wrap').length > 0) {
+                return;
+            }
+
+            const wrapper = $('<div class="wmd-overflow-wrap" />');
+
+            if (target.is('table')) {
+                wrapper.addClass('is-table');
+            } else if (target.is('pre')) {
+                wrapper.addClass('is-code');
+            } else {
+                wrapper.addClass('is-math');
+            }
+
+            target.wrap(wrapper);
+        });
+    }
+
     let previewSyncTimer = null;
     function syncPreviewAfterLayout() {
         if (previewSyncTimer) {
@@ -152,6 +179,7 @@ $(document).ready(function () {
                 renderMathInElement(preview[0], mathRenderOptions);
             }
 
+            ensurePreviewOverflowContainers();
             reloadScroll(true);
         }, 30);
     }
@@ -341,9 +369,9 @@ $(document).ready(function () {
             // 重新调整工具栏高度和布局
             adjustToolbarHeight();
 
-            // 预览和编辑窗口高度一致
-            if (!isFullScreen) {
-                $("#wmd-preview").css("height", "");
+            // Auto-size preview height outside fullscreen
+            if (!isFullScreen && selected_tab === "#wmd-preview") {
+                preview.css('height', '');
             }
 
             if (selected_tab === "#wmd-preview") {

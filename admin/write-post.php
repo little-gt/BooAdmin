@@ -5,7 +5,7 @@ include 'menu.php';
 
 $post = \Widget\Contents\Post\Edit::alloc()->prepare();
 ?>
-<main class="flex-1 flex flex-col overflow-hidden bg-discord-light">
+<main class="write-screen flex-1 flex flex-col overflow-hidden bg-discord-light">
     <!-- Top Header -->
     <header class="h-16 bg-white border-b border-gray-200 flex items-center justify-between px-6 z-10">
         <div class="flex items-center text-discord-muted">
@@ -27,11 +27,11 @@ $post = \Widget\Contents\Post\Edit::alloc()->prepare();
     </header>
 
     <!-- Content Area -->
-    <div class="flex-1 overflow-y-auto p-4 md:p-8">
-        <div class="w-full max-w-none mx-auto h-full flex flex-col">
-             <form class="flex flex-col lg:flex-row gap-6 flex-1 min-h-0" action="<?php $security->index('/action/contents-post-edit'); ?>" method="post" name="write_post">
+    <div class="flex-1 min-w-0 overflow-x-hidden overflow-y-auto p-4 md:p-8">
+        <div class="w-full max-w-none min-w-0 mx-auto h-full flex flex-col">
+             <form class="flex flex-col lg:flex-row gap-6 flex-1 min-h-0 min-w-0" action="<?php $security->index('/action/contents-post-edit'); ?>" method="post" name="write_post">
                 <!-- Main Editor Area -->
-                <div class="flex-1 flex flex-col min-h-0 overflow-y-auto lg:overflow-visible">
+                <div class="flex-1 min-w-0 flex flex-col min-h-0 overflow-y-auto lg:overflow-visible">
                     <?php if ($post->draft): ?>
                         <div class="mb-4 bg-yellow-50 border border-yellow-200 text-yellow-800 px-4 py-3 text-sm">
                             <?php if ($post->draft['cid'] != $post->cid): ?>
@@ -45,7 +45,7 @@ $post = \Widget\Contents\Post\Edit::alloc()->prepare();
                         </div>
                     <?php endif; ?>
 
-                    <div class="bg-white border border-gray-100 p-6 mb-6">
+                    <div class="bg-white border border-gray-100 p-6 mb-6 min-w-0 overflow-x-hidden">
                         <label for="title" class="sr-only"><?php _e('标题'); ?></label>
                         <input type="text" id="title" name="title" autocomplete="off" value="<?php $post->title(); ?>"
                                placeholder="<?php _e('在此输入标题'); ?>" class="w-full text-2xl font-bold border-none focus:outline-none focus:ring-0 placeholder-gray-300 text-discord-text mb-4 p-0"/>
