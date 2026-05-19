@@ -1814,10 +1814,15 @@ body:has(.menu-bar[open]) {
     background: var(--booadmin-surface);
     margin: 0;
     padding: 24px 20px 28px;
+    width: 100%;
+    max-width: 100%;
+    min-width: 0;
+    box-sizing: border-box;
     word-wrap: break-word;
     overflow-wrap: anywhere;
     overflow-x: hidden;
     overflow-y: auto;
+    scrollbar-gutter: stable;
     line-height: 1.8;
     font-size: 0.9375rem;
     color: var(--booadmin-text);
@@ -1991,9 +1996,9 @@ body:has(.menu-bar[open]) {
 
 /* 表格样式 */
 #wmd-preview table {
-    display: block;
-    width: 100%;
-    overflow-x: auto;
+    display: table;
+    width: max-content;
+    min-width: 100%;
     border-collapse: collapse;
     border: 1px solid var(--booadmin-border);
     background: var(--booadmin-surface);
@@ -2138,12 +2143,25 @@ body:has(.menu-bar[open]) {
 }
 
 /* 表格包裹器 */
+#wmd-preview .wmd-overflow-wrap,
 #wmd-preview .table-wrap {
+    display: block;
+    width: 100%;
+    min-width: 0;
+    box-sizing: border-box;
     margin: 1.2rem 0;
     overflow-x: auto;
+    overflow-y: hidden;
+    max-width: 100%;
+    -webkit-overflow-scrolling: touch;
+    overscroll-behavior-x: contain;
+    scrollbar-gutter: stable;
 }
 
-#wmd-preview .table-wrap table {
+#wmd-preview .wmd-overflow-wrap table,
+#wmd-preview .table-wrap table,
+#wmd-preview .wmd-overflow-wrap pre,
+#wmd-preview .wmd-overflow-wrap .katex-display {
     margin: 0;
 }
 
@@ -2625,6 +2643,7 @@ main {
 	display:flex;
 	flex-direction:column;
 	min-height:100vh;
+	min-width:0;
 	/* Remove overflow restrictions */
 }
 /* Override overflow-hidden class on main */
@@ -2639,8 +2658,39 @@ main > header {
 /* Content area expands to fill space,no internal scroll */
 main > .flex-1.overflow-y-auto,main > div.flex-1 {
 	flex:1 0 auto;
+	min-width:0;
 	overflow:visible !important;
 	/* Override overflow-y-auto,let page scroll */
+}
+/* Write screens: lock horizontal bounds, keep local overflow inside preview wrappers */
+main.write-screen > .flex-1.overflow-y-auto,
+main.write-screen > div.flex-1 {
+	overflow:visible !important;
+	overflow-x:hidden !important;
+	min-width:0;
+}
+main.write-screen .w-full.max-w-none,
+main.write-screen form[name="write_post"],
+main.write-screen form[name="write_page"],
+main.write-screen form[name="write_post"] > .flex-1,
+main.write-screen form[name="write_page"] > .flex-1,
+main.write-screen .editor-container,
+main.write-screen #wmd-editarea,
+main.write-screen #wmd-preview {
+	min-width:0;
+	max-width:100%;
+}
+main.write-screen form[name="write_post"] > .flex-1,
+main.write-screen form[name="write_page"] > .flex-1 {
+	overflow-x:hidden;
+}
+main.write-screen #wmd-preview th,
+main.write-screen #wmd-preview td {
+	white-space:normal;
+	word-break:break-word;
+}
+main.write-screen #wmd-preview td a {
+	word-break:break-all;
 }
 /* Footer follows content naturally */
 #admin-footer {
