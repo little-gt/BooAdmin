@@ -1,8 +1,9 @@
 /*
- * BooAdmin Dark Theme
- * 
+ * BooAdmin Pure Black Theme (OLED Dark)
+ *
  * 结构说明：
  * - 本文件通过 @media (prefers-color-scheme: dark) 覆盖 light.css 的变量
+ * - 采用纯黑中性色板，去除蓝调，OLED 友好，护眼不刺眼
  * - 变量顺序和分类与 light.css 完全对齐
  * - 包含 Tailwind 工具类和组件的暗色覆盖（必需，因为 PHP 中大量使用）
  */
@@ -12,174 +13,175 @@
         color-scheme: dark;
 
         /* ========================================
-         * 基础色板 - Backgrounds
+         * 基础色板 - Backgrounds (纯黑基底)
          * ======================================== */
-        --booadmin-bg: #0f1217;
-        --booadmin-sidebar: #111722;
-        --booadmin-active: #273246;
+        --booadmin-bg: #000000;
+        --booadmin-sidebar: #0a0a0a;
+        --booadmin-active: #1a1a1a;
 
         /* ========================================
-         * 表面色板 - Surfaces
+         * 表面色板 - Surfaces (中性微层次)
          * ======================================== */
-        --booadmin-surface: #171b22;
-        --booadmin-surface-2: #1d232d;
-        --booadmin-surface-muted: #141922;
+        --booadmin-surface: #0d0d0d;
+        --booadmin-surface-2: #151515;
+        --booadmin-surface-muted: #080808;
 
         /* ========================================
          * 边框色板 - Borders
          * ======================================== */
-        --booadmin-border: #2b3442;
-        --booadmin-border-strong: #3a475a;
+        --booadmin-border: #222222;
+        --booadmin-border-strong: #333333;
 
         /* ========================================
-         * 文本色板 - Text Colors
+         * 文本色板 - Text Colors (柔和白)
          * ======================================== */
-        --booadmin-text: #e8edf3;
-        --booadmin-muted: #9aa7b7;
-        --booadmin-placeholder: #8694a6;
+        --booadmin-text: #e4e4e7;
+        --booadmin-muted: #a1a1aa;
+        --booadmin-placeholder: #71717a;
         --booadmin-on-accent: #ffffff;
 
         /* ========================================
          * 控件色板 - Form Controls
          * ======================================== */
-        --booadmin-control-bg: #263041;
-        --booadmin-control-bg-hover: #2d3a4f;
-        --booadmin-control-disabled-bg: #141922;
-        --booadmin-control-disabled-text: #8694a6;
-        --booadmin-focus-ring: rgba(122, 139, 255, 0.32);
+        --booadmin-control-bg: #18181b;
+        --booadmin-control-bg-hover: #1f1f23;
+        --booadmin-control-disabled-bg: #080808;
+        --booadmin-control-disabled-text: #52525b;
+        --booadmin-focus-ring: rgba(99, 102, 199, 0.18);
 
         /* ========================================
          * 强调色 - Accent (Primary Brand Color)
+         * 深沉靛蓝，低饱和度，OLED 友好不刺眼
          * ======================================== */
-        --booadmin-accent: #7a8bff;
-        --booadmin-accent-hover: #90a0ff;
-        --booadmin-accent-active: #a7b4ff;
-        --booadmin-accent-rgb: 122, 139, 255;
+        --booadmin-accent: #6366c7;
+        --booadmin-accent-hover: #7c7fd6;
+        --booadmin-accent-active: #9899e3;
+        --booadmin-accent-rgb: 99, 102, 199;
 
         /* ========================================
-         * 链接色 - Links
+         * 链接色 - Links (比强调色更柔和)
          * ======================================== */
-        --booadmin-link: #7a8bff;
-        --booadmin-link-hover: #90a0ff;
-        --booadmin-link-active: #a7b4ff;
-        --booadmin-link-disabled: #7382c4;
-        --booadmin-link-soft-bg: #273246;
-        --booadmin-link-soft-hover: #34445c;
+        --booadmin-link: #7c7fd6;
+        --booadmin-link-hover: #9899e3;
+        --booadmin-link-active: #b4b5ec;
+        --booadmin-link-disabled: #5558a3;
+        --booadmin-link-soft-bg: #16162a;
+        --booadmin-link-soft-hover: #1e1e38;
 
         /* ========================================
-         * 语义色 - Success
+         * 语义色 - Success (柔和绿)
          * ======================================== */
-        --booadmin-success: #8fdc8f;
-        --booadmin-success-bg: #203f2b;
-        --booadmin-success-bg-alt: #203f2b;
-        --booadmin-success-text: #8fdc8f;
-        --booadmin-success-text-strong: #8fdc8f;
+        --booadmin-success: #6bc78a;
+        --booadmin-success-bg: #0a1f12;
+        --booadmin-success-bg-alt: #0a1f12;
+        --booadmin-success-text: #6bc78a;
+        --booadmin-success-text-strong: #95d4ab;
 
         /* ========================================
-         * 语义色 - Warning
+         * 语义色 - Warning (柔和琥珀)
          * ======================================== */
-        --booadmin-warning: #ffd37a;
-        --booadmin-warning-bg: #43381d;
-        --booadmin-warning-text: #ffd37a;
+        --booadmin-warning: #d4a72a;
+        --booadmin-warning-bg: #2a2208;
+        --booadmin-warning-text: #d4a72a;
 
         /* ========================================
-         * 语义色 - Danger/Error
+         * 语义色 - Danger/Error (低饱和红)
          * ======================================== */
-        --booadmin-danger: #ff8b8b;
-        --booadmin-danger-strong: #a94a4a;
-        --booadmin-danger-hover: #ff9a9a;
-        --booadmin-danger-active: #ffb0b0;
-        --booadmin-danger-disabled: #c76f75;
-        --booadmin-error-bg: #4c2428;
-        --booadmin-error-text: #ffc0c0;
+        --booadmin-danger: #e07a7a;
+        --booadmin-danger-strong: #7a2020;
+        --booadmin-danger-hover: #d46464;
+        --booadmin-danger-active: #e09191;
+        --booadmin-danger-disabled: #9e2828;
+        --booadmin-error-bg: #2a0c10;
+        --booadmin-error-text: #e8aaaa;
 
         /* ========================================
-         * 语义色 - Info
+         * 语义色 - Info (低饱和蓝)
          * ======================================== */
-        --booadmin-info: #76a2ff;
-        --booadmin-info-hover: #9fb8ff;
-        --booadmin-info-bg: #1a2232;
+        --booadmin-info: #7aadf0;
+        --booadmin-info-hover: #a3c8f5;
+        --booadmin-info-bg: #081420;
 
         /* ========================================
          * Token Input 组件
          * ======================================== */
-        --booadmin-token-bg: #263041;
-        --booadmin-token-bg-selected: #2d3a4f;
-        --booadmin-token-text: #e8edf3;
-        --booadmin-token-remove: #9aa7b7;
-        --booadmin-token-remove-hover: #ff8b8b;
-        --booadmin-token-dropdown-hover: #1d232d;
-        --booadmin-token-dropdown-selected-bg: #273246;
-        --booadmin-token-dropdown-selected-text: #e8edf3;
+        --booadmin-token-bg: #18181b;
+        --booadmin-token-bg-selected: #1f1f23;
+        --booadmin-token-text: #e4e4e7;
+        --booadmin-token-remove: #a1a1aa;
+        --booadmin-token-remove-hover: #fca5a5;
+        --booadmin-token-dropdown-hover: #151515;
+        --booadmin-token-dropdown-selected-bg: #1a1a2e;
+        --booadmin-token-dropdown-selected-text: #e4e4e7;
 
         /* ========================================
          * 表格组件 - Table
          * ======================================== */
-        --booadmin-table-head: #151c28;
-        --booadmin-table-row-odd: #151a22;
-        --booadmin-table-row-even: #111722;
-        --booadmin-table-row-hover: #1d2532;
+        --booadmin-table-head: #0a0a0a;
+        --booadmin-table-row-odd: #0d0d0d;
+        --booadmin-table-row-even: #0a0a0a;
+        --booadmin-table-row-hover: #151515;
 
         /* ========================================
          * 高亮与选中 - Highlights
          * ======================================== */
-        --booadmin-highlight-soft: #1b2230;
-        --booadmin-highlight-danger: #5e2f37;
-        --booadmin-highlight-warm: #2f2a1d;
-        --booadmin-selection-bg: #273246;
-        --booadmin-selection-border: #3a475a;
+        --booadmin-highlight-soft: #111111;
+        --booadmin-highlight-danger: #2e0f12;
+        --booadmin-highlight-warm: #221e0a;
+        --booadmin-selection-bg: #181830;
+        --booadmin-selection-border: #2a2a44;
 
         /* ========================================
          * 图表组件 - Charts
          * ======================================== */
-        --booadmin-chart-text: #d9e1ec;
-        --booadmin-chart-axis: #8f9db0;
-        --booadmin-chart-grid: #2a3342;
-        --booadmin-chart-tooltip-bg: rgba(17, 23, 34, 0.95);
-        --booadmin-chart-posts: #7a8bff;
-        --booadmin-chart-posts-soft: rgba(122, 139, 255, 0.35);
-        --booadmin-chart-posts-fade: rgba(122, 139, 255, 0.08);
-        --booadmin-chart-comments: #66c787;
-        --booadmin-chart-comments-soft: rgba(102, 199, 135, 0.28);
-        --booadmin-chart-comments-fade: rgba(102, 199, 135, 0.05);
-        --booadmin-chart-warn: #ffc766;
-        --booadmin-chart-danger: #ff7b7b;
+        --booadmin-chart-text: #c4c4cc;
+        --booadmin-chart-axis: #5a5a66;
+        --booadmin-chart-grid: #161616;
+        --booadmin-chart-tooltip-bg: rgba(13, 13, 13, 0.96);
+        --booadmin-chart-posts: #6366c7;
+        --booadmin-chart-posts-soft: rgba(99, 102, 199, 0.18);
+        --booadmin-chart-posts-fade: rgba(99, 102, 199, 0.03);
+        --booadmin-chart-comments: #3db86a;
+        --booadmin-chart-comments-soft: rgba(61, 184, 106, 0.14);
+        --booadmin-chart-comments-fade: rgba(61, 184, 106, 0.02);
+        --booadmin-chart-warn: #c99020;
+        --booadmin-chart-danger: #d46464;
 
         /* ========================================
          * 导航栏 - Navigation
          * ======================================== */
-        --booadmin-nav-bg: #111722;
-        --booadmin-nav-bg-hover: #171f2c;
-        --booadmin-nav-border: #2b3442;
+        --booadmin-nav-bg: #0a0a0a;
+        --booadmin-nav-bg-hover: #111111;
+        --booadmin-nav-border: #222222;
 
         /* ========================================
          * 遮罩层 - Overlays
          * ======================================== */
-        --booadmin-overlay: rgba(0, 0, 0, 0.7);
+        --booadmin-overlay: rgba(0, 0, 0, 0.75);
         --booadmin-overlay-solid: #000000;
-        --booadmin-hero-overlay: rgba(0, 0, 0, 0.62);
+        --booadmin-hero-overlay: rgba(0, 0, 0, 0.65);
 
         /* ========================================
          * NProgress 加载指示器
          * ======================================== */
-        --booadmin-spinner-bg: rgba(30, 37, 48, 0.95);
-        --booadmin-spinner-text: #e8edf3;
-        --booadmin-spinner-icon-bg: rgba(232, 237, 243, 0.2);
-        --booadmin-spinner-icon-active: #7a8bff;
-        --booadmin-spinner-border: rgba(232, 237, 243, 0.15);
+        --booadmin-spinner-bg: rgba(18, 18, 18, 0.96);
+        --booadmin-spinner-text: #e4e4e7;
+        --booadmin-spinner-icon-bg: rgba(228, 228, 231, 0.12);
+        --booadmin-spinner-icon-active: #818cf8;
+        --booadmin-spinner-border: rgba(228, 228, 231, 0.08);
 
         /* ========================================
          * 插件横幅 - Plugin Banner
          * ======================================== */
-        --booadmin-banner-avatar-border: rgba(232, 237, 243, 0.3);
-        --booadmin-banner-btn-bg: rgba(232, 237, 243, 0.15);
-        --booadmin-banner-btn-hover: rgba(232, 237, 243, 0.25);
-        --booadmin-banner-primary-bg: rgba(232, 237, 243, 0.95);
+        --booadmin-banner-avatar-border: rgba(228, 228, 231, 0.2);
+        --booadmin-banner-btn-bg: rgba(228, 228, 231, 0.1);
+        --booadmin-banner-btn-hover: rgba(228, 228, 231, 0.18);
+        --booadmin-banner-primary-bg: rgba(228, 228, 231, 0.95);
 
         /* ========================================
          * 设置标签页 - Settings Tabs (Mobile)
          * ======================================== */
-        --booadmin-tabs-fade-mask: rgba(15, 18, 23, 0.95);
+        --booadmin-tabs-fade-mask: rgba(0, 0, 0, 0.96);
 
         /* ========================================
          * 兼容性别名 - Legacy Aliases
@@ -306,7 +308,38 @@
 
     .bg-discord-accent,
     .hover\:bg-discord-accent:hover {
-        background-color: var(--booadmin-accent) !important;
+        /* 统一暗色模式所有按钮背景色 */
+        background-color: #3a3c6e !important;
+    }
+
+    /* 登录页按钮统一：暗底 + 柔字 + 边框 */
+    .typecho-login-wrap button[type="submit"],
+    .typecho-login-wrap button.bg-discord-accent,
+    #passkey-login-btn {
+        background-color: #3a3c6e !important;
+        color: #c4c8e8 !important;
+        border-color: #484a78 !important;
+    }
+
+    .typecho-login-wrap button[type="submit"]:hover,
+    .typecho-login-wrap button.bg-discord-accent:hover,
+    #passkey-login-btn:hover {
+        background-color: #46487d !important;
+        color: #ddddef !important;
+    }
+
+    /* 全局 bg-discord-accent 按钮：暗模式下统一柔化文字和边框 */
+    button.bg-discord-accent.text-white,
+    a.bg-discord-accent.text-white,
+    input[type="submit"].bg-discord-accent.text-white {
+        color: #c4c8e8 !important;
+        border: 1px solid #484a78 !important;
+    }
+
+    button.bg-discord-accent.text-white:hover,
+    a.bg-discord-accent.text-white:hover,
+    input[type="submit"].bg-discord-accent.text-white:hover {
+        color: #ddddef !important;
     }
 
     /* ========================================
@@ -351,38 +384,110 @@
     }
 
     /* ========================================
-     * 按钮
+     * 按钮 - 全面柔化，OLED 友好
      * ======================================== */
+
+    /* 基础按钮：低调灰底，融入纯黑环境 */
     .btn,
     .btn-xs,
     .btn-s,
     .btn-l,
     #ui-datepicker-div .ui-datepicker-current,
     #ui-datepicker-div .ui-datepicker-close {
-        background-color: var(--booadmin-control-bg) !important;
-        color: var(--booadmin-text) !important;
+        background-color: #1a1a1d !important;
+        color: var(--booadmin-muted) !important;
+        border: 1px solid var(--booadmin-border) !important;
     }
 
     .btn:hover,
     #ui-datepicker-div .ui-datepicker-current:hover,
     #ui-datepicker-div .ui-datepicker-close:hover {
-        background-color: var(--booadmin-control-bg-hover) !important;
+        background-color: #242428 !important;
+        color: var(--booadmin-text) !important;
+        border-color: var(--booadmin-border-strong) !important;
     }
 
+    /* Primary 主按钮：深沉靛蓝，不刺眼 */
     .primary,
     .btn.primary {
-        background-color: var(--booadmin-accent) !important;
-        color: var(--booadmin-on-accent) !important;
+        background-color: #3a3c6e !important;
+        color: #c4c8e8 !important;
+        border: 1px solid #484a78 !important;
     }
 
     .primary:hover,
     .btn.primary:hover {
-        background-color: var(--booadmin-accent-hover) !important;
+        background-color: #46487d !important;
+        color: #dddfeF !important;
+        border-color: #5a5c88 !important;
     }
 
+    .primary:active,
+    .primary.active,
+    .btn.primary:active {
+        background-color: #32345e !important;
+    }
+
+    /* Warning/Danger 警告按钮：暗红，低饱和 */
     .btn-warn {
-        background-color: var(--booadmin-danger-strong) !important;
-        color: var(--booadmin-on-accent) !important;
+        background-color: #5a1a1a !important;
+        color: #e8aaaa !important;
+        border: 1px solid #6e2525 !important;
+    }
+
+    .btn-warn:hover {
+        background-color: #6e2222 !important;
+        color: #f0bbbb !important;
+        border-color: #802e2e !important;
+    }
+
+    /* ========================================
+     * 提交按钮 (设置页/表单) - 柔和渐变
+     * ======================================== */
+    .typecho-option-submit button,
+    .typecho-option-submit input[type="submit"],
+    .typecho-reform-style button[type="submit"],
+    .typecho-reform-style input[type="submit"] {
+        background: linear-gradient(135deg, #3a3c6e 0%, #46487d 100%) !important;
+        color: #c4c8e8 !important;
+        border: 1px solid #484a78 !important;
+    }
+
+    .typecho-option-submit button:hover,
+    .typecho-option-submit input[type="submit"]:hover,
+    .typecho-reform-style button[type="submit"]:hover,
+    .typecho-reform-style input[type="submit"]:hover {
+        background: linear-gradient(135deg, #46487d 0%, #54568a 100%) !important;
+        transform: none !important;
+    }
+
+    /* ========================================
+     * 操作链接颜色柔化
+     * ======================================== */
+    .operate-delete,
+    .operate-button-delete {
+        color: #c07070 !important;
+    }
+
+    .operate-delete:hover,
+    .operate-button-delete:hover {
+        color: #d88888 !important;
+    }
+
+    .operate-edit {
+        color: #70b078 !important;
+    }
+
+    .operate-edit:hover {
+        color: #88c990 !important;
+    }
+
+    .operate-reply {
+        color: #c4a83a !important;
+    }
+
+    .operate-reply:hover {
+        color: #d4bc58 !important;
     }
 
     /* ========================================
@@ -418,9 +523,9 @@
     }
 
     .typecho-pager li.current span {
-        background-color: var(--booadmin-accent) !important;
-        border-color: var(--booadmin-accent) !important;
-        color: var(--booadmin-on-accent) !important;
+        background-color: #3a3c6e !important;
+        border-color: #3a3c6e !important;
+        color: #c4c8e8 !important;
     }
 
     /* ========================================
@@ -519,7 +624,7 @@
      * 通知 Toast
      * ======================================== */
     .typecho-notification {
-        background: #171b22 !important;
+        background: #0d0d0d !important;
         border-color: var(--booadmin-border) !important;
         box-shadow: none !important;
         color: var(--booadmin-text) !important;
@@ -588,5 +693,728 @@
         background: var(--booadmin-surface-2) !important;
         color: var(--booadmin-accent) !important;
         border-color: var(--booadmin-accent) !important;
+    }
+
+    /* ========================================
+     * BooAdmin 组件全覆盖 - Pure Black Adaptation
+     * ======================================== */
+
+    /* --- 操作栏 (Operate Bar) --- */
+    .booadmin-operate-bar {
+        background: rgb(20 20 20 / 0.8) !important;
+        border-bottom-color: var(--booadmin-border) !important;
+    }
+
+    /* --- 下拉切换按钮 --- */
+    .booadmin-dropdown-toggle {
+        color: var(--booadmin-muted) !important;
+        background: #141416 !important;
+        border-color: var(--booadmin-border) !important;
+    }
+
+    .booadmin-dropdown-toggle:hover,
+    .booadmin-dropdown-toggle.active {
+        background: #1c1c20 !important;
+        color: var(--booadmin-text) !important;
+    }
+
+    /* --- 下拉菜单 --- */
+    .booadmin-dropdown-menu {
+        background: var(--booadmin-surface) !important;
+        border-color: var(--booadmin-border) !important;
+    }
+
+    /* --- 面板 --- */
+    .booadmin-panel {
+        background: var(--booadmin-surface) !important;
+        border-color: var(--booadmin-border) !important;
+    }
+
+    .booadmin-panel-title {
+        color: var(--booadmin-text) !important;
+        border-bottom-color: var(--booadmin-border) !important;
+    }
+
+    /* --- 返回按钮 --- */
+    .booadmin-back-button {
+        color: var(--booadmin-text) !important;
+        background: var(--booadmin-surface-2) !important;
+        border-color: var(--booadmin-border-strong) !important;
+    }
+
+    .booadmin-back-button:hover {
+        background: #1c1c20 !important;
+    }
+
+    /* --- 全选操作栏文字 --- */
+    .booadmin-select-all {
+        color: var(--booadmin-muted) !important;
+    }
+
+    /* --- 通知 Toast 基础样式覆盖 (style.css 硬编码 #ffffff) --- */
+    .typecho-notification {
+        background: var(--booadmin-surface) !important;
+        border-color: var(--booadmin-border) !important;
+        box-shadow: none !important;
+        color: var(--booadmin-text) !important;
+    }
+
+    .typecho-notification-icon {
+        color: var(--booadmin-muted) !important;
+    }
+
+    .typecho-notification-title {
+        color: var(--booadmin-text) !important;
+    }
+
+    .typecho-notification-messages li {
+        color: var(--booadmin-muted) !important;
+    }
+
+    .typecho-notification-close {
+        color: var(--booadmin-border-strong) !important;
+    }
+
+    .typecho-notification-close:hover {
+        color: var(--booadmin-muted) !important;
+    }
+
+    /* --- 模态框/弹窗 --- */
+    .booadmin-modal {
+        background-color: var(--booadmin-overlay) !important;
+    }
+
+    .booadmin-dialog {
+        background: var(--booadmin-surface) !important;
+        border-color: var(--booadmin-border) !important;
+        color: var(--booadmin-text) !important;
+    }
+
+    /* --- 版权弹窗内部元素 --- */
+    .booadmin-copyright-popup .support-points li {
+        background: var(--booadmin-surface-2) !important;
+        border-color: var(--booadmin-border) !important;
+        color: var(--booadmin-text) !important;
+    }
+
+    .booadmin-copyright-popup .donation-card {
+        background: var(--booadmin-surface) !important;
+        border-color: var(--booadmin-border) !important;
+    }
+
+    .booadmin-copyright-popup p {
+        color: var(--booadmin-muted) !important;
+    }
+
+    .booadmin-copyright-popup img {
+        border-color: var(--booadmin-border) !important;
+    }
+
+    .booadmin-copyright-popup .close-btn {
+        color: var(--booadmin-muted) !important;
+    }
+
+    .booadmin-copyright-popup .close-btn:hover {
+        color: var(--booadmin-text) !important;
+        background-color: var(--booadmin-surface-2) !important;
+    }
+
+    .booadmin-copyright-popup h3 {
+        color: var(--booadmin-text) !important;
+    }
+
+    .booadmin-copyright-popup .version {
+        color: var(--booadmin-muted) !important;
+    }
+
+    .booadmin-copyright-popup .main-copy {
+        color: var(--booadmin-muted) !important;
+    }
+
+    .booadmin-copyright-popup .action a.secondary {
+        background-color: #18181b !important;
+        color: var(--booadmin-muted) !important;
+        border: 1px solid var(--booadmin-border) !important;
+    }
+
+    .booadmin-copyright-popup .action a.secondary:hover {
+        background-color: #242428 !important;
+        color: var(--booadmin-text) !important;
+    }
+
+    .booadmin-copyright-popup .action a {
+        background-color: #3a3c6e !important;
+        color: #c4c8e8 !important;
+    }
+
+    .booadmin-copyright-popup .action a:hover {
+        background-color: #46487d !important;
+    }
+
+    /* --- 新闻/公告组件 --- */
+    .booadmin-news-item {
+        background-color: var(--booadmin-surface) !important;
+        border-color: var(--booadmin-border) !important;
+    }
+
+    .booadmin-news-item:hover {
+        background-color: var(--booadmin-surface-2) !important;
+        border-color: var(--booadmin-border-strong) !important;
+    }
+
+    .booadmin-news-title {
+        color: var(--booadmin-text) !important;
+    }
+
+    .booadmin-news-item:hover .booadmin-news-title {
+        color: var(--booadmin-accent) !important;
+    }
+
+    .booadmin-news-meta {
+        color: var(--booadmin-muted) !important;
+    }
+
+    .booadmin-news-arrow {
+        color: var(--booadmin-muted) !important;
+    }
+
+    .booadmin-news-item:hover .booadmin-news-arrow {
+        color: var(--booadmin-accent) !important;
+    }
+
+    .booadmin-news-message {
+        color: var(--booadmin-muted) !important;
+    }
+
+    .booadmin-news-section {
+        background: linear-gradient(135deg, var(--booadmin-surface-2) 0%, var(--booadmin-surface) 55%, var(--booadmin-surface-2) 100%) !important;
+        border-color: var(--booadmin-border) !important;
+    }
+
+    .booadmin-news-header-title {
+        color: var(--booadmin-text) !important;
+    }
+
+    .booadmin-news-official-link {
+        color: var(--booadmin-accent) !important;
+    }
+
+    .booadmin-news-official-link:hover {
+        color: var(--booadmin-accent-hover) !important;
+    }
+
+    .booadmin-news-skeleton-item {
+        background-color: var(--booadmin-surface) !important;
+        border-color: var(--booadmin-border) !important;
+    }
+
+    .booadmin-news-skeleton-icon {
+        background-color: var(--booadmin-surface-2) !important;
+    }
+
+    .booadmin-news-skeleton-line {
+        background-color: var(--booadmin-border) !important;
+    }
+
+    .booadmin-news-skeleton-line-soft {
+        background-color: var(--booadmin-surface-2) !important;
+    }
+
+    .booadmin-news-empty {
+        color: var(--booadmin-muted) !important;
+    }
+
+    /* --- 更新横幅 --- */
+    .booadmin-update-banner {
+        background-color: var(--booadmin-info-bg) !important;
+        color: var(--booadmin-info-hover) !important;
+        border-color: var(--booadmin-border) !important;
+    }
+
+    .booadmin-update-link {
+        color: var(--booadmin-info-hover) !important;
+    }
+
+    .booadmin-update-link:hover {
+        color: var(--booadmin-accent) !important;
+    }
+
+    /* --- 图表 tooltip --- */
+    .booadmin-chart-tooltip-title {
+        color: var(--booadmin-chart-text) !important;
+    }
+
+    .booadmin-chart-tooltip-label,
+    .booadmin-chart-tooltip-value {
+        color: var(--booadmin-chart-text) !important;
+    }
+
+    /* --- 插件横幅 --- */
+    .plugin-banner {
+        background: linear-gradient(135deg, #2a2c50 0%, #3a3c6e 100%) !important;
+        border-top-color: var(--booadmin-border) !important;
+    }
+
+    .plugin-banner-button.primary {
+        background: #1a1a20 !important;
+        color: #9899e3 !important;
+        border: 1px solid var(--booadmin-border) !important;
+    }
+
+    .plugin-banner-button.primary:hover {
+        background: #24242e !important;
+    }
+
+    /* --- 卡片视图 --- */
+    .content-card {
+        background: var(--booadmin-surface) !important;
+        color: var(--booadmin-text) !important;
+        border-color: var(--booadmin-border) !important;
+    }
+
+    .content-card:hover {
+        border-color: var(--booadmin-accent) !important;
+    }
+
+    .content-card .card-title {
+        color: var(--booadmin-text) !important;
+    }
+
+    .content-card .card-title:hover {
+        color: var(--booadmin-accent) !important;
+    }
+
+    .content-card .card-meta {
+        color: var(--booadmin-muted) !important;
+        border-top-color: var(--booadmin-border) !important;
+    }
+
+    .content-card .card-actions a {
+        color: var(--booadmin-muted) !important;
+    }
+
+    .content-card .card-actions a:hover {
+        color: #9899e3 !important;
+    }
+
+    /* --- 视图切换按钮 --- */
+    .view-toggle {
+        background: var(--booadmin-highlight-soft) !important;
+    }
+
+    .view-toggle button {
+        color: var(--booadmin-muted) !important;
+    }
+
+    .view-toggle button:hover {
+        color: var(--booadmin-text) !important;
+    }
+
+    .view-toggle button.active,
+    .view-toggle button[aria-pressed="true"] {
+        background: #1a1a1d !important;
+        color: #9899e3 !important;
+    }
+
+    /* --- 设置标签页 --- */
+    .settings-tabs {
+        background-color: var(--booadmin-surface) !important;
+        border-color: var(--booadmin-border) !important;
+    }
+
+    .settings-tabs > a {
+        color: var(--booadmin-muted) !important;
+    }
+
+    .settings-tabs > a.active {
+        color: #9899e3 !important;
+    }
+
+    .settings-tabs-wrapper::after {
+        background: linear-gradient(to left, var(--booadmin-tabs-fade-mask), transparent) !important;
+    }
+
+    /* --- 表格滚动渐变遮罩 --- */
+    .table-wrapper::after {
+        background: linear-gradient(to left, var(--booadmin-surface), transparent) !important;
+    }
+
+    .table-wrapper::before {
+        background: linear-gradient(to right, var(--booadmin-surface), transparent) !important;
+    }
+
+    /* --- Typecho 登录页 --- */
+    .typecho-login-wrap .typecho-login .more-link {
+        color: var(--booadmin-border-strong) !important;
+    }
+
+    .typecho-login-wrap .typecho-login .more-link a {
+        color: var(--booadmin-muted) !important;
+    }
+
+    .typecho-login-wrap .typecho-login .more-link a:hover {
+        color: var(--booadmin-accent) !important;
+    }
+
+    /* --- 气球标签 --- */
+    .balloon {
+        background: var(--booadmin-border-strong) !important;
+        color: var(--booadmin-text) !important;
+    }
+
+    a.balloon-button {
+        background: var(--booadmin-link-soft-bg) !important;
+        color: var(--booadmin-text) !important;
+    }
+
+    a.balloon-button:hover,
+    a.button:hover {
+        background-color: var(--booadmin-link-soft-hover) !important;
+        color: var(--booadmin-surface) !important;
+    }
+
+    /* --- 评论回复区 --- */
+    .comment-reply-content {
+        background-color: var(--booadmin-border) !important;
+    }
+
+    .comment-reply-content::after {
+        border-color: var(--booadmin-border) var(--booadmin-border) transparent transparent !important;
+    }
+
+    /* --- 编辑器区域 --- */
+    .wmd-prompt-background {
+        background-color: var(--booadmin-overlay-solid) !important;
+    }
+
+    .wmd-prompt-dialog {
+        background: var(--booadmin-surface) !important;
+        color: var(--booadmin-text) !important;
+    }
+
+    .wmd-prompt-dialog input[type="text"] {
+        background-color: var(--booadmin-surface-2) !important;
+        color: var(--booadmin-text) !important;
+        border-color: var(--booadmin-border) !important;
+    }
+
+    #wmd-button-bar .wmd-button-row li:hover {
+        background-color: var(--booadmin-surface-2) !important;
+    }
+
+    #wmd-button-bar .wmd-button-row li.wmd-spacer {
+        background: var(--booadmin-surface-2) !important;
+    }
+
+    #wmd-button-bar .wmd-edittab a.active {
+        background: var(--booadmin-surface-2) !important;
+        color: var(--booadmin-muted) !important;
+    }
+
+    /* --- 全屏编辑器 --- */
+    .fullscreen #wmd-button-bar,
+    .fullscreen #text,
+    .fullscreen #wmd-preview,
+    .fullscreen .submit {
+        background: var(--booadmin-surface) !important;
+    }
+
+    .fullscreen #wmd-preview {
+        background: var(--booadmin-bg) !important;
+        border-left-color: var(--booadmin-border) !important;
+    }
+
+    .fullscreen .submit {
+        border-bottom-color: var(--booadmin-border) !important;
+    }
+
+    /* --- UI 日期选择器 --- */
+    #ui-datepicker-div {
+        background: var(--booadmin-surface) !important;
+        border-color: var(--booadmin-border) !important;
+    }
+
+    #ui-datepicker-div .ui-datepicker-header {
+        border-bottom-color: var(--booadmin-border) !important;
+    }
+
+    #ui-datepicker-div .ui-datepicker-calendar a {
+        background-color: var(--booadmin-surface-2) !important;
+        color: var(--booadmin-text) !important;
+    }
+
+    #ui-datepicker-div .ui-datepicker-calendar a:hover {
+        background-color: var(--booadmin-surface-2) !important;
+    }
+
+    #ui-datepicker-div .ui-datepicker-today a {
+        background-color: var(--booadmin-surface-2) !important;
+        color: var(--booadmin-text) !important;
+    }
+
+    #ui-datepicker-div .ui-datepicker-current-day a {
+        background-color: #3a3c6e !important;
+        color: #c4c8e8 !important;
+    }
+
+    #ui-datepicker-div .ui-timepicker-div {
+        border-top-color: var(--booadmin-border) !important;
+    }
+
+    #ui-datepicker-div .ui-slider {
+        border-color: var(--booadmin-surface-2) !important;
+        background-color: var(--booadmin-bg) !important;
+    }
+
+    #ui-datepicker-div .ui-slider .ui-slider-handle {
+        background-color: var(--booadmin-accent) !important;
+    }
+
+    #ui-datepicker-div .ui-datepicker-buttonpane {
+        border-top-color: var(--booadmin-border) !important;
+    }
+
+    /* --- 上传面板 --- */
+    #upload-panel {
+        background-color: var(--booadmin-surface) !important;
+        border-color: var(--booadmin-border) !important;
+        color: var(--booadmin-muted) !important;
+    }
+
+    #upload-panel.drag {
+        background-color: var(--booadmin-selection-bg) !important;
+    }
+
+    /* --- 附件图片 --- */
+    .typecho-attachment-photo {
+        border-color: var(--booadmin-border) !important;
+    }
+
+    /* --- 拖拽排序指示器 --- */
+    .tDnD_whileDrag {
+        background-color: var(--booadmin-selection-bg) !important;
+    }
+
+    /* --- UI 效果转移线 --- */
+    .ui-effects-transfer {
+        border-color: var(--booadmin-border) !important;
+    }
+
+    /* --- 欢迎面板 --- */
+    #typecho-welcome {
+        background-color: var(--booadmin-surface-2) !important;
+    }
+
+    .welcome-board {
+        color: var(--booadmin-muted) !important;
+    }
+
+    .welcome-board em {
+        color: var(--booadmin-text) !important;
+    }
+
+    #start-link {
+        border-bottom-color: var(--booadmin-border) !important;
+    }
+
+    .latest-link span {
+        color: var(--booadmin-muted) !important;
+        border-right-color: var(--booadmin-border) !important;
+    }
+
+    /* --- 页面标题 --- */
+    .typecho-page-title a {
+        background: var(--booadmin-surface-2) !important;
+    }
+
+    /* --- Dashboard --- */
+    .typecho-dashboard ul li {
+        color: var(--booadmin-text) !important;
+    }
+
+    /* --- 主题列表 --- */
+    .typecho-theme-list cite {
+        color: var(--booadmin-muted) !important;
+    }
+
+    .typecho-theme-list tbody tr.current td {
+        background-color: var(--booadmin-selection-bg) !important;
+    }
+
+    .typecho-edit-theme .current {
+        background-color: var(--booadmin-border) !important;
+    }
+
+    .typecho-edit-theme .current a {
+        color: var(--booadmin-text) !important;
+    }
+
+    /* --- 标签列表 --- */
+    .tag-list {
+        background-color: var(--booadmin-surface) !important;
+    }
+
+    .tag-list .none {
+        color: var(--booadmin-muted) !important;
+    }
+
+    .tag-list.typecho-list-notable li:hover {
+        background-color: var(--booadmin-surface-2) !important;
+    }
+
+    .tag-list.typecho-list-notable li:has(input[type="checkbox"]:checked) {
+        background-color: var(--booadmin-selection-bg) !important;
+    }
+
+    /* --- 文章编辑区 --- */
+    .typecho-post-area .edit-draft-notice {
+        color: var(--booadmin-muted) !important;
+    }
+
+    .typecho-post-area .edit-draft-notice a {
+        color: var(--booadmin-danger) !important;
+    }
+
+    .typecho-post-area .url-slug {
+        color: var(--booadmin-muted) !important;
+    }
+
+    .typecho-post-area #slug {
+        background: var(--booadmin-surface-muted) !important;
+        color: var(--booadmin-muted) !important;
+    }
+
+    .typecho-post-area .description {
+        color: var(--booadmin-muted) !important;
+    }
+
+    .typecho-post-area #custom-field {
+        background: var(--booadmin-surface) !important;
+    }
+
+    .typecho-post-area #custom-field summary:hover {
+        color: var(--booadmin-accent) !important;
+    }
+
+    .typecho-post-area #custom-field summary::marker {
+        color: var(--booadmin-muted) !important;
+    }
+
+    .typecho-post-area #custom-field .fields .field {
+        border-bottom-color: var(--booadmin-border) !important;
+    }
+
+    .typecho-post-area #custom-field .typecho-label a {
+        color: var(--booadmin-text) !important;
+    }
+
+    .typecho-post-area #custom-field .typecho-label a:hover {
+        color: var(--booadmin-accent) !important;
+    }
+
+    .typecho-post-area #edit-secondary .category-option ul {
+        background-color: var(--booadmin-surface) !important;
+        border-color: var(--booadmin-border) !important;
+    }
+
+    /* --- 选项卡 (Option Tabs) --- */
+    .typecho-option-tabs li a {
+        border-color: var(--booadmin-border) !important;
+        color: var(--booadmin-muted) !important;
+    }
+
+    .typecho-option-tabs li.current a,
+    .typecho-option-tabs li.active a {
+        background-color: var(--booadmin-surface-2) !important;
+        color: var(--booadmin-text) !important;
+    }
+
+    .typecho-option-tabs li a:hover {
+        background-color: var(--booadmin-surface-2) !important;
+    }
+
+    /* --- 列表表头标题 --- */
+    .typecho-list-table-title {
+        color: var(--booadmin-muted) !important;
+    }
+
+    .typecho-list-table.deactivate {
+        color: var(--booadmin-muted) !important;
+    }
+
+    .typecho-list-table td.none {
+        color: var(--booadmin-muted) !important;
+    }
+
+    .typecho-list-table .status {
+        color: var(--booadmin-muted) !important;
+    }
+
+    .typecho-list-table tbody tr:hover {
+        background-color: var(--booadmin-highlight-soft) !important;
+    }
+
+    .typecho-list-table tbody tr:has(input[type="checkbox"]:checked) {
+        background-color: var(--booadmin-selection-bg) !important;
+    }
+
+    /* --- 分页器补充 --- */
+    .typecho-pager li.current a {
+        background-color: var(--booadmin-surface-2) !important;
+        color: var(--booadmin-text) !important;
+    }
+
+    /* --- 页脚 --- */
+    .typecho-foot {
+        color: var(--booadmin-muted) !important;
+    }
+
+    .typecho-foot .resource {
+        color: var(--booadmin-border) !important;
+    }
+
+    .typecho-foot .resource a {
+        color: var(--booadmin-muted) !important;
+    }
+
+    /* --- Logo --- */
+    .i-logo:hover,
+    .i-logo-s:hover {
+        opacity: 0.25;
+    }
+
+    /* --- Caret 箭头 --- */
+    .i-caret-up,
+    .i-caret-down,
+    .i-caret-left,
+    .i-caret-right {
+        border-color: transparent transparent var(--booadmin-muted) transparent;
+    }
+
+    .i-caret-down {
+        border-color: var(--booadmin-muted) transparent transparent transparent;
+    }
+
+    .i-caret-left {
+        border-color: transparent var(--booadmin-muted) transparent transparent;
+    }
+
+    .i-caret-right {
+        border-color: transparent transparent transparent var(--booadmin-muted);
+    }
+
+    /* --- 弹出层 --- */
+    .popup {
+        background: var(--booadmin-nav-bg) !important;
+    }
+
+    /* --- 加载动画 --- */
+    .loading {
+        background-image: url(../img/ajax-loader-dark.gif) no-repeat left center;
+    }
+
+    /* --- 头像 --- */
+    .profile-avatar {
+        border-color: var(--booadmin-border) !important;
     }
 }

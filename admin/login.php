@@ -76,7 +76,7 @@ include 'header.php';
                 </div>
 
                 <div>
-                    <button type="submit" class="w-full flex justify-center py-3 px-4 border border-transparent text-sm font-medium text-white bg-discord-accent hover:bg-discord-accent/90 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-discord-accent transition-all transform hover:-translate-y-0.5">
+                    <button type="submit" class="w-full flex justify-center py-3 px-4 border text-sm font-medium text-white bg-discord-accent hover:bg-discord-accent/90 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-discord-accent transition-all">
                         <?php _e('登 录'); ?>
                     </button>
                     <input type="hidden" name="referer" value="<?php echo htmlspecialchars($request->get('referer')); ?>" />
@@ -90,7 +90,7 @@ include 'header.php';
             <script src="<?php echo \Typecho\Common::url('usr/plugins/Passkey/assist/js/passkey.js?t=' . $cacheTs, $options->rootUrl); ?>"></script>
             <div id="passkey-login-container">
                 <button type="button" id="passkey-login-btn"
-                    class="w-full flex justify-center py-3 px-4 border border-transparent text-sm font-medium text-white bg-discord-accent hover:bg-discord-accent/90 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-discord-accent transition-all transform hover:-translate-y-0.5">
+                    class="w-full flex justify-center py-3 px-4 border text-sm font-medium text-white bg-discord-accent hover:bg-discord-accent/90 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-discord-accent transition-all">
                     <span id="passkey-btn-text"><?php _e('使用 Passkey 登录'); ?></span>
                 </button>
             </div>
@@ -169,20 +169,21 @@ $(document).ready(function () {
 document.addEventListener('DOMContentLoaded', function () {
     var btn = document.getElementById('passkey-login-btn');
     if (!btn) return;
-    var rootStyle = getComputedStyle(document.documentElement);
-    var accent = rootStyle.getPropertyValue('--booadmin-accent').trim() || '#5865f2';
-    var accentHover = rootStyle.getPropertyValue('--booadmin-accent-hover').trim() || '#4752c4';
-    // 强制修正按钮样式
-    btn.style.setProperty('background-color', accent, 'important');
-    btn.style.setProperty('color', '#ffffff', 'important');
+    var isDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+    // Passkey 按钮由外部 JS 注入，需强制修正颜色
+    btn.style.setProperty('background-color', isDark ? '#3a3c6e' : 'var(--booadmin-accent)', 'important');
+    btn.style.setProperty('color', isDark ? '#c4c8e8' : '#ffffff', 'important');
     btn.style.setProperty('font-size', '14px', 'important');
     btn.style.setProperty('font-weight', '500', 'important');
+    if (isDark) {
+        btn.style.setProperty('border-color', '#484a78', 'important');
+    }
     // 悬停时保持颜色一致
     btn.addEventListener('mouseenter', function () {
-        btn.style.setProperty('background-color', accentHover, 'important');
+        btn.style.setProperty('background-color', isDark ? '#46487d' : 'var(--booadmin-accent-hover)', 'important');
     });
     btn.addEventListener('mouseleave', function () {
-        btn.style.setProperty('background-color', accent, 'important');
+        btn.style.setProperty('background-color', isDark ? '#3a3c6e' : 'var(--booadmin-accent)', 'important');
     });
 });
 </script>

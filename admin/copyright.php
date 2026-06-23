@@ -13,7 +13,7 @@
             <div class="booadmin-copyright-popup" id="booadminCopyrightPopup">
                 <button class="close-btn" onclick="closePopup(); event.stopPropagation();">&times;</button>
                 <h3>关于 BooAdmin</h3>
-                <div class="version">版本 1.2.1</div>
+                <div class="version">版本 1.2.2</div>
                 <div class="content">
                     <div class="left">
                         <p class="main-copy"><strong>BooAdmin 是免费开源项目。</strong>BooAdmin 的开源维护、CDN资源分发与新功能更新都离不开您的捐助。您的支持将帮助我覆盖以下成本：</p>

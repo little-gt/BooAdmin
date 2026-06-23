@@ -3498,7 +3498,7 @@ button:not(.view-toggle button),.btn:not(.view-toggle button),a.btn {
 /* 通知卡片 */
 .typecho-notification {
 	pointer-events:all;
-	background:#ffffff;
+	background:var(--booadmin-surface);
 	border:1px solid var(--booadmin-border);
 	box-shadow:none;
 	padding:14px 16px;
@@ -3702,7 +3702,7 @@ button:not(.view-toggle button),.btn:not(.view-toggle button),a.btn {
 	display:flex;
 	align-items:center;
 	justify-content:space-between;
-	background:rgb(249 250 251 / 0.5);
+	background:var(--booadmin-surface-muted);
 	border-bottom:1px solid var(--booadmin-border);
 }
 
@@ -3722,7 +3722,7 @@ button:not(.view-toggle button),.btn:not(.view-toggle button),a.btn {
 	align-items:center;
 	font-size:12px;
 	font-weight:500;
-	color:#374151;
+	color:var(--booadmin-muted);
 	background:var(--booadmin-surface);
 	border:1px solid var(--booadmin-border-strong);
 }
