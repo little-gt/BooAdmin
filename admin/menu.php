@@ -158,18 +158,20 @@ $isPluginPage = (strpos($_SERVER['REQUEST_URI'], 'extending.php') !== false);
         </ul>
     </nav>
 
-    <div class="p-4 border-t border-gray-100 bg-white">
-        <div class="flex items-center group cursor-pointer hover:bg-gray-50 p-2 transition-colors">
-            <?php echo getAvatar($user->mail, $user->screenName, 36, 'user-avatar'); ?>
-            <div class="ml-3 overflow-hidden sidebar-text">
+    <div class="p-3 md:p-4 border-t border-gray-100 bg-white">
+        <div class="flex items-center group cursor-pointer hover:bg-gray-50 p-2 transition-colors gap-2 md:gap-0">
+            <div class="flex-shrink-0">
+                <?php echo getAvatar($user->mail, $user->screenName, 32, 'user-avatar md:w-9 md:h-9'); ?>
+            </div>
+            <div class="ml-2 md:ml-3 overflow-hidden min-w-0 flex-1 sidebar-text">
                 <p class="text-sm font-semibold text-gray-800 truncate"><a href="<?php $options->adminUrl('profile.php'); ?>"><?php $user->screenName(); ?></a></p>
                 <p class="text-xs text-gray-500 truncate"><?php echo $user->group; ?></p>
             </div>
             <!-- Plugin Injection Point -->
-            <span class="ml-auto flex items-center space-x-2">
+            <span class="flex items-center space-x-1 md:space-x-2 flex-shrink-0">
                 <?php \Typecho\Plugin::factory('admin/menu.php')->call('navBar'); ?>
-                <a href="<?php $options->logoutUrl(); ?>" class="text-gray-400 hover:text-red-500 sidebar-text p-2 hover:bg-red-50 transition-colors" title="<?php _e('登出'); ?>">
-                    <i class="fas fa-sign-out-alt"></i>
+                <a href="<?php $options->logoutUrl(); ?>" class="text-gray-400 hover:text-red-500 sidebar-text p-1.5 md:p-2 hover:bg-red-50 transition-colors" title="<?php _e('登出'); ?>">
+                    <i class="fas fa-sign-out-alt text-sm md:text-base"></i>
                 </a>
             </span>
         </div>
