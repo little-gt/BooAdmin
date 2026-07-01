@@ -216,9 +216,11 @@ $(document).ready(function() {
             if (isImage) {
                 // 显示图片预览
                 showImagePreview(url, title, function() {
-                    Typecho.insertFileToEditor(title, url, isImage);
+                    // 图片预览后直接插入，跳过对话框
+                    Typecho.insertFileToEditor(title, url, isImage, true);
                 });
             } else {
+                // 非图片文件使用原有逻辑
                 Typecho.insertFileToEditor(title, url, isImage);
             }
             return false;
@@ -227,55 +229,71 @@ $(document).ready(function() {
 
     // 显示图片预览模态框
     function showImagePreview(url, title, callback) {
-        // 检查是否已存在预览模态框
-        var previewModal = $('#image-preview-modal');
-        if (previewModal.length === 0) {
-            // 创建预览模态框
-            previewModal = $('<div id="image-preview-modal" class="fixed inset-0 bg-black bg-opacity-75 z-50 flex items-center justify-center p-4"></div>')
-                .appendTo('body')
-                .click(function(e) {
-                    if ($(e.target).is('#image-preview-modal')) {
-                        previewModal.remove();
-                    }
-                });
-            
-            var modalContent = $('<div class="bg-white max-w-4xl w-full max-h-[90vh] flex flex-col"></div>')
-                .appendTo(previewModal);
-            
-            // 模态框内容
-            var modalBody = $('<div class="flex-1 flex items-center justify-center p-4 overflow-auto"></div>')
-                .appendTo(modalContent);
-            
-            $('<img src="' + url + '" class="max-w-full max-h-[70vh] object-contain" alt="' + title + '">')
-                .appendTo(modalBody);
-            
-            // 模态框底部
-            var modalFooter = $('<div class="p-4 flex justify-between items-center"></div>')
-                .appendTo(modalContent);
-            
-            // 原始图片URL显示框
-            var urlContainer = $('<div class="flex-1 mr-4"></div>')
-                .appendTo(modalFooter);
-            
-            $('<input type="text" value="' + url + '" class="w-full px-3 py-2 bg-gray-100 border border-gray-300 text-sm text-gray-800 focus:outline-none" readonly>')
-                .appendTo(urlContainer);
-            
-            var buttonContainer = $('<div class="flex space-x-2"></div>')
-                .appendTo(modalFooter);
-            
-            $('<button class="px-4 py-2 bg-gray-200 text-gray-800 hover:bg-gray-300 focus:outline-none">取消</button>')
-                .click(function() {
+        // 移除已存在的预览模态框
+        $('#image-preview-modal').remove();
+        
+        // 创建预览模态框
+        var previewModal = $('<div id="image-preview-modal" class="fixed inset-0 bg-black bg-opacity-75 z-50 flex items-center justify-center p-4"></div>')
+            .appendTo('body')
+            .click(function(e) {
+                if ($(e.target).is('#image-preview-modal')) {
                     previewModal.remove();
-                })
-                .appendTo(buttonContainer);
-            
-            $('<button class="px-4 py-2 bg-discord-accent text-white hover:bg-blue-600 focus:outline-none">插入图片</button>')
-                .click(function() {
-                    previewModal.remove();
-                    callback();
-                })
-                .appendTo(buttonContainer);
-        }
+                }
+            });
+        
+        var modalContent = $('<div class="bg-white max-w-4xl w-full max-h-[90vh] flex flex-col shadow-xl"></div>')
+            .appendTo(previewModal);
+        
+        // 模态框头部
+        var modalHeader = $('<div class="px-6 py-4 border-b border-gray-200 flex items-center justify-between"></div>')
+            .appendTo(modalContent);
+        
+        $('<h3 class="text-lg font-bold text-discord-text"><?php _e('图片预览'); ?></h3>')
+            .appendTo(modalHeader);
+        
+        $('<button class="text-gray-400 hover:text-gray-600 transition-colors" title="<?php _e('关闭'); ?>"><i class="fas fa-times"></i></button>')
+            .click(function() {
+                previewModal.remove();
+            })
+            .appendTo(modalHeader);
+        
+        // 模态框内容
+        var modalBody = $('<div class="flex-1 flex items-center justify-center p-6 overflow-auto bg-gray-50"></div>')
+            .appendTo(modalContent);
+        
+        $('<img src="' + url + '" class="max-w-full max-h-[60vh] object-contain shadow-sm" alt="' + title + '">')
+            .appendTo(modalBody);
+        
+        // 模态框底部
+        var modalFooter = $('<div class="px-6 py-4 border-t border-gray-200 bg-white"></div>')
+            .appendTo(modalContent);
+        
+        var footerContent = $('<div class="flex items-center justify-between"></div>')
+            .appendTo(modalFooter);
+        
+        // 图片URL显示框
+        var urlContainer = $('<div class="flex-1 mr-4"></div>')
+            .appendTo(footerContent);
+        
+        $('<input type="text" value="' + url + '" class="w-full px-3 py-2 bg-gray-100 border border-gray-300 text-sm text-gray-800 focus:outline-none" readonly>')
+            .appendTo(urlContainer);
+        
+        // 按钮组
+        var buttonContainer = $('<div class="flex space-x-3"></div>')
+            .appendTo(footerContent);
+        
+        $('<button class="px-4 py-2 bg-gray-200 text-discord-text hover:bg-gray-300 transition-colors text-sm font-medium"><?php _e('取消'); ?></button>')
+            .click(function() {
+                previewModal.remove();
+            })
+            .appendTo(buttonContainer);
+        
+        $('<button class="px-4 py-2 bg-discord-accent text-white hover:bg-blue-600 transition-colors text-sm font-medium"><?php _e('插入图片'); ?></button>')
+            .click(function() {
+                previewModal.remove();
+                callback();
+            })
+            .appendTo(buttonContainer);
     }
 
     // File delete confirmation modal
