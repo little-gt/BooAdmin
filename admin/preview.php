@@ -369,7 +369,38 @@ if ($previewMode === 'print') {
             .post-meta { font-size: 8.5pt !important; color: #888 !important; }
             .post-content { padding: 0 !important; }
             img { border: 0.5pt solid #ccc !important; }
-            table { page-break-inside: auto; }
+
+            /* 表格打印优化 */
+            .table-wrap { overflow: visible !important; }
+            .post-content table,
+            .post-content .table-wrap table {
+                display: table !important;
+                width: 100% !important;
+                overflow: visible !important;
+                page-break-inside: auto;
+                border-collapse: collapse;
+            }
+            .post-content th,
+            .post-content td {
+                overflow: visible !important;
+                white-space: normal !important;
+                word-wrap: break-word;
+                overflow-wrap: break-word;
+            }
+
+            /* 公式打印优化 */
+            .post-content .katex-display {
+                overflow: visible !important;
+                overflow-x: visible !important;
+                white-space: normal !important;
+            }
+            .post-content .katex-display > .katex {
+                white-space: normal !important;
+            }
+            .post-content .katex {
+                font-size: 1em !important;
+            }
+
             iframe, video { display: none !important; }
             a[href]::after { content: " (" attr(href) ")"; font-size: 0.75em; color: #aaa; word-break: break-all; }
             a[href^="#"]::after, a[href^="javascript"]::after, a[href^="data:"]::after { content: none; }

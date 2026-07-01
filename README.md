@@ -4,7 +4,7 @@
 
 一款使用 TailwindCSS 精心重构的 Typecho 现代化后台主题。完全支持 Typecho 1.3.0，采用 GARFIELDTOM'S NEST CDN 进行资源加速分发，提供稳定且高效的加载体验。
 
-![BooAdmin](https://img.shields.io/badge/BooAdmin-v1.2.2-blue?style=for-the-badge)
+![BooAdmin](https://img.shields.io/badge/BooAdmin-v1.2.3-blue?style=for-the-badge)
 ![License](https://img.shields.io/badge/License-GPLv3-blue?style=for-the-badge)
 ![LTS](https://img.shields.io/badge/Status-LTS%20Stable-blue?style=for-the-badge)
 
@@ -124,17 +124,13 @@
 
 ---
 
-## 🚀 v1.2.2 版本更新速递
+## 🚀 v1.2.3 版本更新速递
 
 ### 🎨 样式架构
 
-* **暗色模式全面升级**：将原有蓝调暗色设计重构为纯黑背景的黑色模式，采用中性色板，视觉更舒适。
-* **暗色颜色覆盖适配**：统一优化所有组件在暗色模式下的配色，降低饱和度，避免刺眼感。
-* **预览模式增强**：
-  - 新增**原生预览**与**打印预览**双模式切换，默认使用原生预览。
-  - 新增打印按钮，打印预览模式下可用，原生模式下禁用。
-  - 工具栏去除阴影背景，风格更简洁。
-  - 打印输出强制白底黑字，确保暗色模式下打印效果清晰。
+* **预览打印增强**：打印表格和公式时，过长的内容会自动适配，避免出现滚动条等显示问题。
+* **移动菜单优化**：优化头像区域在移动端的展示效果，避免遮挡内容。
+* **图片插入修复**：修复了插入图片时，重复弹出确认弹窗的问题，现直接插入图片到编辑器。
 
 ### 🛠️ 内核质量
 

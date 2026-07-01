@@ -293,7 +293,26 @@ $(document).ready(function () {
         const imageButton = $('#wmd-image-button'),
             linkButton = $('#wmd-link-button');
 
-        Typecho.insertFileToEditor = function (file, url, isImage) {
+        Typecho.insertFileToEditor = function (file, url, isImage, skipDialog) {
+            // 如果 skipDialog 为 true，直接插入，不弹出对话框
+            if (skipDialog) {
+                const sel = textarea.getSelection(),
+                    markdown = isImage ? '![' + file + '](' + url + ')' : '[' + file + '](' + url + ')',
+                    offset = (sel ? sel.start : 0) + markdown.length;
+
+                // 保存当前滚动位置
+                const scrollTop = textarea.scrollTop();
+
+                textarea.replaceSelection(markdown);
+                textarea.setSelection(offset, offset);
+                textarea.trigger('input');
+
+                // 恢复滚动位置
+                textarea.scrollTop(scrollTop);
+                return;
+            }
+
+            // 否则使用原有逻辑（弹出对话框）
             const button = isImage ? imageButton : linkButton;
 
             options.strings[isImage ? 'imagename' : 'linkname'] = file;
