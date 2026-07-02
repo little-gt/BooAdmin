@@ -4,7 +4,7 @@
 
 一款使用 TailwindCSS 精心重构的 Typecho 现代化后台主题。完全支持 Typecho 1.3.0，采用 GARFIELDTOM'S NEST CDN 进行资源加速分发，提供稳定且高效的加载体验。
 
-![BooAdmin](https://img.shields.io/badge/BooAdmin-v1.2.3-blue?style=for-the-badge)
+![BooAdmin](https://img.shields.io/badge/BooAdmin-v1.2.4-blue?style=for-the-badge)
 ![License](https://img.shields.io/badge/License-GPLv3-blue?style=for-the-badge)
 ![LTS](https://img.shields.io/badge/Status-LTS%20Stable-blue?style=for-the-badge)
 
@@ -21,9 +21,9 @@
 
 | 项目 | 类型 | 国内地址 | 国际地址 |
 | ---- | ---- | ---- | ---- |
-| BooAdmin | 后台主题 | https://cnb.cool/little-gt/BooAdmin | https://github.com/little-gt/THEME-BooAdmin |
-| Passkey | 配套插件 | https://cnb.cool/little-gt/Passkey | https://github.com/little-gt/PLUGION-Passkey |
-| Passport | 配套插件 | https://cnb.cool/little-gt/Passport | https://github.com/little-gt/PLUGION-Passport |
+| BooAdmin | 后台主题 | https://cnb.cool/little-gt/BooAdmin | https://github.com/little-gt/BooAdmin |
+| Passkey | 配套插件 | https://cnb.cool/little-gt/Passkey | https://github.com/little-gt/Passkey |
+| Passport | 配套插件 | https://cnb.cool/little-gt/Passport | https://github.com/little-gt/Passport |
 
 ---
 
@@ -124,17 +124,11 @@
 
 ---
 
-## 🚀 v1.2.3 版本更新速递
+## 🚀 v1.2.4 版本更新速递
 
-### 🎨 样式架构
+### 🔧 生命周期信息更新
 
-* **预览打印增强**：打印表格和公式时，过长的内容会自动适配，避免出现滚动条等显示问题。
-* **移动菜单优化**：优化头像区域在移动端的展示效果，避免遮挡内容。
-* **图片插入修复**：修复了插入图片时，重复弹出确认弹窗的问题，现直接插入图片到编辑器。
-
-### 🛠️ 内核质量
-
-* 升级了 `editor-js` 模块，使得边写边预览功能支持解析 LaTex 公式。
+累积更新已经无法兼容 1.2.3 版本，建议升级到 1.2.4 版本。
 
 ### 🔧 对 Typecho.js 修正的说明
 
