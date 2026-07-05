@@ -9,7 +9,7 @@
         <span><?php _e('由 <a href="https://typecho.org" class="hover:text-discord-accent" target="_blank" rel="noopener">%s</a> 驱动, 版本 %s', $options->software, $options->version); ?></span>
         <span class="mx-2 text-gray-300">&bull;</span>
         <span>Theme by <span class="booadmin-copyright-tooltip">
-            <a href="https://github.com/little-gt/THEME-BooAdmin" class="font-medium hover:text-discord-accent transition-colors" target="_blank" rel="noopener">BooAdmin</a>
+            <a href="https://github.com/little-gt/BooAdmin" class="font-medium hover:text-discord-accent transition-colors" target="_blank" rel="noopener">BooAdmin</a>
             <div class="booadmin-copyright-popup" id="booadminCopyrightPopup">
                 <button class="close-btn" onclick="closePopup(); event.stopPropagation();">&times;</button>
                 <h3>关于 BooAdmin</h3>
@@ -22,7 +22,7 @@
                             <li><strong>服务运行成本：</strong>提供静态资源分发、国际/国内线路与 IPv6 优化保障。</li>
                         </ul>
                         <div class="action">
-                            <a href="https://github.com/little-gt/THEME-BooAdmin" target="_blank" rel="noopener">访问 GitHub 开源项目</a>
+                            <a href="https://github.com/little-gt/BooAdmin" target="_blank" rel="noopener">访问 GitHub 开源项目</a>
                             <a href="https://cnb.cool/little-gt/BooAdmin/" class="secondary" target="_blank" rel="noopener">国内仓库</a>
                         </div>
                     </div>

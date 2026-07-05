@@ -39,26 +39,6 @@ BooAdmin 通过 [GARFIELDTOM'S NEST CDN](https://cdn.garfieldtom.cool) 加速分
 - 危害评估与复现步骤
 - PoC 代码与环境信息（PHP/Typecho版本）
 
-<details>
-<summary><b>点击展开：邮件示例</b></summary>
-
-**标题**: `[Security] BooAdmin - 存储型 XSS 漏洞 - 版本 1.2.0`
-
-**正文**:
-```
-影响版本: v1.1.18
-漏洞类型: 存储型 XSS
-复现步骤: 
-  1. 登录后台
-  2. 提交评论 <script>alert(1)</script>
-  3. 访问文章管理页触发
-PoC: <img src=x onerror=alert('XSS')>
-危害: 可窃取管理员 Cookie
-
-致谢ID: Security-Hunter（可选）
-```
-</details>
-
 ---
 
 ## 🎯 范围流程

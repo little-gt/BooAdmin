@@ -64,7 +64,7 @@ include 'header.php';
                         <?php _e('未安装找回密码插件？试试开源的 Passport 插件吧。'); ?> 
                         <a href="https://cnb.cool/little-gt/Passport" target="_blank" class="text-discord-accent hover:underline"><?php _e('国内下载'); ?></a>
                         <span class="text-gray-300 mx-1">|</span>
-                        <a href="https://github.com/little-gt/PLUGION-Passport" target="_blank" class="text-discord-accent hover:underline"><?php _e('GitHub'); ?></a>
+                        <a href="https://github.com/little-gt/Passport" target="_blank" class="text-discord-accent hover:underline"><?php _e('GitHub'); ?></a>
                     </p>
                     <?php endif; ?>
                 </div>
@@ -133,7 +133,7 @@ include 'header.php';
                     <div class="flex gap-2 text-xs">
                         <a href="https://cnb.cool/little-gt/Passkey" target="_blank" rel="noopener noreferrer" class="hover:underline" style="color: var(--booadmin-link);"><?php _e('国内下载'); ?></a>
                         <span style="color: var(--booadmin-border-strong);">|</span>
-                        <a href="https://github.com/little-gt/PLUGION-Passkey" target="_blank" rel="noopener noreferrer" class="hover:underline" style="color: var(--booadmin-link);"><?php _e('GitHub'); ?></a>
+                        <a href="https://github.com/little-gt/Passkey" target="_blank" rel="noopener noreferrer" class="hover:underline" style="color: var(--booadmin-link);"><?php _e('GitHub'); ?></a>
                     </div>
                 </div>
             </div>

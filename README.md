@@ -147,7 +147,7 @@
 
 ### 全新安装
 
-1. 下载 [最新 Release 版本](https://github.com/little-gt/THEME-BooAdmin/releases)。
+1. 下载 [最新 Release 版本](https://github.com/little-gt/BooAdmin/releases)。
 2. 解压压缩包。
 3. 将解压得到的 `admin` 文件夹上传至您的 Typecho 网站根目录，**覆盖**原有的 `admin` 目录。
 4. 登录后台，享受全新的 BooAdmin。
@@ -188,7 +188,7 @@
 
 如果您在使用过程中遇到任何问题，或有更好的建议：
 
-1. 欢迎提交 [Issues](https://github.com/little-gt/THEME-BooAdmin/issues) 反馈 Bug。
+1. 欢迎提交 [Issues](https://github.com/little-gt/BooAdmin/issues) 反馈 Bug。
 2. 欢迎提交 Pull Requests 贡献代码。
 3. 如果喜欢这个主题，请点亮右上角的 ⭐ **Star** 支持作者。
 
