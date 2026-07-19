@@ -47,9 +47,9 @@ foreach ($menuConfig as $label => $items) {
 $visibleMenu = array_filter($visibleMenu);
 
 // 是否处于拓展页面
-$isPluginPage = (strpos($_SERVER['REQUEST_URI'], 'extending.php') !== false);
+$isExtendPage = (strpos($_SERVER['REQUEST_URI'], 'extending.php') !== false);
 ?>
-<?php if(!$isPluginPage): ?>
+<?php if(!$isExtendPage): ?>
 <!-- Sidebar -->
 <aside class="w-64 bg-white border-r border-gray-200 flex-shrink-0 flex flex-col transition-all duration-300 transform md:translate-x-0 fixed md:relative z-20 h-full" id="sidebar">
     <div class="h-16 flex items-center justify-between px-6 border-b border-gray-100 bg-white">
@@ -266,31 +266,31 @@ document.addEventListener('DOMContentLoaded', function() {
 </script>
 <?php endif; ?>
 
-<?php if($isPluginPage): ?>
-<!-- Plugin page banner -->
-<div class="plugin-banner">
-    <div class="plugin-banner-content">
-        <?php echo getAvatar($user->mail, $user->screenName, 40, 'plugin-banner-avatar'); ?>
-        <div class="plugin-banner-text">
-            <div class="plugin-banner-username"><?php $user->screenName(); ?></div>
-            <div class="plugin-banner-role"><?php echo $user->group; ?></div>
-        </div>
+<?php if($isExtendPage): ?>
+<!-- Extend page top bar -->
+<header class="extend-topbar h-16 flex items-center justify-between px-6 z-10 fixed top-0 left-0 right-0">
+    <div class="flex items-center">
+        <a href="<?php $options->adminUrl('index.php'); ?>" class="extend-topbar-back" title="<?php _e('返回控制台'); ?>">
+            <i class="fas fa-arrow-left"></i>
+        </a>
+        <span class="extend-topbar-divider"></span>
+        <h1 class="extend-topbar-title"><?php echo htmlspecialchars($title ?: 'BooAdmin'); ?></h1>
     </div>
-    <div class="plugin-banner-actions">
-        <a href="<?php $options->adminUrl('index.php'); ?>" class="plugin-banner-button primary">
-            <i class="fas fa-arrow-left mr-1"></i>
-            <?php _e('返回控制台'); ?>
+    <div class="flex items-center gap-3">
+        <div class="extend-topbar-user">
+            <?php echo getAvatar($user->mail, $user->screenName, 28, 'extend-topbar-avatar'); ?>
+            <div class="extend-topbar-user-info">
+                <span class="extend-topbar-username"><?php $user->screenName(); ?></span>
+                <span class="extend-topbar-role"><?php echo $user->group; ?></span>
+            </div>
+        </div>
+        <a href="<?php $options->logoutUrl(); ?>" class="extend-topbar-logout" title="<?php _e('登出'); ?>">
+            <i class="fas fa-sign-out-alt"></i>
         </a>
     </div>
-</div>
+</header>
 <script>
-// 添加插件页面的 body 类
-document.body.classList.add('has-plugin-banner');
-
-// 调整主内容区域的左边距，因为侧边栏已经隐藏
-if (window.innerWidth >= 768) {
-    document.querySelector('main').style.marginLeft = '0';
-}
+document.body.classList.add('has-extend-topbar');
 </script>
 <?php endif; ?>
 

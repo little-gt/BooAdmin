@@ -2,7 +2,7 @@
 
 > BooAdmin 是一个完全开源、未压缩加密的 Typecho 后台主题，代码透明可审计。如发现安全问题，您可以根据本安全策略的说明进行处理，并且通知 BooAdmin 的开发者。
 
-![BooAdmin](https://img.shields.io/badge/BooAdmin-v1.2.4-blue?style=for-the-badge)
+![BooAdmin](https://img.shields.io/badge/BooAdmin-v1.2.5-blue?style=for-the-badge)
 ![License](https://img.shields.io/badge/License-GPLv3-blue?style=for-the-badge)
 
 ---
@@ -11,10 +11,10 @@
 
 | 版本 | 状态 | 说明 |
 | :--- | :---: | :--- |
-| **v1.2.4** | ✅ 支持 | 当前主分支，持续接收安全更新 |
-| **v1.2.3 系列** | ❌ EOL | 已抵达生命周期，停止维护，请升级至 v1.2.4 及更高 |
-| **v1.1.x 系列** | ❌ EOL | 已抵达生命周期，停止维护，请升级至 v1.2.4 及更高 |
-| **v1.0.x 系列** | ❌ EOL | 已抵达生命周期，停止维护，请升级至 v1.2.4 及更高 |
+| **v1.3.0 系列** | ✅ 支持 | 当前主分支，持续接收安全更新 |
+| **v1.2.3 系列** | ❌ EOL | 已抵达生命周期，停止维护，请升级至 v1.3.0 及更高 |
+| **v1.1.x 系列** | ❌ EOL | 已抵达生命周期，停止维护，请升级至 v1.3.0 及更高 |
+| **v1.0.x 系列** | ❌ EOL | 已抵达生命周期，停止维护，请升级至 v1.3.0 及更高 |
 
 ---
 
@@ -38,26 +38,6 @@ BooAdmin 通过 [GARFIELDTOM'S NEST CDN](https://cdn.garfieldtom.cool) 加速分
 - 影响版本与漏洞类型（XSS/CSRF/SQL注入等）
 - 危害评估与复现步骤
 - PoC 代码与环境信息（PHP/Typecho版本）
-
-<details>
-<summary><b>点击展开：邮件示例</b></summary>
-
-**标题**: `[Security] BooAdmin - 存储型 XSS 漏洞 - 版本 1.2.0`
-
-**正文**:
-```
-影响版本: v1.1.18
-漏洞类型: 存储型 XSS
-复现步骤: 
-  1. 登录后台
-  2. 提交评论 <script>alert(1)</script>
-  3. 访问文章管理页触发
-PoC: <img src=x onerror=alert('XSS')>
-危害: 可窃取管理员 Cookie
-
-致谢ID: Security-Hunter（可选）
-```
-</details>
 
 ---
 

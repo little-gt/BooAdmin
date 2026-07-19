@@ -55,7 +55,7 @@ include 'menu.php';
                                 </div>
                                 <div class="flex items-center gap-2 text-xs shrink-0">
                                     <a href="https://cnb.cool/little-gt/Passkey" target="_blank" class="px-2 py-1 border hover:opacity-80 transition-opacity whitespace-nowrap" style="color: var(--booadmin-link); border-color: var(--booadmin-border); background-color: var(--booadmin-bg);"><?php _e('国内下载'); ?></a>
-                                    <a href="https://github.com/little-gt/PLUGION-Passkey" target="_blank" class="px-2 py-1 border hover:opacity-80 transition-opacity whitespace-nowrap" style="color: var(--booadmin-link); border-color: var(--booadmin-border); background-color: var(--booadmin-bg);"><?php _e('GitHub'); ?></a>
+                                    <a href="https://github.com/little-gt/Passkey" target="_blank" class="px-2 py-1 border hover:opacity-80 transition-opacity whitespace-nowrap" style="color: var(--booadmin-link); border-color: var(--booadmin-border); background-color: var(--booadmin-bg);"><?php _e('GitHub'); ?></a>
                                 </div>
                             </div>
                             <?php endif; ?>
@@ -67,7 +67,7 @@ include 'menu.php';
                                 </div>
                                 <div class="flex items-center gap-2 text-xs shrink-0">
                                     <a href="https://cnb.cool/little-gt/Passport" target="_blank" class="px-2 py-1 border hover:opacity-80 transition-opacity whitespace-nowrap" style="color: var(--booadmin-link); border-color: var(--booadmin-border); background-color: var(--booadmin-bg);"><?php _e('国内下载'); ?></a>
-                                    <a href="https://github.com/little-gt/PLUGION-Passport" target="_blank" class="px-2 py-1 border hover:opacity-80 transition-opacity whitespace-nowrap" style="color: var(--booadmin-link); border-color: var(--booadmin-border); background-color: var(--booadmin-bg);"><?php _e('GitHub'); ?></a>
+                                    <a href="https://github.com/little-gt/Passport" target="_blank" class="px-2 py-1 border hover:opacity-80 transition-opacity whitespace-nowrap" style="color: var(--booadmin-link); border-color: var(--booadmin-border); background-color: var(--booadmin-bg);"><?php _e('GitHub'); ?></a>
                                 </div>
                             </div>
                             <?php endif; ?>

@@ -5,14 +5,14 @@ if (!defined('__TYPECHO_ADMIN__')) {
 
 $header = '
 <!-- CSS Reset & Grid -->
-<link rel="stylesheet" href="' . $options->adminStaticUrl('css', 'normalize.css?v=1.2.4', true) . '">
-<link rel="stylesheet" href="' . $options->adminStaticUrl('css', 'grid.css?v=1.2.4', true) . '">
+<link rel="stylesheet" href="' . $options->adminStaticUrl('css', 'normalize.css?v=1.3.0', true) . '">
+<link rel="stylesheet" href="' . $options->adminStaticUrl('css', 'grid.css?v=1.3.0', true) . '">
 <!-- Theme Variables -->
-<link rel="stylesheet" href="' . $options->adminStaticUrl('css', 'light.css?v=1.2.4', true) . '">
-<link rel="stylesheet" href="' . $options->adminStaticUrl('css', 'dark.css?v=1.2.4', true) . '">
+<link rel="stylesheet" href="' . $options->adminStaticUrl('css', 'light.css?v=1.3.0', true) . '">
+<link rel="stylesheet" href="' . $options->adminStaticUrl('css', 'dark.css?v=1.3.0', true) . '">    
 <!-- Component Styles -->
-<link rel="stylesheet" href="' . $options->adminStaticUrl('css', 'style.css?v=1.2.4', true) . '">
-<link rel="stylesheet" href="' . $options->adminStaticUrl('css', 'nprogress.css?v=1.2.4', true) . '">
+<link rel="stylesheet" href="' . $options->adminStaticUrl('css', 'style.css?v=1.3.0', true) . '">
+<link rel="stylesheet" href="' . $options->adminStaticUrl('css', 'nprogress.css?v=1.3.0', true) . '">
 <!-- NProgress -->
 <script src="' . $options->adminStaticUrl('js', 'nprogress.js', true) . '"></script>
 <!-- TailwindCSS -->

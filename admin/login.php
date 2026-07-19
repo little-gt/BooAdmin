@@ -59,14 +59,7 @@ include 'header.php';
                         </div>
                     </div>
                     <input type="password" id="password" name="password" class="w-full px-4 py-3 bg-gray-50 border border-gray-200 text-gray-900 focus:outline-none focus:ring-2 focus:ring-discord-accent/50 focus:border-discord-accent transition-all" required placeholder="<?php _e('请输入密码'); ?>" />
-                    <?php if (!$hasPassport): ?>
-                    <p class="mt-2 text-xs text-gray-400">
-                        <?php _e('未安装找回密码插件？试试开源的 Passport 插件吧。'); ?> 
-                        <a href="https://cnb.cool/little-gt/Passport" target="_blank" class="text-discord-accent hover:underline"><?php _e('国内下载'); ?></a>
-                        <span class="text-gray-300 mx-1">|</span>
-                        <a href="https://github.com/little-gt/PLUGION-Passport" target="_blank" class="text-discord-accent hover:underline"><?php _e('GitHub'); ?></a>
-                    </p>
-                    <?php endif; ?>
+
                 </div>
                 <div class="flex items-center">
                     <input id="remember" name="remember" type="checkbox" value="1" class="h-4 w-4 text-discord-accent focus:ring-discord-accent border-gray-300">
@@ -118,25 +111,6 @@ include 'header.php';
                 });
             });
             </script>
-            <?php else: ?>
-            <!-- Passkey 插件未安装提示 -->
-            <div class="flex items-start gap-3 p-4 border text-sm" style="background-color: var(--booadmin-warning-bg); border-color: var(--booadmin-border); color: var(--booadmin-warning-text);">
-                <!-- 警告图标 -->
-                <svg class="flex-shrink-0 mt-0.5" style="color: var(--booadmin-warning);" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                    <circle cx="12" cy="12" r="10"/>
-                    <line x1="12" y1="8" x2="12" y2="12"/>
-                    <line x1="12" y1="16" x2="12.01" y2="16"/>
-                </svg>
-                <div>
-                    <p class="font-medium mb-1" style="color: var(--booadmin-warning);"><?php _e('未检测到 Passkey 插件'); ?></p>
-                    <p class="mb-2" style="color: var(--booadmin-muted);"><?php _e('Passkey 是开源免费的通行密钥插件，符合 IEEE 安全标准，可实现无密码快速登录。'); ?></p>
-                    <div class="flex gap-2 text-xs">
-                        <a href="https://cnb.cool/little-gt/Passkey" target="_blank" rel="noopener noreferrer" class="hover:underline" style="color: var(--booadmin-link);"><?php _e('国内下载'); ?></a>
-                        <span style="color: var(--booadmin-border-strong);">|</span>
-                        <a href="https://github.com/little-gt/PLUGION-Passkey" target="_blank" rel="noopener noreferrer" class="hover:underline" style="color: var(--booadmin-link);"><?php _e('GitHub'); ?></a>
-                    </div>
-                </div>
-            </div>
             <?php endif; ?>
 
             <?php if ($options->allowRegister): ?>
