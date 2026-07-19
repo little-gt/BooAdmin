@@ -173,14 +173,6 @@
     --booadmin-spinner-border: rgba(0, 0, 0, 0.1);
 
     /* ========================================
-     * 插件横幅 - Plugin Banner
-     * ======================================== */
-    --booadmin-banner-avatar-border: rgba(255, 255, 255, 0.3);
-    --booadmin-banner-btn-bg: rgba(255, 255, 255, 0.2);
-    --booadmin-banner-btn-hover: rgba(255, 255, 255, 0.3);
-    --booadmin-banner-primary-bg: rgba(255, 255, 255, 0.9);
-
-    /* ========================================
      * 设置标签页 - Settings Tabs (Mobile)
      * ======================================== */
     --booadmin-tabs-fade-mask: rgba(255, 255, 255, 0.95);

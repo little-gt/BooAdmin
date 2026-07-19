@@ -2698,79 +2698,83 @@ main.write-screen #wmd-preview td a {
 	margin-top:auto;
 	/* Push to bottom when content is short */
 }
-/* Plugin page banner */
-.plugin-banner {
-	position:fixed;
-	bottom:0;
-	left:0;
-	right:0;
-	background:linear-gradient(135deg,var(--booadmin-accent) 0%,var(--booadmin-accent-hover) 100%);
-	color:var(--booadmin-on-accent);
-	padding:1rem 2rem;
-	display:flex;
-	align-items:center;
-	justify-content:space-between;
-	border-top:1px solid var(--booadmin-border);
-	z-index:100;
-	transition:all 0.3s ease;
-	border-radius:0;
+/* Extend page top bar */
+.extend-topbar {
+	background:var(--booadmin-surface);
+	border-bottom:1px solid var(--booadmin-border);
 }
-.plugin-banner-content {
-	display:flex;
+.extend-topbar-back {
+	display:inline-flex;
 	align-items:center;
-	gap:1rem;
-}
-.plugin-banner-avatar {
-	width:2.5rem;
-	height:2.5rem;
+	justify-content:center;
+	width:2rem;
+	height:2rem;
+	color:var(--booadmin-muted);
 	border-radius:50%;
-	border:2px solid var(--booadmin-banner-avatar-border);
-}
-.plugin-banner-text {
-	display:flex;
-	flex-direction:column;
-}
-.plugin-banner-username {
-	font-weight:600;
-	font-size:0.875rem;
-}
-.plugin-banner-role {
-	font-size:0.75rem;
-	opacity:0.9;
-}
-.plugin-banner-actions {
-	display:flex;
-	gap:0.75rem;
-}
-.plugin-banner-button {
-	background:var(--booadmin-banner-btn-bg);
-	color:var(--booadmin-on-accent);
-	padding:0.5rem 1rem;
-	border:none;
-	border-radius:0;
-	font-size:0.875rem;
-	font-weight:500;
-	cursor:pointer;
 	transition:all 0.2s ease;
+}
+.extend-topbar-back:hover {
+	background:var(--booadmin-surface-2);
+	color:var(--booadmin-accent);
+	text-decoration:none;
+}
+.extend-topbar-divider {
+	width:1px;
+	height:1.25rem;
+	background:var(--booadmin-border);
+	margin:0 0.75rem;
+}
+.extend-topbar-title {
+	font-size:1rem;
+	font-weight:700;
+	color:var(--booadmin-text);
+	margin:0;
+}
+.extend-topbar-user {
 	display:flex;
 	align-items:center;
 	gap:0.5rem;
 }
-.plugin-banner-button:hover {
-	background:var(--booadmin-banner-btn-hover);
-	transform:translateY(-1px);
+.extend-topbar-avatar {
+	width:1.75rem;
+	height:1.75rem;
+	border-radius:50%;
+	border:2px solid var(--booadmin-border);
 }
-.plugin-banner-button.primary {
-	background:var(--booadmin-surface);
-	color:var(--booadmin-accent);
-	border-radius:0;
+.extend-topbar-user-info {
+	display:flex;
+	flex-direction:column;
 }
-.plugin-banner-button.primary:hover {
-	background:var(--booadmin-banner-primary-bg);
+.extend-topbar-username {
+	font-size:0.75rem;
+	font-weight:600;
+	color:var(--booadmin-text);
+	line-height:1.3;
 }
-/* Adjust main content for plugin banner */
-.has-plugin-banner main {
-	padding-bottom:5rem;
+.extend-topbar-role {
+	font-size:0.625rem;
+	color:var(--booadmin-muted);
+	line-height:1.3;
+}
+.extend-topbar-logout {
+	display:inline-flex;
+	align-items:center;
+	justify-content:center;
+	width:2rem;
+	height:2rem;
+	color:var(--booadmin-muted);
+	border-radius:50%;
+	transition:all 0.2s ease;
+}
+.extend-topbar-logout:hover {
+	background:var(--booadmin-danger-bg);
+	color:var(--booadmin-danger);
+	text-decoration:none;
+}
+/* Adjust main content for extend top bar */
+.has-extend-topbar main {
+	margin-left:0 !important;
+	padding-top:4rem;
 }
 /* ========================================
    Global Form Styling for Settings Pages

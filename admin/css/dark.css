@@ -171,14 +171,6 @@
         --booadmin-spinner-border: rgba(228, 228, 231, 0.08);
 
         /* ========================================
-         * 插件横幅 - Plugin Banner
-         * ======================================== */
-        --booadmin-banner-avatar-border: rgba(228, 228, 231, 0.2);
-        --booadmin-banner-btn-bg: rgba(228, 228, 231, 0.1);
-        --booadmin-banner-btn-hover: rgba(228, 228, 231, 0.18);
-        --booadmin-banner-primary-bg: rgba(228, 228, 231, 0.95);
-
-        /* ========================================
          * 设置标签页 - Settings Tabs (Mobile)
          * ======================================== */
         --booadmin-tabs-fade-mask: rgba(0, 0, 0, 0.96);
@@ -949,20 +941,20 @@
         color: var(--booadmin-chart-text) !important;
     }
 
-    /* --- 插件横幅 --- */
-    .plugin-banner {
-        background: linear-gradient(135deg, #2a2c50 0%, #3a3c6e 100%) !important;
-        border-top-color: var(--booadmin-border) !important;
+    /* --- 扩展页面顶部栏 --- */
+    .extend-topbar {
+        background: var(--booadmin-surface) !important;
+        border-bottom-color: var(--booadmin-border) !important;
     }
 
-    .plugin-banner-button.primary {
-        background: #1a1a20 !important;
-        color: #9899e3 !important;
-        border: 1px solid var(--booadmin-border) !important;
+    .extend-topbar-back:hover {
+        background: var(--booadmin-surface-2) !important;
+        color: var(--booadmin-accent) !important;
     }
 
-    .plugin-banner-button.primary:hover {
-        background: #24242e !important;
+    .extend-topbar-logout:hover {
+        background: var(--booadmin-danger-bg) !important;
+        color: var(--booadmin-danger) !important;
     }
 
     /* --- 卡片视图 --- */
