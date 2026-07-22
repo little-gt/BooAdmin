@@ -3664,6 +3664,198 @@ button:not(.view-toggle button),.btn:not(.view-toggle button),a.btn {
 }
 
 /* ========================================
+   Stat Cards
+   ======================================== */
+.stat-card {
+	background:var(--booadmin-surface);
+	border:1px solid var(--booadmin-border);
+	position:relative;
+	overflow:hidden;
+}
+.stat-card-gradient-accent {
+	position:absolute;
+	right:0;
+	top:0;
+	height:100%;
+	width:33.333%;
+	background:linear-gradient(to left,var(--booadmin-stat-accent-gradient),transparent);
+	opacity:0;
+	transition:opacity 0.3s ease;
+}
+.stat-card:hover .stat-card-gradient-accent {
+	opacity:1;
+}
+.stat-card-gradient-success {
+	position:absolute;
+	right:0;
+	top:0;
+	height:100%;
+	width:33.333%;
+	background:linear-gradient(to left,var(--booadmin-stat-success-gradient),transparent);
+	opacity:0;
+	transition:opacity 0.3s ease;
+}
+.stat-card:hover .stat-card-gradient-success {
+	opacity:1;
+}
+.stat-card-gradient-warning {
+	position:absolute;
+	right:0;
+	top:0;
+	height:100%;
+	width:33.333%;
+	background:linear-gradient(to left,var(--booadmin-stat-warning-gradient),transparent);
+	opacity:0;
+	transition:opacity 0.3s ease;
+}
+.stat-card:hover .stat-card-gradient-warning {
+	opacity:1;
+}
+.stat-card-gradient-info {
+	position:absolute;
+	right:0;
+	top:0;
+	height:100%;
+	width:33.333%;
+	background:linear-gradient(to left,var(--booadmin-stat-info-gradient),transparent);
+	opacity:0;
+	transition:opacity 0.3s ease;
+}
+.stat-card:hover .stat-card-gradient-info {
+	opacity:1;
+}
+.stat-card-icon-accent,
+.stat-card-icon-success,
+.stat-card-icon-warning,
+.stat-card-icon-info {
+	width:2.5rem;
+	height:2.5rem;
+	flex-shrink:0;
+	display:flex;
+	align-items:center;
+	justify-content:center;
+	border-radius:0;
+}
+.stat-card-icon-accent {
+	background-color:var(--booadmin-stat-accent-icon-bg);
+	color:var(--booadmin-stat-accent-icon);
+}
+.stat-card-icon-success {
+	background-color:var(--booadmin-stat-success-icon-bg);
+	color:var(--booadmin-stat-success-icon);
+}
+.stat-card-icon-warning {
+	background-color:var(--booadmin-stat-warning-icon-bg);
+	color:var(--booadmin-stat-warning-icon);
+}
+.stat-card-icon-info {
+	background-color:var(--booadmin-stat-info-icon-bg);
+	color:var(--booadmin-stat-info-icon);
+}
+.stat-card-value {
+	color:var(--booadmin-text);
+}
+.stat-card-label {
+	color:var(--booadmin-muted);
+}
+.stat-card-trend {
+	color:var(--booadmin-success);
+}
+
+/* ========================================
+   Dashboard Cards
+   ======================================== */
+.dashboard-card {
+	background:var(--booadmin-surface);
+	border:1px solid var(--booadmin-border);
+}
+.dashboard-card-header {
+	border-bottom:1px solid var(--booadmin-border);
+}
+.dashboard-card-title {
+	color:var(--booadmin-text);
+}
+.dashboard-card-subtitle {
+	color:var(--booadmin-muted);
+}
+.dashboard-chart-legend-blue {
+	background-color:var(--booadmin-chart-posts);
+}
+.dashboard-chart-legend-green {
+	background-color:var(--booadmin-chart-comments);
+}
+
+/* ========================================
+   Dashboard Table
+   ======================================== */
+.dashboard-table {
+	background:var(--booadmin-surface);
+}
+.dashboard-table thead {
+	background-color:var(--booadmin-surface-muted);
+}
+.dashboard-table thead th {
+	color:var(--booadmin-muted);
+	border-bottom-color:var(--booadmin-border);
+}
+.dashboard-table tbody td {
+	color:var(--booadmin-text);
+	border-bottom-color:var(--booadmin-border);
+}
+.dashboard-table tbody tr:hover {
+	background-color:var(--booadmin-highlight-soft);
+}
+.dashboard-table .dashboard-table-date {
+	color:var(--booadmin-muted);
+}
+.dashboard-table .dashboard-table-action {
+	color:var(--booadmin-muted);
+}
+.dashboard-table .dashboard-table-action:hover {
+	color:var(--booadmin-accent);
+	background-color:var(--booadmin-highlight-soft);
+}
+
+/* ========================================
+   Dashboard Comments
+   ======================================== */
+.dashboard-comments {
+	background:var(--booadmin-surface);
+	border:1px solid var(--booadmin-border);
+}
+.dashboard-comments-header {
+	border-bottom:1px solid var(--booadmin-border);
+}
+.dashboard-comments-divider {
+	border-bottom-color:var(--booadmin-border);
+}
+.dashboard-comments-item:hover {
+	background-color:var(--booadmin-highlight-soft);
+}
+.dashboard-comments-author {
+	color:var(--booadmin-text);
+}
+.dashboard-comments-date {
+	color:var(--booadmin-muted);
+}
+.dashboard-comments-content {
+	color:var(--booadmin-muted);
+}
+.dashboard-comments-excerpt {
+	background-color:var(--booadmin-surface-muted);
+	border-color:var(--booadmin-border);
+	color:var(--booadmin-text);
+}
+.dashboard-comments-footer {
+	background-color:var(--booadmin-surface-muted);
+	border-top-color:var(--booadmin-border);
+	color:var(--booadmin-muted);
+}
+.dashboard-comments-footer:hover {
+	color:var(--booadmin-accent);
+}
+
+/* ========================================
    Shared Modal Shell
    ======================================== */
 .booadmin-modal {

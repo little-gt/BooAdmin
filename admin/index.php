@@ -89,58 +89,58 @@ $chartComments = json_encode($commentsData);
             <!-- Stats Grid -->
             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
                 <!-- Card 1 -->
-                <div class="bg-white p-6 border border-gray-100 relative overflow-hidden group">
-                    <div class="absolute right-0 top-0 h-full w-1/3 bg-gradient-to-l from-blue-50 to-transparent opacity-0 group-hover:opacity-100 transition-opacity"></div>
+                <div class="stat-card p-6">
+                    <div class="stat-card-gradient-accent"></div>
                     <div class="flex items-center justify-between mb-4 relative z-1">
-                        <h3 class="text-discord-muted font-bold text-xs uppercase tracking-wider"><?php _e('总文章数'); ?></h3>
-                        <div class="w-10 h-10 bg-blue-100 flex items-center justify-center text-blue-500">
+                        <h3 class="stat-card-label font-bold text-xs uppercase tracking-wider"><?php _e('总文章数'); ?></h3>
+                        <div class="stat-card-icon-accent">
                             <i class="fas fa-file-alt text-lg"></i>
                         </div>
                     </div>
-                    <div class="text-3xl font-black text-gray-800 relative z-1"><?php echo $stat->myPublishedPostsNum; ?></div>
-                    <div class="mt-2 text-xs text-green-500 font-bold flex items-center relative z-1">
+                    <div class="text-3xl font-black stat-card-value relative z-1"><?php echo $stat->myPublishedPostsNum; ?></div>
+                    <div class="mt-2 text-xs stat-card-trend font-bold flex items-center relative z-1">
                         <i class="fas fa-arrow-up mr-1"></i> <span><?php _e('持续更新中'); ?></span>
                     </div>
                 </div>
                 <!-- Card 2 -->
-                <div class="bg-white p-6 border border-gray-100 relative overflow-hidden group">
-                    <div class="absolute right-0 top-0 h-full w-1/3 bg-gradient-to-l from-green-50 to-transparent opacity-0 group-hover:opacity-100 transition-opacity"></div>
+                <div class="stat-card p-6">
+                    <div class="stat-card-gradient-success"></div>
                     <div class="flex items-center justify-between mb-4 relative z-1">
-                        <h3 class="text-discord-muted font-bold text-xs uppercase tracking-wider"><?php _e('总评论数'); ?></h3>
-                         <div class="w-10 h-10 bg-green-100 flex items-center justify-center text-green-500">
+                        <h3 class="stat-card-label font-bold text-xs uppercase tracking-wider"><?php _e('总评论数'); ?></h3>
+                         <div class="stat-card-icon-success">
                             <i class="fas fa-comments text-lg"></i>
                         </div>
                     </div>
-                    <div class="text-3xl font-black text-gray-800 relative z-1"><?php echo $stat->myPublishedCommentsNum; ?></div>
-                    <div class="mt-2 text-xs text-blue-500 font-bold flex items-center relative z-1">
+                    <div class="text-3xl font-black stat-card-value relative z-1"><?php echo $stat->myPublishedCommentsNum; ?></div>
+                    <div class="mt-2 text-xs stat-card-trend font-bold flex items-center relative z-1">
                          <i class="fas fa-chart-line mr-1"></i> <span><?php _e('互动活跃'); ?></span>
                     </div>
                 </div>
                  <!-- Card 3 -->
-                 <div class="bg-white p-6 border border-gray-100 relative overflow-hidden group">
-                    <div class="absolute right-0 top-0 h-full w-1/3 bg-gradient-to-l from-yellow-50 to-transparent opacity-0 group-hover:opacity-100 transition-opacity"></div>
+                 <div class="stat-card p-6">
+                    <div class="stat-card-gradient-warning"></div>
                     <div class="flex items-center justify-between mb-4 relative z-1">
-                        <h3 class="text-discord-muted font-bold text-xs uppercase tracking-wider"><?php _e('待审核'); ?></h3>
-                         <div class="w-10 h-10 bg-yellow-100 flex items-center justify-center text-yellow-500">
+                        <h3 class="stat-card-label font-bold text-xs uppercase tracking-wider"><?php _e('待审核'); ?></h3>
+                         <div class="stat-card-icon-warning">
                             <i class="fas fa-hourglass-half text-lg"></i>
                         </div>
                     </div>
-                    <div class="text-3xl font-black text-gray-800 relative z-1"><?php echo $stat->waitingCommentsNum; ?></div>
-                    <div class="mt-2 text-xs text-discord-muted font-bold flex items-center relative z-10">
+                    <div class="text-3xl font-black stat-card-value relative z-1"><?php echo $stat->waitingCommentsNum; ?></div>
+                    <div class="mt-2 text-xs stat-card-label font-bold flex items-center relative z-10">
                         <span><?php _e('需要处理'); ?></span>
                     </div>
                 </div>
                  <!-- Card 4 -->
-                 <div class="bg-white p-6 border border-gray-100 relative overflow-hidden group">
-                    <div class="absolute right-0 top-0 h-full w-1/3 bg-gradient-to-l from-purple-50 to-transparent opacity-0 group-hover:opacity-100 transition-opacity"></div>
+                 <div class="stat-card p-6">
+                    <div class="stat-card-gradient-info"></div>
                     <div class="flex items-center justify-between mb-4 relative z-1">
-                        <h3 class="text-discord-muted font-bold text-xs uppercase tracking-wider"><?php _e('分类数量'); ?></h3>
-                         <div class="w-10 h-10 bg-purple-100 flex items-center justify-center text-purple-500">
+                        <h3 class="stat-card-label font-bold text-xs uppercase tracking-wider"><?php _e('分类数量'); ?></h3>
+                         <div class="stat-card-icon-info">
                             <i class="fas fa-folder text-lg"></i>
                         </div>
                     </div>
-                    <div class="text-3xl font-black text-gray-800 relative z-1"><?php echo $stat->categoriesNum; ?></div>
-                     <div class="mt-2 text-xs text-discord-muted font-bold flex items-center relative z-10">
+                    <div class="text-3xl font-black stat-card-value relative z-1"><?php echo $stat->categoriesNum; ?></div>
+                     <div class="mt-2 text-xs stat-card-label font-bold flex items-center relative z-10">
                         <span><?php _e('内容架构'); ?></span>
                     </div>
                 </div>
@@ -149,24 +149,24 @@ $chartComments = json_encode($commentsData);
             <!-- Charts Section -->
              <div class="grid grid-cols-1 lg:grid-cols-3 gap-6 mb-8">
                 <!-- Main Activity Chart -->
-                <div class="lg:col-span-2 bg-white p-6 border border-gray-100">
+                <div class="lg:col-span-2 dashboard-card p-6">
                     <div class="flex items-center justify-between mb-6">
-                         <h3 class="text-lg font-bold text-gray-800 flex items-center">
+                         <h3 class="text-lg font-bold dashboard-card-title flex items-center">
                             <i class="fas fa-chart-area mr-2 text-discord-accent"></i>
                             <?php _e('内容趋势'); ?>
                         </h3>
                          <div class="flex items-center space-x-4 text-xs">
-                            <span class="flex items-center"><span class="w-3 h-3 rounded-full bg-blue-500 mr-1"></span><?php _e('文章'); ?></span>
-                            <span class="flex items-center"><span class="w-3 h-3 rounded-full bg-green-500 mr-1"></span><?php _e('评论'); ?></span>
+                            <span class="flex items-center"><span class="w-3 h-3 rounded-full dashboard-chart-legend-blue mr-1"></span><?php _e('文章'); ?></span>
+                            <span class="flex items-center"><span class="w-3 h-3 rounded-full dashboard-chart-legend-green mr-1"></span><?php _e('评论'); ?></span>
                         </div>
                     </div>
                     <div id="activity-chart" style="height: 300px; width: 100%;"></div>
                 </div>
                 
                 <!-- Distribution Chart -->
-                <div class="bg-white p-6 border border-gray-100">
-                    <h3 class="text-lg font-bold text-gray-800 mb-6 flex items-center">
-                         <i class="fas fa-chart-pie mr-2 text-green-500"></i>
+                <div class="dashboard-card p-6">
+                    <h3 class="text-lg font-bold dashboard-card-title mb-6 flex items-center">
+                         <i class="fas fa-chart-pie mr-2 text-discord-accent"></i>
                         <?php _e('内容分布'); ?>
                     </h3>
                     <div id="distribution-chart" style="height: 300px; width: 100%;"></div>
@@ -177,41 +177,41 @@ $chartComments = json_encode($commentsData);
             <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
                 
                 <!-- Recent Posts -->
-                <div class="lg:col-span-2 bg-white p-0 border border-gray-100 overflow-hidden">
-                    <div class="p-6 border-b border-gray-100 flex justify-between items-center">
-                        <h3 class="text-lg font-bold text-gray-800 flex items-center">
-                            <i class="fas fa-newspaper mr-2 text-gray-400"></i>
+                <div class="lg:col-span-2 dashboard-card p-0 overflow-hidden">
+                    <div class="p-6 dashboard-card-header flex justify-between items-center">
+                        <h3 class="text-lg font-bold dashboard-card-title flex items-center">
+                            <i class="fas fa-newspaper mr-2 text-discord-muted"></i>
                             <?php _e('最近文章'); ?>
                         </h3>
                         <?php if ($canWrite): ?><a href="<?php $options->adminUrl('write-post.php'); ?>" class="text-xs font-medium text-discord-accent hover:underline"><?php _e('写文章'); ?></a><?php endif; ?>
                     </div>
                     <div class="overflow-x-auto">
-                        <table class="w-full text-left text-sm">
-                            <thead class="bg-gray-50">
-                                <tr class="text-gray-500">
+                        <table class="w-full text-left text-sm dashboard-table">
+                            <thead>
+                                <tr>
                                     <th class="py-3 px-6 font-medium"><?php _e('标题'); ?></th>
                                     <th class="py-3 px-6 font-medium"><?php _e('日期'); ?></th>
                                     <th class="py-3 px-6 font-medium text-right"><?php _e('操作'); ?></th>
                                 </tr>
                             </thead>
-                            <tbody class="text-gray-700">
+                            <tbody>
                                 <?php \Widget\Contents\Post\Recent::alloc('pageSize=8')->to($posts); ?>
                                 <?php if ($posts->have()): ?>
                                     <?php while ($posts->next()): ?>
-                                        <tr class="border-b border-gray-50 hover:bg-gray-50 transition-colors group">
+                                        <tr class="border-b transition-colors group">
                                             <td class="py-3 px-6 font-medium">
-                                                <a href="<?php $posts->permalink(); ?>" class="text-discord-text group-hover:text-discord-accent transition-colors"><?php $posts->title(); ?></a>
+                                                <a href="<?php $posts->permalink(); ?>" class="dashboard-card-title group-hover:text-discord-accent transition-colors"><?php $posts->title(); ?></a>
                                             </td>
-                                            <td class="py-3 px-6 text-gray-400 text-xs"><?php $posts->date('Y-m-d'); ?></td>
+                                            <td class="py-3 px-6 dashboard-table-date text-xs"><?php $posts->date('Y-m-d'); ?></td>
                                             <td class="py-3 px-6 text-right">
                                                 <?php if ($canEdit || ($canWrite && $posts->authorId == $user->uid)): ?>
-                                                <a href="<?php $options->adminUrl('write-post.php?cid=' . $posts->cid); ?>" class="text-gray-400 hover:text-discord-accent transition-colors p-2 hover:bg-gray-100" title="<?php _e('编辑'); ?>"><i class="fas fa-pencil-alt"></i></a>
+                                                <a href="<?php $options->adminUrl('write-post.php?cid=' . $posts->cid); ?>" class="dashboard-table-action transition-colors p-2" title="<?php _e('编辑'); ?>"><i class="fas fa-pencil-alt"></i></a>
                                                 <?php endif; ?>
                                             </td>
                                         </tr>
                                     <?php endwhile; ?>
                                 <?php else: ?>
-                                    <tr><td colspan="3" class="py-8 text-center text-gray-400"><?php _e('暂时没有文章'); ?></td></tr>
+                                    <tr><td colspan="3" class="py-8 text-center dashboard-table-date"><?php _e('暂时没有文章'); ?></td></tr>
                                 <?php endif; ?>
                             </tbody>
                         </table>
@@ -219,30 +219,30 @@ $chartComments = json_encode($commentsData);
                 </div>
 
                 <!-- Recent Comments -->
-                <div class="bg-white p-0 border border-gray-100 overflow-hidden flex flex-col">
-                     <div class="p-6 border-b border-gray-100 flex justify-between items-center">
-                        <h3 class="text-lg font-bold text-gray-800 flex items-center">
-                            <i class="fas fa-comments mr-2 text-gray-400"></i>
+                <div class="dashboard-comments p-0 overflow-hidden flex flex-col">
+                     <div class="p-6 dashboard-comments-header flex justify-between items-center">
+                        <h3 class="text-lg font-bold dashboard-card-title flex items-center">
+                            <i class="fas fa-comments mr-2 text-discord-muted"></i>
                             <?php _e('最新回复'); ?>
                         </h3>
                     </div>
                     <div class="p-0 flex-1 overflow-y-auto max-h-[400px]">
                         <?php \Widget\Comments\Recent::alloc('pageSize=5')->to($comments); ?>
                         <?php if ($comments->have()): ?>
-                            <div class="divide-y divide-gray-50">
+                            <div class="divide-y">
                             <?php while ($comments->next()): ?>
-                                <div class="p-4 hover:bg-gray-50 transition-colors">
+                                <div class="p-4 dashboard-comments-item transition-colors">
                                     <div class="flex items-start space-x-3">
                                         <?php echo getAvatar($comments->mail, $comments->author, 40, 'comment-avatar'); ?>
                                         <div class="flex-1 min-w-0">
                                             <div class="flex items-center justify-between mb-1">
-                                                <p class="text-sm font-bold text-gray-800 truncate"><?php echo htmlspecialchars($comments->author() ?? '', ENT_QUOTES, 'UTF-8'); ?></p>
-                                                <span class="text-xs text-gray-400"><?php $comments->date('m-d'); ?></span>
+                                                <p class="text-sm font-bold dashboard-comments-author truncate"><?php echo htmlspecialchars($comments->author() ?? '', ENT_QUOTES, 'UTF-8'); ?></p>
+                                                <span class="text-xs dashboard-comments-date"><?php $comments->date('m-d'); ?></span>
                                             </div>
-                                            <div class="text-xs text-gray-500 mb-1">
+                                            <div class="text-xs dashboard-comments-content mb-1">
                                                 <?php _e('在'); ?> <a href="<?php $comments->permalink(); ?>" class="text-discord-accent hover:underline"><?php $comments->title(); ?></a>
                                             </div>
-                                            <div class="text-sm text-gray-600 bg-gray-50 p-2 border border-gray-100 mt-1 line-clamp-2">
+                                            <div class="text-sm dashboard-comments-excerpt p-2 border mt-1 line-clamp-2">
                                                 <?php $comments->excerpt(60, '...'); ?>
                                             </div>
                                         </div>
@@ -251,10 +251,10 @@ $chartComments = json_encode($commentsData);
                             <?php endwhile; ?>
                             </div>
                         <?php else: ?>
-                            <div class="p-8 text-center text-sm text-gray-400"><?php _e('暂时没有回复'); ?></div>
+                            <div class="p-8 text-center text-sm dashboard-comments-date"><?php _e('暂时没有回复'); ?></div>
                         <?php endif; ?>
                     </div>
-                    <?php if ($canEdit): ?><a href="<?php $options->adminUrl('manage-comments.php'); ?>" class="block p-3 text-center text-xs font-bold text-gray-500 hover:text-discord-accent bg-gray-50 border-t border-gray-100 transition-colors uppercase tracking-wide"><?php _e('查看所有评论'); ?></a><?php endif; ?>
+                    <?php if ($canEdit): ?><a href="<?php $options->adminUrl('manage-comments.php'); ?>" class="block p-3 text-center text-xs font-bold dashboard-comments-footer transition-colors uppercase tracking-wide"><?php _e('查看所有评论'); ?></a><?php endif; ?>
                 </div>
 
                 <!-- Official Log (Compact) -->
