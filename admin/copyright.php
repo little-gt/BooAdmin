@@ -28,7 +28,7 @@
                     </div>
                     <div class="right">
                         <div class="donation-card">
-                            <img src="https://cnb.cool/little-gt/BooAdmin/-/git/raw/main/screenshot/supportme.jpg" alt="支持 BooAdmin 开源维护" />
+                            <img src="<?php echo $options->theme->url; ?>/img/supportme.png" alt="支持 BooAdmin 开源维护" />
                         </div>
                     </div>
                 </div>
