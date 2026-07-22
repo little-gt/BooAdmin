@@ -7,12 +7,12 @@ $header = '
 <!-- CSS Reset & Grid -->
 <link rel="stylesheet" href="' . $options->adminStaticUrl('css', 'normalize.css?v=1.3.1', true) . '">
 <link rel="stylesheet" href="' . $options->adminStaticUrl('css', 'grid.css?v=1.3.1', true) . '">
-<!-- TailwindCSS -->
-<link rel="stylesheet" href="' . $options->adminStaticUrl('css', 'tailwind.css?v=1.3.1', true) . '">
 <!-- Theme Variables -->
 <link rel="stylesheet" href="' . $options->adminStaticUrl('css', 'style.css?v=1.3.1', true) . '">
 <link rel="stylesheet" href="' . $options->adminStaticUrl('css', 'light.css?v=1.3.1', true) . '">
 <link rel="stylesheet" href="' . $options->adminStaticUrl('css', 'dark.css?v=1.3.1', true) . '">
+<!-- TailwindCSS -->
+<link rel="stylesheet" href="' . $options->adminStaticUrl('css', 'tailwind.css?v=1.3.1', true) . '">
 <!-- NProgress -->
 <script src="' . $options->adminStaticUrl('js', 'nprogress.js', true) . '"></script>
 <link rel="stylesheet" href="' . $options->adminStaticUrl('css', 'nprogress.css', true) . '">
