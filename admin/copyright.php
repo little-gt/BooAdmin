@@ -12,8 +12,8 @@
             <a href="https://github.com/little-gt/BooAdmin" class="font-medium hover:text-discord-accent transition-colors" target="_blank" rel="noopener">BooAdmin</a>
             <div class="booadmin-copyright-popup" id="booadminCopyrightPopup">
                 <button class="close-btn" onclick="closePopup(); event.stopPropagation();">&times;</button>
-                <h3>关于 BooAdmin</h3>
-                <div class="version">版本 1.3.0</div>
+                <h3>关于 BooAdmin 程序</h3>
+                <div class="version">版本 1.3.1</div>
                 <div class="content">
                     <div class="left">
                         <p class="main-copy"><strong>BooAdmin 是免费开源项目。</strong>BooAdmin 的开源维护、CDN资源分发与新功能更新都离不开您的捐助。您的支持将帮助我覆盖以下成本：</p>
@@ -28,7 +28,7 @@
                     </div>
                     <div class="right">
                         <div class="donation-card">
-                            <img src="<?php echo $options->theme->url; ?>/img/supportme.png" alt="支持 BooAdmin 开源维护" />
+                            <img src="<?php $options->adminStaticUrl('img', 'supportme.png'); ?>" alt="支持 BooAdmin 开源维护" />
                         </div>
                     </div>
                 </div>

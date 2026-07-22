@@ -157,6 +157,22 @@
     --booadmin-nav-border: #383d45;
 
     /* ========================================
+     * 统计卡片 - Stat Cards
+     * ======================================== */
+    --booadmin-stat-accent-gradient: rgba(88, 101, 242, 0.08);
+    --booadmin-stat-success-gradient: rgba(22, 163, 74, 0.06);
+    --booadmin-stat-warning-gradient: rgba(234, 88, 12, 0.06);
+    --booadmin-stat-info-gradient: rgba(147, 51, 234, 0.06);
+    --booadmin-stat-accent-icon-bg: rgba(88, 101, 242, 0.12);
+    --booadmin-stat-success-icon-bg: rgba(22, 163, 74, 0.12);
+    --booadmin-stat-warning-icon-bg: rgba(234, 88, 12, 0.12);
+    --booadmin-stat-info-icon-bg: rgba(147, 51, 234, 0.12);
+    --booadmin-stat-accent-icon: #5865f2;
+    --booadmin-stat-success-icon: #16a34a;
+    --booadmin-stat-warning-icon: #ea580c;
+    --booadmin-stat-info-icon: #9333ea;
+
+    /* ========================================
      * 遮罩层 - Overlays
      * ======================================== */
     --booadmin-overlay: rgba(0, 0, 0, 0.5);
