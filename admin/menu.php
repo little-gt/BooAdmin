@@ -8,25 +8,25 @@ $title = trim($options->title);
 // url 为 'settings' 时表示可折叠设置子菜单（模板渲染时特殊处理）
 $menuConfig = [
     '撰写' => [
-        ['write-post.php', 'fa-pen-fancy', '撰写文章', 'contributor'],
-        ['write-page.php', 'fa-file-alt', '创建页面', 'editor'],
+        ['write-post.php', 'fa-pen-fancy', '撰写文章', 'contributor', 'sidebar-icon--blue'],
+        ['write-page.php', 'fa-file-alt', '创建页面', 'editor', 'sidebar-icon--violet'],
     ],
     '管理' => [
-        ['manage-posts.php', 'fa-layer-group', '文章', 'contributor'],
-        ['manage-pages.php', 'fa-file', '页面', 'editor'],
-        ['manage-comments.php', 'fa-comments', '评论', 'editor'],
-        ['manage-medias.php', 'fa-images', '文件', 'editor'],
+        ['manage-posts.php', 'fa-layer-group', '文章', 'contributor', 'sidebar-icon--blue'],
+        ['manage-pages.php', 'fa-file', '页面', 'editor', 'sidebar-icon--violet'],
+        ['manage-comments.php', 'fa-comments', '评论', 'editor', 'sidebar-icon--emerald'],
+        ['manage-medias.php', 'fa-images', '文件', 'editor', 'sidebar-icon--cyan'],
     ],
     '数据' => [
-        ['manage-categories.php', 'fa-folder', '分类', 'editor'],
-        ['manage-tags.php', 'fa-tags', '标签', 'editor'],
-        ['manage-users.php', 'fa-users', '用户', 'administrator'],
+        ['manage-categories.php', 'fa-folder', '分类', 'editor', 'sidebar-icon--amber'],
+        ['manage-tags.php', 'fa-tags', '标签', 'editor', 'sidebar-icon--rose'],
+        ['manage-users.php', 'fa-users', '用户', 'administrator', 'sidebar-icon--orange'],
     ],
     '系统' => [
-        ['themes.php', 'fa-paint-brush', '外观', 'administrator'],
-        ['plugins.php', 'fa-plug', '插件', 'administrator'],
-        ['settings', 'fa-cog', '设置', 'administrator'],
-        ['backup.php', 'fa-download', '备份', 'administrator'],
+        ['themes.php', 'fa-paint-brush', '外观', 'administrator', 'sidebar-icon--rose'],
+        ['plugins.php', 'fa-plug', '插件', 'administrator', 'sidebar-icon--purple'],
+        ['settings', 'fa-cog', '设置', 'administrator', 'sidebar-icon--slate'],
+        ['backup.php', 'fa-download', '备份', 'administrator', 'sidebar-icon--teal'],
     ],
 ];
 
@@ -54,6 +54,7 @@ $isExtendPage = (strpos($_SERVER['REQUEST_URI'], 'extending.php') !== false);
 <aside class="w-64 bg-white border-r border-gray-200 flex-shrink-0 flex flex-col transition-all duration-300 transform md:translate-x-0 fixed md:relative z-20 h-full" id="sidebar">
     <div class="h-16 flex items-center justify-between px-6 border-b border-gray-100 bg-white">
         <h1 class="text-xl font-bold text-discord-accent flex items-center">
+            <span class="sidebar-brand-mark" aria-hidden="true"><i class="fas fa-cubes-stacked"></i></span>
             <span class="sidebar-text text-gray-800 tracking-tight" title="<?php echo htmlspecialchars($title ?: 'BooAdmin'); ?>"><?php echo mb_strimwidth($title ?: 'BooAdmin', 0, 15, '...'); ?></span>
         </h1>
         <button id="sidebar-toggle" class="md:hidden text-gray-400 hover:text-gray-600 focus:outline-none">
@@ -65,8 +66,8 @@ $isExtendPage = (strpos($_SERVER['REQUEST_URI'], 'extending.php') !== false);
         <ul class="space-y-1 px-3">
             <!-- Dashboard -->
             <li>
-                <a href="<?php $options->adminUrl('index.php'); ?>" style="text-decoration:none" class="flex items-center px-3 py-2 text-gray-600 <?php if($menu->current == 'index.php') echo 'bg-blue-50 text-discord-accent'; else echo 'hover:bg-gray-100 hover:text-gray-900'; ?> font-medium transition-all group">
-                    <i class="fas fa-tachometer-alt w-5 text-center mr-3 text-sm opacity-80"></i>
+                <a href="<?php $options->adminUrl('index.php'); ?>" style="text-decoration:none" class="sidebar-link flex items-center px-3 py-2 text-gray-600 <?php if($menu->current == 'index.php') echo 'bg-blue-50 text-discord-accent'; else echo 'hover:bg-gray-100 hover:text-gray-900'; ?> font-medium transition-all group">
+                    <i class="sidebar-icon sidebar-icon--blue fas fa-tachometer-alt"></i>
                     <span class="sidebar-text"><?php _e('控制台'); ?></span>
                 </a>
             </li>
@@ -74,11 +75,11 @@ $isExtendPage = (strpos($_SERVER['REQUEST_URI'], 'extending.php') !== false);
             <!-- Menu -->
             <?php foreach ($visibleMenu as $sectionLabel => $sectionItems):
                 if ($sectionLabel === '系统') continue; ?>
-            <li class="mt-5 mb-2 px-3 text-xs font-bold text-gray-400 uppercase tracking-wider sidebar-text"><?php _e($sectionLabel); ?></li>
+            <li class="sidebar-section-title mt-5 mb-2 px-3 text-xs font-bold text-gray-400 uppercase tracking-wider sidebar-text"><?php _e($sectionLabel); ?></li>
             <?php foreach ($sectionItems as $item): ?>
             <li>
-                <a href="<?php $options->adminUrl($item[0]); ?>" style="text-decoration:none" class="flex items-center px-3 py-2 text-gray-600 hover:bg-gray-100 hover:text-gray-900 transition-colors <?php if($menu->current == $item[0]) echo 'bg-blue-50 text-discord-accent'; ?>">
-                    <i class="fas <?php echo $item[1]; ?> w-5 text-center mr-3 text-sm opacity-80"></i>
+                <a href="<?php $options->adminUrl($item[0]); ?>" style="text-decoration:none" class="sidebar-link flex items-center px-3 py-2 text-gray-600 hover:bg-gray-100 hover:text-gray-900 transition-colors <?php if($menu->current == $item[0]) echo 'bg-blue-50 text-discord-accent'; ?>">
+                    <i class="sidebar-icon <?php echo $item[4]; ?> fas <?php echo $item[1]; ?>"></i>
                     <span class="sidebar-text"><?php _e($item[2]); ?></span>
                 </a>
             </li>
@@ -102,7 +103,7 @@ $isExtendPage = (strpos($_SERVER['REQUEST_URI'], 'extending.php') !== false);
                 $pluginLinks = $xpath->query('//a[contains(@href, "extending.php")]');
                 
                 if ($pluginLinks->length > 0) {
-                    echo '<li class="mt-5 mb-2 px-3 text-xs font-bold text-gray-400 uppercase tracking-wider sidebar-text">';
+                    echo '<li class="sidebar-section-title mt-5 mb-2 px-3 text-xs font-bold text-gray-400 uppercase tracking-wider sidebar-text">';
                     _e('扩展');
                     echo '</li>';
                     
@@ -112,10 +113,10 @@ $isExtendPage = (strpos($_SERVER['REQUEST_URI'], 'extending.php') !== false);
                         $isActive = (!empty($_GET['panel']) && strpos($href, $_GET['panel']) !== false);
                         
                         echo '<li>';
-                        echo '<a href="' . htmlspecialchars($href, ENT_QUOTES, 'UTF-8') . '" style="text-decoration:none" class="flex items-center px-3 py-2 text-gray-600 hover:bg-gray-100 hover:text-gray-900 transition-colors';
+                        echo '<a href="' . htmlspecialchars($href, ENT_QUOTES, 'UTF-8') . '" style="text-decoration:none" class="sidebar-link flex items-center px-3 py-2 text-gray-600 hover:bg-gray-100 hover:text-gray-900 transition-colors';
                         if ($isActive) echo ' bg-blue-50 text-discord-accent';
                         echo '">';
-                        echo '<i class="fas fa-dice-d6 w-5 text-center mr-3 text-sm opacity-80"></i>';
+                        echo '<i class="sidebar-icon sidebar-icon--purple fas fa-dice-d6"></i>';
                         echo '<span class="sidebar-text">' . htmlspecialchars($text, ENT_QUOTES, 'UTF-8') . '</span>';
                         echo '</a>';
                         echo '</li>';
@@ -126,14 +127,14 @@ $isExtendPage = (strpos($_SERVER['REQUEST_URI'], 'extending.php') !== false);
 
             <!-- System -->
             <?php if (!empty($visibleMenu['系统'])): ?>
-            <li class="mt-5 mb-2 px-3 text-xs font-bold text-gray-400 uppercase tracking-wider sidebar-text"><?php _e('系统'); ?></li>
+            <li class="sidebar-section-title mt-5 mb-2 px-3 text-xs font-bold text-gray-400 uppercase tracking-wider sidebar-text"><?php _e('系统'); ?></li>
             <?php foreach ($visibleMenu['系统'] as $item): ?>
             <?php if ($item[0] === 'settings'): ?>
             <li>
                 <div class="relative group-settings">
-                    <button class="w-full flex items-center px-3 py-2 text-gray-600 hover:bg-gray-100 hover:text-gray-900 transition-colors focus:outline-none justify-between <?php if($inSettingsPage) echo 'bg-blue-50 text-discord-accent'; ?>" onclick="const expanded = this.nextElementSibling.classList.toggle('hidden'); this.querySelector('.settings-chevron').classList.toggle('-rotate-90'); this.querySelector('.settings-chevron').classList.toggle('rotate-0'); this.setAttribute('aria-expanded', expanded ? 'false' : 'true');" aria-expanded="<?php echo $inSettingsPage ? 'true' : 'false'; ?>">
+                    <button class="sidebar-link w-full flex items-center px-3 py-2 text-gray-600 hover:bg-gray-100 hover:text-gray-900 transition-colors focus:outline-none justify-between <?php if($inSettingsPage) echo 'bg-blue-50 text-discord-accent'; ?>" onclick="const expanded = this.nextElementSibling.classList.toggle('hidden'); this.querySelector('.settings-chevron').classList.toggle('-rotate-90'); this.querySelector('.settings-chevron').classList.toggle('rotate-0'); this.setAttribute('aria-expanded', expanded ? 'false' : 'true');" aria-expanded="<?php echo $inSettingsPage ? 'true' : 'false'; ?>">
                         <div class="flex items-center">
-                            <i class="fas <?php echo $item[1]; ?> w-5 text-center mr-3 text-sm opacity-80"></i>
+                            <i class="sidebar-icon <?php echo $item[4]; ?> fas <?php echo $item[1]; ?>"></i>
                             <span class="sidebar-text"><?php _e($item[2]); ?></span>
                         </div>
                         <i class="fas fa-chevron-down text-xs transition-transform duration-200 settings-chevron <?php echo $inSettingsPage ? 'rotate-0' : '-rotate-90'; ?>"></i>
@@ -147,8 +148,8 @@ $isExtendPage = (strpos($_SERVER['REQUEST_URI'], 'extending.php') !== false);
             </li>
             <?php else: ?>
             <li>
-                <a href="<?php $options->adminUrl($item[0]); ?>" style="text-decoration:none" class="flex items-center px-3 py-2 text-gray-600 hover:bg-gray-100 hover:text-gray-900 transition-colors <?php if($menu->current == $item[0]) echo 'bg-blue-50 text-discord-accent'; ?>">
-                    <i class="fas <?php echo $item[1]; ?> w-5 text-center mr-3 text-sm opacity-80"></i>
+                    <a href="<?php $options->adminUrl($item[0]); ?>" style="text-decoration:none" class="sidebar-link flex items-center px-3 py-2 text-gray-600 hover:bg-gray-100 hover:text-gray-900 transition-colors <?php if($menu->current == $item[0]) echo 'bg-blue-50 text-discord-accent'; ?>">
+                    <i class="sidebar-icon <?php echo $item[4]; ?> fas <?php echo $item[1]; ?>"></i>
                     <span class="sidebar-text"><?php _e($item[2]); ?></span>
                 </a>
             </li>
@@ -159,7 +160,7 @@ $isExtendPage = (strpos($_SERVER['REQUEST_URI'], 'extending.php') !== false);
     </nav>
 
     <div class="p-3 md:p-4 border-t border-gray-100 bg-white">
-        <div class="flex items-center group cursor-pointer hover:bg-gray-50 p-2 transition-colors gap-2 md:gap-0">
+        <div class="sidebar-profile flex items-center group cursor-pointer hover:bg-gray-50 p-2 transition-colors gap-2 md:gap-0">
             <div class="flex-shrink-0">
                 <?php echo getAvatar($user->mail, $user->screenName, 32, 'user-avatar md:w-9 md:h-9'); ?>
             </div>

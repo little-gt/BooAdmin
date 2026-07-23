@@ -4389,3 +4389,173 @@ button:not(.view-toggle button),.btn:not(.view-toggle button),a.btn {
 		width:100%;
 	}
 }
+
+/* Sidebar and surface polish */
+#sidebar {
+	background:var(--booadmin-sidebar) !important;
+	border:1px solid var(--booadmin-border) !important;
+	border-left:0 !important;
+	border-radius:0 18px 18px 0;
+	box-shadow:8px 0 24px rgba(15, 23, 42, 0.06);
+	overflow:hidden;
+}
+
+#sidebar > div:first-child,
+#sidebar > div:last-child {
+	background:transparent !important;
+	border-color:var(--booadmin-border) !important;
+}
+
+.sidebar-brand-mark {
+	display:inline-flex;
+	align-items:center;
+	justify-content:center;
+	width:32px;
+	height:32px;
+	margin-right:10px;
+	border-radius:10px;
+	color:#ffffff;
+	background:linear-gradient(135deg, #5865f2, #7c3aed);
+	font-size:14px;
+	box-shadow:0 5px 12px rgba(88, 101, 242, 0.24);
+}
+
+#sidebar nav {
+	padding:16px 12px;
+}
+
+#sidebar .sidebar-link {
+	min-height:44px;
+	border-radius:11px;
+	text-decoration:none !important;
+	transition:background-color .18s ease, color .18s ease, transform .18s ease, box-shadow .18s ease;
+}
+
+#sidebar .sidebar-link:hover {
+	transform:translateX(2px);
+}
+
+#sidebar .sidebar-link.bg-blue-50 {
+	background:rgba(var(--booadmin-accent-rgb), 0.12) !important;
+	box-shadow:inset 3px 0 0 var(--booadmin-accent);
+}
+
+.sidebar-icon {
+	display:inline-flex;
+	align-items:center;
+	justify-content:center;
+	flex:0 0 34px;
+	width:34px !important;
+	height:34px;
+	margin-right:10px !important;
+	border-radius:10px;
+	font-size:14px;
+	opacity:1 !important;
+	transition:transform .18s ease, filter .18s ease;
+}
+
+#sidebar .sidebar-link:hover .sidebar-icon {
+	transform:scale(1.06);
+	filter:saturate(1.12);
+}
+
+.sidebar-icon--blue { color:#2563eb; background:#eff6ff; }
+.sidebar-icon--violet { color:#7c3aed; background:#f5f3ff; }
+.sidebar-icon--emerald { color:#059669; background:#ecfdf5; }
+.sidebar-icon--cyan { color:#0891b2; background:#ecfeff; }
+.sidebar-icon--amber { color:#d97706; background:#fffbeb; }
+.sidebar-icon--rose { color:#e11d48; background:#fff1f2; }
+.sidebar-icon--orange { color:#ea580c; background:#fff7ed; }
+.sidebar-icon--purple { color:#9333ea; background:#faf5ff; }
+.sidebar-icon--slate { color:#475569; background:#f1f5f9; }
+.sidebar-icon--teal { color:#0f766e; background:#f0fdfa; }
+
+.sidebar-section-title {
+	position:relative;
+	padding-top:8px !important;
+	padding-bottom:6px !important;
+	letter-spacing:.08em !important;
+	color:var(--booadmin-muted) !important;
+}
+
+.sidebar-section-title::before {
+	content:"";
+	display:inline-block;
+	width:6px;
+	height:6px;
+	margin:0 7px 1px 0;
+	border-radius:50%;
+	background:var(--booadmin-accent);
+	vertical-align:middle;
+}
+
+.sidebar-profile {
+	border-radius:12px;
+	transition:background-color .18s ease;
+}
+
+.sidebar-profile:hover {
+	background:var(--booadmin-surface-2) !important;
+}
+
+.booadmin-panel,
+.content-card,
+.bg-white.border.border-gray-200.overflow-hidden {
+	border-radius:14px;
+	box-shadow:0 8px 24px rgba(15, 23, 42, 0.045);
+}
+
+.booadmin-panel-flush {
+	overflow:hidden;
+}
+
+.booadmin-operate-bar {
+	border-radius:14px 14px 0 0;
+}
+
+.booadmin-dropdown-toggle,
+.booadmin-back-button {
+	border-radius:9px;
+}
+
+.booadmin-dropdown-menu {
+	border-radius:10px;
+	box-shadow:0 12px 28px rgba(15, 23, 42, 0.12);
+}
+
+.content-card {
+	box-shadow:0 5px 16px rgba(15, 23, 42, 0.04);
+}
+
+.content-card:hover {
+	box-shadow:0 10px 24px rgba(15, 23, 42, 0.09);
+}
+
+@media (prefers-color-scheme: dark) {
+	#sidebar {
+		box-shadow:8px 0 28px rgba(0, 0, 0, 0.32);
+	}
+
+	.sidebar-icon--blue { color:#93c5fd; background:rgba(37, 99, 235, .18); }
+	.sidebar-icon--violet { color:#c4b5fd; background:rgba(124, 58, 237, .18); }
+	.sidebar-icon--emerald { color:#6ee7b7; background:rgba(5, 150, 105, .18); }
+	.sidebar-icon--cyan { color:#67e8f9; background:rgba(8, 145, 178, .18); }
+	.sidebar-icon--amber { color:#fcd34d; background:rgba(217, 119, 6, .18); }
+	.sidebar-icon--rose { color:#fda4af; background:rgba(225, 29, 72, .18); }
+	.sidebar-icon--orange { color:#fdba74; background:rgba(234, 88, 12, .18); }
+	.sidebar-icon--purple { color:#d8b4fe; background:rgba(147, 51, 234, .18); }
+	.sidebar-icon--slate { color:#cbd5e1; background:rgba(71, 85, 105, .25); }
+	.sidebar-icon--teal { color:#5eead4; background:rgba(15, 118, 110, .2); }
+
+	.booadmin-panel,
+	.content-card,
+	.bg-white.border.border-gray-200.overflow-hidden {
+		box-shadow:0 8px 26px rgba(0, 0, 0, 0.2);
+	}
+}
+
+@media (max-width:767px) {
+	#sidebar {
+		border-radius:0 18px 18px 0;
+	}
+}
