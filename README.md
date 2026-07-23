@@ -10,9 +10,6 @@
 
 ![登录页面](https://cnb.cool/little-gt/BooAdmin/-/git/raw/main/screenshot/screenshot0.png)
 
-参与讨论：
-[Typecho 官方论坛](https://forum.typecho.org/viewtopic.php?p=62603#p62603)
-
 ---
 
 ## 🔗 项目地址
@@ -24,6 +21,10 @@
 | BooAdmin | 后台主题 | https://cnb.cool/little-gt/BooAdmin | https://github.com/little-gt/BooAdmin |
 | Passkey | 配套插件 | https://cnb.cool/little-gt/Passkey | https://github.com/little-gt/Passkey |
 | Passport | 配套插件 | https://cnb.cool/little-gt/Passport | https://github.com/little-gt/Passport |
+
+![TDP](https://cnb.cool/little-gt/BooAdmin/-/git/raw/main/screenshot/cloud-tdp.png)
+
+来自腾讯云先锋会员 时宇（https://cnb.cool/u/coolerxde） 的系列开源项目，专注于提升 Typecho 1.3.0 的性能，用户体验，以及安全性。并且探索新的技术方向。
 
 ---
 
