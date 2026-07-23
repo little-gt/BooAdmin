@@ -67,7 +67,7 @@ $isExtendPage = (strpos($_SERVER['REQUEST_URI'], 'extending.php') !== false);
             <!-- Dashboard -->
             <li>
                 <a href="<?php $options->adminUrl('index.php'); ?>" style="text-decoration:none" class="sidebar-link flex items-center px-3 py-2 text-gray-600 <?php if($menu->current == 'index.php') echo 'bg-blue-50 text-discord-accent'; else echo 'hover:bg-gray-100 hover:text-gray-900'; ?> font-medium transition-all group">
-                    <i class="sidebar-icon sidebar-icon--blue fas fa-tachometer-alt"></i>
+                    <span class="sidebar-icon sidebar-icon--blue"><i class="fas fa-tachometer-alt" aria-hidden="true"></i></span>
                     <span class="sidebar-text"><?php _e('控制台'); ?></span>
                 </a>
             </li>
@@ -79,7 +79,7 @@ $isExtendPage = (strpos($_SERVER['REQUEST_URI'], 'extending.php') !== false);
             <?php foreach ($sectionItems as $item): ?>
             <li>
                 <a href="<?php $options->adminUrl($item[0]); ?>" style="text-decoration:none" class="sidebar-link flex items-center px-3 py-2 text-gray-600 hover:bg-gray-100 hover:text-gray-900 transition-colors <?php if($menu->current == $item[0]) echo 'bg-blue-50 text-discord-accent'; ?>">
-                    <i class="sidebar-icon <?php echo $item[4]; ?> fas <?php echo $item[1]; ?>"></i>
+                    <span class="sidebar-icon <?php echo $item[4]; ?>"><i class="fas <?php echo $item[1]; ?>" aria-hidden="true"></i></span>
                     <span class="sidebar-text"><?php _e($item[2]); ?></span>
                 </a>
             </li>
@@ -116,7 +116,7 @@ $isExtendPage = (strpos($_SERVER['REQUEST_URI'], 'extending.php') !== false);
                         echo '<a href="' . htmlspecialchars($href, ENT_QUOTES, 'UTF-8') . '" style="text-decoration:none" class="sidebar-link flex items-center px-3 py-2 text-gray-600 hover:bg-gray-100 hover:text-gray-900 transition-colors';
                         if ($isActive) echo ' bg-blue-50 text-discord-accent';
                         echo '">';
-                        echo '<i class="sidebar-icon sidebar-icon--purple fas fa-dice-d6"></i>';
+                        echo '<span class="sidebar-icon sidebar-icon--purple"><i class="fas fa-dice-d6" aria-hidden="true"></i></span>';
                         echo '<span class="sidebar-text">' . htmlspecialchars($text, ENT_QUOTES, 'UTF-8') . '</span>';
                         echo '</a>';
                         echo '</li>';
@@ -134,7 +134,7 @@ $isExtendPage = (strpos($_SERVER['REQUEST_URI'], 'extending.php') !== false);
                 <div class="relative group-settings">
                     <button class="sidebar-link w-full flex items-center px-3 py-2 text-gray-600 hover:bg-gray-100 hover:text-gray-900 transition-colors focus:outline-none justify-between <?php if($inSettingsPage) echo 'bg-blue-50 text-discord-accent'; ?>" onclick="const expanded = this.nextElementSibling.classList.toggle('hidden'); this.querySelector('.settings-chevron').classList.toggle('-rotate-90'); this.querySelector('.settings-chevron').classList.toggle('rotate-0'); this.setAttribute('aria-expanded', expanded ? 'false' : 'true');" aria-expanded="<?php echo $inSettingsPage ? 'true' : 'false'; ?>">
                         <div class="flex items-center">
-                            <i class="sidebar-icon <?php echo $item[4]; ?> fas <?php echo $item[1]; ?>"></i>
+                            <span class="sidebar-icon <?php echo $item[4]; ?>"><i class="fas <?php echo $item[1]; ?>" aria-hidden="true"></i></span>
                             <span class="sidebar-text"><?php _e($item[2]); ?></span>
                         </div>
                         <i class="fas fa-chevron-down text-xs transition-transform duration-200 settings-chevron <?php echo $inSettingsPage ? 'rotate-0' : '-rotate-90'; ?>"></i>
@@ -149,7 +149,7 @@ $isExtendPage = (strpos($_SERVER['REQUEST_URI'], 'extending.php') !== false);
             <?php else: ?>
             <li>
                     <a href="<?php $options->adminUrl($item[0]); ?>" style="text-decoration:none" class="sidebar-link flex items-center px-3 py-2 text-gray-600 hover:bg-gray-100 hover:text-gray-900 transition-colors <?php if($menu->current == $item[0]) echo 'bg-blue-50 text-discord-accent'; ?>">
-                    <i class="sidebar-icon <?php echo $item[4]; ?> fas <?php echo $item[1]; ?>"></i>
+                    <span class="sidebar-icon <?php echo $item[4]; ?>"><i class="fas <?php echo $item[1]; ?>" aria-hidden="true"></i></span>
                     <span class="sidebar-text"><?php _e($item[2]); ?></span>
                 </a>
             </li>

@@ -4448,10 +4448,21 @@ button:not(.view-toggle button),.btn:not(.view-toggle button),a.btn {
 	width:34px !important;
 	height:34px;
 	margin-right:10px !important;
+	padding:0 !important;
+	box-sizing:border-box;
 	border-radius:10px;
 	font-size:14px;
+	line-height:1;
+	text-align:center;
 	opacity:1 !important;
 	transition:transform .18s ease, filter .18s ease;
+}
+
+.sidebar-icon > i {
+	display:block;
+	margin:0;
+	font-style:normal;
+	line-height:1;
 }
 
 #sidebar .sidebar-link:hover .sidebar-icon {
