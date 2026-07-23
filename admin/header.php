@@ -5,17 +5,17 @@ if (!defined('__TYPECHO_ADMIN__')) {
 
 $header = '
 <!-- CSS Reset & Grid -->
-<link rel="stylesheet" href="' . $options->adminStaticUrl('css', 'normalize.css?v=1.3.1', true) . '">
-<link rel="stylesheet" href="' . $options->adminStaticUrl('css', 'grid.css?v=1.3.1', true) . '">
+<link rel="stylesheet" href="' . $options->adminUrl('css/normalize.css?v=1.3.1',true) . '">
+<link rel="stylesheet" href="' . $options->adminUrl('css/grid.css?v=1.3.1',true) . '">
 <!-- Theme Variables -->
-<link rel="stylesheet" href="' . $options->adminStaticUrl('css', 'style.css?v=1.3.1', true) . '">
-<link rel="stylesheet" href="' . $options->adminStaticUrl('css', 'light.css?v=1.3.1', true) . '">
-<link rel="stylesheet" href="' . $options->adminStaticUrl('css', 'dark.css?v=1.3.1', true) . '">
+<link rel="stylesheet" href="' . $options->adminUrl('css/style.css?v=1.3.1',true) . '">
+<link rel="stylesheet" href="' . $options->adminUrl('css/light.css?v=1.3.1',true) . '">
+<link rel="stylesheet" href="' . $options->adminUrl('css/dark.css?v=1.3.1',true) . '">
 <!-- TailwindCSS -->
-<link rel="stylesheet" href="' . $options->adminStaticUrl('css', 'tailwind.css?v=1.3.1', true) . '">
+<link rel="stylesheet" href="' . $options->adminUrl('css/tailwind.css?v=1.3.1',true) . '">
 <!-- NProgress -->
-<script src="' . $options->adminStaticUrl('js', 'nprogress.js', true) . '"></script>
-<link rel="stylesheet" href="' . $options->adminStaticUrl('css', 'nprogress.css', true) . '">
+<script src="' . $options->adminUrl('js/nprogress.js',true) . '"></script>
+<link rel="stylesheet" href="' . $options->adminUrl('css/nprogress.css',true) . '">
 <!-- Font Awesome -->
 <link href="https://cdn.garfieldtom.cool/resource/libs/fontawesome/7.2.0/css/all.min.css" rel="stylesheet">
 <!-- ECharts -->
