@@ -74,7 +74,7 @@ include 'menu.php';
                                             </div>
                                             <div class="flex space-x-2">
                                                 <?php if (!$themes->activated): ?>
-                                                    <a href="<?php $security->index('/action/themes-edit?change=' . $themes->name); ?>" class="flex items-center px-3 py-1.5 bg-discord-accent text-white text-xs font-medium hover:bg-blue-600 transition-colors">
+                                                    <a href="<?php echo booadminActionUrl('/action/themes-edit?change=' . $themes->name); ?>" class="flex items-center px-3 py-1.5 bg-discord-accent text-white text-xs font-medium hover:bg-blue-600 transition-colors">
                                                         <i class="fas fa-check mr-1"></i> <?php _e('启用'); ?>
                                                     </a>
                                                 <?php else: ?>

@@ -66,10 +66,10 @@ $attachments = \Widget\Contents\Attachment\Admin::alloc();
                                     <i class="fas fa-tasks mr-1"></i><?php _e('选中项'); ?> <i class="fas fa-chevron-down ml-1"></i>
                                 </button>
                                 <div class="dropdown-menu booadmin-dropdown-menu w-40 hidden">
-                                    <a lang="<?php _e('你确认要删除这些文件吗?'); ?>" href="<?php $security->index('/action/contents-attachment-edit?do=delete'); ?>" class="block px-4 py-2 text-sm text-red-600 hover:bg-red-50 hover:text-red-700"><i class="fas fa-trash-alt mr-1"></i><?php _e('删除'); ?></a>
+                                    <a lang="<?php _e('你确认要删除这些文件吗?'); ?>" href="<?php echo booadminActionUrl('/action/contents-attachment-edit?do=delete'); ?>" class="block px-4 py-2 text-sm text-red-600 hover:bg-red-50 hover:text-red-700"><i class="fas fa-trash-alt mr-1"></i><?php _e('删除'); ?></a>
                                 </div>
                              </div>
-                             <button lang="<?php _e('您确认要清理未归档的文件吗?'); ?>" class="px-3 py-1 text-xs font-medium bg-red-50 border border-red-200 hover:bg-red-100 text-red-600 btn-operate flex items-center" href="<?php $security->index('/action/contents-attachment-edit?do=clear'); ?>"><i class="fas fa-broom mr-1"></i><?php _e('清理未归档'); ?></button>
+                             <button lang="<?php _e('您确认要清理未归档的文件吗?'); ?>" class="px-3 py-1 text-xs font-medium bg-red-50 border border-red-200 hover:bg-red-100 text-red-600 btn-operate flex items-center" href="<?php echo booadminActionUrl('/action/contents-attachment-edit?do=clear'); ?>"><i class="fas fa-broom mr-1"></i><?php _e('清理未归档'); ?></button>
                          </div>
                          <div class="view-toggle">
                              <button type="button" class="btn-table-view active" title="<?php _e('表格视图'); ?>">
@@ -239,6 +239,7 @@ $attachments = \Widget\Contents\Attachment\Admin::alloc();
                             </div>
                         <?php endif; ?>
                     </div>
+                    <?php $security->form('contents-attachment-edit'); ?>
                 </form>
             </div>
             

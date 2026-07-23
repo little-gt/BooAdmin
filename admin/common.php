@@ -32,6 +32,11 @@ try {
 $request = $options->request;
 $response = $options->response;
 
+function booadminActionUrl($path) {
+    global $security;
+    return $security->getTokenUrl($security->getIndex($path));
+}
+
 /**
  * 统一的头像处理函数
  * @param string $mail 邮箱地址

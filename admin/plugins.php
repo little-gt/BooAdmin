@@ -117,7 +117,7 @@ include 'menu.php';
                                                         <i class="fas fa-cog mr-1.5"></i> <?php _e('设置'); ?>
                                                     </a>
                                                 <?php endif; ?>
-                                                <a href="<?php $security->index('/action/plugins-edit?deactivate=' . $activatedPlugins->name); ?>" class="flex items-center px-3 py-1.5 bg-red-50 text-red-600 hover:bg-red-100 transition-colors text-sm font-medium">
+                                                <a href="<?php echo booadminActionUrl('/action/plugins-edit?deactivate=' . $activatedPlugins->name); ?>" class="flex items-center px-3 py-1.5 bg-red-50 text-red-600 hover:bg-red-100 transition-colors text-sm font-medium">
                                                     <i class="fas fa-power-off mr-1.5"></i> <?php _e('禁用'); ?>
                                                 </a>
                                             <?php else: ?>
@@ -134,7 +134,7 @@ include 'menu.php';
                                                 <h4 class="text-base font-bold text-red-700"><?php echo $key; ?></h4>
                                                 <p class="text-sm text-red-600 mt-1"><i class="fas fa-exclamation-circle mr-1"></i> <?php _e('此插件文件已经损坏或者被不安全移除, 强烈建议你禁用它'); ?></p>
                                             </div>
-                                            <a href="<?php $security->index('/action/plugins-edit?deactivate=' . $key); ?>" class="px-3 py-1.5 bg-red-100 text-red-700 hover:bg-red-200 transition-colors text-sm font-medium">
+                                            <a href="<?php echo booadminActionUrl('/action/plugins-edit?deactivate=' . $key); ?>" class="px-3 py-1.5 bg-red-100 text-red-700 hover:bg-red-200 transition-colors text-sm font-medium">
                                                 <?php _e('禁用'); ?>
                                             </a>
                                         </div>
@@ -165,7 +165,7 @@ include 'menu.php';
                                                 </div>
                                             </div>
                                             <div class="mt-4 md:mt-0 shrink-0">
-                                                <a href="<?php $security->index('/action/plugins-edit?activate=' . $deactivatedPlugins->name); ?>" class="flex items-center px-4 py-1.5 bg-discord-accent text-white hover:bg-blue-600 transition-colors text-sm font-medium">
+                                                <a href="<?php echo booadminActionUrl('/action/plugins-edit?activate=' . $deactivatedPlugins->name); ?>" class="flex items-center px-4 py-1.5 bg-discord-accent text-white hover:bg-blue-600 transition-colors text-sm font-medium">
                                                     <i class="fas fa-play mr-1.5"></i> <?php _e('启用'); ?>
                                                 </a>
                                             </div>

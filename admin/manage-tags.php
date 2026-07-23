@@ -46,12 +46,12 @@ include 'menu.php';
                                         <i class="fas fa-tasks mr-1"></i><?php _e('选中项'); ?> <i class="fas fa-chevron-down ml-1"></i>
                                     </button>
                                     <div class="dropdown-menu booadmin-dropdown-menu w-64 hidden">
-                                        <a lang="<?php _e('你确认要删除这些标签吗?'); ?>" data-confirm-message="<?php _e('你确认要删除这些标签吗?'); ?>" href="<?php $security->index('/action/metas-tag-edit?do=delete'); ?>" class="js-tag-action block px-4 py-2 text-sm text-red-600 hover:bg-red-50 hover:text-red-700"><i class="fas fa-trash-alt mr-1"></i><?php _e('删除'); ?></a>
-                                        <a lang="<?php _e('刷新标签可能需要等待较长时间, 你确认要刷新这些标签吗?'); ?>" data-confirm-message="<?php _e('刷新标签可能需要等待较长时间, 你确认要刷新这些标签吗?'); ?>" href="<?php $security->index('/action/metas-tag-edit?do=refresh'); ?>" class="js-tag-action block px-4 py-2 text-sm text-gray-700 hover:bg-gray-50"><i class="fas fa-sync-alt mr-1"></i><?php _e('刷新'); ?></a>
+                                        <a lang="<?php _e('你确认要删除这些标签吗?'); ?>" data-confirm-message="<?php _e('你确认要删除这些标签吗?'); ?>" href="<?php echo booadminActionUrl('/action/metas-tag-edit?do=delete'); ?>" class="js-tag-action block px-4 py-2 text-sm text-red-600 hover:bg-red-50 hover:text-red-700"><i class="fas fa-trash-alt mr-1"></i><?php _e('删除'); ?></a>
+                                        <a lang="<?php _e('刷新标签可能需要等待较长时间, 你确认要刷新这些标签吗?'); ?>" data-confirm-message="<?php _e('刷新标签可能需要等待较长时间, 你确认要刷新这些标签吗?'); ?>" href="<?php echo booadminActionUrl('/action/metas-tag-edit?do=refresh'); ?>" class="js-tag-action block px-4 py-2 text-sm text-gray-700 hover:bg-gray-50"><i class="fas fa-sync-alt mr-1"></i><?php _e('刷新'); ?></a>
                                         <div class="border-t border-gray-100 my-1"></div>
                                         <div class="px-4 py-2">
                                             <div class="flex items-center space-x-2">
-                                                <button type="button" lang="<?php _e('你确认要合并这些标签吗?'); ?>" data-confirm-message="<?php _e('你确认要合并这些标签吗?'); ?>" class="btn-merge px-2 py-1 text-xs bg-discord-accent text-white hover:bg-blue-600 transition-colors" rel="<?php $security->index('/action/metas-tag-edit?do=merge'); ?>"><i class="fas fa-compress-alt mr-1"></i><?php _e('合并到'); ?></button>
+                                                <button type="button" lang="<?php _e('你确认要合并这些标签吗?'); ?>" data-confirm-message="<?php _e('你确认要合并这些标签吗?'); ?>" class="btn-merge px-2 py-1 text-xs bg-discord-accent text-white hover:bg-blue-600 transition-colors" rel="<?php echo booadminActionUrl('/action/metas-tag-edit?do=merge'); ?>"><i class="fas fa-compress-alt mr-1"></i><?php _e('合并到'); ?></button>
                                                 <input type="text" name="merge" class="text-xs border border-gray-300 px-2 py-1 focus:outline-none focus:border-discord-accent w-24" placeholder="<?php _e('标签名'); ?>">
                                             </div>
                                         </div>
@@ -84,6 +84,7 @@ include 'menu.php';
                             <?php endif; ?>
                             <input type="hidden" name="do" value="delete"/>
                         </div>
+                        <?php $security->form('metas-tag-edit'); ?>
                     </form>
                 </div>
             </div>
@@ -296,7 +297,8 @@ include 'form-js.php';
         $('.typecho-option input').first().focus();
 
         <?php if (isset($request->mid)): ?>
-        $('#<?php echo $request->mid; ?> div').addClass('ring-2 ring-offset-1 ring-yellow-400 border-yellow-400');
+        var selectedTag = <?php echo json_encode((string) $request->mid, JSON_HEX_TAG | JSON_HEX_AMP | JSON_HEX_APOS | JSON_HEX_QUOT); ?>;
+        $('#' + selectedTag + ' div').addClass('ring-2 ring-offset-1 ring-yellow-400 border-yellow-400');
         <?php endif; ?>
     });
 })();

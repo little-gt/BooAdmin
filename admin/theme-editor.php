@@ -91,6 +91,7 @@ include 'menu.php';
                                         </button>
                                     <?php endif; ?>
                                 </div>
+                                <?php $security->form('themes-edit'); ?>
                             </form>
 
                             <!-- 保存确认提示框 -->

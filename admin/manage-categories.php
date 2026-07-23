@@ -48,12 +48,12 @@ include 'menu.php';
                                     <i class="fas fa-tasks mr-1"></i><?php _e('选中项'); ?> <i class="fas fa-chevron-down ml-1"></i>
                                 </button>
                                 <div class="dropdown-menu booadmin-dropdown-menu w-64 hidden">
-                                    <a lang="<?php _e('此分类下的所有内容将被删除, 你确认要删除这些分类吗?'); ?>" data-confirm-message="<?php _e('此分类下的所有内容将被删除, 你确认要删除这些分类吗?'); ?>" href="<?php $security->index('/action/metas-category-edit?do=delete'); ?>" class="js-category-action block px-4 py-2 text-sm text-red-600 hover:bg-red-50 hover:text-red-700"><i class="fas fa-trash-alt mr-1"></i><?php _e('删除'); ?></a>
-                                    <a lang="<?php _e('刷新分类可能需要等待较长时间, 你确认要刷新这些分类吗?'); ?>" data-confirm-message="<?php _e('刷新分类可能需要等待较长时间, 你确认要刷新这些分类吗?'); ?>" href="<?php $security->index('/action/metas-category-edit?do=refresh'); ?>" class="js-category-action block px-4 py-2 text-sm text-gray-700 hover:bg-gray-50"><i class="fas fa-sync-alt mr-1"></i><?php _e('刷新'); ?></a>
+                                    <a lang="<?php _e('此分类下的所有内容将被删除, 你确认要删除这些分类吗?'); ?>" data-confirm-message="<?php _e('此分类下的所有内容将被删除, 你确认要删除这些分类吗?'); ?>" href="<?php echo booadminActionUrl('/action/metas-category-edit?do=delete'); ?>" class="js-category-action block px-4 py-2 text-sm text-red-600 hover:bg-red-50 hover:text-red-700"><i class="fas fa-trash-alt mr-1"></i><?php _e('删除'); ?></a>
+                                    <a lang="<?php _e('刷新分类可能需要等待较长时间, 你确认要刷新这些分类吗?'); ?>" data-confirm-message="<?php _e('刷新分类可能需要等待较长时间, 你确认要刷新这些分类吗?'); ?>" href="<?php echo booadminActionUrl('/action/metas-category-edit?do=refresh'); ?>" class="js-category-action block px-4 py-2 text-sm text-gray-700 hover:bg-gray-50"><i class="fas fa-sync-alt mr-1"></i><?php _e('刷新'); ?></a>
                                     <div class="border-t border-gray-100 my-1"></div>
                                     <div class="px-4 py-2">
                                         <div class="flex items-center space-x-2">
-                                            <button type="button" lang="<?php _e('你确认要合并这些分类吗?'); ?>" data-confirm-message="<?php _e('你确认要合并这些分类吗?'); ?>" class="btn-merge px-2 py-1 text-xs bg-discord-accent text-white hover:bg-blue-600 transition-colors" rel="<?php $security->index('/action/metas-category-edit?do=merge'); ?>"><i class="fas fa-compress-alt mr-1"></i><?php _e('合并到'); ?></button>
+                                            <button type="button" lang="<?php _e('你确认要合并这些分类吗?'); ?>" data-confirm-message="<?php _e('你确认要合并这些分类吗?'); ?>" class="btn-merge px-2 py-1 text-xs bg-discord-accent text-white hover:bg-blue-600 transition-colors" rel="<?php echo booadminActionUrl('/action/metas-category-edit?do=merge'); ?>"><i class="fas fa-compress-alt mr-1"></i><?php _e('合并到'); ?></button>
                                             <select name="merge" class="text-xs border border-gray-300 px-2 py-1 focus:outline-none focus:border-discord-accent w-24">
                                                 <?php $categories->parse('<option value="{mid}">{name}</option>'); ?>
                                             </select>
@@ -114,7 +114,7 @@ include 'menu.php';
                                             <div class="flex justify-end space-x-3 opacity-0 group-hover:opacity-100 transition-opacity">
                                                 <a href="<?php $options->adminUrl('category.php?mid=' . $categories->mid); ?>" class="text-gray-500 hover:text-discord-accent" title="<?php _e('编辑'); ?>"><i class="fas fa-edit"></i></a>
                                                 <?php if ($options->defaultCategory != $categories->mid): ?>
-                                                    <a href="<?php $security->index('/action/metas-category-edit?do=default&mid=' . $categories->mid); ?>" class="text-gray-500 hover:text-discord-accent" title="<?php _e('设为默认'); ?>"><i class="fas fa-check-circle"></i></a>
+                                                    <a href="<?php echo booadminActionUrl('/action/metas-category-edit?do=default&mid=' . $categories->mid); ?>" class="text-gray-500 hover:text-discord-accent" title="<?php _e('设为默认'); ?>"><i class="fas fa-check-circle"></i></a>
                                                 <?php endif; ?>
                                             </div>
                                         </td>
@@ -133,6 +133,7 @@ include 'menu.php';
                         </tbody>
                     </table>
                     </div>
+                    <?php $security->form('metas-category-edit'); ?>
                 </form>
             </div>
         </div>
@@ -218,7 +219,7 @@ include 'common-js.php';
                     ids.push($(this).val());
                 });
 
-                $.post('<?php $security->index('/action/metas-category-edit?do=sort'); ?>',
+                $.post('<?php echo $security->getTokenUrl($security->getIndex('/action/metas-category-edit?do=sort')); ?>',
                     $.param({mid: ids}));
             }
         });
@@ -313,7 +314,8 @@ include 'common-js.php';
         <?php if (isset($request->mid)): ?>
         (function () {
             var highlightSoft = getComputedStyle(document.documentElement).getPropertyValue('--booadmin-highlight-soft').trim() || '#F3F4F6';
-            $('#mid-<?php echo $request->mid; ?>').effect('highlight', {color: highlightSoft}, 1500);
+            var selectedCategory = <?php echo json_encode((string) $request->mid, JSON_HEX_TAG | JSON_HEX_AMP | JSON_HEX_APOS | JSON_HEX_QUOT); ?>;
+            $('#mid-' + selectedCategory).effect('highlight', {color: highlightSoft}, 1500);
         })();
         <?php endif; ?>
     });

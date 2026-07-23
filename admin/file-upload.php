@@ -13,7 +13,7 @@ if (isset($post) || isset($page)) {
 ?>
 
 <div id="upload-panel" class="p-4 bg-gray-50 border border-dashed border-gray-300 hover:border-discord-accent transition-colors">
-    <div class="upload-area text-center py-8 cursor-pointer text-discord-muted hover:text-discord-text" data-url="<?php $security->index('/action/upload'); ?>">
+    <div class="upload-area text-center py-8 cursor-pointer text-discord-muted hover:text-discord-text" data-url="<?php echo $security->getTokenUrl($security->getIndex('/action/upload')); ?>">
         <div class="mb-3 text-4xl text-gray-300">
             <i class="fas fa-cloud-upload-alt"></i>
         </div>

@@ -39,7 +39,7 @@ $(document).ready(function() {
     $('#title').select();
 
     // text 自动拉伸
-    Typecho.editorResize('text', '<?php $security->index('/action/ajax?do=editorResize'); ?>');
+    Typecho.editorResize('text', '<?php echo booadminActionUrl('/action/ajax?do=editorResize'); ?>');
 
     // tag autocomplete 提示
     const tags = $('#tags'), tagsPre = [];

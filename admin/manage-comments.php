@@ -99,15 +99,15 @@ $isAllComments = ('on' == $request->get('__typecho_all_comments') || 'on' == \Ty
                                     <i class="fas fa-tasks mr-1"></i><?php _e('选中项'); ?> <i class="fas fa-chevron-down ml-1"></i>
                                 </button>
                                 <div class="dropdown-menu booadmin-dropdown-menu w-40 hidden">
-                                    <a href="<?php $security->index('/action/comments-edit?do=approved'); ?>" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-50"><i class="fas fa-check mr-1 text-green-600"></i><?php _e('通过'); ?></a>
-                                    <a href="<?php $security->index('/action/comments-edit?do=waiting'); ?>" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-50"><i class="fas fa-clock mr-1 text-yellow-600"></i><?php _e('待审核'); ?></a>
-                                    <a href="<?php $security->index('/action/comments-edit?do=spam'); ?>" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-50"><i class="fas fa-ban mr-1 text-orange-500"></i><?php _e('标记垃圾'); ?></a>
+                                    <a href="<?php echo booadminActionUrl('/action/comments-edit?do=approved'); ?>" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-50"><i class="fas fa-check mr-1 text-green-600"></i><?php _e('通过'); ?></a>
+                                    <a href="<?php echo booadminActionUrl('/action/comments-edit?do=waiting'); ?>" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-50"><i class="fas fa-clock mr-1 text-yellow-600"></i><?php _e('待审核'); ?></a>
+                                    <a href="<?php echo booadminActionUrl('/action/comments-edit?do=spam'); ?>" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-50"><i class="fas fa-ban mr-1 text-orange-500"></i><?php _e('标记垃圾'); ?></a>
                                     <div class="border-t border-gray-100 my-1"></div>
-                                    <a href="<?php $security->index('/action/comments-edit?do=delete'); ?>" class="block px-4 py-2 text-sm text-red-600 hover:bg-red-50 hover:text-red-700"><i class="fas fa-trash-alt mr-1"></i><?php _e('删除'); ?></a>
+                                    <a href="<?php echo booadminActionUrl('/action/comments-edit?do=delete'); ?>" class="block px-4 py-2 text-sm text-red-600 hover:bg-red-50 hover:text-red-700"><i class="fas fa-trash-alt mr-1"></i><?php _e('删除'); ?></a>
                                 </div>
                              </div>
                              <?php if('spam' == $request->get('status')): ?>
-                                <button lang="<?php _e('你确认要删除所有垃圾评论吗?'); ?>" class="px-3 py-1 text-xs font-medium bg-red-50 border border-red-200 hover:bg-red-100 text-red-600 btn-operate flex items-center" href="<?php $security->index('/action/comments-edit?do=delete-spam'); ?>"><i class="fas fa-trash mr-1"></i><?php _e('删除所有垃圾评论'); ?></button>
+                                <button lang="<?php _e('你确认要删除所有垃圾评论吗?'); ?>" class="px-3 py-1 text-xs font-medium bg-red-50 border border-red-200 hover:bg-red-100 text-red-600 btn-operate flex items-center" href="<?php echo booadminActionUrl('/action/comments-edit?do=delete-spam'); ?>"><i class="fas fa-trash mr-1"></i><?php _e('删除所有垃圾评论'); ?></button>
                              <?php endif; ?>
                          </div>
                          <div class="flex items-center space-x-4">
@@ -179,11 +179,11 @@ $isAllComments = ('on' == $request->get('__typecho_all_comments') || 'on' == \Ty
                                         'permalink' => $comments->permalink,
                                         'status' => $comments->status,
                                         'gravatar' => $gravatarHtml,
-                                        'replyUrl' => $security->getIndex('/action/comments-edit?do=reply&coid=' . $comments->coid),
-                                        'editUrl' => $security->getIndex('/action/comments-edit?do=edit&coid=' . $comments->coid),
-                                        'approvedUrl' => $security->getIndex('/action/comments-edit?do=approved&coid=' . $comments->coid),
-                                        'spamUrl' => $security->getIndex('/action/comments-edit?do=spam&coid=' . $comments->coid),
-                                        'deleteUrl' => $security->getIndex('/action/comments-edit?do=delete&coid=' . $comments->coid),
+                                        'replyUrl' => $security->getTokenUrl($security->getIndex('/action/comments-edit?do=reply&coid=' . $comments->coid)),
+                                        'editUrl' => $security->getTokenUrl($security->getIndex('/action/comments-edit?do=edit&coid=' . $comments->coid)),
+                                        'approvedUrl' => $security->getTokenUrl($security->getIndex('/action/comments-edit?do=approved&coid=' . $comments->coid)),
+                                        'spamUrl' => $security->getTokenUrl($security->getIndex('/action/comments-edit?do=spam&coid=' . $comments->coid)),
+                                        'deleteUrl' => $security->getTokenUrl($security->getIndex('/action/comments-edit?do=delete&coid=' . $comments->coid)),
                                         'comment' => $comment
                                     ];
                                 ?>
@@ -226,22 +226,22 @@ $isAllComments = ('on' == $request->get('__typecho_all_comments') || 'on' == \Ty
                                         </td>
                                         <td class="py-3 pr-4 text-right align-top text-sm">
                                             <div class="flex flex-col items-end space-y-1 opacity-0 group-hover:opacity-100 transition-opacity">
-                                                <a href="#<?php $comments->theId(); ?>" rel="<?php $security->index('/action/comments-edit?do=reply&coid=' . $comments->coid); ?>" class="operate-reply text-discord-accent hover:underline"><i class="fas fa-reply mr-1"></i><?php _e('回复'); ?></a>
-                                                <a href="#<?php $comments->theId(); ?>" rel="<?php $security->index('/action/comments-edit?do=edit&coid=' . $comments->coid); ?>" class="operate-edit text-gray-500 hover:text-discord-accent"><i class="fas fa-edit mr-1"></i><?php _e('编辑'); ?></a>
+                                                <a href="#<?php $comments->theId(); ?>" rel="<?php echo booadminActionUrl('/action/comments-edit?do=reply&coid=' . $comments->coid); ?>" class="operate-reply text-discord-accent hover:underline"><i class="fas fa-reply mr-1"></i><?php _e('回复'); ?></a>
+                                                <a href="#<?php $comments->theId(); ?>" rel="<?php echo booadminActionUrl('/action/comments-edit?do=edit&coid=' . $comments->coid); ?>" class="operate-edit text-gray-500 hover:text-discord-accent"><i class="fas fa-edit mr-1"></i><?php _e('编辑'); ?></a>
                                                 
                                                 <?php if('approved' == $comments->status): ?>
                                                     <!-- Current status approved -->
                                                 <?php else: ?>
-                                                    <a href="<?php $security->index('/action/comments-edit?do=approved&coid=' . $comments->coid); ?>" class="operate-approved text-green-600 hover:underline"><i class="fas fa-check mr-1"></i><?php _e('通过'); ?></a>
+                                                    <a href="<?php echo booadminActionUrl('/action/comments-edit?do=approved&coid=' . $comments->coid); ?>" class="operate-approved text-green-600 hover:underline"><i class="fas fa-check mr-1"></i><?php _e('通过'); ?></a>
                                                 <?php endif; ?>
                                                 
                                                 <?php if('spam' == $comments->status): ?>
                                                     <!-- Current status spam -->
                                                 <?php else: ?>
-                                                    <a href="<?php $security->index('/action/comments-edit?do=spam&coid=' . $comments->coid); ?>" class="operate-spam text-orange-500 hover:underline"><i class="fas fa-ban mr-1"></i><?php _e('标为垃圾'); ?></a>
+                                                    <a href="<?php echo booadminActionUrl('/action/comments-edit?do=spam&coid=' . $comments->coid); ?>" class="operate-spam text-orange-500 hover:underline"><i class="fas fa-ban mr-1"></i><?php _e('标为垃圾'); ?></a>
                                                 <?php endif; ?>
                                                 
-                                                <a lang="<?php _e('你确认要删除%s的评论吗?', htmlspecialchars($comments->author)); ?>" href="<?php $security->index('/action/comments-edit?do=delete&coid=' . $comments->coid); ?>" class="operate-delete text-red-500 hover:underline"><i class="fas fa-trash-alt mr-1"></i><?php _e('删除'); ?></a>
+                                                <a lang="<?php _e('你确认要删除%s的评论吗?', htmlspecialchars($comments->author)); ?>" href="<?php echo booadminActionUrl('/action/comments-edit?do=delete&coid=' . $comments->coid); ?>" class="operate-delete text-red-500 hover:underline"><i class="fas fa-trash-alt mr-1"></i><?php _e('删除'); ?></a>
                                             </div>
                                         </td>
                                     </tr>
@@ -279,14 +279,14 @@ $isAllComments = ('on' == $request->get('__typecho_all_comments') || 'on' == \Ty
                                             <div class="flex-1 min-w-0">
                                                 <div class="card-title font-medium text-discord-text">
                                                     <?php if($commentData['url']): ?>
-                                                        <a href="<?php echo $commentData['url']; ?>" target="_blank" class="hover:underline"><?php echo htmlspecialchars($commentData['author']); ?></a>
+                                                        <a href="<?php echo htmlspecialchars(preg_match('/^https?:\\/\\//i', $commentData['url']) ? $commentData['url'] : '#', ENT_QUOTES, 'UTF-8'); ?>" target="_blank" rel="noopener noreferrer" class="hover:underline"><?php echo htmlspecialchars($commentData['author']); ?></a>
                                                     <?php else: ?>
                                                         <?php echo htmlspecialchars($commentData['author']); ?>
                                                     <?php endif; ?>
                                                 </div>
                                                 <?php if($commentData['mail']): ?>
                                                     <div class="text-xs text-gray-400 truncate">
-                                                        <a href="mailto:<?php echo $commentData['mail']; ?>" class="hover:text-discord-accent"><?php echo htmlspecialchars($commentData['mail']); ?></a>
+                                                        <a href="mailto:<?php echo htmlspecialchars($commentData['mail'], ENT_QUOTES, 'UTF-8'); ?>" class="hover:text-discord-accent"><?php echo htmlspecialchars($commentData['mail']); ?></a>
                                                     </div>
                                                 <?php endif; ?>
                                             </div>
@@ -344,6 +344,7 @@ $isAllComments = ('on' == $request->get('__typecho_all_comments') || 'on' == \Ty
                     <?php if(isset($request->cid)): ?>
                     <input type="hidden" value="<?php echo $request->filter('html')->cid; ?>" name="cid" />
                     <?php endif; ?>
+                    <?php $security->form('comments-edit'); ?>
                 </form>
             </div>
             

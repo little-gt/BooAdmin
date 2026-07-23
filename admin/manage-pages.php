@@ -70,10 +70,10 @@ $pages = \Widget\Contents\Page\Admin::alloc();
                                     <i class="fas fa-tasks mr-1"></i><?php _e('选中项'); ?> <i class="fas fa-chevron-down ml-1"></i>
                                 </button>
                                 <div class="dropdown-menu booadmin-dropdown-menu w-40 hidden">
-                                    <a href="<?php $security->index('/action/contents-page-edit?do=delete'); ?>" class="block px-4 py-2 text-sm text-red-600 hover:bg-red-50 hover:text-red-700"><i class="fas fa-trash-alt mr-1"></i><?php _e('删除'); ?></a>
+                                    <a href="<?php echo booadminActionUrl('/action/contents-page-edit?do=delete'); ?>" class="block px-4 py-2 text-sm text-red-600 hover:bg-red-50 hover:text-red-700"><i class="fas fa-trash-alt mr-1"></i><?php _e('删除'); ?></a>
                                     <div class="border-t border-gray-100 my-1"></div>
-                                    <a href="<?php $security->index('/action/contents-page-edit?do=mark&status=publish'); ?>" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-50"><i class="fas fa-eye mr-1"></i><?php _e('标记为公开'); ?></a>
-                                    <a href="<?php $security->index('/action/contents-page-edit?do=mark&status=hidden'); ?>" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-50"><i class="fas fa-eye-slash mr-1"></i><?php _e('标记为隐藏'); ?></a>
+                                    <a href="<?php echo booadminActionUrl('/action/contents-page-edit?do=mark&status=publish'); ?>" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-50"><i class="fas fa-eye mr-1"></i><?php _e('标记为公开'); ?></a>
+                                    <a href="<?php echo booadminActionUrl('/action/contents-page-edit?do=mark&status=hidden'); ?>" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-50"><i class="fas fa-eye-slash mr-1"></i><?php _e('标记为隐藏'); ?></a>
                                 </div>
                              </div>
                          </div>
@@ -261,6 +261,7 @@ $pages = \Widget\Contents\Page\Admin::alloc();
                             </div>
                         <?php endif; ?>
                     </div>
+                    <?php $security->form('contents-page-edit'); ?>
                 </form>
             </div>
 
@@ -356,7 +357,7 @@ include 'table-js.php';
                             ids.push($(this).val());
                         });
 
-                        $.post('<?php $security->index('/action/contents-page-edit?do=sort'); ?>',
+                        $.post('<?php echo $security->getTokenUrl($security->getIndex('/action/contents-page-edit?do=sort')); ?>',
                             $.param({cid: ids}));
                     }
                 });

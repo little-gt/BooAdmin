@@ -78,7 +78,7 @@ include 'menu.php';
                 <div class="booadmin-panel">
                     <h3 class="booadmin-panel-title"><?php _e('替换文件'); ?></h3>
                     <div id="upload-panel" class="border-2 border-dashed border-gray-300 p-8 text-center hover:bg-gray-50 transition-colors relative">
-                        <div class="upload-area cursor-pointer" data-url="<?php $security->index('/action/upload?do=modify'); ?>">
+                        <div class="upload-area cursor-pointer" data-url="<?php echo $security->getTokenUrl($security->getIndex('/action/upload?do=modify')); ?>">
                             <i class="fas fa-cloud-upload-alt text-4xl text-gray-300 mb-3"></i>
                             <p class="text-gray-500 font-medium"><?php _e('拖放文件到这里'); ?></p>
                             <p class="text-gray-400 text-sm mt-1"><?php _e('或者'); ?> <a href="###" class="upload-file text-discord-accent hover:underline"><?php _e('选择文件上传'); ?></a></p>
@@ -95,7 +95,7 @@ include 'menu.php';
                     <?php $attachment->form()->render(); ?>
                     
                     <div class="mt-6 pt-4 border-t border-gray-100 text-center hidden">
-                        <button class="text-red-500 hover:text-red-700 text-sm operate-delete" lang="<?php _e('你确认要删除文件 %s 吗?', $attachment->attachment->name); ?>" href="<?php $security->index('/action/contents-attachment-edit?do=delete&cid=' . $attachment->cid); ?>">
+                        <button class="text-red-500 hover:text-red-700 text-sm operate-delete" lang="<?php _e('你确认要删除文件 %s 吗?', $attachment->attachment->name); ?>" href="<?php echo booadminActionUrl('/action/contents-attachment-edit?do=delete&cid=' . $attachment->cid); ?>">
                             <i class="fas fa-trash-alt mr-1"></i> <?php _e('删除此文件'); ?>
                         </button>
                     </div>

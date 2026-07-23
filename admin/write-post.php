@@ -37,7 +37,7 @@ $post = \Widget\Contents\Post\Edit::alloc()->prepare();
                             <?php if ($post->draft['cid'] != $post->cid): ?>
                                 <?php $postModifyDate = new \Typecho\Date($post->draft['modified']); ?>
                                 <cite><?php _e('你正在编辑的是保存于 %s 的修订版, 你也可以 <a href="%s" class="underline">删除它</a>', $postModifyDate->word(),
-                                        $security->getIndex('/action/contents-post-edit?do=deleteDraft&cid=' . $post->cid)); ?></cite>
+                                        booadminActionUrl('/action/contents-post-edit?do=deleteDraft&cid=' . $post->cid)); ?></cite>
                             <?php else: ?>
                                 <cite><?php _e('当前正在编辑的是未发布的草稿'); ?></cite>
                             <?php endif; ?>
@@ -238,6 +238,7 @@ $post = \Widget\Contents\Post\Edit::alloc()->prepare();
                         </div>
                     </div>
                 </div>
+                <?php $security->form('contents-post-edit'); ?>
              </form>
         </div>
     </div>

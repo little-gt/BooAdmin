@@ -31,6 +31,10 @@ $(document).ready(function() {
 
     updateAttachmentNumber();
 
+    function escapeHtml(value) {
+        return $('<div>').text(value == null ? '' : String(value)).html();
+    }
+
     const uploadUrl = $('.upload-area').bind({
         dragenter   :   function (e) {
             $(this).parent().addClass('drag');
@@ -85,7 +89,7 @@ $(document).ready(function() {
 
     function fileUploadStart (file) {
         $('<li id="' + file.id + '" class="loading group flex items-center justify-between p-2 bg-white border border-gray-200 hover:border-discord-accent transition-colors">' +
-            '<span class="text-sm text-gray-500 flex items-center"><i class="fas fa-spinner fa-spin mr-2 text-discord-accent"></i> ' + file.name + '</span></li>').appendTo('#file-list');
+            '<span class="text-sm text-gray-500 flex items-center"><i class="fas fa-spinner fa-spin mr-2 text-discord-accent"></i> ' + escapeHtml(file.name) + '</span></li>').appendTo('#file-list');
     }
 
     function fileUploadError (type, file) {
@@ -106,13 +110,13 @@ $(document).ready(function() {
                 break;
         }
 
-        var fileError = '<?php _e('%s 上传失败'); ?>'.replace('%s', file.name),
+        var fileError = escapeHtml('<?php _e('%s 上传失败'); ?>'.replace('%s', file.name)),
             li, exist = $('#' + file.id);
 
         if (exist.length > 0) {
-            li = exist.removeClass('loading').html('<span class="text-red-500 text-sm">' + fileError + '</span><span class="text-xs text-gray-400 ml-2">' + word + '</span>');
+            li = exist.removeClass('loading').html('<span class="text-red-500 text-sm">' + fileError + '</span><span class="text-xs text-gray-400 ml-2">' + escapeHtml(word) + '</span>');
         } else {
-            li = $('<li class="p-2 bg-red-50 border border-red-200 text-sm">' + fileError + '<br /><span class="text-xs text-gray-500">' + word + '</span></li>').appendTo('#file-list');
+            li = $('<li class="p-2 bg-red-50 border border-red-200 text-sm">' + fileError + '<br /><span class="text-xs text-gray-500">' + escapeHtml(word) + '</span></li>').appendTo('#file-list');
         }
 
         const highlightDanger = getComputedStyle(document.documentElement).getPropertyValue('--booadmin-highlight-danger').trim() || '#FBC2C4';
@@ -127,7 +131,7 @@ $(document).ready(function() {
             .data('image', attachment.isImage)
             .html('<input type="hidden" name="attachment[]" value="' + attachment.cid + '" />' +
                 '<a class="insert flex-1 text-sm text-discord-text hover:text-discord-accent truncate mr-2" target="_blank" href="###" title="<?php _e('点击插入文件'); ?>">' +
-                '<i class="far fa-file mr-2 text-gray-400"></i>' + attachment.title + '</a>' +
+                '<i class="far fa-file mr-2 text-gray-400"></i>' + escapeHtml(attachment.title) + '</a>' +
                 '<div class="info text-xs text-gray-400 flex items-center space-x-2">' + attachment.bytes +
                 ' <a class="file text-gray-400 hover:text-discord-accent" target="_blank" href="<?php $options->adminUrl('media.php'); ?>?cid=' +
                 attachment.cid + '" title="<?php _e('编辑'); ?>"><i class="fas fa-edit"></i></a>' +
@@ -334,7 +338,7 @@ $(document).ready(function() {
             // 禁用按钮防止重复点击
             $confirmBtn.prop('disabled', true).addClass('opacity-50');
             
-            $.post('<?php $security->index('/action/contents-attachment-edit'); ?>',
+            $.post('<?php echo $security->getTokenUrl($security->getIndex('/action/contents-attachment-edit')); ?>',
                 {'do' : 'delete', 'cid' : fileDeleteData.cid},
                 function (response) {
                     if (response && response.success !== false) {
