@@ -65,7 +65,7 @@ $isExtendPage = (strpos($_SERVER['REQUEST_URI'], 'extending.php') !== false);
         <ul class="space-y-1 px-3">
             <!-- Dashboard -->
             <li>
-                <a href="<?php $options->adminUrl('index.php'); ?>" style="text-decoration:none" class="flex items-center px-3 py-2 text-gray-600 <?php if($menu->current == 'index.php') echo 'bg-blue-50 text-discord-accent'; else echo 'hover:bg-gray-100 hover:text-gray-900'; ?> font-medium transition-all group">
+                <a href="<?php $options->adminUrl('index.php'); ?>" class="flex items-center px-3 py-2 text-gray-600 <?php if($menu->current == 'index.php') echo 'bg-blue-50 text-discord-accent'; else echo 'hover:bg-gray-100 hover:text-gray-900'; ?> font-medium transition-all group">
                     <i class="fas fa-tachometer-alt w-5 text-center mr-3 text-sm opacity-80"></i>
                     <span class="sidebar-text"><?php _e('控制台'); ?></span>
                 </a>
@@ -77,7 +77,7 @@ $isExtendPage = (strpos($_SERVER['REQUEST_URI'], 'extending.php') !== false);
             <li class="mt-5 mb-2 px-3 text-xs font-bold text-gray-400 uppercase tracking-wider sidebar-text"><?php _e($sectionLabel); ?></li>
             <?php foreach ($sectionItems as $item): ?>
             <li>
-                <a href="<?php $options->adminUrl($item[0]); ?>" style="text-decoration:none" class="flex items-center px-3 py-2 text-gray-600 hover:bg-gray-100 hover:text-gray-900 transition-colors <?php if($menu->current == $item[0]) echo 'bg-blue-50 text-discord-accent'; ?>">
+                <a href="<?php $options->adminUrl($item[0]); ?>" class="flex items-center px-3 py-2 text-gray-600 hover:bg-gray-100 hover:text-gray-900 transition-colors <?php if($menu->current == $item[0]) echo 'bg-blue-50 text-discord-accent'; ?>">
                     <i class="fas <?php echo $item[1]; ?> w-5 text-center mr-3 text-sm opacity-80"></i>
                     <span class="sidebar-text"><?php _e($item[2]); ?></span>
                 </a>
@@ -112,7 +112,7 @@ $isExtendPage = (strpos($_SERVER['REQUEST_URI'], 'extending.php') !== false);
                         $isActive = (!empty($_GET['panel']) && strpos($href, $_GET['panel']) !== false);
                         
                         echo '<li>';
-                        echo '<a href="' . htmlspecialchars($href, ENT_QUOTES, 'UTF-8') . '" style="text-decoration:none" class="flex items-center px-3 py-2 text-gray-600 hover:bg-gray-100 hover:text-gray-900 transition-colors';
+                        echo '<a href="' . htmlspecialchars($href, ENT_QUOTES, 'UTF-8') . '" class="flex items-center px-3 py-2 text-gray-600 hover:bg-gray-100 hover:text-gray-900 transition-colors';
                         if ($isActive) echo ' bg-blue-50 text-discord-accent';
                         echo '">';
                         echo '<i class="fas fa-dice-d6 w-5 text-center mr-3 text-sm opacity-80"></i>';
@@ -140,14 +140,14 @@ $isExtendPage = (strpos($_SERVER['REQUEST_URI'], 'extending.php') !== false);
                     </button>
                     <ul class="mt-1 ml-2 pl-6 space-y-1 border-l-2 border-gray-100 <?php if(!$inSettingsPage) echo 'hidden'; ?>">
                         <?php foreach ($settingsSubItems as $page => $label): ?>
-                        <li><a href="<?php $options->adminUrl($page); ?>" style="text-decoration:none" class="block px-2 py-1.5 text-sm text-gray-500 hover:text-discord-accent <?php if($menu->current == $page) echo 'text-discord-accent font-medium'; ?>"><?php _e($label); ?></a></li>
+                        <li><a href="<?php $options->adminUrl($page); ?>" class="block px-2 py-1.5 text-sm text-gray-500 hover:text-discord-accent <?php if($menu->current == $page) echo 'text-discord-accent font-medium'; ?>"><?php _e($label); ?></a></li>
                         <?php endforeach; ?>
                     </ul>
                 </div>
             </li>
             <?php else: ?>
             <li>
-                <a href="<?php $options->adminUrl($item[0]); ?>" style="text-decoration:none" class="flex items-center px-3 py-2 text-gray-600 hover:bg-gray-100 hover:text-gray-900 transition-colors <?php if($menu->current == $item[0]) echo 'bg-blue-50 text-discord-accent'; ?>">
+                <a href="<?php $options->adminUrl($item[0]); ?>" class="flex items-center px-3 py-2 text-gray-600 hover:bg-gray-100 hover:text-gray-900 transition-colors <?php if($menu->current == $item[0]) echo 'bg-blue-50 text-discord-accent'; ?>">
                     <i class="fas <?php echo $item[1]; ?> w-5 text-center mr-3 text-sm opacity-80"></i>
                     <span class="sidebar-text"><?php _e($item[2]); ?></span>
                 </a>
@@ -164,7 +164,7 @@ $isExtendPage = (strpos($_SERVER['REQUEST_URI'], 'extending.php') !== false);
                 <?php echo getAvatar($user->mail, $user->screenName, 32, 'user-avatar md:w-9 md:h-9'); ?>
             </div>
             <div class="ml-2 md:ml-3 overflow-hidden min-w-0 flex-1 sidebar-text">
-                <p class="text-sm font-semibold text-gray-800 truncate"><a href="<?php $options->adminUrl('profile.php'); ?>" style="text-decoration:none"><?php $user->screenName(); ?></a></p>
+                <p class="text-sm font-semibold text-gray-800 truncate"><a href="<?php $options->adminUrl('profile.php'); ?>"><?php $user->screenName(); ?></a></p>
                 <p class="text-xs text-gray-500 truncate"><?php echo $user->group; ?></p>
             </div>
             <!-- Plugin Injection Point -->

@@ -4,9 +4,9 @@
 
 一款使用 TailwindCSS 精心重构的 Typecho 现代化后台主题。完全支持 Typecho 1.3.0，采用 GARFIELDTOM'S NEST CDN 进行资源加速分发，提供稳定且高效的加载体验。
 
-![BooAdmin](https://img.shields.io/badge/BooAdmin-v1.3.1--rc1-blue?style=for-the-badge)
+![BooAdmin](https://img.shields.io/badge/BooAdmin-v1.3.1--rc2-blue?style=for-the-badge)
 ![License](https://img.shields.io/badge/License-GPLv3-blue?style=for-the-badge)
-![LTS](https://img.shields.io/badge/Status-LTS%20Stable-blue?style=for-the-badge)
+![LTS](https://img.shields.io/badge/Status-Preview%20Stable-blue?style=for-the-badge)
 
 ![登录页面](https://cnb.cool/little-gt/BooAdmin/-/git/raw/main/screenshot/screenshot0.png)
 
@@ -168,7 +168,7 @@
 | 图表库   | ECharts.js   | 5.5.0               | 用于加载主题内控制台的图表 |
 | 进度条   | NProgress    | 0.2.0               | 用于加载主题内的进度条 |
 | 公式绘制 | KaTeX        | 0.16.38             | 用于文章预览功能的公式渲染 |
-| CSS 框架 | TailwindCSS  | 3.4.17              | 用于构建主题的样式系统 |
+| CSS 框架 | TailwindCSS  | 4.4.3（兼容 3.4.17）| 用于构建主题的样式系统，编译配置详见 [config/README.md](config/README.md) |
 
 ### 资源加速
 

@@ -1,0 +1,14 @@
+@import "tailwindcss";
+
+/* 内容路径 - 扫描所有 PHP 文件 */
+@source "../../admin/**/*.php";
+
+/* Discord 主题颜色定义 */
+@theme {
+  --color-discord-light: #f3f4f6;
+  --color-discord-sidebar: #202225;
+  --color-discord-active: #36393f;
+  --color-discord-accent: #5865f2;
+  --color-discord-text: #dcddde;
+  --color-discord-muted: #72767d;
+}

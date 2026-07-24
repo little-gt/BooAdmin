@@ -19,6 +19,36 @@ a:hover {
 	color:var(--booadmin-link-hover);
 	text-decoration:underline
 }
+
+/* Links acting as buttons should never show underlines */
+a[href]:not(.message a):not(#wmd-preview a):not(.typecho-reform-style a):not(.dropdown-menu a):not(.typecho-pager a):not(.typecho-list-operate a):not(.typecho-option-tabs a):not(.typecho-head-nav a):not(.booadmin-copyright-popup .action a):hover,
+a[href].bg-discord-accent:hover,
+a[href].bg-blue-600:hover,
+a[href].bg-green-500:hover,
+a[href].bg-gray-100:hover,
+a[href].bg-white:hover,
+a[href][style*="text-decoration:none"]:hover {
+    text-decoration: none !important;
+}
+
+/* Ensure all navigation and action links have no underline on any state */
+nav a:hover,
+aside a:hover,
+header a:hover,
+footer a:hover,
+.menu a:hover,
+.button a:hover,
+.btn:hover,
+.operate a:hover,
+.action a:hover,
+nav>ul>li>a:hover,
+nav>menu>li>a:hover,
+.sidebar a:hover,
+.group a:hover,
+#sidebar a:hover,
+.extend-topbar a:hover {
+    text-decoration: none !important;
+}
 code,pre,.mono {
 	font-family:"Cascadia Code",Menlo,Monaco,Consolas,"Courier New",monospace
 }
@@ -3254,6 +3284,24 @@ button:not(.view-toggle button),.btn:not(.view-toggle button),a.btn {
 
 .operate-form .bg-gray-100 {
 	background-color:var(--booadmin-surface-2) !important;
+}
+
+/* ========================================
+   Table Mode Polish (Tailwind v4)
+   ======================================== */
+/* Rounded, elevated container for a modern card-like appearance */
+.operate-form .bg-white.border.border-gray-200.overflow-hidden {
+	border-radius:0.75rem;
+	box-shadow:0 1px 2px 0 rgb(0 0 0 / 0.05);
+}
+/* Refined, non-wrapping header labels with subtle tracking */
+.operate-form .typecho-list-table thead th {
+	white-space:nowrap;
+	letter-spacing:0.02em;
+}
+/* Theme-aware checkbox accent (Tailwind v4 accent-color equivalent) */
+.operate-form input[type="checkbox"] {
+	accent-color:var(--booadmin-accent);
 }
 
 .booadmin-avatar-image-hidden {
