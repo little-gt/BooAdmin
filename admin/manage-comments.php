@@ -86,7 +86,7 @@ $isAllComments = ('on' == $request->get('__typecho_all_comments') || 'on' == \Ty
             </div>
 
             <!-- Comment List -->
-            <div class="bg-white border border-gray-200 overflow-hidden rounded-xl shadow-sm">
+            <div class="bg-white border border-gray-200 overflow-hidden">
                 <form method="post" name="manage_comments" class="operate-form">
                     <div class="booadmin-operate-bar operate-bar">
                          <div class="flex items-center space-x-2">
@@ -133,13 +133,20 @@ $isAllComments = ('on' == $request->get('__typecho_all_comments') || 'on' == \Ty
 
                     <div class="table-wrapper" data-table-scroll>
                     <table class="w-full text-left border-collapse typecho-list-table">
+                        <colgroup>
+                            <col style="width:40px">
+                            <col style="width:64px;text-align:center">
+                            <col style="width:120px;text-align:left">
+                            <col style="text-align:left">
+                            <col style="width:192px;text-align:right">
+                        </colgroup>
                         <thead>
                             <tr class="text-xs font-bold text-gray-500 uppercase border-b border-gray-100 bg-gray-50/50">
-                                <th class="w-10 pl-4 py-3"></th>
-                                <th class="w-16 py-3 text-center"><?php _e('头像'); ?></th>
+                                <th class="pl-4 py-3"></th>
+                                <th class="py-3"><?php _e('头像'); ?></th>
                                 <th class="py-3"><?php _e('作者'); ?></th>
                                 <th class="py-3"><?php _e('内容'); ?></th>
-                                <th class="py-3 w-48 text-right pr-4"><?php _e('操作'); ?></th>
+                                <th class="py-3 pr-4"><?php _e('操作'); ?></th>
                             </tr>
                         </thead>
                         <tbody class="divide-y divide-gray-100">
@@ -192,7 +199,7 @@ $isAllComments = ('on' == $request->get('__typecho_all_comments') || 'on' == \Ty
                                         <td class="pl-4 py-3 align-top">
                                             <input type="checkbox" value="<?php $comments->coid(); ?>" name="coid[]" class="text-discord-accent focus:ring-discord-accent border-gray-300 mt-1">
                                         </td>
-                                        <td class="py-3 text-center align-top">
+                                        <td class="py-3 align-top">
                                             <div class="w-10 h-10 mx-auto flex items-center justify-center">
                                                 <?php if ('comment' == $comments->type): ?>
                                                     <?php echo getAvatar($comments->mail, $comments->author, 40); ?>
@@ -224,7 +231,7 @@ $isAllComments = ('on' == $request->get('__typecho_all_comments') || 'on' == \Ty
                                                 <?php $comments->content(); ?>
                                             </div>
                                         </td>
-                                        <td class="py-3 pr-4 text-right align-top text-sm">
+                                        <td class="py-3 pr-4 align-top text-sm">
                                             <div class="flex flex-col items-end space-y-1 opacity-0 group-hover:opacity-100 transition-opacity">
                                                 <a href="#<?php $comments->theId(); ?>" rel="<?php $security->index('/action/comments-edit?do=reply&coid=' . $comments->coid); ?>" class="operate-reply text-discord-accent hover:underline"><i class="fas fa-reply mr-1"></i><?php _e('回复'); ?></a>
                                                 <a href="#<?php $comments->theId(); ?>" rel="<?php $security->index('/action/comments-edit?do=edit&coid=' . $comments->coid); ?>" class="operate-edit text-gray-500 hover:text-discord-accent"><i class="fas fa-edit mr-1"></i><?php _e('编辑'); ?></a>

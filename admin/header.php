@@ -8,11 +8,11 @@ $header = '
 <link rel="stylesheet" href="' . $options->adminUrl('css/normalize.css',true) . '">
 <link rel="stylesheet" href="' . $options->adminUrl('css/grid.css',true) . '">
 <!-- Theme Variables -->
-<link rel="stylesheet" href="' . $options->adminUrl('css/style.css?v=1.3.1-rc2',true) . '">
-<link rel="stylesheet" href="' . $options->adminUrl('css/light.css?v=1.3.1-rc2',true) . '">
-<link rel="stylesheet" href="' . $options->adminUrl('css/dark.css?v=1.3.1-rc2',true) . '">
+<link rel="stylesheet" href="' . $options->adminUrl('css/style.css?v=1.3.1-sc3',true) . '">
+<link rel="stylesheet" href="' . $options->adminUrl('css/light.css?v=1.3.1-sc3',true) . '">
+<link rel="stylesheet" href="' . $options->adminUrl('css/dark.css?v=e.3.1-sc3',true) . '">
 <!-- TailwindCSS -->
-<link rel="stylesheet" href="' . $options->adminUrl('css/tailwind.css?v=1.3.1-rc2',true) . '">
+<link rel="stylesheet" href="' . $options->adminUrl('css/tailwind.css?v=1.3.1-sc3',true) . '">
 <!-- NProgress -->
 <script src="' . $options->adminUrl('js/nprogress.js',true) . '"></script>
 <link rel="stylesheet" href="' . $options->adminUrl('css/nprogress.css',true) . '">

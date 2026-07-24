@@ -200,6 +200,29 @@
         --color-discord-accent: var(--booadmin-accent);
         --color-discord-text: var(--booadmin-text);
         --color-discord-muted: var(--booadmin-muted);
+
+        /* ========================================
+         * 语义色微调 - 暗色专用染色层 (Tints)
+         * 用于覆盖 Tailwind 的 blue/green/red/yellow 等
+         * 亮色工具类，使其在纯黑环境下不再刺眼
+         * ======================================== */
+        --booadmin-tint-blue: rgba(122, 162, 240, 0.12);
+        --booadmin-tint-blue-strong: rgba(122, 162, 240, 0.20);
+        --booadmin-tint-green: rgba(107, 199, 138, 0.12);
+        --booadmin-tint-green-strong: rgba(107, 199, 138, 0.20);
+        --booadmin-tint-red: rgba(224, 122, 122, 0.12);
+        --booadmin-tint-red-strong: rgba(224, 122, 122, 0.20);
+        --booadmin-tint-yellow: rgba(212, 167, 42, 0.14);
+        --booadmin-tint-yellow-strong: rgba(212, 167, 42, 0.22);
+
+        /* 暗色下 CTA 按钮的实色映射（柔化亮色按钮） */
+        --booadmin-solid-blue: #2f5d8f;
+        --booadmin-solid-blue-hover: #3a6ea5;
+        --booadmin-solid-green: #2f7a4d;
+        --booadmin-solid-green-hover: #388a59;
+        --booadmin-solid-red: #a83f3f;
+        --booadmin-solid-red-hover: #b85050;
+        --booadmin-solid-yellow: #a37816;
     }
 
     /* ========================================
@@ -1424,5 +1447,320 @@
     /* --- 头像 --- */
     .profile-avatar {
         border-color: var(--booadmin-border) !important;
+    }
+
+    /* ========================================
+     * 全局强调层 - 滚动条 / 选区 / 焦点环 / 原生控件
+     * ======================================== */
+
+    /* --- 滚动条 (Firefox) --- */
+    * {
+        scrollbar-color: var(--booadmin-border-strong) var(--booadmin-bg) !important;
+        scrollbar-width: thin !important;
+    }
+
+    /* --- 滚动条 (WebKit) --- */
+    *::-webkit-scrollbar {
+        width: 10px !important;
+        height: 10px !important;
+    }
+
+    *::-webkit-scrollbar-track {
+        background: var(--booadmin-bg) !important;
+    }
+
+    *::-webkit-scrollbar-thumb {
+        background: var(--booadmin-border-strong) !important;
+        border-radius: 6px !important;
+        border: 2px solid var(--booadmin-bg) !important;
+    }
+
+    *::-webkit-scrollbar-thumb:hover {
+        background: #4a4a55 !important;
+    }
+
+    /* --- 文本选区高亮 --- */
+    ::selection {
+        background: var(--booadmin-selection-bg) !important;
+        color: var(--booadmin-text) !important;
+    }
+
+    ::-moz-selection {
+        background: var(--booadmin-selection-bg) !important;
+        color: var(--booadmin-text) !important;
+    }
+
+    /* --- 原生复选框 / 单选框强调色 --- */
+    input[type="checkbox"],
+    input[type="radio"] {
+        accent-color: var(--booadmin-accent) !important;
+    }
+
+    /* --- 焦点环：统一使用强调色，提升键盘可达性 --- */
+    :focus-visible {
+        outline: 2px solid var(--booadmin-accent) !important;
+        outline-offset: 2px !important;
+    }
+
+    input:focus-visible,
+    textarea:focus-visible,
+    select:focus-visible,
+    button:focus-visible,
+    .btn:focus-visible,
+    .primary:focus-visible,
+    a:focus-visible {
+        outline: 2px solid var(--booadmin-accent) !important;
+        outline-offset: 2px !important;
+    }
+
+    /* Tailwind ring 工具类：暗色下加强可见度 */
+    .focus\:ring-discord-accent:focus,
+    .focus\:ring-discord-accent\/10:focus,
+    .focus\:ring-2:focus {
+        --tw-ring-color: rgba(99, 102, 199, 0.55) !important;
+        --tw-ring-opacity: 1 !important;
+    }
+
+    /* --- 浮动强调阴影（模态框 / 卡片 / 图片） --- */
+    .shadow-sm,
+    .shadow,
+    .shadow-md,
+    .shadow-lg,
+    .shadow-xl,
+    .shadow-2xl {
+        box-shadow: 0 8px 30px rgba(0, 0, 0, 0.6) !important;
+    }
+
+    /* ========================================
+     * Tailwind 文本色工具类全覆盖 - 强调色映射
+     * ======================================== */
+    .text-blue-400,
+    .text-blue-500,
+    .text-blue-600 {
+        color: #8fb8f2 !important;
+    }
+
+    .text-green-500,
+    .text-green-600 {
+        color: #84d3a0 !important;
+    }
+
+    .text-red-500,
+    .text-red-600,
+    .text-red-700 {
+        color: #e89090 !important;
+    }
+
+    .hover\:text-red-500:hover {
+        color: #f0a0a0 !important;
+    }
+
+    .hover\:text-red-600:hover {
+        color: #f0a0a0 !important;
+    }
+
+    .hover\:text-red-700:hover {
+        color: #f5b0b0 !important;
+    }
+
+    .hover\:text-blue-600:hover {
+        color: #a3c8f5 !important;
+    }
+
+    .hover\:text-green-600:hover {
+        color: #9ad9b2 !important;
+    }
+
+    .text-yellow-500,
+    .text-yellow-600,
+    .text-yellow-700,
+    .text-yellow-800 {
+        color: #e0bd5a !important;
+    }
+
+    /* ========================================
+     * Tailwind 背景色工具类全覆盖 - 染色层映射
+     * ======================================== */
+    .bg-blue-50,
+    .bg-blue-50\/30 {
+        background-color: var(--booadmin-tint-blue) !important;
+    }
+
+    .bg-blue-100 {
+        background-color: var(--booadmin-tint-blue-strong) !important;
+    }
+
+    .bg-blue-500,
+    .bg-blue-600 {
+        background-color: var(--booadmin-solid-blue) !important;
+    }
+
+    .bg-green-50 {
+        background-color: var(--booadmin-tint-green) !important;
+    }
+
+    .bg-green-100 {
+        background-color: var(--booadmin-tint-green-strong) !important;
+    }
+
+    .bg-green-500,
+    .bg-green-600 {
+        background-color: var(--booadmin-solid-green) !important;
+    }
+
+    .bg-red-50 {
+        background-color: var(--booadmin-tint-red) !important;
+    }
+
+    .bg-red-100 {
+        background-color: var(--booadmin-tint-red-strong) !important;
+    }
+
+    .bg-red-500,
+    .bg-red-600 {
+        background-color: var(--booadmin-solid-red) !important;
+    }
+
+    .bg-yellow-50 {
+        background-color: var(--booadmin-tint-yellow) !important;
+    }
+
+    .bg-yellow-100 {
+        background-color: var(--booadmin-tint-yellow-strong) !important;
+    }
+
+    .bg-yellow-500,
+    .bg-yellow-600 {
+        background-color: var(--booadmin-solid-yellow) !important;
+    }
+
+    /* 灰色实色块（如「加密」徽章）转为暗色表面 */
+    .bg-gray-500,
+    .bg-gray-600,
+    .bg-gray-700,
+    .bg-gray-800 {
+        background-color: var(--booadmin-surface-2) !important;
+    }
+
+    /* ========================================
+     * Tailwind 边框色工具类全覆盖
+     * ======================================== */
+    .border-blue-200 {
+        border-color: rgba(122, 162, 240, 0.35) !important;
+    }
+
+    .border-green-200 {
+        border-color: rgba(107, 199, 138, 0.35) !important;
+    }
+
+    .border-red-100 {
+        border-color: rgba(224, 122, 122, 0.22) !important;
+    }
+
+    .border-red-200 {
+        border-color: rgba(224, 122, 122, 0.35) !important;
+    }
+
+    .border-yellow-200 {
+        border-color: rgba(212, 167, 42, 0.35) !important;
+    }
+
+    .border-discord-accent {
+        border-color: #484a78 !important;
+    }
+
+    /* ========================================
+     * Tailwind 渐变工具类覆盖（头像占位等）
+     * ======================================== */
+    .bg-gradient-to-br.from-blue-500.to-blue-600 {
+        background-image: linear-gradient(135deg, #2f5d8f 0%, #274f7a 100%) !important;
+    }
+
+    /* ========================================
+     * Tailwind Hover 状态全覆盖 - 染色层交互
+     * ======================================== */
+    .hover\:bg-blue-50:hover {
+        background-color: var(--booadmin-tint-blue-strong) !important;
+    }
+
+    .hover\:bg-blue-100:hover {
+        background-color: rgba(122, 162, 240, 0.26) !important;
+    }
+
+    .hover\:bg-blue-600:hover {
+        background-color: var(--booadmin-solid-blue-hover) !important;
+    }
+
+    .hover\:bg-green-50:hover {
+        background-color: var(--booadmin-tint-green-strong) !important;
+    }
+
+    .hover\:bg-green-100:hover {
+        background-color: rgba(107, 199, 138, 0.26) !important;
+    }
+
+    .hover\:bg-green-600:hover {
+        background-color: var(--booadmin-solid-green-hover) !important;
+    }
+
+    .hover\:bg-red-50:hover {
+        background-color: var(--booadmin-tint-red-strong) !important;
+    }
+
+    .hover\:bg-red-100:hover,
+    .hover\:bg-red-200:hover {
+        background-color: rgba(224, 122, 122, 0.26) !important;
+    }
+
+    .hover\:bg-red-600:hover {
+        background-color: var(--booadmin-solid-red-hover) !important;
+    }
+
+    .hover\:bg-yellow-50:hover,
+    .hover\:bg-yellow-100:hover {
+        background-color: var(--booadmin-tint-yellow-strong) !important;
+    }
+
+    /* --- 灰色 hover 全覆盖（菜单 / 选项卡 / 取消按钮 / 表格行） --- */
+    .hover\:bg-gray-50:hover {
+        background-color: #161616 !important;
+    }
+
+    .hover\:bg-gray-100:hover {
+        background-color: var(--booadmin-surface-2) !important;
+    }
+
+    .hover\:bg-gray-200:hover {
+        background-color: var(--booadmin-active) !important;
+    }
+
+    .hover\:bg-gray-300:hover {
+        background-color: #202020 !important;
+    }
+
+    /* --- 灰色 hover 文本：暗色下统一提亮为可读文本，避免近黑文本不可见 --- */
+    .hover\:text-gray-600:hover,
+    .hover\:text-gray-700:hover,
+    .hover\:text-gray-800:hover,
+    .hover\:text-gray-900:hover {
+        color: var(--booadmin-text) !important;
+    }
+
+    /* --- 强调色 hover：柔化纯黑环境下的靛蓝，避免刺眼 --- */
+    .hover\:text-discord-accent:hover {
+        color: var(--booadmin-link) !important;
+    }
+
+    /* --- 登录/CTA 按钮 hover：与暗色主按钮一致 --- */
+    .bg-discord-accent.hover\:bg-blue-600:hover,
+    a.bg-discord-accent.hover\:bg-blue-600:hover,
+    button.bg-discord-accent.hover\:bg-blue-600:hover {
+        background-color: #46487d !important;
+    }
+
+    /* --- group-hover 图标卡片：保持暗色强调 --- */
+    .group-hover\:bg-discord-accent.group-hover\:text-white:hover,
+    .group:hover .group-hover\:bg-discord-accent {
+        background-color: #3a3c6e !important;
     }
 }

@@ -482,18 +482,33 @@
 
                 initializeViewMode();
 
-                var resizeTimer = null;
-                $(window).on('resize.viewMode', function() {
-                    if (resizeTimer) {
-                        clearTimeout(resizeTimer);
-                    }
+                // Responsive auto-switch: when the viewport NARROWS below the
+                // breakpoint, force the table into card view. When it WIDENS,
+                // do nothing and keep the current view ("反之不操作").
+                var mq = window.matchMedia('(max-width: 767px)');
+                var wasNarrow = mq.matches;
 
-                    resizeTimer = setTimeout(function() {
-                        if (!hasUserViewPreference()) {
-                            applyViewMode(getDefaultViewMode());
+                function syncResponsiveView(isNarrow) {
+                    if (isNarrow && !wasNarrow) {
+                        // narrowed: switch table -> card automatically
+                        if ($('.operate-form').closest('.bg-white').attr('data-view-mode') !== 'card') {
+                            applyViewMode('card');
+                            saveViewMode('card');
                         }
-                    }, 150);
-                });
+                    }
+                    // widening: intentionally leave the view unchanged
+                    wasNarrow = isNarrow;
+                }
+
+                if (typeof mq.addEventListener === 'function') {
+                    mq.addEventListener('change', function(e) {
+                        syncResponsiveView(e.matches);
+                    });
+                } else if (typeof mq.addListener === 'function') {
+                    mq.addListener(function(e) {
+                        syncResponsiveView(e.matches);
+                    });
+                }
 
                 $(document).on('change', '.content-card .card-checkbox', function() {
                     var $checkbox = $(this);

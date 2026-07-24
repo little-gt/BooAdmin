@@ -437,12 +437,14 @@ select {
 .typecho-list-table th {
 	padding:0 10px 10px;
 	border-bottom:1px solid var(--booadmin-border);
-	text-align:left
+	vertical-align:middle
 }
 .typecho-list-table td {
 	padding:10px;
 	border-top:1px solid var(--booadmin-border);
-	word-break:break-all
+	word-break:break-all;
+	overflow-wrap:anywhere;
+	vertical-align:middle
 }
 .typecho-list-table td pre {
 	overflow:auto
@@ -484,20 +486,18 @@ select {
 }
 }
 @media (max-width:767px) {
+	/* Keep the table as a SINGLE coherent table so thead/tbody columns
+	   stay aligned (the grid). The .table-wrapper handles horizontal
+	   scroll only when content genuinely overflows. */
 	.typecho-list-table {
-		display:block;
-		overflow-x:auto;
-		-webkit-overflow-scrolling:touch
-	}
-	.typecho-list-table thead,
-	.typecho-list-table tbody,
-	.typecho-list-table tfoot {
-		display:table;
-		width:100%
+		table-layout:fixed
 	}
 	.typecho-list-table th,
 	.typecho-list-table td {
-		white-space:nowrap
+		white-space:normal;
+		word-break:break-word;
+		overflow-wrap:anywhere;
+		vertical-align:top
 	}
 }
 .typecho-option-tabs {
@@ -3286,24 +3286,6 @@ button:not(.view-toggle button),.btn:not(.view-toggle button),a.btn {
 	background-color:var(--booadmin-surface-2) !important;
 }
 
-/* ========================================
-   Table Mode Polish (Tailwind v4)
-   ======================================== */
-/* Rounded, elevated container for a modern card-like appearance */
-.operate-form .bg-white.border.border-gray-200.overflow-hidden {
-	border-radius:0.75rem;
-	box-shadow:0 1px 2px 0 rgb(0 0 0 / 0.05);
-}
-/* Refined, non-wrapping header labels with subtle tracking */
-.operate-form .typecho-list-table thead th {
-	white-space:nowrap;
-	letter-spacing:0.02em;
-}
-/* Theme-aware checkbox accent (Tailwind v4 accent-color equivalent) */
-.operate-form input[type="checkbox"] {
-	accent-color:var(--booadmin-accent);
-}
-
 .booadmin-avatar-image-hidden {
 	display:none !important
 }
@@ -3939,6 +3921,31 @@ button:not(.view-toggle button),.btn:not(.view-toggle button),a.btn {
 
 .booadmin-dialog-lg {
 	max-width:42rem;
+}
+
+/* Comment modals (reply / edit / delete / message) - stay within viewport */
+.comment-modal {
+	position:fixed;
+	inset:0;
+	z-index:60;
+	display:none;
+	align-items:center;
+	justify-content:center;
+	padding:16px;
+	background-color:var(--booadmin-overlay);
+	overflow-y:auto
+}
+.comment-modal.active {
+	display:flex
+}
+.comment-modal > .booadmin-dialog {
+	margin:auto;
+	max-height:calc(100vh - 32px);
+	overflow-y:auto
+}
+#originalCommentArea {
+	max-height:35vh;
+	overflow-y:auto
 }
 
 .booadmin-operate-bar {

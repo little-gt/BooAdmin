@@ -55,7 +55,7 @@ $users = \Widget\Users\Admin::alloc();
             </div>
 
             <!-- User List -->
-            <div class="bg-white border border-gray-200 overflow-hidden rounded-xl shadow-sm">
+            <div class="bg-white border border-gray-200 overflow-hidden">
                 <form method="post" name="manage_users" class="operate-form">
                     <div class="booadmin-operate-bar operate-bar">
                          <div class="flex items-center space-x-2">
@@ -76,14 +76,22 @@ $users = \Widget\Users\Admin::alloc();
 
                     <div class="table-wrapper" data-table-scroll>
                     <table class="w-full text-left border-collapse typecho-list-table draggable">
-                                <thead>
+                        <colgroup>
+                            <col style="width:40px">
+                            <col style="width:64px;text-align:center">
+                            <col style="text-align:left">
+                            <col class="hidden lg:table-cell" style="width:140px;text-align:left">
+                            <col class="hidden lg:table-cell" style="width:200px;text-align:left">
+                            <col style="width:120px;text-align:right">
+                        </colgroup>
+                        <thead>
                             <tr class="text-xs font-bold text-gray-500 uppercase border-b border-gray-100 bg-gray-50/50 nodrag">
-                                <th class="w-10 pl-4 py-3"></th>
-                                <th class="w-16 py-3 text-center"><?php _e('文章数'); ?></th>
+                                <th class="pl-4 py-3"></th>
+                                <th class="py-3"><?php _e('文章数'); ?></th>
                                 <th class="py-3"><?php _e('用户名'); ?></th>
                                 <th class="py-3 hidden lg:table-cell"><?php _e('昵称'); ?></th>
                                 <th class="py-3 hidden lg:table-cell"><?php _e('电子邮件'); ?></th>
-                                <th class="py-3 pr-4 text-right"><?php _e('用户组'); ?></th>
+                                <th class="py-3 pr-4"><?php _e('用户组'); ?></th>
                             </tr>
                         </thead>
                         <tbody class="divide-y divide-gray-100">
@@ -93,7 +101,7 @@ $users = \Widget\Users\Admin::alloc();
                                         <td class="pl-4 py-3">
                                             <input type="checkbox" value="<?php $users->uid(); ?>" name="uid[]" class="text-discord-accent focus:ring-discord-accent border-gray-300">
                                         </td>
-                                        <td class="py-3 text-center">
+                                        <td class="py-3">
                                             <a href="<?php $options->adminUrl('manage-posts.php?__typecho_all_posts=off&uid=' . $users->uid); ?>" 
                                                class="inline-flex items-center justify-center px-2 py-0.5 text-xs font-medium <?php echo $users->postsNum > 0 ? 'bg-discord-accent text-white' : 'bg-gray-100 text-gray-500'; ?>">
                                                 <?php $users->postsNum(); ?>
@@ -135,7 +143,7 @@ $users = \Widget\Users\Admin::alloc();
                                                 <span class="text-gray-400"><?php _e('暂无'); ?></span>
                                             <?php endif; ?>
                                         </td>
-                                        <td class="py-3 pr-4 text-left text-sm">
+                                        <td class="py-3 pr-4 text-sm">
                                             <?php 
                                             $groupClass = 'bg-gray-100 text-gray-500';
                                             $groupName = '';

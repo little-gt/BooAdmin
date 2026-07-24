@@ -69,14 +69,22 @@ include 'menu.php';
 
                     <div class="table-wrapper" data-table-scroll>
                     <table class="w-full text-left border-collapse typecho-list-table">
+                        <colgroup>
+                            <col style="width:40px">
+                            <col style="text-align:left">
+                            <col class="hidden md:table-cell" style="width:120px;text-align:left">
+                            <col class="hidden md:table-cell" style="width:140px;text-align:left">
+                            <col style="width:96px;text-align:center">
+                            <col style="width:96px;text-align:right">
+                        </colgroup>
                         <thead>
                             <tr class="text-xs font-bold text-gray-500 uppercase border-b border-gray-100 bg-gray-50/50 nodrag">
-                                <th class="w-10 pl-4 py-3"></th>
+                                <th class="pl-4 py-3"></th>
                                 <th class="py-3"><?php _e('名称'); ?></th>
                                 <th class="py-3 hidden md:table-cell"><?php _e('子分类'); ?></th>
                                 <th class="py-3 hidden md:table-cell"><?php _e('缩略名'); ?></th>
-                                <th class="py-3 w-24 text-center"><?php _e('文章数'); ?></th>
-                                <th class="py-3 w-24 text-right pr-4"><?php _e('操作'); ?></th>
+                                <th class="py-3"><?php _e('文章数'); ?></th>
+                                <th class="py-3 pr-4"><?php _e('操作'); ?></th>
                             </tr>
                         </thead>
                         <tbody class="divide-y divide-gray-100">
@@ -105,12 +113,12 @@ include 'menu.php';
                                         <td class="py-3 hidden md:table-cell text-sm text-gray-600 font-mono text-xs">
                                             <?php $categories->slug(); ?>
                                         </td>
-                                        <td class="py-3 text-center">
+                                        <td class="py-3">
                                             <a href="<?php $options->adminUrl('manage-posts.php?category=' . $categories->mid); ?>" class="inline-flex items-center justify-center px-2 py-0.5 text-xs font-medium <?php echo $categories->count > 0 ? 'bg-discord-accent text-white' : 'bg-gray-100 text-gray-500'; ?> hover:bg-blue-600 transition-colors">
                                                 <?php $categories->count(); ?>
                                             </a>
                                         </td>
-                                        <td class="py-3 pr-4 text-right text-sm">
+                                        <td class="py-3 pr-4 text-sm">
                                             <div class="flex justify-end space-x-3 opacity-0 group-hover:opacity-100 transition-opacity">
                                                 <a href="<?php $options->adminUrl('category.php?mid=' . $categories->mid); ?>" class="text-gray-500 hover:text-discord-accent" title="<?php _e('编辑'); ?>"><i class="fas fa-edit"></i></a>
                                                 <?php if ($options->defaultCategory != $categories->mid): ?>

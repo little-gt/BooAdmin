@@ -57,7 +57,7 @@ $pages = \Widget\Contents\Page\Admin::alloc();
             </div>
 
             <!-- Page List -->
-            <div class="bg-white border border-gray-200 overflow-hidden rounded-xl shadow-sm">
+            <div class="bg-white border border-gray-200 overflow-hidden">
                 <form method="post" name="manage_pages" class="operate-form">
                     <div class="booadmin-operate-bar operate-bar">
                          <div class="flex items-center space-x-2">
@@ -91,14 +91,22 @@ $pages = \Widget\Contents\Page\Admin::alloc();
 
                     <div class="table-wrapper" data-table-scroll>
                     <table class="w-full text-left border-collapse typecho-list-table">
+                        <colgroup>
+                            <col style="width:40px">
+                            <col style="width:64px;text-align:center">
+                            <col style="text-align:left">
+                            <col style="width:120px;text-align:left">
+                            <col class="hidden md:table-cell" style="width:100px;text-align:left">
+                            <col style="width:140px;text-align:right">
+                        </colgroup>
                         <thead>
                             <tr class="text-xs font-bold text-gray-500 uppercase border-b border-gray-100 bg-gray-50/50 nodrag">
-                                <th class="w-10 pl-4 py-3"></th>
-                                <th class="w-16 py-3 text-center"><?php _e('评论数'); ?></th>
+                                <th class="pl-4 py-3"></th>
+                                <th class="py-3"><?php _e('评论数'); ?></th>
                                 <th class="py-3"><?php _e('标题'); ?></th>
                                 <th class="py-3"><?php _e('子页面'); ?></th>
                                 <th class="py-3 hidden md:table-cell"><?php _e('作者'); ?></th>
-                                <th class="py-3 pr-4 text-right"><?php _e('日期'); ?></th>
+                                <th class="py-3 pr-4"><?php _e('日期'); ?></th>
                             </tr>
                         </thead>
                         <tbody class="divide-y divide-gray-100">
@@ -129,7 +137,7 @@ $pages = \Widget\Contents\Page\Admin::alloc();
                                         <td class="pl-4 py-3">
                                             <input type="checkbox" value="<?php $pages->cid(); ?>" name="cid[]" class="text-discord-accent focus:ring-discord-accent border-gray-300">
                                         </td>
-                                        <td class="py-3 text-center">
+                                        <td class="py-3">
                                             <a href="<?php $options->adminUrl('manage-comments.php?cid=' . $pages->cid); ?>" 
                                                class="inline-flex items-center justify-center px-2 py-0.5 text-xs font-medium <?php echo $pages->commentsNum > 0 ? 'bg-discord-accent text-white' : 'bg-gray-100 text-gray-500'; ?>">
                                                 <?php $pages->commentsNum(); ?>
@@ -164,7 +172,7 @@ $pages = \Widget\Contents\Page\Admin::alloc();
                                         <td class="py-3 hidden md:table-cell text-sm text-gray-600">
                                             <?php $pages->author(); ?>
                                         </td>
-                                        <td class="py-3 pr-4 text-right text-sm text-gray-500">
+                                        <td class="py-3 pr-4 text-sm text-gray-500">
                                             <?php if ('page_draft' == $pages->type || $pages->revision): ?>
                                                 <span class="block text-xs text-green-600"><?php $modifyDate = new \Typecho\Date($pages->revision ? $pages->revision['modified'] : $pages->modified); _e('保存于 %s', $modifyDate->word()); ?></span>
                                             <?php else: ?>
