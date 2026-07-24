@@ -53,7 +53,7 @@ $attachments = \Widget\Contents\Attachment\Admin::alloc();
             </div>
 
             <!-- Media List -->
-            <div class="bg-white border border-gray-200 overflow-hidden">
+            <div class="bg-white border border-gray-200 overflow-hidden rounded-xl shadow-sm">
                 <form method="post" name="manage_medias" class="operate-form">
                     <div class="booadmin-operate-bar operate-bar">
                          <div class="flex items-center space-x-2">
