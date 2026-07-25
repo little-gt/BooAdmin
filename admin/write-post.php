@@ -113,7 +113,7 @@ $post = \Widget\Contents\Post\Edit::alloc()->prepare();
                          <button type="button" class="flex-1 py-2 text-sm font-medium text-discord-text bg-white focus:outline-none transition-all duration-200" data-target="#tab-advance"><?php _e('设置'); ?></button>
                          <button type="button" class="flex-1 py-2 text-sm font-medium text-gray-500 hover:text-discord-text focus:outline-none transition-all duration-200" id="tab-files-btn" data-target="#tab-files"><?php _e('附件'); ?></button>
                     </div>
-                    <br>
+
                     <!-- Tab Content Container -->
                     <div class="bg-white border border-gray-100 overflow-hidden flex-1">
                         <div id="tab-advance" class="p-6 space-y-6 tab-content h-full overflow-y-auto custom-scrollbar">

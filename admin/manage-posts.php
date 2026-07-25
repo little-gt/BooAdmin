@@ -94,7 +94,7 @@ $isAllPosts = ('on' == $request->get('__typecho_all_posts') || 'on' == \Typecho\
             </div>
 
             <!-- Post List -->
-            <div class="bg-white border border-gray-200 overflow-hidden rounded-xl shadow-sm">
+            <div class="bg-white border border-gray-200 overflow-hidden">
                 <form method="post" name="manage_posts" class="operate-form">
                     <div class="booadmin-operate-bar operate-bar">
                          <div class="flex items-center space-x-2">
@@ -147,7 +147,7 @@ $isAllPosts = ('on' == $request->get('__typecho_all_posts') || 'on' == \Typecho\
                                 <th class="py-3"><?php _e('标题'); ?></th>
                                 <th class="py-3 hidden md:table-cell"><?php _e('作者'); ?></th>
                                 <th class="py-3 hidden md:table-cell"><?php _e('分类'); ?></th>
-                                <th class="py-3 pr-4 text-right"><?php _e('日期'); ?></th>
+                                <th class="py-3 pr-4 text-left"><?php _e('日期'); ?></th>
                             </tr>
                         </thead>
                         <tbody class="divide-y divide-gray-100">
@@ -218,7 +218,7 @@ $isAllPosts = ('on' == $request->get('__typecho_all_posts') || 'on' == \Typecho\
                                                 echo '" class="hover:underline hover:text-discord-accent">' . $category['name'] . '</a>'; ?>
                                             <?php endforeach; ?>
                                         </td>
-                                        <td class="py-3 pr-4 text-right text-sm text-gray-500">
+                                        <td class="py-3 pr-4 text-left text-sm text-gray-500">
                                             <?php if ('post_draft' == $posts->type || $posts->revision): ?>
                                                 <span class="block text-xs text-green-600"><?php $modifyDate = new \Typecho\Date($posts->revision ? $posts->revision['modified'] : $posts->modified); _e('保存于 %s', $modifyDate->word()); ?></span>
                                             <?php else: ?>

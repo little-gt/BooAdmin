@@ -482,6 +482,9 @@
 
                 initializeViewMode();
 
+                // One-way responsive: auto-switch table→card when screen narrows,
+                // but do NOT auto-switch card→table when screen widens.
+                var wasMobile = isMobileViewport();
                 var resizeTimer = null;
                 $(window).on('resize.viewMode', function() {
                     if (resizeTimer) {
@@ -489,9 +492,13 @@
                     }
 
                     resizeTimer = setTimeout(function() {
-                        if (!hasUserViewPreference()) {
-                            applyViewMode(getDefaultViewMode());
+                        var isMobile = isMobileViewport();
+                        // Only auto-switch to card view when transitioning from wide to narrow
+                        if (isMobile && !wasMobile) {
+                            applyViewMode('card');
                         }
+                        // Do NOT auto-switch back to table when going from narrow to wide
+                        wasMobile = isMobile;
                     }, 150);
                 });
 

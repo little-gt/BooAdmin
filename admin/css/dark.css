@@ -1425,4 +1425,87 @@
     .profile-avatar {
         border-color: var(--booadmin-border) !important;
     }
+
+    /* ========================================
+     * 主题编辑器 - 文件列表选项卡 (Theme Editor File List Tabs)
+     * ======================================== */
+
+    /* 文件列表侧栏容器 */
+    .theme-file-list {
+        background-color: var(--booadmin-surface-2) !important;
+        border-color: var(--booadmin-border) !important;
+    }
+
+    /* 文件列表标题栏 */
+    .theme-file-list-header {
+        background-color: var(--booadmin-surface) !important;
+        border-bottom-color: var(--booadmin-border-strong) !important;
+        color: var(--booadmin-text) !important;
+    }
+
+    /* 文件项基础样式 */
+    .theme-file-item {
+        color: var(--booadmin-muted) !important;
+        border-left: 3px solid transparent;
+        text-decoration: none !important;
+    }
+
+    /* 文件项悬停状态 */
+    .theme-file-item:hover:not(.theme-file-item-active) {
+        background-color: var(--booadmin-highlight-soft) !important;
+        color: var(--booadmin-text) !important;
+        border-left-color: var(--booadmin-border-strong);
+        text-decoration: none !important;
+    }
+
+    /* 当前选中文件项 - 突出显示 */
+    .theme-file-item-active {
+        background-color: var(--booadmin-selection-bg) !important;
+        color: var(--booadmin-accent) !important;
+        border-left: 3px solid var(--booadmin-accent) !important;
+        font-weight: 600 !important;
+        text-decoration: none !important;
+    }
+
+    /* 当前选中文件项图标 */
+    .theme-file-item-active i {
+        opacity: 0.9 !important;
+        color: var(--booadmin-accent) !important;
+    }
+
+    /* 编辑器区域容器 */
+    #editor-container {
+        background-color: var(--booadmin-surface-2) !important;
+        border-color: var(--booadmin-border) !important;
+    }
+
+    /* 编辑器顶部栏 */
+    #editor-container > div:first-child {
+        background-color: var(--booadmin-surface) !important;
+        border-bottom-color: var(--booadmin-border-strong) !important;
+    }
+
+    /* 编辑器文件名显示 */
+    #editor-container > div:first-child > span {
+        color: var(--booadmin-text) !important;
+    }
+
+    /* 代码编辑区 textarea */
+    #editor-container textarea {
+        background-color: var(--booadmin-bg) !important;
+        color: var(--booadmin-text) !important;
+    }
+
+    /* 编辑器底部保存栏 */
+    #editor-container form > div:last-child {
+        background-color: var(--booadmin-surface) !important;
+        border-top-color: var(--booadmin-border-strong) !important;
+    }
+
+    /* 只读提示标签 */
+    #editor-container .text-red-500 {
+        background-color: var(--booadmin-error-bg) !important;
+        color: var(--booadmin-danger) !important;
+        border-color: var(--booadmin-danger) !important;
+    }
 }

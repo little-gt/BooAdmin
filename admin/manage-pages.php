@@ -57,7 +57,7 @@ $pages = \Widget\Contents\Page\Admin::alloc();
             </div>
 
             <!-- Page List -->
-            <div class="bg-white border border-gray-200 overflow-hidden rounded-xl shadow-sm">
+            <div class="bg-white border border-gray-200 overflow-hidden">
                 <form method="post" name="manage_pages" class="operate-form">
                     <div class="booadmin-operate-bar operate-bar">
                          <div class="flex items-center space-x-2">
@@ -98,7 +98,7 @@ $pages = \Widget\Contents\Page\Admin::alloc();
                                 <th class="py-3"><?php _e('标题'); ?></th>
                                 <th class="py-3"><?php _e('子页面'); ?></th>
                                 <th class="py-3 hidden md:table-cell"><?php _e('作者'); ?></th>
-                                <th class="py-3 pr-4 text-right"><?php _e('日期'); ?></th>
+                                <th class="py-3 pr-4 text-left"><?php _e('日期'); ?></th>
                             </tr>
                         </thead>
                         <tbody class="divide-y divide-gray-100">
@@ -164,7 +164,7 @@ $pages = \Widget\Contents\Page\Admin::alloc();
                                         <td class="py-3 hidden md:table-cell text-sm text-gray-600">
                                             <?php $pages->author(); ?>
                                         </td>
-                                        <td class="py-3 pr-4 text-right text-sm text-gray-500">
+                                        <td class="py-3 pr-4 text-left text-sm text-gray-500">
                                             <?php if ('page_draft' == $pages->type || $pages->revision): ?>
                                                 <span class="block text-xs text-green-600"><?php $modifyDate = new \Typecho\Date($pages->revision ? $pages->revision['modified'] : $pages->modified); _e('保存于 %s', $modifyDate->word()); ?></span>
                                             <?php else: ?>
