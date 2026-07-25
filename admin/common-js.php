@@ -482,33 +482,25 @@
 
                 initializeViewMode();
 
-                // Responsive auto-switch: when the viewport NARROWS below the
-                // breakpoint, force the table into card view. When it WIDENS,
-                // do nothing and keep the current view ("反之不操作").
-                var mq = window.matchMedia('(max-width: 767px)');
-                var wasNarrow = mq.matches;
-
-                function syncResponsiveView(isNarrow) {
-                    if (isNarrow && !wasNarrow) {
-                        // narrowed: switch table -> card automatically
-                        if ($('.operate-form').closest('.bg-white').attr('data-view-mode') !== 'card') {
-                            applyViewMode('card');
-                            saveViewMode('card');
-                        }
+                // One-way responsive: auto-switch table→card when screen narrows,
+                // but do NOT auto-switch card→table when screen widens.
+                var wasMobile = isMobileViewport();
+                var resizeTimer = null;
+                $(window).on('resize.viewMode', function() {
+                    if (resizeTimer) {
+                        clearTimeout(resizeTimer);
                     }
-                    // widening: intentionally leave the view unchanged
-                    wasNarrow = isNarrow;
-                }
 
-                if (typeof mq.addEventListener === 'function') {
-                    mq.addEventListener('change', function(e) {
-                        syncResponsiveView(e.matches);
-                    });
-                } else if (typeof mq.addListener === 'function') {
-                    mq.addListener(function(e) {
-                        syncResponsiveView(e.matches);
-                    });
-                }
+                    resizeTimer = setTimeout(function() {
+                        var isMobile = isMobileViewport();
+                        // Only auto-switch to card view when transitioning from wide to narrow
+                        if (isMobile && !wasMobile) {
+                            applyViewMode('card');
+                        }
+                        // Do NOT auto-switch back to table when going from narrow to wide
+                        wasMobile = isMobile;
+                    }, 150);
+                });
 
                 $(document).on('change', '.content-card .card-checkbox', function() {
                     var $checkbox = $(this);

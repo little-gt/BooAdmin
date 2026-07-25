@@ -19,36 +19,6 @@ a:hover {
 	color:var(--booadmin-link-hover);
 	text-decoration:underline
 }
-
-/* Links acting as buttons should never show underlines */
-a[href]:not(.message a):not(#wmd-preview a):not(.typecho-reform-style a):not(.dropdown-menu a):not(.typecho-pager a):not(.typecho-list-operate a):not(.typecho-option-tabs a):not(.typecho-head-nav a):not(.booadmin-copyright-popup .action a):hover,
-a[href].bg-discord-accent:hover,
-a[href].bg-blue-600:hover,
-a[href].bg-green-500:hover,
-a[href].bg-gray-100:hover,
-a[href].bg-white:hover,
-a[href][style*="text-decoration:none"]:hover {
-    text-decoration: none !important;
-}
-
-/* Ensure all navigation and action links have no underline on any state */
-nav a:hover,
-aside a:hover,
-header a:hover,
-footer a:hover,
-.menu a:hover,
-.button a:hover,
-.btn:hover,
-.operate a:hover,
-.action a:hover,
-nav>ul>li>a:hover,
-nav>menu>li>a:hover,
-.sidebar a:hover,
-.group a:hover,
-#sidebar a:hover,
-.extend-topbar a:hover {
-    text-decoration: none !important;
-}
 code,pre,.mono {
 	font-family:"Cascadia Code",Menlo,Monaco,Consolas,"Courier New",monospace
 }
@@ -220,6 +190,34 @@ select {
 }
 .btn-link,.btn-link:hover,.btn-link:focus,.btn-link:active,.btn-link.active {
 	background-color:transparent
+}
+/* Remove underlines from button-style links on hover/active (ref: menu.php pattern) */
+.btn,.btn:hover,.btn:active,.btn.active,
+a.btn,a.btn:hover,a.btn:active,a.btn.active,
+.btn-xs,.btn-s,.btn-l,
+.btn-warn,.btn-warn:hover,.btn-warn:active,.btn-warn.active,
+.primary,.primary:hover,.primary:active,.primary.active,
+.btn-link,.btn-link:hover,.btn-link:focus,.btn-link:active,.btn-link.active,
+.btn-dropdown-toggle,.btn-dropdown-toggle:hover,.btn-dropdown-toggle:active,
+.btn-operate,.btn-operate:hover,.btn-operate:active,
+.btn-table-view,.btn-card-view,
+.btn-table-view:hover,.btn-card-view:hover,
+.btn-table-view.active,.btn-card-view.active,
+.view-toggle button,.view-toggle button:hover,.view-toggle button.active,
+.booadmin-back-button,.booadmin-back-button:hover,
+.booadmin-dropdown-toggle,.booadmin-dropdown-toggle:hover,.booadmin-dropdown-toggle.active,
+.operate-delete,.operate-delete:hover,
+.operate-edit,.operate-edit:hover,
+.operate-reply,.operate-reply:hover,
+.operate-approved,.operate-approved:hover,
+.operate-spam,.operate-spam:hover,
+.operate-button-delete,.operate-button-delete:hover,
+a.balloon-button,a.balloon-button:hover,
+a.button,a.button:hover,
+.typecho-pager li a,.typecho-pager li a:hover,
+.typecho-head-nav a,.typecho-head-nav a:hover,.typecho-head-nav a:focus,
+.typecho-option-tabs li a,.typecho-option-tabs li a:hover {
+	text-decoration:none !important
 }
 .btn-drop {
 	position:relative
@@ -437,14 +435,12 @@ select {
 .typecho-list-table th {
 	padding:0 10px 10px;
 	border-bottom:1px solid var(--booadmin-border);
-	vertical-align:middle
+	text-align:left
 }
 .typecho-list-table td {
 	padding:10px;
 	border-top:1px solid var(--booadmin-border);
-	word-break:break-all;
-	overflow-wrap:anywhere;
-	vertical-align:middle
+	word-break:break-all
 }
 .typecho-list-table td pre {
 	overflow:auto
@@ -486,18 +482,20 @@ select {
 }
 }
 @media (max-width:767px) {
-	/* Keep the table as a SINGLE coherent table so thead/tbody columns
-	   stay aligned (the grid). The .table-wrapper handles horizontal
-	   scroll only when content genuinely overflows. */
 	.typecho-list-table {
-		table-layout:fixed
+		display:block;
+		overflow-x:auto;
+		-webkit-overflow-scrolling:touch
+	}
+	.typecho-list-table thead,
+	.typecho-list-table tbody,
+	.typecho-list-table tfoot {
+		display:table;
+		width:100%
 	}
 	.typecho-list-table th,
 	.typecho-list-table td {
-		white-space:normal;
-		word-break:break-word;
-		overflow-wrap:anywhere;
-		vertical-align:top
+		white-space:nowrap
 	}
 }
 .typecho-option-tabs {
@@ -3921,31 +3919,6 @@ button:not(.view-toggle button),.btn:not(.view-toggle button),a.btn {
 
 .booadmin-dialog-lg {
 	max-width:42rem;
-}
-
-/* Comment modals (reply / edit / delete / message) - stay within viewport */
-.comment-modal {
-	position:fixed;
-	inset:0;
-	z-index:60;
-	display:none;
-	align-items:center;
-	justify-content:center;
-	padding:16px;
-	background-color:var(--booadmin-overlay);
-	overflow-y:auto
-}
-.comment-modal.active {
-	display:flex
-}
-.comment-modal > .booadmin-dialog {
-	margin:auto;
-	max-height:calc(100vh - 32px);
-	overflow-y:auto
-}
-#originalCommentArea {
-	max-height:35vh;
-	overflow-y:auto
 }
 
 .booadmin-operate-bar {

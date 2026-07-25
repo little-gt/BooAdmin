@@ -72,37 +72,82 @@ $users = \Widget\Users\Admin::alloc();
                                     </div>
                                  </div>
                              </div>
+                         <div class="view-toggle">
+                             <button type="button" class="btn-table-view active" title="<?php _e('表格视图'); ?>">
+                                 <i class="fas fa-table"></i>
+                                 <span class="hidden sm:inline"><?php _e('表格'); ?></span>
+                             </button>
+                             <button type="button" class="btn-card-view" title="<?php _e('卡片视图'); ?>">
+                                 <i class="fas fa-th-large"></i>
+                                 <span class="hidden sm:inline"><?php _e('卡片'); ?></span>
+                             </button>
+                         </div>
                     </div>
 
                     <div class="table-wrapper" data-table-scroll>
                     <table class="w-full text-left border-collapse typecho-list-table draggable">
-                        <colgroup>
-                            <col style="width:40px">
-                            <col style="width:64px;text-align:center">
-                            <col style="text-align:left">
-                            <col class="hidden lg:table-cell" style="width:140px;text-align:left">
-                            <col class="hidden lg:table-cell" style="width:200px;text-align:left">
-                            <col style="width:120px;text-align:right">
-                        </colgroup>
-                        <thead>
+                                <thead>
                             <tr class="text-xs font-bold text-gray-500 uppercase border-b border-gray-100 bg-gray-50/50 nodrag">
-                                <th class="pl-4 py-3"></th>
-                                <th class="py-3"><?php _e('文章数'); ?></th>
+                                <th class="w-10 pl-4 py-3"></th>
+                                <th class="w-16 py-3 text-center"><?php _e('文章数'); ?></th>
                                 <th class="py-3"><?php _e('用户名'); ?></th>
                                 <th class="py-3 hidden lg:table-cell"><?php _e('昵称'); ?></th>
                                 <th class="py-3 hidden lg:table-cell"><?php _e('电子邮件'); ?></th>
-                                <th class="py-3 pr-4"><?php _e('用户组'); ?></th>
+                                <th class="py-3 pr-4 text-left"><?php _e('用户组'); ?></th>
                             </tr>
                         </thead>
                         <tbody class="divide-y divide-gray-100">
                             <?php if ($users->have()): ?>
-                                <?php while ($users->next()): ?>
+                                <?php
+                                // Store users data for card view
+                                $usersData = [];
+                                while ($users->next()):
+                                    $groupClass = 'bg-gray-100 text-gray-500';
+                                    $groupName = '';
+                                    switch ($users->group) {
+                                        case 'administrator':
+                                            $groupClass = 'bg-red-100 text-red-600';
+                                            $groupName = _t('管理员');
+                                            break;
+                                        case 'editor':
+                                            $groupClass = 'bg-blue-100 text-blue-600';
+                                            $groupName = _t('编辑');
+                                            break;
+                                        case 'contributor':
+                                            $groupClass = 'bg-green-100 text-green-600';
+                                            $groupName = _t('贡献者');
+                                            break;
+                                        case 'subscriber':
+                                            $groupClass = 'bg-yellow-100 text-yellow-600';
+                                            $groupName = _t('关注者');
+                                            break;
+                                        case 'visitor':
+                                            $groupClass = 'bg-gray-100 text-gray-500';
+                                            $groupName = _t('访问者');
+                                            break;
+                                        default:
+                                            $groupClass = 'bg-gray-100 text-gray-500';
+                                            $groupName = $users->group;
+                                            break;
+                                    }
+                                    $usersData[] = [
+                                        'uid' => $users->uid,
+                                        'name' => $users->name,
+                                        'screenName' => $users->screenName,
+                                        'mail' => $users->mail,
+                                        'postsNum' => $users->postsNum,
+                                        'group' => $users->group,
+                                        'groupClass' => $groupClass,
+                                        'groupName' => $groupName,
+                                        'permalink' => $users->permalink
+                                    ];
+                                ?>
                                     <tr id="user-<?php $users->uid(); ?>" class="group hover:bg-gray-50 transition-colors">
                                         <td class="pl-4 py-3">
                                             <input type="checkbox" value="<?php $users->uid(); ?>" name="uid[]" class="text-discord-accent focus:ring-discord-accent border-gray-300">
                                         </td>
-                                        <td class="py-3">
-                                            <a href="<?php $options->adminUrl('manage-posts.php?__typecho_all_posts=off&uid=' . $users->uid); ?>" 
+                                        <td class="py-3 text-center">
+                                            <a href="<?php $options->adminUrl('manage-posts.php?__typecho_all_posts=off&uid=' . $users->uid); ?>"
                                                class="inline-flex items-center justify-center px-2 py-0.5 text-xs font-medium <?php echo $users->postsNum > 0 ? 'bg-discord-accent text-white' : 'bg-gray-100 text-gray-500'; ?>">
                                                 <?php $users->postsNum(); ?>
                                             </a>
@@ -143,37 +188,7 @@ $users = \Widget\Users\Admin::alloc();
                                                 <span class="text-gray-400"><?php _e('暂无'); ?></span>
                                             <?php endif; ?>
                                         </td>
-                                        <td class="py-3 pr-4 text-sm">
-                                            <?php 
-                                            $groupClass = 'bg-gray-100 text-gray-500';
-                                            $groupName = '';
-                                            switch ($users->group) {
-                                                case 'administrator':
-                                                    $groupClass = 'bg-red-100 text-red-600';
-                                                    $groupName = _t('管理员');
-                                                    break;
-                                                case 'editor':
-                                                    $groupClass = 'bg-blue-100 text-blue-600';
-                                                    $groupName = _t('编辑');
-                                                    break;
-                                                case 'contributor':
-                                                    $groupClass = 'bg-green-100 text-green-600';
-                                                    $groupName = _t('贡献者');
-                                                    break;
-                                                case 'subscriber':
-                                                    $groupClass = 'bg-yellow-100 text-yellow-600';
-                                                    $groupName = _t('关注者');
-                                                    break;
-                                                case 'visitor':
-                                                    $groupClass = 'bg-gray-100 text-gray-500';
-                                                    $groupName = _t('访问者');
-                                                    break;
-                                                default:
-                                                    $groupClass = 'bg-gray-100 text-gray-500';
-                                                    $groupName = $users->group;
-                                                    break;
-                                            } 
-                                            ?>
+                                        <td class="py-3 pr-4 text-left text-sm">
                                             <span class="px-2 py-0.5 text-xs font-medium whitespace-nowrap <?php echo $groupClass; ?>"><?php echo $groupName; ?></span>
                                         </td>
                                     </tr>
@@ -190,6 +205,70 @@ $users = \Widget\Users\Admin::alloc();
                             <?php endif; ?>
                         </tbody>
                     </table>
+                    </div>
+
+                    <!-- Card View Container -->
+                    <div class="card-view-container">
+                        <?php if (!empty($usersData)): ?>
+                            <?php foreach ($usersData as $user): ?>
+                                <div class="content-card" id="card-user-<?php echo $user['uid']; ?>">
+                                    <input type="checkbox" value="<?php echo $user['uid']; ?>" name="uid[]" class="card-checkbox text-discord-accent focus:ring-discord-accent border-gray-300">
+
+                                    <div class="card-header">
+                                        <div class="mr-3 flex-shrink-0">
+                                            <?php if ($user['mail']): ?>
+                                                <?php echo getAvatar($user['mail'], $user['screenName'], 64); ?>
+                                            <?php else: ?>
+                                                <div class="w-10 h-10 bg-gray-100 border border-gray-200 flex items-center justify-center text-gray-500 overflow-hidden flex-shrink-0">
+                                                    <i class="fas fa-user"></i>
+                                                </div>
+                                            <?php endif; ?>
+                                        </div>
+                                        <div class="flex-1 min-w-0">
+                                            <a href="<?php $options->adminUrl('user.php?uid=' . $user['uid']); ?>" class="card-title block break-all">
+                                                <?php echo htmlspecialchars($user['name']); ?>
+                                            </a>
+                                            <div class="card-badges">
+                                                <span class="px-2 py-0.5 text-xs font-medium whitespace-nowrap <?php echo $user['groupClass']; ?>"><?php echo $user['groupName']; ?></span>
+                                            </div>
+                                        </div>
+                                        <a href="<?php $options->adminUrl('manage-posts.php?__typecho_all_posts=off&uid=' . $user['uid']); ?>"
+                                           class="card-comment-badge flex-shrink-0 <?php echo $user['postsNum'] > 0 ? 'bg-discord-accent text-white' : 'bg-gray-100 text-gray-500'; ?>">
+                                            <?php echo $user['postsNum']; ?>
+                                        </a>
+                                    </div>
+
+                                    <div class="card-meta">
+                                        <?php if ($user['screenName']): ?>
+                                        <div class="card-meta-item">
+                                            <i class="fas fa-id-badge text-gray-400"></i>
+                                            <span class="break-all"><?php echo htmlspecialchars($user['screenName']); ?></span>
+                                        </div>
+                                        <?php endif; ?>
+                                        <?php if ($user['mail']): ?>
+                                        <div class="card-meta-item">
+                                            <i class="fas fa-envelope text-gray-400"></i>
+                                            <a href="mailto:<?php echo htmlspecialchars($user['mail']); ?>" class="hover:text-discord-accent break-all"><?php echo htmlspecialchars($user['mail']); ?></a>
+                                        </div>
+                                        <?php endif; ?>
+                                    </div>
+
+                                    <div class="card-actions">
+                                        <a href="<?php $options->adminUrl('user.php?uid=' . $user['uid']); ?>">
+                                            <i class="fas fa-edit"></i> <?php _e('编辑'); ?>
+                                        </a>
+                                        <a href="<?php echo $user['permalink']; ?>" target="_blank">
+                                            <i class="fas fa-external-link-alt"></i> <?php _e('主页'); ?>
+                                        </a>
+                                    </div>
+                                </div>
+                            <?php endforeach; ?>
+                        <?php else: ?>
+                            <div class="px-4 py-8 text-center text-gray-500">
+                                <div class="mb-3 text-5xl text-gray-300"><i class="far fa-users"></i></div>
+                                <p class="text-sm text-gray-500"><?php _e('没有找到任何用户'); ?></p>
+                            </div>
+                        <?php endif; ?>
                     </div>
                 </form>
             </div>

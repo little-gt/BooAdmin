@@ -46,14 +46,14 @@ include 'menu.php';
                 <div class="p-6">
                     <div id="editor-fullscreen-container" class="flex flex-col lg:flex-row gap-6 flex-1 min-h-0">
                         <!-- File List Sidebar -->
-                        <div class="lg:w-64 bg-gray-50 border border-gray-100 flex flex-col overflow-hidden">
-                            <div class="p-4 bg-gray-100 border-b border-gray-200 font-bold text-discord-text text-sm">
+                        <div class="lg:w-64 bg-gray-50 border border-gray-100 flex flex-col overflow-hidden theme-file-list">
+                            <div class="p-4 bg-gray-100 border-b border-gray-200 font-bold text-discord-text text-sm theme-file-list-header">
                                 <?php _e('模板文件'); ?>
                             </div>
                             <ul class="overflow-y-auto flex-1 p-2 space-y-1">
                                 <?php while ($files->next()): ?>
                                     <li>
-                                        <a href="<?php $options->adminUrl('theme-editor.php?theme=' . $files->currentTheme() . '&file=' . $files->file); ?>" class="block px-3 py-2 text-sm truncate transition-colors <?php if ($files->current): ?>bg-discord-light text-discord-accent font-medium<?php else: ?>text-discord-muted hover:bg-gray-200 hover:text-discord-text<?php endif; ?>">
+                                        <a href="<?php $options->adminUrl('theme-editor.php?theme=' . $files->currentTheme() . '&file=' . $files->file); ?>" class="block px-3 py-2 text-sm truncate transition-colors theme-file-item <?php if ($files->current): ?>bg-discord-light text-discord-accent font-medium theme-file-item-active<?php else: ?>text-discord-muted hover:bg-gray-200 hover:text-discord-text<?php endif; ?>">
                                             <i class="fas fa-file-code mr-2 opacity-50"></i><?php $files->file(); ?>
                                         </a>
                                     </li>
