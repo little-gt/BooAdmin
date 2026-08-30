@@ -830,7 +830,8 @@ function closeDeleteModal() {
 
 function confirmDelete() {
     if (!currentDeleteUrl) return;
-    
+
+    var _currentDeleteUrl = currentDeleteUrl;
     var $target = currentDeleteTarget;
     var $tr = $target.closest('tr');
     var $card = $target.closest('.content-card');
@@ -844,16 +845,16 @@ function confirmDelete() {
     if ($tr.length > 0) {
         $tr.fadeOut(function () {
             rememberScroll();
-            window.location.href = currentDeleteUrl;
+            window.location.href = _currentDeleteUrl;
         });
     } else if ($card.length > 0) {
         $card.fadeOut(function () {
             rememberScroll();
-            window.location.href = currentDeleteUrl;
+            window.location.href = _currentDeleteUrl;
         });
     } else {
         rememberScroll();
-        window.location.href = currentDeleteUrl;
+        window.location.href = _currentDeleteUrl;
     }
     
     closeDeleteModal();
