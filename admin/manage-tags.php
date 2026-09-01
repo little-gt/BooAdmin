@@ -291,7 +291,12 @@ include 'form-js.php';
                 closeModal();
             }
         });
-        
+
+        // 事件已绑定，解除这些操作链接的原生跳转保护
+        if (window.booadminArmLinks) {
+            booadminArmLinks('.js-tag-action');
+        }
+
         // Ensure form JS works correctly
         $('.typecho-option input').first().focus();
 

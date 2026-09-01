@@ -530,31 +530,42 @@ $(document).ready(function() {
     
     // Draft delete confirmation modal
     var draftDeleteHref = null;
+
+    function closeDraftDeleteModal() {
+        $('#draft-delete-confirm-modal').addClass('hidden');
+        draftDeleteHref = null;
+    }
+
     $('.edit-draft-notice a').click(function () {
         draftDeleteHref = $(this).attr('href');
         $('#draft-delete-confirm-modal').removeClass('hidden');
         return false;
     });
 
-    $('#cancel-draft-delete').click(function () {
-        $('#draft-delete-confirm-modal').addClass('hidden');
-        draftDeleteHref = null;
-    });
+    $('#cancel-draft-delete').click(closeDraftDeleteModal);
 
     $('#confirm-draft-delete').click(function () {
-        if (draftDeleteHref) {
-            window.location.href = draftDeleteHref;
+        // 先快照目标, 再关闭并重置状态, 最后执行跳转
+        var href = draftDeleteHref;
+
+        closeDraftDeleteModal();
+
+        if (href) {
+            window.location.href = href;
         }
-        $('#draft-delete-confirm-modal').addClass('hidden');
     });
 
     // Close modal when clicking outside
     $('#draft-delete-confirm-modal').click(function (e) {
         if (e.target === this) {
-            $('#draft-delete-confirm-modal').addClass('hidden');
-            draftDeleteHref = null;
+            closeDraftDeleteModal();
         }
     });
+
+    // 事件已绑定，解除这些操作链接的原生跳转保护
+    if (window.booadminArmLinks) {
+        booadminArmLinks('.edit-draft-notice a');
+    }
 });
 </script>
 <!-- Preview Save Confirm Modal -->

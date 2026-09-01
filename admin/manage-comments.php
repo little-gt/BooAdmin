@@ -777,7 +777,10 @@ function submitReply() {
         return;
     }
     
-    $.post(currentReplyUrl, {text: text}, function(o) {
+    // 在发起请求前快照目标, 避免异步回调期间被 closeReplyModal() 清空
+    var _currentReplyUrl = currentReplyUrl;
+
+    $.post(_currentReplyUrl, {text: text}, function(o) {
         if (o && o.comment) {
             closeReplyModal();
             showMessageModal('<?php _e('成功'); ?>', '<?php _e('回复成功'); ?>');
@@ -830,7 +833,8 @@ function closeDeleteModal() {
 
 function confirmDelete() {
     if (!currentDeleteUrl) return;
-    
+
+    var _currentDeleteUrl = currentDeleteUrl;
     var $target = currentDeleteTarget;
     var $tr = $target.closest('tr');
     var $card = $target.closest('.content-card');
@@ -844,16 +848,16 @@ function confirmDelete() {
     if ($tr.length > 0) {
         $tr.fadeOut(function () {
             rememberScroll();
-            window.location.href = currentDeleteUrl;
+            window.location.href = _currentDeleteUrl;
         });
     } else if ($card.length > 0) {
         $card.fadeOut(function () {
             rememberScroll();
-            window.location.href = currentDeleteUrl;
+            window.location.href = _currentDeleteUrl;
         });
     } else {
         rememberScroll();
-        window.location.href = currentDeleteUrl;
+        window.location.href = _currentDeleteUrl;
     }
     
     closeDeleteModal();
@@ -872,11 +876,16 @@ function submitEdit() {
         return;
     }
     
-    $.post(currentEditUrl, formData, function(o) {
+    // 在发起请求前快照目标, 避免异步回调期间被 closeEditModal() 清空
+    var _currentEditUrl = currentEditUrl;
+    var _currentEditRowId = currentEditRowId;
+    var _currentEditCardId = currentEditCardId;
+
+    $.post(_currentEditUrl, formData, function(o) {
         if (o && o.comment) {
             // Update table row if exists
-            if (currentEditRowId) {
-                var $row = $('#' + currentEditRowId);
+            if (_currentEditRowId) {
+                var $row = $('#' + _currentEditRowId);
                 if ($row.length > 0) {
                     // Update data attribute
                     var oldComment = $row.data('comment');
@@ -910,8 +919,8 @@ function submitEdit() {
             }
             
             // Update card if exists
-            if (currentEditCardId) {
-                var $card = $('#' + currentEditCardId);
+            if (_currentEditCardId) {
+                var $card = $('#' + _currentEditCardId);
                 if ($card.length > 0) {
                     // Update data attribute
                     var oldComment = JSON.parse($card.attr('data-comment'));
@@ -1085,7 +1094,12 @@ $(document).ready(function () {
             return false;
         }
     }, true); // 使用捕获阶段
-    
+
+    // 事件已绑定，解除这些操作链接的原生跳转保护
+    if (window.booadminArmLinks) {
+        booadminArmLinks('a.operate-delete, a.operate-approved, a.operate-waiting, a.operate-spam');
+    }
+
     // Modal close on background click
     $('.comment-modal').on('click', function(e) {
         if ($(e.target).hasClass('comment-modal')) {
@@ -1104,14 +1118,15 @@ $(document).ready(function () {
     // Message modal confirm button click
     $('#messageModalConfirm').click(function() {
         var $modal = $('#messageModal');
+        // 先快照数据, 再关闭弹窗, 最后执行跳转, 避免残留状态影响后续操作
         var isConfirm = $modal.data('is-confirm');
         var confirmUrl = $modal.data('confirm-url');
-        
+
+        closeMessageModal();
+
         if (isConfirm && confirmUrl) {
             rememberScroll();
             window.location.href = confirmUrl;
-        } else {
-            closeMessageModal();
         }
     });
     

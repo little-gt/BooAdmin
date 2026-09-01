@@ -392,6 +392,12 @@ include 'table-js.php';
 $(document).ready(function () {
     // Operate confirmation modal
     var operateHref = null;
+
+    function closeOperateModal() {
+        $('#operate-confirm-modal').addClass('hidden');
+        operateHref = null;
+    }
+
     $('.btn-operate').click(function () {
         var t = $(this);
         operateHref = t.attr('href');
@@ -400,23 +406,23 @@ $(document).ready(function () {
         return false;
     });
 
-    $('#cancel-operate').click(function () {
-        $('#operate-confirm-modal').addClass('hidden');
-        operateHref = null;
-    });
+    $('#cancel-operate').click(closeOperateModal);
 
     $('#confirm-operate').click(function () {
-        if (operateHref) {
-            window.location.href = operateHref;
+        // 先快照目标, 再关闭并重置状态, 最后执行跳转
+        var href = operateHref;
+
+        closeOperateModal();
+
+        if (href) {
+            window.location.href = href;
         }
-        $('#operate-confirm-modal').addClass('hidden');
     });
 
     // Close modal when clicking outside
     $('#operate-confirm-modal').click(function (e) {
         if (e.target === this) {
-            $('#operate-confirm-modal').addClass('hidden');
-            operateHref = null;
+            closeOperateModal();
         }
     });
 });

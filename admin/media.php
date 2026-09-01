@@ -147,6 +147,12 @@ include 'file-upload-js.php';
 
         // Delete confirmation modal
         var deleteHref = null;
+
+        function closeDeleteModal() {
+            $('#delete-confirm-modal').addClass('hidden');
+            deleteHref = null;
+        }
+
         $('.operate-delete').click(function () {
             var t = $(this);
             deleteHref = t.attr('href');
@@ -155,23 +161,23 @@ include 'file-upload-js.php';
             return false;
         });
 
-        $('#cancel-delete').click(function () {
-            $('#delete-confirm-modal').addClass('hidden');
-            deleteHref = null;
-        });
+        $('#cancel-delete').click(closeDeleteModal);
 
         $('#confirm-delete').click(function () {
-            if (deleteHref) {
-                window.location.href = deleteHref;
+            // 先快照目标, 再关闭并重置状态, 最后执行跳转
+            var href = deleteHref;
+
+            closeDeleteModal();
+
+            if (href) {
+                window.location.href = href;
             }
-            $('#delete-confirm-modal').addClass('hidden');
         });
 
         // Close modal when clicking outside
         $('#delete-confirm-modal').click(function (e) {
             if (e.target === this) {
-                $('#delete-confirm-modal').addClass('hidden');
-                deleteHref = null;
+                closeDeleteModal();
             }
         });
 

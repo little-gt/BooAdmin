@@ -310,6 +310,11 @@ include 'common-js.php';
             }
         });
 
+        // 事件已绑定，解除这些操作链接的原生跳转保护
+        if (window.booadminArmLinks) {
+            booadminArmLinks('.js-category-action');
+        }
+
         <?php if (isset($request->mid)): ?>
         (function () {
             var highlightSoft = getComputedStyle(document.documentElement).getPropertyValue('--booadmin-highlight-soft').trim() || '#F3F4F6';

@@ -315,16 +315,61 @@
             // ========================================
             (function() {
                 // Override dropdownMenu plugin behavior
-                // Store original dropdownMenu if needed
                 var $doc = $(document);
                 var activeDropdown = null;
+                // 保留原生实现，遇到非 BooAdmin 下拉结构时回退，避免插件按原生方式调用时失效
+                var nativeDropdownMenu = $.fn.dropdownMenu;
+
+                function resolveDropdownParts($el, options) {
+                    var $container = $el.closest('.relative, .group');
+                    var $menu;
+                    var $btn;
+
+                    if ($container.length === 0) {
+                        return null;
+                    }
+
+                    $menu = options && options.menuEl
+                        ? $container.find(options.menuEl)
+                        : $container.find('.dropdown-menu');
+
+                    if ($menu.length === 0) {
+                        return null;
+                    }
+
+                    if (options && options.btnEl) {
+                        $btn = $el.is(options.btnEl) ? $el : $container.find(options.btnEl).first();
+                    } else {
+                        $btn = $el;
+                    }
+
+                    if ($btn.length === 0) {
+                        return null;
+                    }
+
+                    return { container : $container, btn : $btn, menu : $menu };
+                }
 
                 // Override the dropdownMenu plugin
                 $.fn.dropdownMenu = function(options) {
+                    var useNative = false;
+
+                    this.each(function() {
+                        if (!resolveDropdownParts($(this), options)) {
+                            useNative = true;
+                            return false;
+                        }
+                    });
+
+                    if (useNative) {
+                        return nativeDropdownMenu.apply(this, arguments);
+                    }
+
                     return this.each(function() {
-                        var $container = $(this).closest('.relative, .group');
-                        var $btn = $(this);
-                        var $menu = $container.find('.dropdown-menu');
+                        var parts = resolveDropdownParts($(this), options);
+                        var $container = parts.container;
+                        var $btn = parts.btn;
+                        var $menu = parts.menu;
 
                         function setDropdownState(isOpen) {
                             $menu.toggleClass('is-open', isOpen)
