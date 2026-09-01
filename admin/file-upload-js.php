@@ -330,12 +330,15 @@ $(document).ready(function() {
         if (fileDeleteData && fileDeleteEl) {
             var $modal = $('#file-delete-confirm-modal');
             var $confirmBtn = $('#confirm-file-delete');
+            // 在发起请求前快照目标, 避免异步回调期间被关闭/重开逻辑清空或改写
+            var deleteCid = fileDeleteData.cid;
+            var $deleteEl = $(fileDeleteEl);
             
             // 禁用按钮防止重复点击
             $confirmBtn.prop('disabled', true).addClass('opacity-50');
             
             $.post('<?php $security->index('/action/contents-attachment-edit'); ?>',
-                {'do' : 'delete', 'cid' : fileDeleteData.cid},
+                {'do' : 'delete', 'cid' : deleteCid},
                 function (response) {
                     if (response && response.success !== false) {
                         // 显示成功通知
@@ -344,7 +347,7 @@ $(document).ready(function() {
                         }
                         
                         // 移除文件项
-                        $(fileDeleteEl).fadeOut(function () {
+                        $deleteEl.fadeOut(function () {
                             $(this).remove();
                             updateAttachmentNumber();
                         });
