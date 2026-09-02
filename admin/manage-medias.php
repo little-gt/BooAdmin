@@ -178,7 +178,7 @@ $attachments = \Widget\Contents\Attachment\Admin::alloc();
                                     <div class="card-media-preview">
                                         <?php if ($attachment['isImage']): ?>
                                             <a href="<?php $options->adminUrl('media.php?cid=' . $attachment['cid']); ?>" class="media-preview-link">
-                                                <img src="<?php echo $attachment['url']; ?>" alt="<?php echo htmlspecialchars($attachment['title']); ?>" class="media-preview-image">
+                                                <img data-src="<?php echo $attachment['url']; ?>" alt="<?php echo htmlspecialchars($attachment['title']); ?>" class="media-preview-image">
                                             </a>
                                         <?php else: ?>
                                             <a href="<?php $options->adminUrl('media.php?cid=' . $attachment['cid']); ?>" class="media-preview-link media-preview-icon">
@@ -338,6 +338,26 @@ $attachments = \Widget\Contents\Attachment\Admin::alloc();
     background: linear-gradient(135deg, var(--booadmin-surface-2) 0%, var(--booadmin-highlight-soft) 100%);
 }
 
+/* 卡片视图图片懒加载：加载中显示持续旋转动画 */
+.card-media-preview.lazy-loading::after {
+    content: "";
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 28px;
+    height: 28px;
+    margin: -14px 0 0 -14px;
+    border: 3px solid rgba(255, 255, 255, 0.45);
+    border-top-color: var(--booadmin-accent);
+    border-radius: 50%;
+    animation: media-lazy-spin 0.8s linear infinite;
+    z-index: 2;
+}
+
+@keyframes media-lazy-spin {
+    to { transform: rotate(360deg); }
+}
+
 .media-card .card-comment-badge {
     position: absolute;
     top: 0.75rem;
@@ -391,5 +411,58 @@ $(document).ready(function () {
         });
         return false;
     });
+
+    // 卡片视图图片懒加载：每次只下载一张，动画持续到全部完成
+    var $mediaContainer = $('.card-view-container');
+    if ($mediaContainer.length) {
+        var loadingQueue = [];
+        var isLoading = false;
+
+        function loadNextMediaImage() {
+            if (loadingQueue.length === 0) {
+                isLoading = false;
+                return;
+            }
+            isLoading = true;
+
+            var img = loadingQueue.shift();
+            var $img = $(img);
+            var realSrc = $img.attr('data-src');
+            if (!realSrc) {
+                loadNextMediaImage();
+                return;
+            }
+
+            $img.on('load error', function () {
+                $img.closest('.card-media-preview').removeClass('lazy-loading');
+                loadNextMediaImage();
+            });
+            $img.attr('src', realSrc);
+        }
+
+        function startMediaLazyLoad() {
+            $mediaContainer.find('img.media-preview-image[data-src]').each(function () {
+                var $img = $(this);
+                if ($img.data('lazyQueued')) {
+                    return;
+                }
+                $img.data('lazyQueued', true);
+                $img.closest('.card-media-preview').addClass('lazy-loading');
+                loadingQueue.push(this);
+            });
+
+            if (!isLoading) {
+                loadNextMediaImage();
+            }
+        }
+
+        // 切换到卡片视图时启动懒加载
+        $('.view-toggle').on('click', '.btn-card-view', startMediaLazyLoad);
+
+        // 初始即为卡片视图（如移动端）时直接启动
+        if ($mediaContainer.is(':visible')) {
+            startMediaLazyLoad();
+        }
+    }
 });
 </script>

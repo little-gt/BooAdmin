@@ -37,9 +37,7 @@ $header = \Typecho\Plugin::factory('admin/header.php')->filter('header', $header
     </head>
     <body class="<?php echo isset($bodyClass) ? $bodyClass : ''; ?>">
         <script>
-        /* 操作类链接（AJAX / 确认弹窗）在页面脚本绑定事件之前被点击时，会直接跳转到 /action/ 接口地址。
-           这里在捕获阶段拦截这些链接的原生跳转，直到对应脚本调用 window.booadminArmLinks() 完成接管。
-           window load 后统一兜底解除保护，避免脚本异常时操作永久失效。 */
+        /* 操作类链接（AJAX / 确认弹窗）在页面脚本绑定事件之前被点击时，会直接跳转到 /action/ 接口地址。这里在捕获阶段拦截这些链接的原生跳转，直到对应脚本调用 window.booadminArmLinks() 完成接管。window load 后统一兜底解除保护，避免脚本异常时操作永久失效。 */
         (function () {
             var GUARD_SELECTOR = [
                 'a.operate-delete',
