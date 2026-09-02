@@ -388,7 +388,7 @@ $(document).ready(function () {
             // 重新调整工具栏高度和布局
             adjustToolbarHeight();
 
-            // Auto-size preview height outside fullscreen
+            // 全屏外自动调整预览高度
             if (!isFullScreen && selected_tab === "#wmd-preview") {
                 preview.css('height', '');
             }

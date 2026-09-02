@@ -229,87 +229,66 @@ $(document).ready(function() {
 
     // 显示图片预览模态框
     function showImagePreview(url, title, callback) {
-        // 移除已存在的预览模态框
-        $('#image-preview-modal').remove();
-        
-        // 创建预览模态框
-        var previewModal = $('<div id="image-preview-modal" class="fixed inset-0 bg-black bg-opacity-75 z-50 flex items-center justify-center p-4"></div>')
-            .appendTo('body')
-            .click(function(e) {
-                if ($(e.target).is('#image-preview-modal')) {
-                    previewModal.remove();
-                }
-            });
-        
-        var modalContent = $('<div class="bg-white max-w-4xl w-full max-h-[90vh] flex flex-col shadow-xl"></div>')
-            .appendTo(previewModal);
-        
-        // 模态框头部
-        var modalHeader = $('<div class="px-6 py-4 border-b border-gray-200 flex items-center justify-between"></div>')
-            .appendTo(modalContent);
-        
-        $('<h3 class="text-lg font-bold text-discord-text"><?php _e('图片预览'); ?></h3>')
-            .appendTo(modalHeader);
-        
-        $('<button class="text-gray-400 hover:text-gray-600 transition-colors" title="<?php _e('关闭'); ?>"><i class="fas fa-times"></i></button>')
-            .click(function() {
-                previewModal.remove();
-            })
-            .appendTo(modalHeader);
-        
-        // 模态框内容
-        var modalBody = $('<div class="flex-1 flex items-center justify-center p-6 overflow-auto bg-gray-50"></div>')
-            .appendTo(modalContent);
-        
-        $('<img src="' + url + '" class="max-w-full max-h-[60vh] object-contain shadow-sm" alt="' + title + '">')
-            .appendTo(modalBody);
-        
-        // 模态框底部
-        var modalFooter = $('<div class="px-6 py-4 border-t border-gray-200 bg-white"></div>')
-            .appendTo(modalContent);
-        
-        var footerContent = $('<div class="flex items-center justify-between"></div>')
-            .appendTo(modalFooter);
-        
-        // 图片URL显示框
-        var urlContainer = $('<div class="flex-1 mr-4"></div>')
-            .appendTo(footerContent);
-        
-        $('<input type="text" value="' + url + '" class="w-full px-3 py-2 bg-gray-100 border border-gray-300 text-sm text-gray-800 focus:outline-none" readonly>')
-            .appendTo(urlContainer);
-        
-        // 按钮组
-        var buttonContainer = $('<div class="flex space-x-3"></div>')
-            .appendTo(footerContent);
-        
-        $('<button class="px-4 py-2 bg-gray-200 text-discord-text hover:bg-gray-300 transition-colors text-sm font-medium"><?php _e('取消'); ?></button>')
-            .click(function() {
-                previewModal.remove();
-            })
-            .appendTo(buttonContainer);
-        
-        $('<button class="px-4 py-2 bg-discord-accent text-white hover:bg-blue-600 transition-colors text-sm font-medium"><?php _e('插入图片'); ?></button>')
-            .click(function() {
-                previewModal.remove();
-                callback();
-            })
-            .appendTo(buttonContainer);
+        var bodyHtml =
+            '<div class="flex-1 flex items-center justify-center p-6 overflow-auto bg-gray-50">' +
+                '<img src="' + url + '" class="max-w-full max-h-[60vh] object-contain shadow-sm" alt="' + title + '">' +
+            '</div>' +
+            '<div class="px-6 py-4 border-t border-gray-200 bg-white flex items-center justify-between">' +
+                '<div class="flex-1 mr-4">' +
+                    '<input type="text" value="' + url + '" class="w-full px-3 py-2 bg-gray-100 border border-gray-300 text-sm text-gray-800 focus:outline-none" readonly>' +
+                '</div>' +
+            '</div>';
+
+        BooAdmin.Modal.create({
+            title: '<?php _e('图片预览'); ?>',
+            message: bodyHtml,
+            size: 'md',
+            confirmText: '<?php _e('插入图片'); ?>',
+            cancelText: '<?php _e('取消'); ?>',
+            onConfirm: callback
+        }).open();
     }
 
-    // File delete confirmation modal
-    var fileDeleteData = null;
-    var fileDeleteEl = null;
-
+    // 文件删除确认
     function attachDeleteEvent (el) {
         var file = $('a.insert', el).text();
         $('.delete', el).click(function () {
-            fileDeleteEl = el;
-            fileDeleteData = {
-                cid: $(this).parents('li').data('cid'),
-                file: file
-            };
-            $('#file-delete-confirm-message').text('<?php _e('确认要删除文件 %s 吗?'); ?>'.replace('%s', file));
-            $('#file-delete-confirm-modal').removeClass('hidden');
+            var cid = $(this).parents('li').data('cid');
+            var $deleteEl = $(el);
+
+            var modal = BooAdmin.confirm({
+                title: '<?php _e('确认删除'); ?>',
+                message: '<?php _e('确认要删除文件 %s 吗?'); ?>'.replace('%s', file),
+                confirmText: '<?php _e('确认删除'); ?>',
+                onConfirm: function () {
+                    $.post('<?php $security->index('/action/contents-attachment-edit'); ?>',
+                        {'do' : 'delete', 'cid' : cid},
+                        function (response) {
+                            if (response && response.success !== false) {
+                                if (window.TypechoNotification) {
+                                    TypechoNotification.success('<?php _e('文件已删除'); ?>');
+                                }
+                                $deleteEl.fadeOut(function () {
+                                    $(this).remove();
+                                    updateAttachmentNumber();
+                                });
+                            } else {
+                                if (window.TypechoNotification) {
+                                    TypechoNotification.error(response.message || '<?php _e('删除失败，请重试'); ?>');
+                                }
+                            }
+                            modal.close();
+                        },
+                        'json'
+                    ).fail(function() {
+                        if (window.TypechoNotification) {
+                            TypechoNotification.error('<?php _e('网络错误，删除失败'); ?>');
+                        }
+                        modal.close();
+                    });
+                    return false; // 请求完成前保持弹窗打开
+                }
+            });
             return false;
         });
     }
@@ -318,91 +297,6 @@ $(document).ready(function() {
         attachInsertEvent(this);
         attachDeleteEvent(this);
     });
-
-    // File delete modal handlers
-    $('#cancel-file-delete').click(function () {
-        $('#file-delete-confirm-modal').addClass('hidden');
-        fileDeleteData = null;
-        fileDeleteEl = null;
-    });
-
-    $('#confirm-file-delete').click(function () {
-        if (fileDeleteData && fileDeleteEl) {
-            var $modal = $('#file-delete-confirm-modal');
-            var $confirmBtn = $('#confirm-file-delete');
-            // 在发起请求前快照目标, 避免异步回调期间被关闭/重开逻辑清空或改写
-            var deleteCid = fileDeleteData.cid;
-            var $deleteEl = $(fileDeleteEl);
-            
-            // 禁用按钮防止重复点击
-            $confirmBtn.prop('disabled', true).addClass('opacity-50');
-            
-            $.post('<?php $security->index('/action/contents-attachment-edit'); ?>',
-                {'do' : 'delete', 'cid' : deleteCid},
-                function (response) {
-                    if (response && response.success !== false) {
-                        // 显示成功通知
-                        if (window.TypechoNotification) {
-                            TypechoNotification.success('<?php _e('文件已删除'); ?>');
-                        }
-                        
-                        // 移除文件项
-                        $deleteEl.fadeOut(function () {
-                            $(this).remove();
-                            updateAttachmentNumber();
-                        });
-                        
-                        // 恢复按钮状态
-                        $confirmBtn.prop('disabled', false).removeClass('opacity-50');
-                        
-                        // 关闭模态框并重置状态
-                        $modal.addClass('hidden');
-                        fileDeleteData = null;
-                        fileDeleteEl = null;
-                    } else {
-                        // 显示错误通知
-                        if (window.TypechoNotification) {
-                            TypechoNotification.error(response.message || '<?php _e('删除失败，请重试'); ?>');
-                        }
-                        $confirmBtn.prop('disabled', false).removeClass('opacity-50');
-                    }
-                },
-                'json'
-            ).fail(function() {
-                // 网络错误
-                if (window.TypechoNotification) {
-                    TypechoNotification.error('<?php _e('网络错误，删除失败'); ?>');
-                }
-                $confirmBtn.prop('disabled', false).removeClass('opacity-50');
-            });
-        } else {
-            $('#file-delete-confirm-modal').addClass('hidden');
-        }
-    });
-
-    // Close modal when clicking outside
-    $('#file-delete-confirm-modal').click(function (e) {
-        if (e.target === this) {
-            $('#file-delete-confirm-modal').addClass('hidden');
-            fileDeleteData = null;
-            fileDeleteEl = null;
-        }
-    });
 });
 </script>
-<!-- File Delete Confirm Modal -->
-<div id="file-delete-confirm-modal" class="booadmin-modal hidden">
-    <div class="booadmin-dialog booadmin-dialog-sm">
-        <h3 class="text-lg font-bold text-discord-text mb-4"><?php _e('确认删除'); ?></h3>
-        <p id="file-delete-confirm-message" class="text-discord-muted mb-6"></p>
-        <div class="flex justify-end space-x-3">
-            <button id="cancel-file-delete" class="px-4 py-2 bg-gray-200 text-discord-text font-medium hover:bg-gray-300 transition-colors text-sm">
-                <?php _e('取消'); ?>
-            </button>
-            <button id="confirm-file-delete" class="px-4 py-2 bg-discord-accent text-white font-medium hover:bg-blue-600 transition-colors text-sm">
-                <?php _e('确认删除'); ?>
-            </button>
-        </div>
-    </div>
-</div>
 

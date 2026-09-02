@@ -142,21 +142,6 @@ include 'menu.php';
     <?php include 'copyright.php'; ?>
 </main>
 
-<div id="categories-confirm-modal" class="booadmin-modal hidden" role="dialog" aria-modal="true" aria-labelledby="categories-confirm-modal-title">
-    <div class="booadmin-dialog booadmin-dialog-sm">
-        <h3 id="categories-confirm-modal-title" class="text-lg font-bold text-discord-text mb-4"><?php _e('操作确认'); ?></h3>
-        <p id="categories-confirm-modal-message" class="text-discord-muted mb-6"><?php _e('请确认是否继续。'); ?></p>
-        <div class="flex justify-end space-x-3">
-            <button id="categories-modal-cancel" type="button" class="px-4 py-2 bg-gray-200 text-discord-text font-medium hover:bg-gray-300 transition-colors text-sm">
-                <?php _e('取消'); ?>
-            </button>
-            <button id="categories-modal-confirm" type="button" class="px-4 py-2 bg-discord-accent text-white font-medium hover:bg-blue-600 transition-colors text-sm">
-                <?php _e('确认'); ?>
-            </button>
-        </div>
-    </div>
-</div>
-
 <?php
 include 'common-js.php';
 ?>
@@ -165,34 +150,22 @@ include 'common-js.php';
 (function () {
     $(document).ready(function () {
         var form = $('form[name="manage_categories"]'),
-            confirmModal = $('#categories-confirm-modal'),
-            confirmTitle = $('#categories-confirm-modal-title'),
-            confirmMessage = $('#categories-confirm-modal-message'),
-            confirmButton = $('#categories-modal-confirm'),
-            cancelButton = $('#categories-modal-cancel'),
-            pendingSubmit = null,
-            pendingActionEl = null,
             replayingNativeAction = false;
 
         function openModal(title, message, onConfirm, confirmOnly) {
-            confirmTitle.text(title);
-            confirmMessage.text(message);
-            pendingSubmit = onConfirm || null;
-
             if (confirmOnly) {
-                cancelButton.addClass('hidden');
-                confirmButton.text('<?php _e('我知道了'); ?>');
+                BooAdmin.alert({
+                    title: title,
+                    message: message,
+                    confirmText: '<?php _e('我知道了'); ?>'
+                });
             } else {
-                cancelButton.removeClass('hidden');
-                confirmButton.text('<?php _e('确认'); ?>');
+                BooAdmin.confirm({
+                    title: title,
+                    message: message,
+                    onConfirm: onConfirm
+                });
             }
-
-            confirmModal.removeClass('hidden').addClass('flex');
-        }
-
-        function closeModal() {
-            confirmModal.removeClass('flex').addClass('hidden');
-            pendingSubmit = null;
         }
 
         function hasSelectedCategories() {
@@ -239,9 +212,8 @@ include 'common-js.php';
                 return false;
             }
 
-            pendingActionEl = actionLink;
             openModal('<?php _e('操作确认'); ?>', message, function () {
-                var target = pendingActionEl,
+                var target = actionLink,
                     originalLang;
 
                 if (!target || target.length === 0) {
@@ -260,8 +232,6 @@ include 'common-js.php';
                 if (typeof originalLang !== 'undefined') {
                     target.attr('lang', originalLang);
                 }
-
-                pendingActionEl = null;
             }, false);
 
             return false;
@@ -284,30 +254,6 @@ include 'common-js.php';
                 message = btn.data('confirm-message') || btn.attr('lang') || '<?php _e('你确认要执行该操作吗?'); ?>';
 
             requestBatchAction(btn.attr('rel'), message);
-        });
-
-        confirmButton.on('click', function () {
-            var callback = pendingSubmit;
-            closeModal();
-            if (callback) {
-                callback();
-            }
-        });
-
-        cancelButton.on('click', function () {
-            closeModal();
-        });
-
-        confirmModal.on('click', function (e) {
-            if (e.target === this) {
-                closeModal();
-            }
-        });
-
-        $(document).on('keydown', function (e) {
-            if (e.key === 'Escape' && confirmModal.hasClass('flex')) {
-                closeModal();
-            }
         });
 
         // 事件已绑定，解除这些操作链接的原生跳转保护

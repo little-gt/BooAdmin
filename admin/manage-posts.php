@@ -153,10 +153,10 @@ $isAllPosts = ('on' == $request->get('__typecho_all_posts') || 'on' == \Typecho\
                         <tbody class="divide-y divide-gray-100">
                             <?php if ($posts->have()): ?>
                                 <?php 
-                                // Store posts data for card view
+                                // 为卡片视图存储文章数据
                                 $postsData = [];
                                 while ($posts->next()): 
-                                    // Store all necessary data in an array
+                                    // 将所有必要数据存入数组
                                     $postsData[] = [
                                         'cid' => $posts->cid,
                                         'title' => $posts->title,

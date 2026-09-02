@@ -127,46 +127,27 @@ $backupFiles = \Widget\Backup::alloc()->listFiles();
     <?php include 'copyright.php'; ?>
 </main>
 
-<style>
-/* Custom tab styling logic needs to be handled by JS now as classes changed */
-</style>
-
 <?php
 include 'common-js.php';
 include 'form-js.php';
 ?>
-<!-- Restore Confirm Modal -->
-<div id="restore-confirm-modal" class="booadmin-modal hidden">
-    <div class="booadmin-dialog booadmin-dialog-sm">
-        <h3 class="text-lg font-bold text-discord-text mb-4"><?php _e('确认恢复'); ?></h3>
-        <p class="text-discord-muted mb-6"><?php _e('恢复操作将覆盖所有现有数据, 是否继续?'); ?></p>
-        <div class="flex justify-end space-x-3">
-            <button id="cancel-restore" class="px-4 py-2 bg-gray-200 text-discord-text font-medium hover:bg-gray-300 transition-colors text-sm">
-                <?php _e('取消'); ?>
-            </button>
-            <button id="confirm-restore" class="px-4 py-2 bg-discord-accent text-white font-medium hover:bg-blue-600 transition-colors text-sm">
-                <?php _e('确认恢复'); ?>
-            </button>
-        </div>
-    </div>
-</div>
 <script>
     $(document).ready(function() {
-        // Tab switching
+        // 切换标签页
         $('.typecho-option-tabs a').click(function(e) {
             e.preventDefault();
             var targetId = $(this).attr('href');
             
-            // Toggle classes for tabs
+            // 切换标签页对应的 class
             $('.typecho-option-tabs a').removeClass('bg-white text-discord-text').addClass('text-gray-500 hover:text-discord-text');
             $(this).removeClass('text-gray-500 hover:text-discord-text').addClass('bg-white text-discord-text');
             
-            // Toggle content
+            // 切换内容区显示
             $('.tab-content').addClass('hidden');
             $(targetId).removeClass('hidden');
         });
 
-        // File input change
+        // 文件选择框变更
         $('#backup-upload-file').change(function() {
             var fileName = $(this).val().split('\\').pop();
             if (fileName) {
@@ -175,32 +156,22 @@ include 'form-js.php';
             }
         });
 
-        // Restore confirmation modal
+        // 恢复确认
         var restoreForm = null;
         $('#backup-secondary form').submit(function (e) {
             e.preventDefault();
             restoreForm = this;
-            $('#restore-confirm-modal').removeClass('hidden');
-        });
-
-        $('#cancel-restore').click(function () {
-            $('#restore-confirm-modal').addClass('hidden');
-            restoreForm = null;
-        });
-
-        $('#confirm-restore').click(function () {
-            if (restoreForm) {
-                restoreForm.submit();
-            }
-            $('#restore-confirm-modal').addClass('hidden');
-        });
-
-        // Close modal when clicking outside
-        $('#restore-confirm-modal').click(function (e) {
-            if (e.target === this) {
-                $('#restore-confirm-modal').addClass('hidden');
-                restoreForm = null;
-            }
+            BooAdmin.confirm({
+                title: '<?php _e('确认恢复'); ?>',
+                message: '<?php _e('恢复操作将覆盖所有现有数据, 是否继续?'); ?>',
+                confirmText: '<?php _e('确认恢复'); ?>',
+                onConfirm: function () {
+                    if (restoreForm) {
+                        restoreForm.submit();
+                    }
+                }
+            });
+            return false;
         });
     });
 </script>

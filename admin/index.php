@@ -295,7 +295,7 @@ include 'common-js.php';
 ?>
 <script>
     $(document).ready(function () {
-        // Activity Chart Config - 使用真实数据
+        // 活动图表配置（使用真实数据）
         var chartDays = <?php echo $chartDays; ?>;
         var chartPosts = <?php echo $chartPosts; ?>;
         var chartComments = <?php echo $chartComments; ?>;
@@ -386,7 +386,7 @@ include 'common-js.php';
             ]
         };
 
-        // Distribution Chart Config
+        // 分布图表配置
         var distributionOption = {
              tooltip: { trigger: 'item' },
              legend: { bottom: '0%', left: 'center', icon: 'circle' },
@@ -422,7 +422,7 @@ include 'common-js.php';
         var distributionChart = echarts.init(document.getElementById('distribution-chart'));
         distributionChart.setOption(distributionOption);
 
-        // Resize charts on window resize
+        // 窗口尺寸变化时重绘图表
         window.addEventListener('resize', function() {
             activityChart.resize();
             distributionChart.resize();

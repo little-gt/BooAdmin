@@ -2,14 +2,15 @@
 <script src="<?php $options->adminStaticUrl('js', 'jquery.js'); ?>"></script>
 <script src="<?php $options->adminStaticUrl('js', 'jquery-ui.js'); ?>"></script>
 <script src="<?php $options->adminStaticUrl('js', 'typecho.js'); ?>"></script>
+<script src="<?php $options->adminStaticUrl('js', 'booadmin.js'); ?>"></script>
 <script>
     (function () {
         $(document).ready(function() {
             // ========================================
-            // Page Loading Progress Bar
+            // 页面加载进度条
             // ========================================
             (function() {
-                // 确保nprogress元素存在且结构完整
+                // 确保 NProgress 元素存在且结构完整
                 function ensureNProgressStructure() {
                     var $nprogress = $('#nprogress');
                     if ($nprogress.length === 0) {
@@ -39,7 +40,7 @@
                     parent: 'body'
                 });
                 
-                // 初始化spinner
+                // 初始化 spinner
                 var $spinner = ensureNProgressStructure();
                 
                 // 启动进度条（默认加载状态）
@@ -280,7 +281,7 @@
                 });
             }
             
-            // Table scroll indicator
+            // 表格滚动指示
             function updateTableScrollIndicator() {
                 $('.table-wrapper[data-table-scroll]').each(function() {
                     var $wrapper = $(this);
@@ -305,16 +306,16 @@
                 });
             }
             
-            // Initialize and bind events
+            // 初始化并绑定事件
             $('.table-wrapper[data-table-scroll]').on('scroll', updateTableScrollIndicator);
             $(window).on('resize', updateTableScrollIndicator);
-            updateTableScrollIndicator(); // Initial check
+            updateTableScrollIndicator(); // 初始检查
 
             // ========================================
-            // Dropdown Menu Enhancement
+            // 下拉菜单增强
             // ========================================
             (function() {
-                // Override dropdownMenu plugin behavior
+                // 覆写 dropdownMenu 插件行为
                 var $doc = $(document);
                 var activeDropdown = null;
                 // 保留原生实现，遇到非 BooAdmin 下拉结构时回退，避免插件按原生方式调用时失效
@@ -350,7 +351,7 @@
                     return { container : $container, btn : $btn, menu : $menu };
                 }
 
-                // Override the dropdownMenu plugin
+                // 覆写 dropdownMenu 插件
                 $.fn.dropdownMenu = function(options) {
                     var useNative = false;
 
@@ -395,7 +396,7 @@
                             
                             var isVisible = $menu.hasClass('is-open');
                             
-                            // Close all other dropdowns first
+                            // 先关闭其它下拉菜单
                             closeOtherDropdowns();
                             
                             if (isVisible) {
@@ -411,7 +412,7 @@
                     });
                 };
 
-                // Close dropdown when clicking outside
+                // 点击外部时关闭下拉菜单
                 $doc.on('click.dropdown', function(e) {
                     if (activeDropdown && !$(e.target).closest(activeDropdown).length) {
                         $('.dropdown-menu').removeClass('is-open').addClass('hidden').attr('aria-hidden', 'true');
@@ -420,21 +421,21 @@
                     }
                 });
 
-                // Close dropdown when clicking on a menu item
+                // 点击菜单项时关闭下拉菜单
                 $doc.on('click.dropdown', '.dropdown-menu a', function() {
                     $('.dropdown-menu').removeClass('is-open').addClass('hidden').attr('aria-hidden', 'true');
                     $('.btn-dropdown-toggle').removeClass('active').attr('aria-expanded', 'false');
                     activeDropdown = null;
                 });
 
-                // Initialize dropdowns on page load
+                // 页面加载时初始化下拉菜单
                 $(function() {
                     $('.btn-dropdown-toggle').each(function() {
                         var $btn = $(this);
                         var $container = $btn.closest('.relative, .group');
                         var $menu = $container.find('.dropdown-menu');
 
-                        // Initialize semantic state for menu visibility.
+                        // 初始化菜单可见性的语义状态
                         $menu.removeClass('is-open').addClass('hidden').attr('aria-hidden', 'true');
                         $btn.attr('aria-expanded', 'false');
                     });
@@ -442,7 +443,7 @@
             })();
 
             // ========================================
-            // View Mode Toggle (Table/Card)
+            // 视图模式切换（表格/卡片）
             // ========================================
             (function() {
                 if ($('.view-toggle').length === 0) {
@@ -467,7 +468,7 @@
                     try {
                         localStorage.setItem(VIEW_MODE_KEY, mode);
                     } catch(e) {
-                        // Ignore localStorage errors
+                        // 忽略 localStorage 错误
                     }
                 }
 
@@ -483,7 +484,7 @@
                     try {
                         localStorage.setItem(VIEW_MODE_USER_SET_KEY, 'true');
                     } catch(e) {
-                        // Ignore localStorage errors
+                        // 忽略 localStorage 错误
                     }
                 }
 
@@ -527,8 +528,8 @@
 
                 initializeViewMode();
 
-                // One-way responsive: auto-switch table→card when screen narrows,
-                // but do NOT auto-switch card→table when screen widens.
+                // 单向响应式：屏幕变窄时自动由表格视图切换为卡片视图，
+                // 但屏幕变宽时不自动切回表格视图。
                 var wasMobile = isMobileViewport();
                 var resizeTimer = null;
                 $(window).on('resize.viewMode', function() {
@@ -538,11 +539,11 @@
 
                     resizeTimer = setTimeout(function() {
                         var isMobile = isMobileViewport();
-                        // Only auto-switch to card view when transitioning from wide to narrow
+                        // 仅当从宽屏过渡到窄屏时，自动切换为卡片视图
                         if (isMobile && !wasMobile) {
                             applyViewMode('card');
                         }
-                        // Do NOT auto-switch back to table when going from narrow to wide
+                        // 从窄屏变回宽屏时不自动切回表格视图
                         wasMobile = isMobile;
                     }, 150);
                 });
@@ -592,4 +593,17 @@
             })();
         });
     })();
+</script>
+<script>
+    // BooAdmin 共享库：注入翻译与通知别名，统一后台前端"体系层"
+    if (window.BooAdmin) {
+        BooAdmin.setI18n({
+            confirmTitle: '<?php _e('操作确认'); ?>',
+            alertTitle: '<?php _e('提示'); ?>',
+            confirm: '<?php _e('确认'); ?>',
+            cancel: '<?php _e('取消'); ?>',
+            ok: '<?php _e('我知道了'); ?>'
+        });
+        BooAdmin.notify = window.TypechoNotification || null;
+    }
 </script>

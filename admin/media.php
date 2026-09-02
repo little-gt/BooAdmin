@@ -69,7 +69,7 @@ include 'menu.php';
                             <label class="block text-sm font-medium text-gray-700 mb-1"><?php _e('文件链接'); ?></label>
                             <div class="flex">
                                 <input id="attachment-url" type="text" class="flex-1 px-3 py-2 border border-gray-300 bg-gray-50 text-sm text-gray-600 focus:outline-none focus:border-discord-accent" value="<?php $attachment->attachment->url(); ?>" readonly/>
-                                <button type="button" class="px-4 py-2 bg-gray-100 border border-l-0 border-gray-300 text-gray-600 hover:bg-gray-200 transition-colors text-sm font-medium" onclick="document.getElementById('attachment-url').select();document.execCommand('copy');document.getElementById('copy-success-modal').classList.remove('hidden'); setTimeout(function(){ document.getElementById('copy-success-modal').classList.add('hidden'); }, 2000);"><?php _e('复制'); ?></button>
+                                <button type="button" class="px-4 py-2 bg-gray-100 border border-l-0 border-gray-300 text-gray-600 hover:bg-gray-200 transition-colors text-sm font-medium" onclick="document.getElementById('attachment-url').select();document.execCommand('copy');BooAdmin.alert({title:'<?php _e('复制成功'); ?>',message:'<?php _e('已复制到剪贴板'); ?>',confirmText:'<?php _e('确定'); ?>'});"><?php _e('复制'); ?></button>
                             </div>
                         </div>
                     </div>
@@ -112,73 +112,27 @@ include 'menu.php';
 include 'common-js.php';
 include 'file-upload-js.php';
 ?>
-<!-- Delete Confirm Modal -->
-<div id="delete-confirm-modal" class="booadmin-modal hidden">
-    <div class="booadmin-dialog booadmin-dialog-sm">
-        <h3 class="text-lg font-bold text-discord-text mb-4"><?php _e('确认删除'); ?></h3>
-        <p id="delete-confirm-message" class="text-discord-muted mb-6"></p>
-        <div class="flex justify-end space-x-3">
-            <button id="cancel-delete" class="px-4 py-2 bg-gray-200 text-discord-text font-medium hover:bg-gray-300 transition-colors text-sm">
-                <?php _e('取消'); ?>
-            </button>
-            <button id="confirm-delete" class="px-4 py-2 bg-discord-accent text-white font-medium hover:bg-blue-600 transition-colors text-sm">
-                <?php _e('确认删除'); ?>
-            </button>
-        </div>
-    </div>
-</div>
-<!-- Copy Success Modal -->
-<div id="copy-success-modal" class="booadmin-modal hidden">
-    <div class="booadmin-dialog booadmin-dialog-sm">
-        <h3 class="text-lg font-bold text-discord-text mb-4"><?php _e('复制成功'); ?></h3>
-        <p class="text-discord-muted mb-6"><?php _e('已复制到剪贴板'); ?></p>
-        <div class="flex justify-end">
-            <button class="px-4 py-2 bg-discord-accent text-white font-medium hover:bg-blue-600 transition-colors text-sm" onclick="document.getElementById('copy-success-modal').classList.add('hidden');">
-                <?php _e('确定'); ?>
-            </button>
-        </div>
-    </div>
-</div>
 <script type="text/javascript">
     $(document).ready(function () {
         $('#attachment-url').click(function () {
             $(this).select();
         });
 
-        // Delete confirmation modal
-        var deleteHref = null;
-
-        function closeDeleteModal() {
-            $('#delete-confirm-modal').addClass('hidden');
-            deleteHref = null;
-        }
-
+        // 删除确认
         $('.operate-delete').click(function () {
             var t = $(this);
-            deleteHref = t.attr('href');
-            $('#delete-confirm-message').text(t.attr('lang'));
-            $('#delete-confirm-modal').removeClass('hidden');
+            var href = t.attr('href');
+            BooAdmin.confirm({
+                title: '<?php _e('确认删除'); ?>',
+                message: t.attr('lang') || '<?php _e('确认要删除该文件吗?'); ?>',
+                confirmText: '<?php _e('确认删除'); ?>',
+                onConfirm: function () {
+                    if (href) {
+                        window.location.href = href;
+                    }
+                }
+            });
             return false;
-        });
-
-        $('#cancel-delete').click(closeDeleteModal);
-
-        $('#confirm-delete').click(function () {
-            // 先快照目标, 再关闭并重置状态, 最后执行跳转
-            var href = deleteHref;
-
-            closeDeleteModal();
-
-            if (href) {
-                window.location.href = href;
-            }
-        });
-
-        // Close modal when clicking outside
-        $('#delete-confirm-modal').click(function (e) {
-            if (e.target === this) {
-                closeDeleteModal();
-            }
         });
 
         Typecho.uploadComplete = function (attachment) {
