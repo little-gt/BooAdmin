@@ -38,10 +38,10 @@ $(document).ready(function() {
     // 聚焦
     $('#title').select();
 
-    // text 自动拉伸
+    // 正文编辑框自动拉伸
     Typecho.editorResize('text', '<?php $security->index('/action/ajax?do=editorResize'); ?>');
 
-    // tag autocomplete 提示
+    // 标签自动补全提示
     const tags = $('#tags'), tagsPre = [];
     
     if (tags.length > 0) {
@@ -79,7 +79,7 @@ $(document).ready(function() {
             prePopulate     :   tagsPre,
 
             onResult        :   function (result, query, val) {
-                // remove special chars
+                // 移除特殊字符
                 val = val.replace(/<|>|&|"|'/g, '');
 
                 if (!query) {
@@ -101,7 +101,7 @@ $(document).ready(function() {
             }
         });
 
-        // tag autocomplete 提示宽度设置
+        // 标签自动补全提示宽度设置
         $('#token-input-tags').focus(function() {
             const t = $('.token-input-dropdown'),
                 offset = t.outerWidth() - t.width();
@@ -278,7 +278,6 @@ $(document).ready(function() {
     $('<input name="timezone" type="hidden" />').appendTo(form).val(- (new Date).getTimezoneOffset() * 60);
 
     // 预览功能
-    const previewSaveModal = $('#preview-save-confirm-modal');
     const previewState = {
         overlay: null,
         container: null,
@@ -309,11 +308,6 @@ $(document).ready(function() {
 
     function getPreviewUrl(previewCid) {
         return './preview.php?cid=' + encodeURIComponent(previewCid);
-    }
-
-    function hidePreviewSaveConfirm() {
-        previewSaveModal.addClass('hidden');
-        previewState.saveCallback = null;
     }
 
     function togglePreviewFullScreen() {
@@ -457,50 +451,43 @@ $(document).ready(function() {
                 });
             };
 
-            previewSaveModal.removeClass('hidden');
+            BooAdmin.confirm({
+                title: '<?php _e('确认保存'); ?>',
+                message: '<?php _e('修改后的内容需要保存后才能预览, 是否保存?'); ?>',
+                confirmText: '<?php _e('确认保存'); ?>',
+                onConfirm: function () {
+                    const callback = previewState.saveCallback;
+                    previewState.saveCallback = null;
+                    if (callback) {
+                        callback();
+                    }
+                }
+            });
             return;
         }
 
         openPreview(resolvePreviewCid());
     });
 
-    $('#cancel-preview-save').on('click', hidePreviewSaveConfirm);
-
-    $('#confirm-preview-save').on('click', function () {
-        const callback = previewState.saveCallback;
-
-        hidePreviewSaveConfirm();
-
-        if (callback) {
-            callback();
-        }
-    });
-
-    previewSaveModal.on('click', function (e) {
-        if (e.target === this) {
-            hidePreviewSaveConfirm();
-        }
-    });
-
-    // Use 'on' for dynamic elements if needed, but direct click is fine for static
+    // 静态元素可直接绑定；动态元素如需再改用事件委托
     $(document).on('click', '.typecho-option-tabs button, .typecho-option-tabs li', function() {
         const $this = $(this);
         const isButton = $this.is('button');
         
         if (isButton) {
-            // New structure: button inside a flex container
+            // 新结构：按钮位于 flex 容器内
             const group = $this.parent();
-            // Reset all buttons in the group
+            // 重置分组内全部按钮样式
             group.find('button').removeClass('text-discord-text bg-white shadow-sm').addClass('text-gray-500 hover:text-discord-text');
-            // Activate clicked button
+            // 激活当前点击的按钮
             $this.removeClass('text-gray-500 hover:text-discord-text').addClass('text-discord-text bg-white shadow-sm');
         } else {
-            // Old structure: li inside ul
+            // 旧结构：li 位于 ul 内
             $this.siblings().removeClass('active');
             $this.addClass('active');
         }
         
-        // Hide all potential tab content containers
+        // 隐藏所有可能的标签页内容容器
         let targetSelector;
         if (isButton) {
             targetSelector = $this.data('target');
@@ -528,38 +515,20 @@ $(document).ready(function() {
         }
     });
     
-    // Draft delete confirmation modal
-    var draftDeleteHref = null;
-
-    function closeDraftDeleteModal() {
-        $('#draft-delete-confirm-modal').addClass('hidden');
-        draftDeleteHref = null;
-    }
-
+    // 草稿删除确认
     $('.edit-draft-notice a').click(function () {
-        draftDeleteHref = $(this).attr('href');
-        $('#draft-delete-confirm-modal').removeClass('hidden');
+        var href = $(this).attr('href');
+        BooAdmin.confirm({
+            title: '<?php _e('确认删除'); ?>',
+            message: '<?php _e('您确认要删除这份草稿吗?'); ?>',
+            confirmText: '<?php _e('确认删除'); ?>',
+            onConfirm: function () {
+                if (href) {
+                    window.location.href = href;
+                }
+            }
+        });
         return false;
-    });
-
-    $('#cancel-draft-delete').click(closeDraftDeleteModal);
-
-    $('#confirm-draft-delete').click(function () {
-        // 先快照目标, 再关闭并重置状态, 最后执行跳转
-        var href = draftDeleteHref;
-
-        closeDraftDeleteModal();
-
-        if (href) {
-            window.location.href = href;
-        }
-    });
-
-    // Close modal when clicking outside
-    $('#draft-delete-confirm-modal').click(function (e) {
-        if (e.target === this) {
-            closeDraftDeleteModal();
-        }
     });
 
     // 事件已绑定，解除这些操作链接的原生跳转保护
@@ -568,34 +537,4 @@ $(document).ready(function() {
     }
 });
 </script>
-<!-- Preview Save Confirm Modal -->
-<div id="preview-save-confirm-modal" class="booadmin-modal hidden">
-    <div class="booadmin-dialog booadmin-dialog-sm">
-        <h3 class="text-lg font-bold text-discord-text mb-4"><?php _e('确认保存'); ?></h3>
-        <p class="text-discord-muted mb-6"><?php _e('修改后的内容需要保存后才能预览, 是否保存?'); ?></p>
-        <div class="flex justify-end space-x-3">
-            <button id="cancel-preview-save" class="px-4 py-2 bg-gray-200 text-discord-text font-medium hover:bg-gray-300 transition-colors text-sm">
-                <?php _e('取消'); ?>
-            </button>
-            <button id="confirm-preview-save" class="px-4 py-2 bg-discord-accent text-white font-medium hover:bg-blue-600 transition-colors text-sm">
-                <?php _e('确认保存'); ?>
-            </button>
-        </div>
-    </div>
-</div>
-<!-- Draft Delete Confirm Modal -->
-<div id="draft-delete-confirm-modal" class="booadmin-modal hidden">
-    <div class="booadmin-dialog booadmin-dialog-sm">
-        <h3 class="text-lg font-bold text-discord-text mb-4"><?php _e('确认删除'); ?></h3>
-        <p class="text-discord-muted mb-6"><?php _e('您确认要删除这份草稿吗?'); ?></p>
-        <div class="flex justify-end space-x-3">
-            <button id="cancel-draft-delete" class="px-4 py-2 bg-gray-200 text-discord-text font-medium hover:bg-gray-300 transition-colors text-sm">
-                <?php _e('取消'); ?>
-            </button>
-            <button id="confirm-draft-delete" class="px-4 py-2 bg-discord-accent text-white font-medium hover:bg-blue-600 transition-colors text-sm">
-                <?php _e('确认删除'); ?>
-            </button>
-        </div>
-    </div>
-</div>
 

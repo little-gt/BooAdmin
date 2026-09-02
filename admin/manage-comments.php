@@ -145,7 +145,7 @@ $isAllComments = ('on' == $request->get('__typecho_all_comments') || 'on' == \Ty
                         <tbody class="divide-y divide-gray-100">
                             <?php if($comments->have()): ?>
                                 <?php 
-                                // Store comments data for card view
+                                // 为卡片视图存储评论数据
                                 $commentsData = [];
                                 while($comments->next()): 
                                     $comment = array(
@@ -157,13 +157,13 @@ $isAllComments = ('on' == $request->get('__typecho_all_comments') || 'on' == \Ty
                                         'text'      =>  $comments->text
                                     );
                                     
-                                    // Use getAvatar function for consistent avatar handling
+                                    // 使用 getAvatar 函数统一处理头像
                                     $gravatarHtml = '';
                                     if ('comment' == $comments->type) {
                                         $gravatarHtml = getAvatar($comments->mail, $comments->author, 40);
                                     }
                                     
-                                    // Store data for card view
+                                    // 为卡片视图存储数据
                                     $commentsData[] = [
                                         'coid' => $comments->coid,
                                         'id' => $comments->theId,
@@ -677,7 +677,7 @@ include 'common-js.php';
 include 'table-js.php';
 ?>
 <script type="text/javascript">
-// Global variables for modal state
+// 模态框状态的全局变量
 var currentReplyUrl = '';
 var currentEditUrl = '';
 var currentEditRowId = '';
@@ -685,7 +685,7 @@ var currentEditCardId = '';
 var currentDeleteUrl = '';
 var currentDeleteTarget = null;
 
-// Modal control functions
+// 模态框控制函数
 function showMessageModal(title, content, isConfirm) {
     $('#messageModalTitle').text(title);
     $('#messageModalContent').text(content);
@@ -713,7 +713,7 @@ function openReplyModal(commentData, actionUrl) {
         var authorFirstChar = commentData.author ? commentData.author.charAt(0) : '?';
         var gravatarUrl = '';
         
-        // Try to get gravatar from the row
+        // 尝试从行中获取 gravatar
         var $row = $('#' + commentData.id);
         if ($row.length > 0) {
             var $gravatar = $row.find('td:eq(1) img');
@@ -721,7 +721,7 @@ function openReplyModal(commentData, actionUrl) {
                 gravatarUrl = $gravatar.attr('src');
             }
         }
-        // If not found in table, try card view
+        // 若表格中未找到，则尝试卡片视图
         if (!gravatarUrl) {
             var $card = $('.content-card[data-comment*=\'"author":"' + commentData.author + '"\']').first();
             if ($card.length > 0) {
@@ -883,11 +883,11 @@ function submitEdit() {
 
     $.post(_currentEditUrl, formData, function(o) {
         if (o && o.comment) {
-            // Update table row if exists
+            // 若存在则更新表格行
             if (_currentEditRowId) {
                 var $row = $('#' + _currentEditRowId);
                 if ($row.length > 0) {
-                    // Update data attribute
+                    // 更新 data 属性
                     var oldComment = $row.data('comment');
                     oldComment.author = formData.author;
                     oldComment.mail = formData.mail;
@@ -895,7 +895,7 @@ function submitEdit() {
                     oldComment.text = formData.text;
                     $row.data('comment', oldComment);
                     
-                    // Update author info column
+                    // 更新作者信息列
                     var authorHtml = '<div class="font-medium text-discord-text">'
                         + (formData.url ? '<a target="_blank" href="' + formData.url + '" class="hover:underline">' + formData.author + '</a>' : formData.author)
                         + '</div><div class="text-xs text-gray-400 mt-0.5">';
@@ -912,17 +912,17 @@ function submitEdit() {
                     
                     $row.find('td:eq(2)').html(authorHtml).effect('highlight');
                     
-                    // Update content
+                    // 更新内容
                     var content = DOMPurify.sanitize(o.comment.content, {USE_PROFILES: {html: true}});
                     $row.find('.comment-content').html(content).effect('highlight');
                 }
             }
             
-            // Update card if exists
+            // 若存在则更新卡片
             if (_currentEditCardId) {
                 var $card = $('#' + _currentEditCardId);
                 if ($card.length > 0) {
-                    // Update data attribute
+                    // 更新 data 属性
                     var oldComment = JSON.parse($card.attr('data-comment'));
                     oldComment.author = formData.author;
                     oldComment.mail = formData.mail;
@@ -930,7 +930,7 @@ function submitEdit() {
                     oldComment.text = formData.text;
                     $card.attr('data-comment', JSON.stringify(oldComment));
                     
-                    // Update author info
+                    // 更新作者信息
                     var authorHtml = formData.url ? 
                         '<a href="' + formData.url + '" target="_blank" class="hover:underline">' + formData.author + '</a>' : 
                         formData.author;
@@ -942,7 +942,7 @@ function submitEdit() {
                         $card.find('.card-header .text-xs').html('');
                     }
                     
-                    // Update content
+                    // 更新内容
                     var content = DOMPurify.sanitize(o.comment.content, {USE_PROFILES: {html: true}});
                     $card.find('.card-content').html(content).effect('highlight');
                 }
@@ -1100,7 +1100,7 @@ $(document).ready(function () {
         booadminArmLinks('a.operate-delete, a.operate-approved, a.operate-waiting, a.operate-spam');
     }
 
-    // Modal close on background click
+    // 点击背景关闭模态框
     $('.comment-modal').on('click', function(e) {
         if ($(e.target).hasClass('comment-modal')) {
             if ($(this).attr('id') === 'replyModal') {
@@ -1115,7 +1115,7 @@ $(document).ready(function () {
         }
     });
     
-    // Message modal confirm button click
+    // 消息模态框确认按钮点击
     $('#messageModalConfirm').click(function() {
         var $modal = $('#messageModal');
         // 先快照数据, 再关闭弹窗, 最后执行跳转, 避免残留状态影响后续操作
@@ -1130,21 +1130,21 @@ $(document).ready(function () {
         }
     });
     
-    // Message modal cancel button click
+    // 消息模态框取消按钮点击
     $('#messageModalCancel').click(function() {
         closeMessageModal();
     });
     
-    // Enter key in reply textarea submits
+    // 回复文本框中按回车提交
     $('#replyText').on('keydown', function(e) {
         if (e.ctrlKey && e.keyCode === 13) {
             submitReply();
         }
     });
     
-    // ESC key closes modals
+    // ESC 键关闭模态框
     $(document).on('keydown', function(e) {
-        if (e.keyCode === 27) { // ESC key
+        if (e.keyCode === 27) { // ESC 键
             if ($('#replyModal').hasClass('active')) {
                 closeReplyModal();
             }

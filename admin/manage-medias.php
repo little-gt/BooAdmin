@@ -98,11 +98,11 @@ $attachments = \Widget\Contents\Attachment\Admin::alloc();
                         <tbody class="divide-y divide-gray-100">
                             <?php if ($attachments->have()): ?>
                                 <?php 
-                                // Store attachments data for card view
+                                // 为卡片视图存储附件数据
                                 $attachmentsData = [];
                                 while ($attachments->next()): 
                                     $mime = \Typecho\Common::mimeIconType($attachments->attachment->mime);
-                                    // Store all necessary data in an array
+                                    // 将所有必要数据存入数组
                                     $attachmentsData[] = [
                                         'cid' => $attachments->cid,
                                         'title' => $attachments->title,
@@ -373,57 +373,23 @@ $attachments = \Widget\Contents\Attachment\Admin::alloc();
 include 'common-js.php';
 include 'table-js.php';
 ?>
-<!-- Operate Confirm Modal -->
-<div id="operate-confirm-modal" class="booadmin-modal hidden">
-    <div class="booadmin-dialog booadmin-dialog-sm">
-        <h3 class="text-lg font-bold text-discord-text mb-4"><?php _e('确认操作'); ?></h3>
-        <p id="operate-confirm-message" class="text-discord-muted mb-6"></p>
-        <div class="flex justify-end space-x-3">
-            <button id="cancel-operate" class="px-4 py-2 bg-gray-200 text-discord-text font-medium hover:bg-gray-300 transition-colors text-sm">
-                <?php _e('取消'); ?>
-            </button>
-            <button id="confirm-operate" class="px-4 py-2 bg-discord-accent text-white font-medium hover:bg-blue-600 transition-colors text-sm">
-                <?php _e('确认'); ?>
-            </button>
-        </div>
-    </div>
-</div>
 <script type="text/javascript">
 $(document).ready(function () {
-    // Operate confirmation modal
-    var operateHref = null;
-
-    function closeOperateModal() {
-        $('#operate-confirm-modal').addClass('hidden');
-        operateHref = null;
-    }
-
+    // 操作确认
     $('.btn-operate').click(function () {
         var t = $(this);
-        operateHref = t.attr('href');
-        $('#operate-confirm-message').text(t.attr('lang'));
-        $('#operate-confirm-modal').removeClass('hidden');
+        var href = t.attr('href');
+        BooAdmin.confirm({
+            title: '<?php _e('确认操作'); ?>',
+            message: t.attr('lang') || '<?php _e('确认要执行该操作吗?'); ?>',
+            confirmText: '<?php _e('确认'); ?>',
+            onConfirm: function () {
+                if (href) {
+                    window.location.href = href;
+                }
+            }
+        });
         return false;
-    });
-
-    $('#cancel-operate').click(closeOperateModal);
-
-    $('#confirm-operate').click(function () {
-        // 先快照目标, 再关闭并重置状态, 最后执行跳转
-        var href = operateHref;
-
-        closeOperateModal();
-
-        if (href) {
-            window.location.href = href;
-        }
-    });
-
-    // Close modal when clicking outside
-    $('#operate-confirm-modal').click(function (e) {
-        if (e.target === this) {
-            closeOperateModal();
-        }
     });
 });
 </script>

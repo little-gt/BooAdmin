@@ -186,7 +186,7 @@ document.addEventListener('DOMContentLoaded', function() {
     const sidebar = document.getElementById('sidebar');
     const toggleBtn = document.getElementById('sidebar-toggle');
     const overlay = document.getElementById('sidebar-overlay');
-    const mobileMenuBtn = document.getElementById('mobile-menu-btn'); // Will be added in header
+    const mobileMenuBtn = document.getElementById('mobile-menu-btn'); // 该按钮将在 header 中注入
     const nav = sidebar.querySelector('nav');
     const SIDEBAR_SCROLL_KEY = 'typecho_sidebar_scroll';
 
@@ -248,7 +248,7 @@ document.addEventListener('DOMContentLoaded', function() {
     // 页面加载时恢复滚动位置
     restoreScrollPosition();
 
-    // Initial check for mobile
+    // 移动端初始检查
     if (window.innerWidth < 768) {
         closeSidebar();
     }

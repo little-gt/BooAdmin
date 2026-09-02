@@ -106,21 +106,6 @@ include 'menu.php';
     <?php include 'copyright.php'; ?>
 </main>
 
-<div id="tags-confirm-modal" class="booadmin-modal hidden" role="dialog" aria-modal="true" aria-labelledby="tags-confirm-modal-title">
-    <div class="booadmin-dialog booadmin-dialog-sm">
-        <h3 id="tags-confirm-modal-title" class="text-lg font-bold text-discord-text mb-4"><?php _e('操作确认'); ?></h3>
-        <p id="tags-confirm-modal-message" class="text-discord-muted mb-6"><?php _e('请确认是否继续。'); ?></p>
-        <div class="flex justify-end space-x-3">
-            <button id="tags-modal-cancel" type="button" class="px-4 py-2 bg-gray-200 text-discord-text font-medium hover:bg-gray-300 transition-colors text-sm">
-                <?php _e('取消'); ?>
-            </button>
-            <button id="tags-modal-confirm" type="button" class="px-4 py-2 bg-discord-accent text-white font-medium hover:bg-blue-600 transition-colors text-sm">
-                <?php _e('确认'); ?>
-            </button>
-        </div>
-    </div>
-</div>
-
 <style>
 /* 标签选中样式优化 */
 .tag-list li input:checked ~ .tag-item {
@@ -159,34 +144,22 @@ include 'form-js.php';
 (function () {
     $(document).ready(function () {
         var form = $('form[name="manage_tags"]'),
-            confirmModal = $('#tags-confirm-modal'),
-            confirmTitle = $('#tags-confirm-modal-title'),
-            confirmMessage = $('#tags-confirm-modal-message'),
-            confirmButton = $('#tags-modal-confirm'),
-            cancelButton = $('#tags-modal-cancel'),
-            pendingSubmit = null,
-            pendingActionEl = null,
             replayingNativeAction = false;
 
         function openModal(title, message, onConfirm, confirmOnly) {
-            confirmTitle.text(title);
-            confirmMessage.text(message);
-            pendingSubmit = onConfirm || null;
-
             if (confirmOnly) {
-                cancelButton.addClass('hidden');
-                confirmButton.text('<?php _e('我知道了'); ?>');
+                BooAdmin.alert({
+                    title: title,
+                    message: message,
+                    confirmText: '<?php _e('我知道了'); ?>'
+                });
             } else {
-                cancelButton.removeClass('hidden');
-                confirmButton.text('<?php _e('确认'); ?>');
+                BooAdmin.confirm({
+                    title: title,
+                    message: message,
+                    onConfirm: onConfirm
+                });
             }
-
-            confirmModal.removeClass('hidden').addClass('flex');
-        }
-
-        function closeModal() {
-            confirmModal.removeClass('flex').addClass('hidden');
-            pendingSubmit = null;
         }
 
         function hasSelectedTags() {
@@ -220,9 +193,8 @@ include 'form-js.php';
                 return false;
             }
 
-            pendingActionEl = actionLink;
             openModal('<?php _e('操作确认'); ?>', message, function () {
-                var target = pendingActionEl,
+                var target = actionLink,
                     originalLang;
 
                 if (!target || target.length === 0) {
@@ -241,14 +213,12 @@ include 'form-js.php';
                 if (typeof originalLang !== 'undefined') {
                     target.attr('lang', originalLang);
                 }
-
-                pendingActionEl = null;
             }, false);
 
             return false;
         });
 
-        // Reuse Typecho's row/select-all behavior.
+        // 复用 Typecho 的行/全选行为
         $('.tag-list').tableSelectable({
             checkEl     :   'input[type=checkbox]',
             rowEl       :   'li',
@@ -268,36 +238,12 @@ include 'form-js.php';
             requestBatchAction(btn.attr('rel'), message);
         });
 
-        confirmButton.on('click', function () {
-            var callback = pendingSubmit;
-            closeModal();
-            if (callback) {
-                callback();
-            }
-        });
-
-        cancelButton.on('click', function () {
-            closeModal();
-        });
-
-        confirmModal.on('click', function (e) {
-            if (e.target === this) {
-                closeModal();
-            }
-        });
-
-        $(document).on('keydown', function (e) {
-            if (e.key === 'Escape' && confirmModal.hasClass('flex')) {
-                closeModal();
-            }
-        });
-
         // 事件已绑定，解除这些操作链接的原生跳转保护
         if (window.booadminArmLinks) {
             booadminArmLinks('.js-tag-action');
         }
 
-        // Ensure form JS works correctly
+        // 确保表单 JS 正常工作
         $('.typecho-option input').first().focus();
 
         <?php if (isset($request->mid)): ?>

@@ -92,22 +92,6 @@ include 'menu.php';
                                     <?php endif; ?>
                                 </div>
                             </form>
-
-                            <!-- 保存确认提示框 -->
-                            <div id="save-confirm-modal" class="booadmin-modal hidden">
-                                <div class="booadmin-dialog booadmin-dialog-sm">
-                                    <h3 class="text-lg font-bold text-discord-text mb-4"><?php _e('确认保存'); ?></h3>
-                                    <p class="text-discord-muted mb-6"><?php _e('您确定要保存此文件吗？此操作不可逆。'); ?></p>
-                                    <div class="flex justify-end space-x-3">
-                                        <button type="button" id="cancel-save" class="px-4 py-2 bg-gray-200 text-discord-text font-medium hover:bg-gray-300 transition-colors text-sm">
-                                            <?php _e('取消'); ?>
-                                        </button>
-                                        <button type="button" id="confirm-save" class="px-4 py-2 bg-discord-accent text-white font-medium hover:bg-blue-600 transition-colors text-sm">
-                                            <?php _e('确认保存'); ?>
-                                        </button>
-                                    </div>
-                                </div>
-                            </div>
                         </div>
                     </div>
                 </div>
@@ -167,35 +151,20 @@ document.addEventListener('fullscreenchange', function() {
 
 // 保存确认提示框
 const saveBtn = document.getElementById('save-btn');
-const saveConfirmModal = document.getElementById('save-confirm-modal');
-const cancelSave = document.getElementById('cancel-save');
-const confirmSave = document.getElementById('confirm-save');
 const themeForm = document.getElementById('theme');
 
 if (saveBtn) {
     saveBtn.addEventListener('click', function() {
-        saveConfirmModal.classList.remove('hidden');
-    });
-}
-
-if (cancelSave) {
-    cancelSave.addEventListener('click', function() {
-        saveConfirmModal.classList.add('hidden');
-    });
-}
-
-if (confirmSave) {
-    confirmSave.addEventListener('click', function() {
-        themeForm.submit();
-    });
-}
-
-// 点击模态框外部关闭
-if (saveConfirmModal) {
-    saveConfirmModal.addEventListener('click', function(e) {
-        if (e.target === saveConfirmModal) {
-            saveConfirmModal.classList.add('hidden');
-        }
+        BooAdmin.confirm({
+            title: '<?php _e('确认保存'); ?>',
+            message: '<?php _e('您确定要保存此文件吗？此操作不可逆。'); ?>',
+            confirmText: '<?php _e('确认保存'); ?>',
+            onConfirm: function () {
+                if (themeForm) {
+                    themeForm.submit();
+                }
+            }
+        });
     });
 }
 </script>

@@ -39,7 +39,7 @@
                     const urlObj = new URL(url);
                     input.val(urlObj.toString());
                 } catch {
-                    // ignore
+                    // 忽略
                 }
             }
 

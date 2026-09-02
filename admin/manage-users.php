@@ -99,7 +99,7 @@ $users = \Widget\Users\Admin::alloc();
                         <tbody class="divide-y divide-gray-100">
                             <?php if ($users->have()): ?>
                                 <?php
-                                // Store users data for card view
+                                // 为卡片视图存储用户数据
                                 $usersData = [];
                                 while ($users->next()):
                                     $groupClass = 'bg-gray-100 text-gray-500';

@@ -104,10 +104,10 @@ $pages = \Widget\Contents\Page\Admin::alloc();
                         <tbody class="divide-y divide-gray-100">
                             <?php if ($pages->have()): ?>
                                 <?php 
-                                // Store pages data for card view
+                                // 为卡片视图存储页面数据
                                 $pagesData = [];
                                 while ($pages->next()): 
-                                    // Store all necessary data in an array
+                                    // 将所有必要数据存入数组
                                     $pagesData[] = [
                                         'cid' => $pages->cid,
                                         'title' => $pages->title,
