@@ -6,8 +6,6 @@
  * Modal.create），彼此保持独立、解耦。
  *
  * 依赖：jQuery（需在引入本文件之前加载）。
- *
- * @version 1.3.1-RC5
  */
 (function ($, window, document) {
     'use strict';
@@ -25,6 +23,35 @@
         if (map && typeof map === 'object') {
             $.extend(i18n, map);
         }
+    }
+
+    /** 主题版本号；运行时由 common-js.php 注入（唯一数据源：admin/common.php 的 BOOADMIN_VERSION） */
+    var version = '';
+
+    /**
+     * 设置主题版本号
+     * @param {string} v 版本号
+     */
+    function setVersion(v) {
+        if (typeof v === 'string' && v !== '') {
+            version = v;
+            // 同步到对外对象，保证 BooAdmin.version 能读到最新值
+            if (window.BooAdmin) {
+                window.BooAdmin.version = v;
+            }
+        }
+    }
+
+    /**
+     * 将任意文本转义为安全的 HTML 片段。
+     * confirm / alert 的 message 按“纯文本”渲染，避免把用户输入或 DOM 文本
+     * （如文件名、lang 属性）当作 HTML 执行。需要富文本时请改用 BooAdmin.Modal.create。
+     *
+     * @param {*} str 待转义内容
+     * @returns {string} 转义后的 HTML 片段
+     */
+    function escapeHtml(str) {
+        return $('<div/>').text(str === undefined || str === null ? '' : String(str)).html();
     }
 
     /**
@@ -57,7 +84,9 @@
             onClose: null
         }, options);
 
-        var uid = 'bm' + (createModal._seq = (createModal._seq || 0) + 1);
+        var seq = (createModal._seq = (createModal._seq || 0) + 1);
+        // 复用同一 id 时使用稳定命名空间：保证旧监听能被 off 移除，避免重复触发与事件泄漏
+        var uid = options.id ? ('bm_' + String(options.id).replace(/[^\w-]/g, '_')) : ('bm' + seq);
         var dynamic = !options.id;
         var $modal;
 
@@ -90,6 +119,13 @@
             $confirm = $modal.find('.booadmin-modal-confirm'),
             $cancel = $modal.find('.booadmin-modal-cancel');
 
+        // 无障碍：把标题与正文关联到容器，便于屏幕阅读器正确朗读
+        var titleId = uid + '_title',
+            messageId = uid + '_message';
+        $modal.attr('aria-labelledby', titleId).attr('aria-describedby', messageId);
+        $title.attr('id', titleId);
+        $message.attr('id', messageId);
+
         function close() {
             $modal.addClass('hidden');
             $(document).off('keydown.' + uid);
@@ -105,6 +141,9 @@
 
         function open(override) {
             override = override || {};
+
+            // 每次打开重置确认按钮状态：onConfirm 内可临时禁用以防重入，复用单例时不影响下次打开
+            $confirm.prop('disabled', false).removeClass('opacity-50');
 
             $title.text(override.title !== undefined ? override.title : (options.title || ''));
             $message.html(override.message !== undefined ? override.message : (options.message || ''));
@@ -179,6 +218,10 @@
 
     /**
      * 确认弹窗
+     *
+     * 注意：message 按纯文本渲染（内部会做 HTML 转义），
+     * 需要富文本正文请改用 BooAdmin.Modal.create。
+     *
      * @param {Object} opts { title, message, confirmText, cancelText, onConfirm }
      */
     function confirm(opts) {
@@ -188,7 +231,7 @@
 
         m.open({
             title: opts.title || i18n.confirmTitle,
-            message: opts.message || '',
+            message: escapeHtml(opts.message),
             confirmText: opts.confirmText || i18n.confirm,
             cancelText: opts.cancelText || i18n.cancel,
             showCancel: opts.showCancel !== false
@@ -199,6 +242,9 @@
 
     /**
      * 提示弹窗（仅一个按钮）
+     *
+     * 注意：message 按纯文本渲染（内部会做 HTML 转义）。
+     *
      * @param {Object} opts { title, message, confirmText, onConfirm }
      */
     function alert(opts) {
@@ -208,7 +254,7 @@
 
         m.open({
             title: opts.title || i18n.alertTitle,
-            message: opts.message || '',
+            message: escapeHtml(opts.message),
             confirmText: opts.confirmText || i18n.ok,
             showCancel: false
         });
@@ -221,6 +267,8 @@
      * ============================================================ */
     window.BooAdmin = {
         setI18n: setI18n,
+        setVersion: setVersion,
+        version: version,
         Modal: { create: createModal },
         confirm: confirm,
         alert: alert

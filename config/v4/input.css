@@ -2,6 +2,7 @@
 
 /* 内容路径 - 扫描所有 PHP 文件 */
 @source "../../admin/**/*.php";
+@source "../../admin/**/*.js";
 
 /* Discord 主题颜色定义 */
 @theme {

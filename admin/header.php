@@ -5,17 +5,17 @@ if (!defined('__TYPECHO_ADMIN__')) {
 
 $header = '
 <!-- CSS Reset & Grid -->
-<link rel="stylesheet" href="' . $options->adminUrl('css/normalize.css?v=1.3.2',true) . '">
-<link rel="stylesheet" href="' . $options->adminUrl('css/grid.css?v=1.3.2',true) . '">
+<link rel="stylesheet" href="' . $options->adminUrl('css/normalize.css?v=' . BOOADMIN_VERSION, true) . '">
+<link rel="stylesheet" href="' . $options->adminUrl('css/grid.css?v=' . BOOADMIN_VERSION, true) . '">
 <!-- Theme Variables -->
-<link rel="stylesheet" href="' . $options->adminUrl('css/style.css?v=1.3.2',true) . '">
-<link rel="stylesheet" href="' . $options->adminUrl('css/light.css?v=1.3.2',true) . '">
-<link rel="stylesheet" href="' . $options->adminUrl('css/dark.css?v=1.3.2',true) . '">
+<link rel="stylesheet" href="' . $options->adminUrl('css/style.css?v=' . BOOADMIN_VERSION, true) . '">
+<link rel="stylesheet" href="' . $options->adminUrl('css/light.css?v=' . BOOADMIN_VERSION, true) . '">
+<link rel="stylesheet" href="' . $options->adminUrl('css/dark.css?v=' . BOOADMIN_VERSION, true) . '">
 <!-- TailwindCSS -->
-<link rel="stylesheet" href="' . $options->adminUrl('css/tailwind.css?v=1.3.2',true) . '">
+<link rel="stylesheet" href="' . $options->adminUrl('css/tailwind.css?v=' . BOOADMIN_VERSION, true) . '">
 <!-- NProgress -->
-<script src="' . $options->adminUrl('js/nprogress.js',true) . '"></script>
-<link rel="stylesheet" href="' . $options->adminUrl('css/nprogress.css',true) . '">
+<script src="' . $options->adminUrl('js/nprogress.js', true) . '"></script>
+<link rel="stylesheet" href="' . $options->adminUrl('css/nprogress.css', true) . '">
 <!-- Font Awesome -->
 <link href="https://cdn.garfieldtom.cool/resource/libs/fontawesome/7.2.0/css/all.min.css" rel="stylesheet">
 <!-- ECharts -->
@@ -37,9 +37,7 @@ $header = \Typecho\Plugin::factory('admin/header.php')->filter('header', $header
     </head>
     <body class="<?php echo isset($bodyClass) ? $bodyClass : ''; ?>">
         <script>
-        /* 操作类链接（AJAX / 确认弹窗）在页面脚本绑定事件之前被点击时，会直接跳转到 /action/ 接口地址。
-           这里在捕获阶段拦截这些链接的原生跳转，直到对应脚本调用 window.booadminArmLinks() 完成接管。
-           window load 后统一兜底解除保护，避免脚本异常时操作永久失效。 */
+        /* 操作类链接（AJAX / 确认弹窗）在页面脚本绑定事件之前被点击时，会直接跳转到 /action/ 接口地址。这里在捕获阶段拦截这些链接的原生跳转，直到对应脚本调用 window.booadminArmLinks() 完成接管。window load 后统一兜底解除保护，避免脚本异常时操作永久失效。 */
         (function () {
             var GUARD_SELECTOR = [
                 'a.operate-delete',

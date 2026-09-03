@@ -4,5 +4,6 @@ module.exports = {
   // 此配置文件主要用于兼容性和项目设置
   content: [
     '../admin/**/*.php',
+    '../admin/**/*.js',
   ],
 }

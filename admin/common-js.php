@@ -595,7 +595,7 @@
     })();
 </script>
 <script>
-    // BooAdmin 共享库：注入翻译与通知别名，统一后台前端"体系层"
+    // BooAdmin 共享库 注入翻译与通知别名，统一后台前端"体系层"
     if (window.BooAdmin) {
         BooAdmin.setI18n({
             confirmTitle: '<?php _e('操作确认'); ?>',
@@ -604,6 +604,8 @@
             cancel: '<?php _e('取消'); ?>',
             ok: '<?php _e('我知道了'); ?>'
         });
+        // 注入版本号
+        BooAdmin.setVersion('<?php echo BOOADMIN_VERSION; ?>');
         BooAdmin.notify = window.TypechoNotification || null;
     }
 </script>

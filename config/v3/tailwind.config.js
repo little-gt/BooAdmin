@@ -2,6 +2,7 @@
 module.exports = {
   content: [
     './admin/**/*.php',
+    './admin/**/*.js',
   ],
   theme: {
     extend: {

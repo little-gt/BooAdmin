@@ -1,6 +1,9 @@
 <?php if(!defined('__TYPECHO_ADMIN__')) exit; ?>
 <?php $content = !empty($post) ? $post : $page; ?>
 <script>
+// ========================================
+// 编辑器：正文文本域通用事件（Markdown 与非 Markdown 模式共用）
+// ========================================
 (function () {
     $('#text').on('change', function (e) {
         e.preventDefault();
@@ -12,14 +15,28 @@
 </script>
 <?php if (!$options->markdown): ?>
 <script>
+// ========================================
+// 编辑器：非 Markdown 模式，插入内容使用原生 HTML
+// ========================================
 (function () {
     const textarea = $('#text');
 
-    // 原始的插入图片和文件
+    // 转义 HTML 特殊字符：文件名或 URL 可能含引号、尖括号，
+    // 直接拼接会破坏属性结构并造成注入，插入编辑器前必须先转义
+    function escapeHtmlAttr (str) {
+        return String(str === undefined || str === null ? '' : str)
+            .replace(/&/g, '&amp;')
+            .replace(/</g, '&lt;')
+            .replace(/>/g, '&gt;')
+            .replace(/"/g, '&quot;')
+            .replace(/'/g, '&#39;');
+    }
+
+    // 插入图片 / 文件到正文
     Typecho.insertFileToEditor = function (file, url, isImage) {
         const sel = textarea.getSelection(),
-            html = isImage ? '<img src="' + url + '" alt="' + file + '" />'
-                : '<a href="' + url + '">' + file + '</a>',
+            html = isImage ? '<img src="' + escapeHtmlAttr(url) + '" alt="' + escapeHtmlAttr(file) + '" />'
+                : '<a href="' + escapeHtmlAttr(url) + '">' + escapeHtmlAttr(file) + '</a>',
             offset = (sel ? sel.start : 0) + html.length;
 
         textarea.replaceSelection(html);
@@ -52,7 +69,6 @@ $(document).ready(function () {
     options.strings = {
         bold: '<?php _e('加粗'); ?> <strong> Ctrl+B',
         boldexample: '<?php _e('加粗文字'); ?>',
-            
         italic: '<?php _e('斜体'); ?> <em> Ctrl+I',
         italicexample: '<?php _e('斜体文字'); ?>',
 
@@ -98,17 +114,18 @@ $(document).ready(function () {
     const converter = new HyperDown(),
         editor = new Markdown.Editor(converter, '', options);
 
-    // 自动跟随
+    // 预览自动跟随编辑区滚动
     converter.enableHtml(true);
     converter.enableLine(true);
     const reloadScroll = scrollableEditor(textarea, preview);
 
-    // 修正白名单
+    // 渲染收尾：拆分摘要/正文、替换嵌入标签，并对结果做 HTML 净化
     converter.hook('makeHtml', function (html) {
         html = html.replace('<p><!--more--></p>', '<!--more-->');
-        
+
+        // 存在摘要分割线时，拆成 summary / details 两段
         if (html.indexOf('<!--more-->') > 0) {
-            var parts = html.split(/\s*<\!\-\-more\-\->\s*/),
+            const parts = html.split(/\s*<\!\-\-more\-\->\s*/),
                 summary = parts.shift(),
                 details = parts.join('');
 
@@ -116,7 +133,7 @@ $(document).ready(function () {
                 + '<div class="details">' + details + '</div>';
         }
 
-        // 替换block
+        // iframe / embed 转为占位块，避免外部内容撑破预览区
         html = html.replace(/<(iframe|embed)\s+([^>]*)>/ig, function (all, tag, src) {
             if (src[src.length - 1] === '/') {
                 src = src.substring(0, src.length - 1);
@@ -128,6 +145,14 @@ $(document).ready(function () {
 
         return DOMPurify.sanitize(html, {USE_PROFILES: {html: true}});
     });
+
+    // ========================================
+    // 预览区：公式渲染、溢出容器与滚动同步
+    // ========================================
+    // 等待布局稳定后再同步的防抖间隔（ms）
+    const PREVIEW_SYNC_DELAY = 30;
+    // 图片 load / error 迟迟不触发时的兜底超时（ms）
+    const PREVIEW_SYNC_FALLBACK = 1200;
 
     const mathRenderOptions = {
         delimiters: [
@@ -181,7 +206,7 @@ $(document).ready(function () {
 
             ensurePreviewOverflowContainers();
             reloadScroll(true);
-        }, 30);
+        }, PREVIEW_SYNC_DELAY);
     }
 
     editor.hooks.chain('onPreviewRefresh', function () {
@@ -230,7 +255,7 @@ $(document).ready(function () {
         });
 
         // 某些缓存/异常图片不会再触发 load/error，超时后兜底同步
-        fallbackTimer = setTimeout(finish, 1200);
+        fallbackTimer = setTimeout(finish, PREVIEW_SYNC_FALLBACK);
 
         if (pending === 0) {
             finish();
@@ -240,41 +265,105 @@ $(document).ready(function () {
     <?php \Typecho\Plugin::factory('admin/editor-js.php')->call('markdownEditor', $content); ?>
 
     let th = textarea.height();
-    const uploadBtn = $('<button type="button" id="btn-fullscreen-upload" class="btn btn-link">'
+    // 全屏模式下的附件侧边栏
+    // 复用页面已有的上传面板（#tab-files），进入全屏时挂到 body 以免受右侧栏隐藏影响，
+    // 退出全屏时放回原位。上传 / 插入逻辑（file-upload-js.php）保持不变。
+    const uploadBtn = $('<button type="button" id="btn-fullscreen-upload" class="btn btn-link" '
+            + 'title="<?php _e('附件'); ?>" aria-label="<?php _e('附件'); ?>">'
             + '<i class="i-upload"><?php _e('附件'); ?></i></button>')
-            .prependTo('.submit .right')
-            .click(function() {
-                $('a', $('.typecho-option-tabs li').not('.active')).trigger('click');
+            .appendTo('#wmd-button-bar')
+            .click(function () {
+                const $files = $('#tab-files');
+                if ($files.length === 0) {
+                    return false;
+                }
+                // 已展开则收起，否则展开为侧边栏
+                if ($files.hasClass('fs-open')) {
+                    closeFullscreenFiles();
+                } else {
+                    openFullscreenFiles();
+                }
                 return false;
             });
 
-    $('.typecho-option-tabs li').click(function () {
-        uploadBtn.find('i').toggleClass('i-upload-active',
-            $('#tab-files-btn', this).length > 0);
-    });
+    function openFullscreenFiles () {
+        $('#tab-files').addClass('fs-open');
+        uploadBtn.find('i').addClass('i-upload-active');
+    }
+
+    function closeFullscreenFiles () {
+        $('#tab-files').removeClass('fs-open');
+        uploadBtn.find('i').removeClass('i-upload-active');
+    }
+
+    // 进入全屏：把附件面板移到 body 成为独立侧边栏，并补一个带关闭按钮的头部
+    function attachFullscreenFiles () {
+        const $files = $('#tab-files');
+        if ($files.length === 0) {
+            return;
+        }
+        // 仅首次记录原位，供退出全屏时还原
+        if (!$files.data('fs-origin')) {
+            $files.data('fs-origin', $files.parent());
+        }
+        if ($files.find('.fs-files-header').length === 0) {
+            $('<div class="fs-files-header"></div>')
+                .append($('<span><?php _e('附件'); ?></span>'))
+                .append($('<button type="button" class="fs-files-close" aria-label="<?php _e('关闭'); ?>">'
+                        + '<i class="fas fa-times"></i></button>')
+                    .click(closeFullscreenFiles))
+                .prependTo($files);
+        }
+        // 挂到 body，避免被右侧栏的隐藏状态影响
+        $files.appendTo(document.body);
+    }
+
+    // 退出全屏：收起侧边栏并放回原位
+    function detachFullscreenFiles () {
+        const $files = $('#tab-files');
+        if ($files.length === 0) {
+            return;
+        }
+        $files.removeClass('fs-open');
+        uploadBtn.find('i').removeClass('i-upload-active');
+        const origin = $files.data('fs-origin');
+        if (origin && origin.length > 0) {
+            $files.appendTo(origin);
+        }
+    }
+
+    // 进入全屏：可用高度由调用方决定，两个全屏钩子共用，避免重复实现
+    function applyFullscreenHeight (getViewportHeight) {
+        $(document.body).addClass('fullscreen');
+
+        const height = getViewportHeight() - toolbar.outerHeight();
+
+        textarea.css('height', height);
+        preview.css('height', height);
+        isFullScreen = true;
+    }
 
     editor.hooks.chain('enterFakeFullScreen', function () {
+        // 记录原始高度，供退出全屏时还原
         th = textarea.height();
-        $(document.body).addClass('fullscreen');
-        const h = $(window).height() - toolbar.outerHeight();
-        
-        textarea.css('height', h);
-        preview.css('height', h);
-        isFullScreen = true;
+        applyFullscreenHeight(function () {
+            return $(window).height();
+        });
+        attachFullscreenFiles();
     });
 
     editor.hooks.chain('enterFullScreen', function () {
-        $(document.body).addClass('fullscreen');
-        
-        const h = window.screen.height - toolbar.outerHeight();
-        textarea.css('height', h);
-        preview.css('height', h);
-        isFullScreen = true;
+        applyFullscreenHeight(function () {
+            return window.screen.height;
+        });
+        attachFullscreenFiles();
     });
 
     editor.hooks.chain('exitFullScreen', function () {
         $(document.body).removeClass('fullscreen');
+        detachFullscreenFiles();
         textarea.height(th);
+        // 清除内联高度，交回样式表控制
         preview.css('height', '');
         isFullScreen = false;
     });
@@ -287,6 +376,95 @@ $(document).ready(function () {
         Typecho.savePost();
     });
 
+    // 转义 markdown 链接文本中的方括号，避免被提前闭合
+    function escapeMarkdownText (text) {
+        return String(text === undefined || text === null ? '' : text).replace(/([\\\[\]])/g, '\\$1');
+    }
+
+    // 行首 0~3 个空格的引用式定义：  [N]: url
+    const LINK_DEF_PATTERN = /^[ ]{0,3}\[(\d+)\]:[ \t]*(\S+)[ \t]*$/;
+
+    /**
+     * 收集正文中已有的引用式定义
+     * @param {string} text 正文内容
+     * @returns {{defs: Object, maxNum: number}} defs 为「编号 -> url」映射，maxNum 为当前最大编号
+     */
+    function collectLinkDefs (text) {
+        const lines = String(text === undefined || text === null ? '' : text).split('\n');
+        const defs = {};
+        let maxNum = 0;
+
+        for (const line of lines) {
+            const matched = line.match(LINK_DEF_PATTERN);
+
+            if (matched) {
+                defs[matched[1]] = matched[2];
+                maxNum = Math.max(maxNum, parseInt(matched[1], 10));
+            }
+        }
+
+        return {defs: defs, maxNum: maxNum};
+    }
+
+    /**
+     * 格式化定义中的 URL：空白转 %20，含尖括号时用 <> 包裹，避免解析错位
+     * @param {string} url 原始地址
+     * @returns {string}
+     */
+    function formatLinkDefUrl (url) {
+        const safe = String(url === undefined || url === null ? '' : url).replace(/\s/g, '%20');
+
+        return /[<>]/.test(safe) ? '<' + safe.replace(/</g, '%3C').replace(/>/g, '%3E') + '>' : safe;
+    }
+
+    /**
+     * 以引用式（reference-style）插入图片/链接
+     *
+     * 正文写 ![alt][N] / [文本][N]，链接定义 "  [N]: url" 追加到文末，
+     * 与 pagedown 默认行为保持一致（前置空行、两个空格缩进）；
+     * 同一 URL 复用已有定义，避免重复堆积。
+     *
+     * @param {string} file 文件名/描述
+     * @param {string} url 资源地址
+     * @param {boolean} isImage 是否为图片
+     */
+    function insertReferenceLink (file, url, isImage) {
+        const collected = collectLinkDefs(textarea.val()),
+            defs = collected.defs;
+        let num = null;
+
+        // 同一 URL 已存在定义时直接复用
+        for (const key in defs) {
+            if (Object.prototype.hasOwnProperty.call(defs, key) && defs[key] === url) {
+                num = parseInt(key, 10);
+                break;
+            }
+        }
+
+        // 否则分配下一个可用编号
+        if (num === null) {
+            num = collected.maxNum + 1;
+        }
+
+        const sel = textarea.getSelection(),
+            snippet = (isImage ? '![' : '[') + escapeMarkdownText(file) + '][' + num + ']',
+            offset = (sel ? sel.start : 0) + snippet.length,
+            scrollTop = textarea.scrollTop();
+
+        textarea.replaceSelection(snippet);
+
+        // 新定义追加到文末（仅在确实新建编号时写入）
+        if (num > collected.maxNum) {
+            textarea.val(textarea.val() + '\n\n  [' + num + ']: ' + formatLinkDefUrl(url));
+        }
+
+        textarea.setSelection(offset, offset);
+        textarea.trigger('input');
+
+        // 恢复滚动位置
+        textarea.scrollTop(scrollTop);
+    }
+
     function initMarkdown() {
         editor.run();
 
@@ -294,21 +472,10 @@ $(document).ready(function () {
             linkButton = $('#wmd-link-button');
 
         Typecho.insertFileToEditor = function (file, url, isImage, skipDialog) {
-            // 如果 skipDialog 为 true，直接插入，不弹出对话框
+            // skipDialog 为 true：跳过 pagedown 对话框（避免与文件预览弹窗重复弹出），
+            // 但仍以引用式写入，保持「底部链接定义」的原有格式
             if (skipDialog) {
-                const sel = textarea.getSelection(),
-                    markdown = isImage ? '![' + file + '](' + url + ')' : '[' + file + '](' + url + ')',
-                    offset = (sel ? sel.start : 0) + markdown.length;
-
-                // 保存当前滚动位置
-                const scrollTop = textarea.scrollTop();
-
-                textarea.replaceSelection(markdown);
-                textarea.setSelection(offset, offset);
-                textarea.trigger('input');
-
-                // 恢复滚动位置
-                textarea.scrollTop(scrollTop);
+                insertReferenceLink(file, url, isImage);
                 return;
             }
 
@@ -338,7 +505,7 @@ $(document).ready(function () {
                 buttonRow.css('height', 'auto');
                 buttonRow.css('flex-wrap', 'wrap');
                 buttonRow.css('align-items', 'center');
-                
+
                 // 同时调整整个工具栏容器的高度
                 const buttonBar = $('#wmd-button-bar');
                 if (buttonBar.length > 0) {
@@ -346,7 +513,7 @@ $(document).ready(function () {
                     buttonBar.css('flex-wrap', 'wrap');
                     buttonBar.css('align-items', 'center');
                 }
-                
+
                 // 移除编辑/预览标签的内联样式，保持默认设计
                 const editTab = $('.wmd-edittab');
                 if (editTab.length > 0) {
@@ -363,60 +530,68 @@ $(document).ready(function () {
             syncPreviewAfterLayout();
         });
 
-        // 编辑预览切换
-        const edittab = $('#wmd-button-bar').append('<div class="wmd-edittab"><a href="#wmd-editarea" class="active"><?php _e('撰写'); ?></a><a href="#wmd-preview"><?php _e('预览'); ?></a></div>'),
-            editarea = $(textarea.parent()).attr("id", "wmd-editarea");
+        // 编辑 / 预览切换
+        $('#wmd-button-bar').append('<div class="wmd-edittab"><a href="#wmd-editarea" class="active"><?php _e('撰写'); ?></a><a href="#wmd-preview"><?php _e('预览'); ?></a></div>');
+        textarea.parent().attr('id', 'wmd-editarea');
 
-        $(".wmd-edittab a").click(function() {
-            $(".wmd-edittab a").removeClass('active');
-            $(this).addClass("active");
-            $("#wmd-editarea, #wmd-preview").addClass("wmd-hidetab");
+        $('.wmd-edittab a').click(function () {
+            const $link = $(this),
+                target = $link.attr('href'),
+                isPreview = target === '#wmd-preview';
 
-            const selected_tab = $(this).attr("href"),
-                selected_el = $(selected_tab).removeClass("wmd-hidetab");
+            $('.wmd-edittab a').removeClass('active');
+            $link.addClass('active');
+            $('#wmd-editarea, #wmd-preview').addClass('wmd-hidetab');
+            $(target).removeClass('wmd-hidetab');
 
-            // 预览时隐藏编辑器按钮
-            if (selected_tab === "#wmd-preview") {
-                $("#wmd-button-row").addClass("wmd-visualhide");
+            // 预览时隐藏工具栏按钮
+            $('#wmd-button-row').toggleClass('wmd-visualhide', isPreview);
 
-                // 确保预览时 LaTeX 公式已渲染
-                syncPreviewAfterLayout();
-            } else {
-                $("#wmd-button-row").removeClass("wmd-visualhide");
-            }
-
-            // 重新调整工具栏高度和布局
+            // 工具栏换行后高度会变化，切换后需重新计算
             adjustToolbarHeight();
 
-            // 全屏外自动调整预览高度
-            if (!isFullScreen && selected_tab === "#wmd-preview") {
-                preview.css('height', '');
-            }
+            if (isPreview) {
+                // 非全屏下清除内联高度，交回样式表控制
+                if (!isFullScreen) {
+                    preview.css('height', '');
+                }
 
-            if (selected_tab === "#wmd-preview") {
+                // 渲染 LaTeX 公式并同步滚动
                 syncPreviewAfterLayout();
             }
 
             return false;
         });
 
-        // 剪贴板复制图片
+        // 粘贴图片时自动上传
         textarea.bind('paste', function (e) {
-            const items = (e.clipboardData || e.originalEvent.clipboardData).items;
+            const clipboard = e.originalEvent && e.originalEvent.clipboardData
+                ? e.originalEvent.clipboardData
+                : e.clipboardData;
 
-            for (const item of items) {
-                if (item.kind === 'file') {
-                    const file = item.getAsFile();
+            // 部分浏览器或场景下取不到剪贴板数据，直接跳过避免报错
+            if (!clipboard || !clipboard.items) {
+                return;
+            }
 
-                    if (file.size > 0) {
-                        if (!file.name) {
-                            file.name = (new Date()).toISOString().replace(/\..+$/, '')
-                                + '.' + file.type.split('/').pop();
-                        }
-
-                        Typecho.uploadFile(file);
-                    }
+            for (const item of clipboard.items) {
+                if (item.kind !== 'file') {
+                    continue;
                 }
+
+                const file = item.getAsFile();
+
+                if (!file || file.size === 0) {
+                    continue;
+                }
+
+                // 无名文件（如部分截图）按时间戳生成文件名
+                if (!file.name) {
+                    file.name = (new Date()).toISOString().replace(/\..+$/, '')
+                        + '.' + file.type.split('/').pop();
+                }
+
+                Typecho.uploadFile(file);
             }
         });
     }
@@ -425,7 +600,7 @@ $(document).ready(function () {
         initMarkdown();
     } else {
         const notice = $('<div class="message notice"><?php _e('这篇文章不是由Markdown语法创建的, 继续使用Markdown编辑它吗?'); ?> '
-            + '<button class="btn btn-xs primary yes"><?php _e('是'); ?></button> ' 
+            + '<button class="btn btn-xs primary yes"><?php _e('是'); ?></button> '
             + '<button class="btn btn-xs no"><?php _e('否'); ?></button></div>')
             .hide().insertBefore(textarea).slideDown();
 

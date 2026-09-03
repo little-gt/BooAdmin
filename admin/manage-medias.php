@@ -178,7 +178,7 @@ $attachments = \Widget\Contents\Attachment\Admin::alloc();
                                     <div class="card-media-preview">
                                         <?php if ($attachment['isImage']): ?>
                                             <a href="<?php $options->adminUrl('media.php?cid=' . $attachment['cid']); ?>" class="media-preview-link">
-                                                <img src="<?php echo $attachment['url']; ?>" alt="<?php echo htmlspecialchars($attachment['title']); ?>" class="media-preview-image">
+                                                <img data-src="<?php echo $attachment['url']; ?>" alt="<?php echo htmlspecialchars($attachment['title']); ?>" class="media-preview-image">
                                             </a>
                                         <?php else: ?>
                                             <a href="<?php $options->adminUrl('media.php?cid=' . $attachment['cid']); ?>" class="media-preview-link media-preview-icon">
@@ -338,6 +338,50 @@ $attachments = \Widget\Contents\Attachment\Admin::alloc();
     background: linear-gradient(135deg, var(--booadmin-surface-2) 0%, var(--booadmin-highlight-soft) 100%);
 }
 
+/* 卡片视图图片懒加载：加载中显示持续旋转动画 */
+.card-media-preview.lazy-loading::after {
+    content: "";
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 28px;
+    height: 28px;
+    margin: -14px 0 0 -14px;
+    border: 3px solid rgba(255, 255, 255, 0.45);
+    border-top-color: var(--booadmin-accent);
+    border-radius: 50%;
+    animation: media-lazy-spin 0.8s linear infinite;
+    z-index: 2;
+}
+
+@keyframes media-lazy-spin {
+    to { transform: rotate(360deg); }
+}
+
+/* 加载完成前隐藏 img，避免显示裂图图标 */
+.card-media-preview .media-preview-image {
+    opacity: 0;
+    transition: transform 0.3s ease, opacity 0.3s ease;
+}
+
+.card-media-preview .media-preview-image.is-loaded {
+    opacity: 1;
+}
+
+/* 加载失败时的友好提示（不显示裂图图标） */
+.card-media-preview.media-failed::before {
+    content: "图片加载失败";
+    position: absolute;
+    top: 50%;
+    left: 0;
+    right: 0;
+    transform: translateY(-50%);
+    text-align: center;
+    color: var(--booadmin-muted);
+    font-size: 0.8rem;
+    z-index: 2;
+}
+
 .media-card .card-comment-badge {
     position: absolute;
     top: 0.75rem;
@@ -391,5 +435,104 @@ $(document).ready(function () {
         });
         return false;
     });
+
+    // 卡片视图图片懒加载：每次只下载一张，失败跳过，全部完成后重试一次
+    var $mediaContainer = $('.card-view-container');
+    if ($mediaContainer.length) {
+        var mainQueue = [];
+        var failedList = [];
+        var isLoading = false;
+        var hasRetried = false;
+
+        function loadImage(img, done) {
+            var $img = $(img);
+            var src = $img.attr('data-src');
+            if (!src) {
+                done(false);
+                return;
+            }
+            $img.one('load', function () {
+                $img.addClass('is-loaded');
+                done(true);
+            }).one('error', function () {
+                done(false);
+            });
+            $img.attr('src', src);
+        }
+
+        function processBatch(queue, done) {
+            if (queue.length === 0) {
+                done();
+                return;
+            }
+            isLoading = true;
+
+            var img = queue.shift();
+            var $img = $(img);
+            var $preview = $img.closest('.card-media-preview');
+
+            // 进入加载态：显示持续旋转动画，隐藏 img 避免裂图
+            $preview.removeClass('media-failed').addClass('lazy-loading');
+            $img.removeClass('is-loaded');
+
+            loadImage(img, function (ok) {
+                $preview.removeClass('lazy-loading');
+                if (ok) {
+                    $img.addClass('is-loaded');
+                } else {
+                    // 加载失败：跳过当前，记录待重试，显示友好提示
+                    $preview.addClass('media-failed');
+                    failedList.push(img);
+                }
+                processBatch(queue, done);
+            });
+        }
+
+        function onAllAttempted() {
+            isLoading = false;
+            // 全部尝试完毕后，对失败项统一重试一次
+            if (failedList.length > 0 && !hasRetried) {
+                hasRetried = true;
+                var retryItems = failedList;
+                failedList = [];
+                setTimeout(function () {
+                    processBatch(retryItems, onAllAttempted);
+                }, 300);
+            }
+        }
+
+        function startMediaLazyLoad() {
+            // 收集尚未入队的图片
+            $mediaContainer.find('img.media-preview-image[data-src]').each(function () {
+                var $img = $(this);
+                if ($img.data('lazyQueued')) {
+                    return;
+                }
+                $img.data('lazyQueued', true);
+                mainQueue.push(this);
+            });
+
+            if (!isLoading) {
+                processBatch(mainQueue, onAllAttempted);
+            }
+        }
+
+        // 切换到卡片视图（含响应式自动切换）时触发懒加载
+        var $scope = $('.operate-form').closest('.bg-white');
+        if ($scope.length && 'MutationObserver' in window) {
+            new MutationObserver(function () {
+                if ($scope.hasClass('view-mode-card')) {
+                    startMediaLazyLoad();
+                }
+            }).observe($scope[0], { attributes: true, attributeFilter: ['class'] });
+        } else {
+            $('.view-toggle').on('click', '.btn-card-view', startMediaLazyLoad);
+        }
+
+        // 初始即为卡片视图（如移动端）时直接启动
+        if ($mediaContainer.is(':visible')) {
+            startMediaLazyLoad();
+        }
+    }
 });
 </script>

@@ -83,9 +83,15 @@ $(document).ready(function() {
         Typecho.uploadFile(this.files[0]);
     });
 
+    // 文件名由用户输入，统一用 text 写入，避免拼接进 HTML 造成注入
     function fileUploadStart (file) {
-        $('<li id="' + file.id + '" class="loading group flex items-center justify-between p-2 bg-white border border-gray-200 hover:border-discord-accent transition-colors">' +
-            '<span class="text-sm text-gray-500 flex items-center"><i class="fas fa-spinner fa-spin mr-2 text-discord-accent"></i> ' + file.name + '</span></li>').appendTo('#file-list');
+        var $li = $('<li class="loading group flex items-center justify-between p-2 bg-white border border-gray-200 hover:border-discord-accent transition-colors"></li>')
+            .attr('id', file.id);
+        var $label = $('<span class="text-sm text-gray-500 flex items-center"></span>')
+            .append($('<i class="fas fa-spinner fa-spin mr-2 text-discord-accent"></i>'))
+            .append($('<span></span>').text(' ' + file.name));
+
+        $li.append($label).appendTo('#file-list');
     }
 
     function fileUploadError (type, file) {
@@ -110,9 +116,15 @@ $(document).ready(function() {
             li, exist = $('#' + file.id);
 
         if (exist.length > 0) {
-            li = exist.removeClass('loading').html('<span class="text-red-500 text-sm">' + fileError + '</span><span class="text-xs text-gray-400 ml-2">' + word + '</span>');
+            li = exist.removeClass('loading').empty()
+                .append($('<span class="text-red-500 text-sm"></span>').text(fileError))
+                .append($('<span class="text-xs text-gray-400 ml-2"></span>').text(word));
         } else {
-            li = $('<li class="p-2 bg-red-50 border border-red-200 text-sm">' + fileError + '<br /><span class="text-xs text-gray-500">' + word + '</span></li>').appendTo('#file-list');
+            li = $('<li class="p-2 bg-red-50 border border-red-200 text-sm"></li>')
+                .append($('<span></span>').text(fileError))
+                .append('<br />')
+                .append($('<span class="text-xs text-gray-500"></span>').text(word))
+                .appendTo('#file-list');
         }
 
         const highlightDanger = getComputedStyle(document.documentElement).getPropertyValue('--booadmin-highlight-danger').trim() || '#FBC2C4';
@@ -121,21 +133,41 @@ $(document).ready(function() {
         });
     }
 
+    // 附件标题、体积等来自服务端返回，同样用 text / attr 写入，避免拼接注入
     function fileUploadComplete (file, attachment) {
-        const li = $('#' + file.id).removeClass('loading').addClass('group flex items-center justify-between p-2 bg-white border border-gray-200 hover:border-discord-accent transition-colors').data('cid', attachment.cid)
+        var $li = $('#' + file.id)
+            .removeClass('loading')
+            .addClass('group flex items-center justify-between p-2 bg-white border border-gray-200 hover:border-discord-accent transition-colors')
+            .data('cid', attachment.cid)
             .data('url', attachment.url)
             .data('image', attachment.isImage)
-            .html('<input type="hidden" name="attachment[]" value="' + attachment.cid + '" />' +
-                '<a class="insert flex-1 text-sm text-discord-text hover:text-discord-accent truncate mr-2" target="_blank" href="###" title="<?php _e('点击插入文件'); ?>">' +
-                '<i class="far fa-file mr-2 text-gray-400"></i>' + attachment.title + '</a>' +
-                '<div class="info text-xs text-gray-400 flex items-center space-x-2">' + attachment.bytes +
-                ' <a class="file text-gray-400 hover:text-discord-accent" target="_blank" href="<?php $options->adminUrl('media.php'); ?>?cid=' +
-                attachment.cid + '" title="<?php _e('编辑'); ?>"><i class="fas fa-edit"></i></a>' +
-                ' <a class="delete text-gray-400 hover:text-red-500" href="###" title="<?php _e('删除'); ?>"><i class="fas fa-trash-alt"></i></a></div>')
-            .effect('highlight', 1000);
+            .empty();
 
-        attachInsertEvent(li);
-        attachDeleteEvent(li);
+        $('<input type="hidden" name="attachment[]">').val(attachment.cid).appendTo($li);
+
+        var $link = $('<a class="insert flex-1 text-sm text-discord-text hover:text-discord-accent truncate mr-2" target="_blank" href="###"></a>')
+            .attr('title', '<?php _e('点击插入文件'); ?>')
+            .append($('<i class="far fa-file mr-2 text-gray-400"></i>'))
+            .append($('<span></span>').text(attachment.title));
+        $li.append($link);
+
+        var $info = $('<div class="info text-xs text-gray-400 flex items-center space-x-2"></div>')
+            .append($('<span></span>').text(attachment.bytes))
+            .append(' ')
+            .append($('<a class="file text-gray-400 hover:text-discord-accent" target="_blank"></a>')
+                .attr('href', '<?php $options->adminUrl('media.php'); ?>?cid=' + encodeURIComponent(attachment.cid))
+                .attr('title', '<?php _e('编辑'); ?>')
+                .append($('<i class="fas fa-edit"></i>')))
+            .append(' ')
+            .append($('<a class="delete text-gray-400 hover:text-red-500" href="###"></a>')
+                .attr('title', '<?php _e('删除'); ?>')
+                .append($('<i class="fas fa-trash-alt"></i>')));
+        $li.append($info);
+
+        $li.effect('highlight', 1000);
+
+        attachInsertEvent($li);
+        attachDeleteEvent($li);
         updateAttachmentNumber();
 
         Typecho.uploadComplete(attachment);
@@ -228,20 +260,32 @@ $(document).ready(function() {
     }
 
     // 显示图片预览模态框
+    // 用 DOM 方式构建正文：url / title 通过 attr / val / text 写入，
+    // 避免文件名含引号或尖括号时破坏属性、造成 HTML 注入
     function showImagePreview(url, title, callback) {
-        var bodyHtml =
-            '<div class="flex-1 flex items-center justify-center p-6 overflow-auto bg-gray-50">' +
-                '<img src="' + url + '" class="max-w-full max-h-[60vh] object-contain shadow-sm" alt="' + title + '">' +
-            '</div>' +
-            '<div class="px-6 py-4 border-t border-gray-200 bg-white flex items-center justify-between">' +
-                '<div class="flex-1 mr-4">' +
-                    '<input type="text" value="' + url + '" class="w-full px-3 py-2 bg-gray-100 border border-gray-300 text-sm text-gray-800 focus:outline-none" readonly>' +
-                '</div>' +
-            '</div>';
+        var $body = $('<div></div>');
+
+        var $previewWrap = $('<div class="flex-1 flex items-center justify-center p-6 overflow-auto bg-gray-50"></div>');
+        $('<img class="max-w-full max-h-[60vh] object-contain shadow-sm">')
+            .attr('src', url)
+            .attr('alt', title)
+            .appendTo($previewWrap);
+
+        var $footer = $('<div class="px-6 py-4 border-t border-gray-200 bg-white flex items-center justify-between"></div>');
+        var $urlWrap = $('<div class="flex-1 mr-4"></div>');
+        // 必须用 attr 而非 val()：$body.html() 走 innerHTML 序列化，
+        // val() 只改 property 不会被输出，会导致预览里的链接显示为空
+        $('<input type="text" class="w-full px-3 py-2 bg-gray-100 border border-gray-300 text-sm text-gray-800 focus:outline-none" readonly>')
+            .attr('value', url)
+            .appendTo($urlWrap);
+        $footer.append($urlWrap);
+
+        $body.append($previewWrap, $footer);
 
         BooAdmin.Modal.create({
+            id: 'booadmin-image-preview-modal',  // 固定 id 复用同一实例，避免 DOM 与事件累积
             title: '<?php _e('图片预览'); ?>',
-            message: bodyHtml,
+            message: $body.html(),
             size: 'md',
             confirmText: '<?php _e('插入图片'); ?>',
             cancelText: '<?php _e('取消'); ?>',
@@ -255,12 +299,19 @@ $(document).ready(function() {
         $('.delete', el).click(function () {
             var cid = $(this).parents('li').data('cid');
             var $deleteEl = $(el);
+            var deleting = false;
 
             var modal = BooAdmin.confirm({
                 title: '<?php _e('确认删除'); ?>',
                 message: '<?php _e('确认要删除文件 %s 吗?'); ?>'.replace('%s', file),
                 confirmText: '<?php _e('确认删除'); ?>',
                 onConfirm: function () {
+                    if (deleting) {
+                        return false;   // 防重入：上一个删除请求未完成时忽略重复点击
+                    }
+                    deleting = true;
+                    modal.el.find('.booadmin-modal-confirm').prop('disabled', true).addClass('opacity-50');
+
                     $.post('<?php $security->index('/action/contents-attachment-edit'); ?>',
                         {'do' : 'delete', 'cid' : cid},
                         function (response) {
