@@ -1,6 +1,6 @@
 # BooAdmin Theme for Typecho
 
-> 🌐 Language：[中文](README.md) · [English](README.EN.md) · [日本語](README.JA.md.md)
+> 🌐 Language：[中文](README.md) · [日本語](README.JA.md)
 
 > **Efficient · Modern · Minimal**
 
