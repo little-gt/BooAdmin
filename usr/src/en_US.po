@@ -1458,282 +1458,1259 @@ msgstr "Domestic repository"
 msgid "支持 BooAdmin 开源维护"
 msgstr "Support BooAdmin open-source maintenance"
 
-msgid "站点名称"
-msgstr "Site Name"
+msgid "%d年"
+msgstr "%d year"
 
-msgid "站点的名称将显示在网页的标题处."
-msgstr "The site name will be displayed in the page title."
+msgid "%d年%d月"
+msgstr "%d year %d month"
 
-msgid "站点地址"
-msgstr "Site URL"
+msgid "%d年%d月%d日"
+msgstr "%d year %d month %d day"
 
-msgid "站点地址主要用于生成内容的永久链接."
-msgstr "The site address is mainly used to generate permalinks for your content."
+msgid "%s 的评论"
+msgstr "%s's comments"
 
-msgid "站点描述"
-msgstr "Site Description"
+msgid "%s 设置已经保存"
+msgstr "%s settings saved"
 
-msgid "站点描述将显示在网页代码的头部."
-msgstr "The site description will be displayed in the page header."
+msgid "%s的文章"
+msgstr "%s's posts"
 
-msgid "关键词"
-msgstr "Keywords"
+msgid "%s的评论"
+msgstr "%s's comments"
 
-msgid "请以半角逗号 \",\" 分割多个关键字."
-msgstr "Separate multiple keywords with a half-width comma \",\"."
+msgid "&laquo;"
+msgstr "&laquo;"
 
-msgid "是否允许注册"
-msgstr "Allow Registration"
+msgid "&raquo;"
+msgstr "&raquo;"
 
-msgid "不允许"
-msgstr "Disallow"
+msgid "<a href=\"%s\">%s</a> 已经被设为默认分类"
+msgstr "<a href=\"%s\">%s</a> has been set as the default category"
 
-msgid "允许"
-msgstr "Allow"
-
-msgid "允许访问者注册到你的网站, 默认的注册用户不享有任何写入权限."
-msgstr "Allow visitors to register on your site. Registered users have no writing privileges by default."
-
-msgid "XMLRPC 接口"
-msgstr "XMLRPC Interface"
-
-msgid "仅关闭 Pingback 接口"
-msgstr "Disable Pingback Interface Only"
-
-msgid "打开"
-msgstr "Open"
-
-msgid "语言"
-msgstr "Language"
-
-msgid "时区"
-msgstr "Timezone"
-
-msgid "允许上传的文件类型"
-msgstr "Allowed Upload File Types"
-
-msgid "图片文件"
-msgstr "Image files"
-
-msgid "多媒体文件"
-msgstr "Media files"
-
-msgid "常用档案文件"
-msgstr "Common document files"
-
-msgid "其他格式"
-msgstr "Other formats"
-
-msgid "用逗号 \",\" 将后缀名隔开, 例如:"
-msgstr "Separate extensions with a comma \",\", e.g.:"
-
-msgid "保存设置"
-msgstr "Save Settings"
-
-msgid "北京时间 香港,新加坡,越南 (GMT +8)"
-msgstr "Beijing Time, Hong Kong, Singapore, Vietnam (GMT +8)"
-
-msgid "评论日期格式"
-msgstr "Comment Date Format"
-
-msgid "F jS, Y \\a\\t h:i a"
-msgstr "F jS, Y \\a\\t h:i a"
-
-msgid "这是一个默认的格式,当你在模板中调用显示评论日期方法时, 如果没有指定日期格式, 将按照此格式输出."
-msgstr "This is a default format. When you call the comment date method in your template without specifying a date format, output follows this format."
-
-msgid "具体写法请参考 PHP 日期格式写法."
-msgstr "Refer to the PHP date format syntax for details."
-
-msgid "评论列表数目"
-msgstr "Number of Comments in List"
-
-msgid "此数目用于指定显示在侧边栏中的评论列表数目."
-msgstr "This number specifies how many comments appear in the sidebar list."
-
-msgid "评论显示"
-msgstr "Comment Display"
-
-msgid "仅显示评论, 不显示 Pingback 和 Trackback"
-msgstr "Show comments only, hide Pingbacks and Trackbacks"
-
-msgid "在评论中使用 Markdown 语法"
-msgstr "Use Markdown syntax in comments"
-
-msgid "评论者名称显示时自动加上其个人主页链接"
-msgstr "Automatically add the commenter's homepage link when displaying their name"
-
-msgid "对评论者个人主页链接使用 nofollow 属性"
-msgstr "Apply the nofollow attribute to commenter homepage links"
-
-msgid "启用 Gravatar 头像服务, 最高显示评级为 %s 的头像"
-msgstr "Enable the Gravatar avatar service, with a maximum rating of %s"
+msgid "<a href=\"%s\">%s</a> 无法在此版本的typecho下正常工作"
+msgstr "<a href=\"%s\">%s</a> cannot work properly under this version of Typecho"
 
 msgid "G - 普通"
 msgstr "G - General"
 
-msgid "启用分页, 并且每页显示 %s 篇评论, 在列出时将 %s 作为默认显示"
-msgstr "Enable pagination, showing %s comments per page, with %s displayed by default"
+msgid "PG - 13岁以上"
+msgstr "PG - 13 and older"
 
-msgid "最后一页"
-msgstr "Last Page"
+msgid "PingBack已经存在"
+msgstr "Pingback already exists"
 
-msgid "启用评论回复, 以 %s 层作为每个评论最多的回复层数"
-msgstr "Enable comment replies, with %s levels as the maximum reply depth per comment"
+msgid "R - 17岁以上成人"
+msgstr "R - 17 and older (adult)"
 
-msgid "将 %s 的评论显示在前面"
-msgstr "Show %s comments first"
+msgid "X - 限制级"
+msgstr "X - Restricted"
 
-msgid "较旧的"
-msgstr "Older"
+msgid "XMLRPC 接口"
+msgstr "XMLRPC interface"
 
-msgid "评论提交"
-msgstr "Comment Submission"
+msgid "Y年m月d日"
+msgstr "Y year m month d day"
 
-msgid "所有评论必须经过审核"
-msgstr "All comments must be moderated"
+msgid "lang"
+msgstr "English"
 
-msgid "评论者之前须有评论通过了审核"
-msgstr "Commenters must have a previously approved comment"
-
-msgid "必须填写邮箱"
-msgstr "Email is required"
-
-msgid "必须填写网址"
-msgstr "URL is required"
-
-msgid "检查评论来源页 URL 是否与文章链接一致"
-msgstr "Check whether the comment source page URL matches the article link"
-
-msgid "开启反垃圾保护"
-msgstr "Enable anti-spam protection"
-
-msgid "在文章发布 %s 天以后自动关闭评论"
-msgstr "Automatically close comments %s days after the post is published"
-
-msgid "同一 IP 发布评论的时间间隔限制为 %s 分钟"
-msgstr "Limit the comment posting interval from the same IP to %s minutes"
-
-msgid "允许使用的HTML标签和属性"
-msgstr "Allowed HTML Tags and Attributes"
-
-msgid "默认的用户评论不允许填写任何的HTML标签, 你可以在这里填写允许使用的HTML标签."
-msgstr "By default, user comments do not allow any HTML tags. You can specify the allowed HTML tags here."
-
-msgid "比如: <a href=\"\"> <img src=\"\"> <blockquote>"
-msgstr "For example: <a href=\"\"> <img src=\"\"> <blockquote>"
-
-msgid "文章日期格式"
-msgstr "Post Date Format"
-
-msgid "此格式用于指定显示在文章归档中的日期默认显示格式."
-msgstr "This format specifies the default date display format shown in post archives."
-
-msgid "在某些主题中这个格式可能不会生效, 因为主题作者可以自定义日期格式."
-msgstr "In some themes this format may not take effect, because theme authors can define a custom date format."
-
-msgid "请参考"
-msgstr "Please refer to"
-
-msgid "PHP 日期格式写法."
-msgstr "PHP date format syntax."
-
-msgid "站点首页"
-msgstr "Site Homepage"
-
-msgid "显示最新发布的文章"
-msgstr "Show the latest published posts"
-
-msgid "使用 %s 作为首页"
-msgstr "Use %s as the homepage"
-
-msgid "文章列表数目"
-msgstr "Number of Posts in List"
-
-msgid "此数目用于指定显示在侧边栏中的文章列表数目."
-msgstr "This number specifies how many posts appear in the sidebar list."
-
-msgid "每页文章数目"
-msgstr "Posts Per Page"
-
-msgid "此数目用于指定文章归档输出时每页显示的文章数目."
-msgstr "This number specifies how many posts are displayed per page when outputting post archives."
-
-msgid "聚合全文输出"
-msgstr "Full Text in Feed"
-
-msgid "仅输出摘要"
-msgstr "Summary only"
-
-msgid "全文输出"
-msgstr "Full text"
-
-msgid "如果你不希望在聚合中输出文章全文,请使用仅输出摘要选项."
-msgstr "If you do not want to output the full post text in the feed, use the summary-only option."
-
-msgid "摘要的文字取决于你在文章中使用分隔符的位置."
-msgstr "The excerpt text depends on where you place the split marker in your post."
-
-msgid "是否使用地址重写功能"
-msgstr "Whether to enable URL rewriting"
-
-msgid "不启用"
-msgstr "Disable"
-
-msgid "地址重写即 rewrite 功能是某些服务器软件提供的优化内部连接的功能."
-msgstr "URL rewriting (the rewrite function) is a feature provided by some server software to optimize internal links."
-
-msgid "打开此功能可以让你的链接看上去完全是静态地址."
-msgstr "Enabling this feature makes your links appear as fully static addresses."
-
-msgid "自定义文章路径"
-msgstr "Custom Article Path"
-
-msgid "默认风格"
-msgstr "Default Style"
+msgid "n月j日"
+msgstr "n month j day"
 
 msgid "wordpress风格"
-msgstr "WordPress Style"
+msgstr "WordPress style"
 
-msgid "按日期归档"
-msgstr "Archive by Date"
+msgid "zh-CN"
+msgstr "zh-CN"
 
-msgid "按分类归档"
-msgstr "Archive by Category"
+msgid "一分钟前"
+msgstr "a minute ago"
 
-msgid "个性化定义"
-msgstr "Custom"
+msgid "一天前"
+msgstr "a day ago"
 
-msgid "可用参数: "
-msgstr "Available parameters: "
-
-msgid "日志 ID,"
-msgstr "Post ID,"
-
-msgid "日志缩略名,"
-msgstr "Post slug,"
-
-msgid "分类,"
-msgstr "Category,"
-
-msgid "多级分类,"
-msgstr "Multi-level category,"
-
-msgid "年,"
-msgstr "Year,"
-
-msgid "月,"
-msgstr "Month,"
-
-msgid "选择一种合适的文章静态路径风格, 使得你的网站链接更加友好."
-msgstr "Choose a suitable article permalink style to make your site links more friendly."
+msgid "一小时前"
+msgstr "an hour ago"
 
 msgid "一旦你选择了某种链接风格请不要轻易修改它."
 msgstr "Once you choose a certain link style, do not change it lightly."
 
-msgid "独立页面路径"
-msgstr "Independent Page Path"
+msgid "一秒前"
+msgstr "a second ago"
+
+msgid "不允许"
+msgstr "Disallow"
+
+msgid "不同的用户组拥有不同的权限."
+msgstr "Different user groups have different permissions."
+
+msgid "不启用"
+msgstr "Disable"
+
+msgid "东京平壤时间 西伊里安,摩鹿加群岛 (GMT +9)"
+msgstr "Tokyo-Pyongyang time, West Irian, Moluccas (GMT +9)"
+
+msgid "东欧标准时间 布加勒斯特,塞浦路斯,希腊 (GMT +2)"
+msgstr "Eastern European Standard Time, Bucharest, Cyprus, Greece (GMT +2)"
+
+msgid "东萨摩亚群岛 (GMT -11)"
+msgstr "Eastern Samoa Islands (GMT -11)"
+
+msgid "两次输入的密码不一致"
+msgstr "The two entered passwords do not match"
+
+msgid "个人主页地址"
+msgstr "Personal homepage URL"
+
+msgid "个人主页地址最多包含255个字符"
+msgstr "Personal homepage URL may contain at most 255 characters"
+
+msgid "个人主页地址格式错误"
+msgstr "Personal homepage URL format is incorrect"
+
+msgid "个性化定义"
+msgstr "Custom"
+
+msgid "中欧标准时间 阿姆斯特丹,荷兰,法国 (GMT +1)"
+msgstr "Central European Standard Time, Amsterdam, Netherlands, France (GMT +1)"
+
+msgid "为了便于记忆, 密码长度请不要超过十八位"
+msgstr "For easy memorization, please keep the password length under eighteen characters"
+
+msgid "为了保证账户安全, 请输入至少六位的密码"
+msgstr "For account security, please enter a password of at least six characters"
+
+msgid "为此用户分配一个密码."
+msgstr "Assign a password to this user."
+
+msgid "仅关闭 Pingback 接口"
+msgstr "Only close the Pingback interface"
+
+msgid "仅显示评论, 不显示 Pingback 和 Trackback"
+msgstr "Show comments only, hide Pingback and Trackback"
+
+msgid "仅输出摘要"
+msgstr "Excerpt only"
+
+msgid "佛德尔群岛 亚速尔群岛,葡属几内亚 (GMT -1)"
+msgstr "Azores Islands, Portuguese Guinea (GMT -1)"
+
+msgid "作者不存在"
+msgstr "Author does not exist"
+
+msgid "你确认删除文件 %s 吗?"
+msgstr "Are you sure you want to delete the file %s?"
+
+msgid "使用 %s 页面作为首页"
+msgstr "Use the %s page as the homepage"
+
+msgid "使用 <a href=\"https://daringfireball.net/projects/markdown/\">Markdown</a> 语法能够使您的撰写过程更加简便直观."
+msgstr "Using <a href=\"https://daringfireball.net/projects/markdown/\">Markdown</a> syntax makes your writing process easier and more intuitive."
+
+msgid "使用 Markdown 语法编辑和解析内容"
+msgstr "Edit and parse content using Markdown syntax"
+
+msgid "保存设置"
+msgstr "Save settings"
+
+msgid "修评论失败"
+msgstr "Failed to edit comment"
+
+msgid "允许"
+msgstr "Allow"
+
+msgid "允许上传的文件类型"
+msgstr "Allowed upload file types"
+
+msgid "允许使用的HTML标签和属性"
+msgstr "Allowed HTML tags and attributes"
+
+msgid "允许访问者注册到你的网站, 默认的注册用户不享有任何写入权限."
+msgstr "Allow visitors to register on your site; registered users have no write permissions by default."
+
+msgid "全文输出"
+msgstr "Full text output"
+
+msgid "关键词"
+msgstr "Keywords"
+
+msgid "其他格式 %s"
+msgstr "Other formats %s"
+
+msgid "具体写法请参考 <a href=\"https://www.php.net/manual/zh/function.date.php\">PHP 日期格式写法</a>."
+msgstr "For specific syntax, refer to <a href=\"https://www.php.net/manual/zh/function.date.php\">PHP date format</a>."
+
+msgid "具体的权限分配表请<a href=\"https://docs.typecho.org/develop/acl\">参考这里</a>."
+msgstr "For the specific permission assignment table, please <a href=\"https://docs.typecho.org/develop/acl\">refer here</a>."
+
+msgid "内容不存在"
+msgstr "Content does not exist"
+
+msgid "内容被隐藏"
+msgstr "Content is hidden"
+
+msgid "出现在聚合中"
+msgstr "Appears in feeds"
+
+msgid "分类 <a href=\"%s\">%s</a> 已经被增加"
+msgstr "<a href=\"%s\">%s</a> has been added"
+
+msgid "分类 <a href=\"%s\">%s</a> 已经被更新"
+msgstr "<a href=\"%s\">%s</a> has been updated"
+
+msgid "分类不存在"
+msgstr "Category does not exist"
+
+msgid "分类主键不存在"
+msgstr "Category primary key does not exist"
+
+msgid "分类刷新已经完成"
+msgstr "Category refresh complete"
+
+msgid "分类名称"
+msgstr "Category name"
+
+msgid "分类名称已经存在"
+msgstr "Category name already exists"
+
+msgid "分类名称无法被转换为缩略名"
+msgstr "Category name cannot be converted to a slug"
+
+msgid "分类已经删除"
+msgstr "Category deleted"
+
+msgid "分类已经合并"
+msgstr "Categories merged"
+
+msgid "分类排序已经完成"
+msgstr "Category sorting complete"
+
+msgid "分类描述"
+msgstr "Category description"
+
+msgid "分类缩略名"
+msgstr "Category slug"
+
+msgid "分类缩略名用于创建友好的链接形式, 建议使用字母, 数字, 下划线和横杠."
+msgstr "The category slug is used to create friendly URLs; letters, numbers, underscores and hyphens are recommended."
 
 msgid "分类路径"
-msgstr "Category Path"
+msgstr "Category path"
 
+msgid "分类路径中没有包含 {mid} 或者 {slug} "
+msgstr "The category path does not contain {mid} or {slug}"
+
+msgid "刚刚"
+msgstr "Just now"
+
+msgid "创建新页面"
+msgstr "Create new page"
+
+msgid "删除文件"
+msgstr "Delete file"
+
+msgid "删除评论失败"
+msgstr "Failed to delete comment"
+
+msgid "删除评论成功"
+msgstr "Comment deleted successfully"
+
+msgid "北京时间 香港,新加坡,越南 (GMT +8)"
+msgstr "Beijing time, Hong Kong, Singapore, Vietnam (GMT +8)"
+
+msgid "升级"
+msgstr "Upgrade"
+
+msgid "升级已经完成"
+msgstr "Upgrade complete"
+
+msgid "升级程序"
+msgstr "Upgrade program"
+
+msgid "博客关键字"
+msgstr "Blog keywords"
+
+msgid "博客地址"
+msgstr "Blog address"
+
+msgid "博客标题"
+msgstr "Blog title"
+
+msgid "博客首页地址"
+msgstr "Blog homepage address"
+
+msgid "取消回复"
+msgstr "Cancel reply"
+
+msgid "可以被引用"
+msgstr "Can be referenced"
+
+msgid "可以被评论"
+msgstr "Can be commented"
+
+msgid "可用参数: <code>{cid}</code> 日志 ID, <code>{slug}</code> 日志缩略名, <code>{category}</code> 分类, <code>{directory}</code> 多级分类, <code>{year}</code> 年, <code>{month}</code> 月, <code>{day}</code> 日"
+msgstr "Available parameters: <code>{cid}</code> post ID, <code>{slug}</code> post slug, <code>{category}</code> category, <code>{directory}</code> multi-level category, <code>{year}</code> year, <code>{month}</code> month, <code>{day}</code> day"
+
+msgid "可用参数: <code>{cid}</code> 页面 ID, <code>{slug}</code> 页面缩略名, <code>{directory}</code> 多级页面"
+msgstr "Available parameters: <code>{cid}</code> page ID, <code>{slug}</code> page slug, <code>{directory}</code> multi-level page"
+
+msgid "可用参数: <code>{mid}</code> 分类 ID, <code>{slug}</code> 分类缩略名, <code>{directory}</code> 多级分类"
+msgstr "Available parameters: <code>{mid}</code> category ID, <code>{slug}</code> category slug, <code>{directory}</code> multi-level category"
+
+msgid "合并到的标签名不合法"
+msgstr "The tag name to merge into is invalid"
+
+msgid "同一 IP 发布评论的时间间隔限制为 %s 分钟"
+msgstr "The comment interval limit for the same IP is %s minutes"
+
+msgid "同时将文章列表页路径更改为 %s"
+msgstr "Also change the post list page path to %s"
+
+msgid "启用 <a href=\"https://gravatar.com\">Gravatar</a> 头像服务, 最高显示评级为 %s 的头像"
+msgstr "Enable <a href=\"https://gravatar.com\">Gravatar</a> avatar service, showing avatars up to rating %s"
+
+msgid "启用分页, 并且每页显示 %s 篇评论, 在列出时将 %s 作为默认显示"
+msgstr "Enable pagination, showing %s comments per page, with %s as the default display when listing"
+
+msgid "启用评论回复, 以 %s 层作为每个评论最多的回复层数"
+msgstr "Enable comment replies, with %s levels as the maximum reply depth per comment"
+
+msgid "回复评论失败"
+msgstr "Failed to reply to comment"
+
+msgid "图片文件"
+msgstr "Image files"
+
+msgid "在 XMLRPC 接口中使用 Markdown 语法"
+msgstr "Use Markdown syntax in the XMLRPC interface"
+
+msgid "在文章发布 %s 天以后自动关闭评论"
+msgstr "Automatically close comments %s days after the post is published"
+
+msgid "在某些主题中这个格式可能不会生效, 因为主题作者可以自定义日期格式."
+msgstr "This format may not take effect in some themes because theme authors can customize the date format."
+
+msgid "在评论中使用 Markdown 语法"
+msgstr "Use Markdown syntax in comments"
+
+msgid "地址重写即 rewrite 功能是某些服务器软件提供的优化内部连接的功能."
+msgstr "URL rewriting (the rewrite function) is a feature provided by some server software to optimize internal links."
+
+msgid "增加分类"
+msgstr "Add category"
+
+msgid "增加标签"
+msgstr "Add tag"
+
+msgid "增加用户"
+msgstr "Add user"
+
+msgid "墨西哥城时间 洪都拉斯,危地马拉,哥斯达黎加 (GMT -6)"
+msgstr "Mexico City time, Honduras, Guatemala, Costa Rica (GMT -6)"
+
+msgid "备份文件上传失败"
+msgstr "Backup file upload failed"
+
+msgid "备份文件不存在"
+msgstr "Backup file does not exist"
+
+msgid "备份文件格式错误"
+msgstr "Backup file format is incorrect"
+
+msgid "夏威夷群岛 (GMT -10)"
+msgstr "Hawaiian Islands (GMT -10)"
+
+msgid "外观已经改变"
+msgstr "Appearance changed"
+
+msgid "外观设置已经保存"
+msgstr "Appearance settings saved"
+
+msgid "外观配置功能不存在"
+msgstr "Appearance configuration feature does not exist"
+
+msgid "多媒体文件"
+msgstr "Multimedia files"
+
+msgid "大西洋中部时间 格陵兰 (GMT -2)"
+msgstr "Mid-Atlantic time, Greenland (GMT -2)"
+
+msgid "如果你不希望在聚合中输出文章全文,请使用仅输出摘要选项."
+msgstr "If you do not want to output the full post text in feeds, use the excerpt-only option."
+
+msgid "如果你仍然想启用此功能, 请勾选这里"
+msgstr "If you still want to enable this feature, please check here"
+
+msgid "如果你将此项留空, 将默认使用用户名."
+msgstr "If you leave this blank, the username will be used by default."
+
+msgid "密码已经成功修改"
+msgstr "Password changed successfully"
+
+msgid "对不起, 您的发言过于频繁, 请稍候再次发布."
+msgstr "Sorry, you are posting too frequently. Please try again later."
+
+msgid "对不起,您输入的密码错误"
+msgstr "Sorry, the password you entered is incorrect"
+
+msgid "对不起,此内容的反馈被禁止."
+msgstr "Sorry, feedback on this content is disabled."
+
+msgid "对不起,此内容的引用被禁止."
+msgstr "Sorry, trackbacks for this content are disabled."
+
+msgid "对于完全支持 <a href=\"https://daringfireball.net/projects/markdown/\">Markdown</a> 语法写作的离线编辑器, 打开此选项后将避免内容被转换为 HTML."
+msgstr "For offline editors that fully support <a href=\"https://daringfireball.net/projects/markdown/\">Markdown</a> syntax, enabling this option prevents content from being converted to HTML."
+
+msgid "对评论者个人主页链接使用 <a href=\"https://en.wikipedia.org/wiki/Nofollow\">nofollow 属性</a>"
+msgstr "Use the <a href=\"https://en.wikipedia.org/wiki/Nofollow\">nofollow attribute</a> on commenter homepage links"
+
+msgid "将 %s 的评论显示在前面"
+msgstr "Show %s's comments first"
+
+msgid "已发布"
+msgstr "Published"
+
+msgid "布宜诺斯艾利斯 乌拉圭,法属圭亚那 (GMT -3)"
+msgstr "Buenos Aires, Uruguay, French Guiana (GMT -3)"
+
+msgid "常用档案文件"
+msgstr "Common archive files"
+
+msgid "建议使用特殊字符与字母、数字的混编样式,以增加系统安全性."
+msgstr "It is recommended to mix special characters with letters and numbers to increase system security."
+
+msgid "开启反垃圾保护"
+msgstr "Enable anti-spam protection"
+
+msgid "当前地址 <strong>%s</strong> 与上述设定值不一致"
+msgstr "The current address <strong>%s</strong> does not match the above setting"
+
+msgid "必须填写个人主页"
+msgstr "Personal homepage is required"
+
+msgid "必须填写分类名称"
+msgstr "Category name is required"
+
+msgid "必须填写密码"
+msgstr "Password is required"
+
+msgid "必须填写文件标题"
+msgstr "File title is required"
+
+msgid "必须填写标签名称"
+msgstr "Tag name is required"
+
+msgid "必须填写用户名"
+msgstr "Username is required"
+
+msgid "必须填写用户名称"
+msgstr "User display name is required"
+
+msgid "必须填写电子邮箱"
+msgstr "Email is required"
+
+msgid "必须填写电子邮箱地址"
+msgstr "Email address is required"
+
+msgid "必须填写网址"
+msgstr "URL is required"
+
+msgid "必须填写评论内容"
+msgstr "Comment content is required"
+
+msgid "必须填写邮箱"
+msgstr "Email is required"
+
+msgid "恢复数据出现错误"
+msgstr "Error occurred while restoring data"
+
+msgid "恢复过程中遇到如下错误: %s"
+msgstr "The following error occurred during restoration: %s"
+
+msgid "悉尼关岛时间 塔斯马尼亚岛,新几内亚 (GMT +10)"
+msgstr "Sydney-Guam time, Tasmania, New Guinea (GMT +10)"
+
+msgid "您所使用的用户名已经被注册,请登录后再次提交"
+msgstr "The username you used is already registered. Please log in and submit again."
+
+msgid "您的档案已经更新"
+msgstr "Your profile has been updated"
+
+msgid "您的评论正等待审核!"
+msgstr "Your comment is awaiting moderation!"
+
+msgid "您编辑的文件不存在"
+msgstr "The file you edited does not exist"
+
+msgid "您选择的风格不存在"
+msgstr "The style you selected does not exist"
+
+msgid "惠灵顿时间 新西兰,斐济群岛 (GMT +12)"
+msgstr "Wellington time, New Zealand, Fiji Islands (GMT +12)"
+
+msgid "我们检测到你使用了apache服务器, 但是程序无法在根目录创建.htaccess文件, 这可能是产生这个错误的原因."
+msgstr "We detected that you are using an Apache server, but the program cannot create the .htaccess file in the root directory, which may be the cause of this error."
+
+msgid "所有垃圾评论已经被删除"
+msgstr "All spam comments have been deleted"
+
+msgid "所有评论必须经过审核"
+msgstr "All comments must be moderated"
+
+msgid "所罗门群岛 库页岛 (GMT +11)"
+msgstr "Solomon Islands, Sakhalin (GMT +11)"
+
+msgid "所选择的语言包不存在"
+msgstr "The selected language pack does not exist"
+
+msgid "打开"
+msgstr "Open"
+
+msgid "打开此功能可以让你的链接看上去完全是静态地址."
+msgstr "Enabling this feature makes your links appear as fully static addresses."
+
+msgid "找不到内容"
+msgstr "Content not found"
+
+msgid "按分类归档"
+msgstr "Archive by category"
+
+msgid "按日期归档"
+msgstr "Archive by date"
+
+msgid "描述"
+msgstr "Description"
+
+msgid "提交"
+msgstr "Submit"
+
+msgid "提交修改"
+msgstr "Submit changes"
+
+msgid "插件%s的配置信息没有找到"
+msgstr "Plugin %s configuration not found"
+
+msgid "插件不存在"
+msgstr "Plugin does not exist"
+
+msgid "插件已经被启用"
+msgstr "Plugin enabled"
+
+msgid "插件已经被禁用"
+msgstr "Plugin disabled"
+
+msgid "插件设置已经保存"
+msgstr "Plugin settings saved"
+
+msgid "摘要的文字取决于你在文章中使用分隔符的位置."
+msgstr "The excerpt text depends on where you place the split marker in your post."
+
+msgid "数据恢复完成"
+msgstr "Data recovery complete"
+
+msgid "文件 %s 无法被写入"
+msgstr "File %s cannot be written"
+
+msgid "文件 %s 的更改已经保存"
+msgstr "Changes to file %s have been saved"
+
+msgid "文件 <a href=\"%s\">%s</a> 已经被更新"
+msgstr "<a href=\"%s\">%s</a> has been updated"
+
+msgid "文件不存在"
+msgstr "File does not exist"
+
+msgid "文件已经被删除"
+msgstr "File deleted"
+
+msgid "文件标题无法被转换为缩略名"
+msgstr "File title cannot be converted to a slug"
+
+msgid "文件缩略名用于创建友好的链接形式,建议使用字母,数字,下划线和横杠."
+msgstr "The file slug is used to create friendly URLs; letters, numbers, underscores and hyphens are recommended."
+
+msgid "文章 \"%s\" 等待审核"
+msgstr "Post \"%s\" is awaiting moderation"
+
+msgid "文章 \"<a href=\"%s\">%s</a>\" 已经发布"
+msgstr "Post \"<a href=\"%s\">%s</a>\" has been published"
+
+msgid "文章不存在"
+msgstr "Post does not exist"
+
+msgid "文章列表数目"
+msgstr "Number of posts per list"
+
+msgid "文章已经被删除"
+msgstr "Post deleted"
+
+msgid "文章已经被标记为<strong>%s</strong>"
+msgstr "Post has been marked as <strong>%s</strong>"
+
+msgid "文章日期格式"
+msgstr "Post date format"
+
+msgid "文章缩略图"
+msgstr "Post thumbnail"
+
+msgid "新增 %s 的子分类"
+msgstr "Add a subcategory of %s"
+
+msgid "新增 %s 的子页面"
+msgstr "Add a child page of %s"
+
+msgid "新增分类"
+msgstr "Add category"
+
+msgid "新增用户"
+msgstr "Add user"
+
+msgid "新德里时间 巴基斯坦,马尔代夫 (GMT +5)"
+msgstr "New Delhi time, Pakistan, Maldives (GMT +5)"
+
+msgid "无法启用插件"
+msgstr "Cannot enable plugin"
+
+msgid "无法登录, 密码错误"
+msgstr "Cannot log in, incorrect password"
+
+msgid "无法禁用插件"
+msgstr "Cannot disable plugin"
+
+msgid "无法读取备份文件"
+msgstr "Cannot read backup file"
+
+msgid "无法配置插件"
+msgstr "Cannot configure plugin"
+
+msgid "日期格式"
+msgstr "Date format"
+
+msgid "时区"
+msgstr "Timezone"
+
+msgid "时间格式"
+msgstr "Time format"
+
+msgid "昨天 %s"
+msgstr "Yesterday %s"
+
+msgid "是否使用地址重写功能"
+msgstr "Whether to enable URL rewriting"
+
+msgid "是否允许注册"
+msgstr "Whether to allow registration"
+
+msgid "昵称已经存在"
+msgstr "Nickname already exists"
+
+msgid "显示"
+msgstr "Display"
+
+msgid "显示最新发布的文章"
+msgstr "Show latest published posts"
+
+msgid "智利巴西 委内瑞拉,玻利维亚 (GMT -4)"
+msgstr "Chile-Brazil, Venezuela, Bolivia (GMT -4)"
+
+msgid "更新密码"
+msgstr "Update password"
+
+msgid "更新我的档案"
+msgstr "Update my profile"
+
+msgid "曼谷雅加达 柬埔寨,苏门答腊,老挝 (GMT +7)"
+msgstr "Bangkok-Jakarta, Cambodia, Sumatra, Laos (GMT +7)"
+
+msgid "最后一页"
+msgstr "Last page"
+
+msgid "未命名文档"
+msgstr "Untitled document"
+
+msgid "未命名页面"
+msgstr "Untitled page"
+
+msgid "未归档文件 %s 已经被更新"
+msgstr "Unfiled file %s has been updated"
+
+msgid "未归档文件已经被清理"
+msgstr "Unfiled files have been cleaned up"
+
+msgid "权限不足"
+msgstr "Insufficient permissions"
+
+msgid "标准"
+msgstr "Standard"
+
+msgid "标签 <a href=\"%s\">%s</a> 已经被增加"
+msgstr "<a href=\"%s\">%s</a> has been added"
+
+msgid "标签 <a href=\"%s\">%s</a> 已经被更新"
+msgstr "<a href=\"%s\">%s</a> has been updated"
+
+msgid "标签不存在"
+msgstr "Tag does not exist"
+
+msgid "标签主键不存在"
+msgstr "Tag primary key does not exist"
+
+msgid "标签刷新已经完成"
+msgstr "Tag refresh complete"
+
+msgid "标签名称"
+msgstr "Tag name"
+
+msgid "标签名称已经存在"
+msgstr "Tag name already exists"
+
+msgid "标签名称无法被转换为缩略名"
+msgstr "Tag name cannot be converted to a slug"
+
+msgid "标签已经删除"
+msgstr "Tag deleted"
+
+msgid "标签已经合并"
+msgstr "Tags merged"
+
+msgid "标签缩略名"
+msgstr "Tag slug"
+
+msgid "标签缩略名用于创建友好的链接形式, 如果留空则默认使用标签名称."
+msgstr "The tag slug is used to create friendly URLs; if left blank, the tag name is used by default."
+
+msgid "格林威治(子午线)标准时间 (GMT)"
+msgstr "Greenwich (meridian) Standard Time (GMT)"
+
+msgid "检查评论来源页 URL 是否与文章链接一致"
+msgstr "Check whether the comment's referrer URL matches the post link"
+
+msgid "概要"
+msgstr "Summary"
+
+msgid "欢迎"
+msgstr "Welcome"
+
+msgid "欢迎使用"
+msgstr "Welcome to use"
+
+msgid "此内容被密码保护"
+msgstr "This content is password protected"
+
+msgid "此分类将归档在您选择的父级分类下."
+msgstr "This category will be archived under the parent category you selected."
+
+msgid "此功能开启不会影响以前没有使用 Markdown 语法编辑的内容."
+msgstr "Enabling this feature will not affect content previously edited without Markdown syntax."
+
+msgid "此数目用于指定文章归档输出时每页显示的文章数目."
+msgstr "This number specifies how many posts are displayed per page in post archives."
+
+msgid "此数目用于指定显示在侧边栏中的文章列表数目."
+msgstr "This number specifies how many posts are shown in the sidebar list."
+
+msgid "此数目用于指定显示在侧边栏中的评论列表数目."
+msgstr "This number specifies how many comments are shown in the sidebar list."
+
+msgid "此文字用于描述分类, 在有的主题中它会被显示."
+msgstr "This text describes the category and may be displayed in some themes."
+
+msgid "此文字用于描述文件,在有的主题中它会被显示."
+msgstr "This text describes the file and may be displayed in some themes."
+
+msgid "此格式用于指定显示在文章归档中的日期默认显示格式."
+msgstr "This format specifies the default date display format shown in post archives."
+
+msgid "此用户名将作为用户登录时所用的名称."
+msgstr "This username will be used when the user logs in."
+
+msgid "此用户的个人主页地址, 请用 <code>https://</code> 开头."
+msgstr "The user's homepage address; please start it with <code>https://</code>."
+
+msgid "每页文章数目"
+msgstr "Posts per page"
+
+msgid "比如: %s"
+msgstr "For example: %s"
+
+msgid "没有分类被删除"
+msgstr "No category was deleted"
+
+msgid "没有垃圾评论被删除"
+msgstr "No spam comments were deleted"
+
+msgid "没有文件被删除"
+msgstr "No file was deleted"
+
+msgid "没有文章被删除"
+msgstr "No post was deleted"
+
+msgid "没有文章被标记"
+msgstr "No post was marked"
+
+msgid "没有未归档文件被清理"
+msgstr "No unfiled files were cleaned up"
+
+msgid "没有标签被删除"
+msgstr "No tag was deleted"
+
+msgid "没有用户被删除"
+msgstr "No user was deleted"
+
+msgid "没有编辑权限"
+msgstr "No edit permission"
+
+msgid "没有草稿被删除"
+msgstr "No draft was deleted"
+
+msgid "没有获取评论的权限"
+msgstr "No permission to retrieve comments"
+
+msgid "没有评论被删除"
+msgstr "No comment was deleted"
+
+msgid "没有评论被标记为垃圾"
+msgstr "No comment was marked as spam"
+
+msgid "没有评论被标记为待审核"
+msgstr "No comment was marked as pending"
+
+msgid "没有评论被通过"
+msgstr "No comment was approved"
+
+msgid "没有选择任何分类"
+msgstr "No category was selected"
+
+msgid "没有选择任何备份文件"
+msgstr "No backup file was selected"
+
+msgid "没有选择任何标签"
+msgstr "No tag was selected"
+
+msgid "没有页面被删除"
+msgstr "No page was deleted"
+
+msgid "没有页面被标记"
+msgstr "No page was marked"
+
+msgid "注册"
+msgstr "Register"
+
+msgid "注册到%s"
+msgstr "Register to %s"
+
+msgid "源地址服务器错误"
+msgstr "Source address server error"
+
+msgid "父级分类"
+msgstr "Parent category"
+
+msgid "父级分类不存在"
+msgstr "Parent category does not exist"
+
+msgid "父级评论不存在"
+msgstr "Parent comment does not exist"
+
+msgid "独立页面"
+msgstr "Independent page"
+
+msgid "独立页面路径"
+msgstr "Independent page path"
+
+msgid "独立页面路径中没有包含 {cid} 或者 {slug} "
+msgstr "The independent page path does not contain {cid} or {slug}"
+
+msgid "用户 %s 已经被增加"
+msgstr "User %s has been added"
+
+msgid "用户 %s 已经被更新"
+msgstr "User %s has been updated"
+
+msgid "用户 <strong>%s</strong> 已经成功注册, 密码为 <strong>%s</strong>"
+msgstr "User <strong>%s</strong> registered successfully, password is <strong>%s</strong>"
+
+msgid "用户不存在"
+msgstr "User does not exist"
+
+msgid "用户主键不存在"
+msgstr "User primary key does not exist"
+
+msgid "用户名已经存在"
+msgstr "Username already exists"
+
+msgid "用户名或密码无效"
+msgstr "Invalid username or password"
+
+msgid "用户名最多包含150个字符"
+msgstr "Username may contain at most 150 characters"
+
+msgid "用户名最多包含32个字符"
+msgstr "Username may contain at most 32 characters"
+
+msgid "用户名至少包含2个字符"
+msgstr "Username must contain at least 2 characters"
+
+msgid "用户密码"
+msgstr "User password"
+
+msgid "用户密码确认"
+msgstr "Confirm user password"
+
+msgid "用户已经删除"
+msgstr "User deleted"
+
+msgid "用户昵称"
+msgstr "User nickname"
+
+msgid "用户昵称可以与用户名不同, 用于前台显示."
+msgstr "The user nickname can differ from the username and is used for front-end display."
+
+msgid "用逗号 \",\" 将后缀名隔开, 例如: %s"
+msgstr "Separate extensions with a comma \",\" , for example: %s"
+
+msgid "电子邮箱地址将作为此用户的主要联系方式."
+msgstr "The email address will be the user's primary contact method."
+
+msgid "电子邮箱地址已经存在"
+msgstr "Email address already exists"
+
+msgid "电子邮箱最多包含150个字符"
+msgstr "Email may contain at most 150 characters"
+
+msgid "电子邮箱最多包含64个字符"
+msgstr "Email may contain at most 64 characters"
+
+msgid "电子邮箱格式错误"
+msgstr "Email format is incorrect"
+
+msgid "登录"
+msgstr "Log in"
+
+msgid "登录到%s"
+msgstr "Log in to %s"
+
+msgid "登录地址"
+msgstr "Login address"
+
+msgid "目标地址禁止Ping"
+msgstr "Ping is forbidden for the target address"
+
+msgid "直接调用 %s 模板文件"
+msgstr "Call the %s template file directly"
+
+msgid "禁止访问"
+msgstr "Access forbidden"
+
+msgid "禁止重复提交"
+msgstr "Duplicate submission forbidden"
+
+msgid "科伦坡时间 孟加拉 (GMT +6)"
+msgstr "Colombo time, Bangladesh (GMT +6)"
+
+msgid "站点名称"
+msgstr "Site name"
+
+msgid "站点地址"
+msgstr "Site address"
+
+msgid "站点地址主要用于生成内容的永久链接."
+msgstr "The site address is mainly used to generate permanent links for content."
+
+msgid "站点描述"
+msgstr "Site description"
+
+msgid "站点描述将显示在网页代码的头部."
+msgstr "The site description is shown in the head section of the page code."
+
+msgid "站点的名称将显示在网页的标题处."
+msgstr "The site name is displayed in the page title."
+
+msgid "站点首页"
+msgstr "Site homepage"
+
+msgid "第一页"
+msgstr "First page"
+
+msgid "第比利斯时间 阿曼,毛里塔尼亚,留尼汪岛 (GMT +4)"
+msgstr "Tbilisi time, Oman, Mauritania, Reunion (GMT +4)"
+
+msgid "管理"
+msgstr "Manage"
+
+msgid "管理 %s 的子分类"
+msgstr "Manage subcategories of %s"
+
+msgid "管理 %s 的子页面"
+msgstr "Manage child pages of %s"
+
+msgid "管理区域的地址"
+msgstr "Admin area address"
+
+msgid "纽约渥太华 古巴,哥伦比亚,牙买加 (GMT -5)"
+msgstr "New York-Ottawa, Cuba, Colombia, Jamaica (GMT -5)"
+
+msgid "编辑 %s"
+msgstr "Edit %s"
+
+msgid "编辑分类"
+msgstr "Edit category"
+
+msgid "编辑分类 %s"
+msgstr "Edit category %s"
+
+msgid "编辑文件 %s"
+msgstr "Edit file %s"
+
+msgid "编辑标签"
+msgstr "Edit tag"
+
+msgid "编辑标签 %s"
+msgstr "Edit tag %s"
+
+msgid "编辑用户"
+msgstr "Edit user"
+
+msgid "编辑用户 %s"
+msgstr "Edit user %s"
+
+msgid "缩略名已经存在"
+msgstr "Slug already exists"
+
+msgid "网站外观"
+msgstr "Site appearance"
+
+msgid "网站概要"
+msgstr "Site summary"
+
+msgid "美国丹佛时间 (GMT -7)"
+msgstr "Denver time (GMT -7)"
+
+msgid "美国旧金山时间 (GMT -8)"
+msgstr "San Francisco time (GMT -8)"
+
+msgid "聚合全文输出"
+msgstr "Feed full-text output"
+
+msgid "聚合页不存在"
+msgstr "Feed page does not exist"
+
+msgid "自动保存"
+msgstr "Auto save"
+
+msgid "自动保存功能可以更好地保护你的文章不会丢失."
+msgstr "The auto-save feature better protects your posts from being lost."
+
+msgid "自定义文章路径"
+msgstr "Custom post path"
+
+msgid "自定义链接与现有规则存在冲突! 它可能影响解析效率, 建议你重新分配一个规则."
+msgstr "The custom link conflicts with an existing rule! It may affect parsing efficiency; please assign a different rule."
+
+msgid "艾尼威托克岛 (GMT -12)"
+msgstr "Eniwetok Island (GMT -12)"
+
+msgid "草稿 \"%s\" 已经被保存"
+msgstr "Draft \"%s\" has been saved"
+
+msgid "草稿已经被删除"
+msgstr "Draft deleted"
+
+msgid "莫斯科时间 伊拉克,埃塞俄比亚,马达加斯加 (GMT +3)"
+msgstr "Moscow time, Iraq, Ethiopia, Madagascar (GMT +3)"
+
+msgid "获取评论失败"
+msgstr "Failed to retrieve comments"
+
+msgid "设置你经常使用的默认允许权限"
+msgstr "Set the default allowed permissions you frequently use"
+
+msgid "设置已经保存"
+msgstr "Settings saved"
+
+msgid "设置插件 %s"
+msgstr "Configure plugin %s"
+
+msgid "评论不存在"
+msgstr "Comment does not exist"
+
+msgid "评论列表数目"
+msgstr "Number of comments per list"
+
+msgid "评论已经被删除"
+msgstr "Comment deleted"
+
+msgid "评论已经被标记为垃圾"
+msgstr "Comment marked as spam"
+
+msgid "评论已经被标记为待审核"
+msgstr "Comment marked as pending"
+
+msgid "评论已经被通过"
+msgstr "Comment approved"
+
+msgid "评论提交"
+msgstr "Comment submitted"
+
+msgid "评论日期格式"
+msgstr "Comment date format"
+
+msgid "评论显示"
+msgstr "Comment display"
+
+msgid "评论来源页错误."
+msgstr "Comment referrer page error."
+
+msgid "评论者之前须有评论通过了审核"
+msgstr "Commenter must have a previously approved comment"
+
+msgid "评论者名称显示时自动加上其个人主页链接"
+msgstr "Automatically add the commenter's homepage link to their name when displayed"
+
+msgid "语言"
+msgstr "Language"
+
+msgid "请不要与系统中现有的用户名重复."
+msgstr "Please do not duplicate an existing username in the system."
+
+msgid "请不要与系统中现有的电子邮箱地址重复."
+msgstr "Please do not duplicate an existing email address in the system."
+
+msgid "请不要在关键词中使用特殊字符"
+msgstr "Please do not use special characters in keywords"
+
+msgid "请不要在分类名称中使用特殊字符"
+msgstr "Please do not use special characters in the category name"
+
+msgid "请不要在日期格式中使用特殊字符"
+msgstr "Please do not use special characters in the date format"
+
+msgid "请不要在昵称中使用特殊字符"
+msgstr "Please do not use special characters in the nickname"
+
+msgid "请不要在用户名中使用特殊字符"
+msgstr "Please do not use special characters in the username"
+
+msgid "请不要在站点名称中使用特殊字符"
+msgstr "Please do not use special characters in the site name"
+
+msgid "请不要在站点描述中使用特殊字符"
+msgstr "Please do not use special characters in the site description"
+
+msgid "请不要在缩略名中使用特殊字符"
+msgstr "Please do not use special characters in the slug"
+
+msgid "请不要标签名称中使用特殊字符"
+msgstr "Please do not use special characters in the tag name"
+
+msgid "请以半角逗号 \",\" 分割多个关键字."
+msgstr "Separate multiple keywords with a half-width comma \",\" ."
+
+msgid "请先升级至版本 %s"
+msgstr "Please upgrade to version %s first"
+
+msgid "请参考 <a href=\"https://www.php.net/manual/zh/function.date.php\">PHP 日期格式写法</a>."
+msgstr "Please refer to <a href=\"https://www.php.net/manual/zh/function.date.php\">PHP date format</a>."
+
+msgid "请在路径中至少包含上述的一项参数."
+msgstr "Please include at least one of the above parameters in the path."
+
+msgid "请填入一个数字"
+msgstr "Please enter a number"
+
+msgid "请填写一个合法的URL地址"
+msgstr "Please enter a valid URL"
+
+msgid "请填写站点名称"
+msgstr "Please enter the site name"
+
+msgid "请填写站点地址"
+msgstr "Please enter the site address"
+
+msgid "请填写需要合并到的标签"
+msgstr "Please enter the tag to merge into"
+
+msgid "请求的地址不存在"
+msgstr "The requested address does not exist"
+
+msgid "请确认你的密码, 与上面输入的密码保持一致."
+msgstr "Please confirm your password to match the one entered above."
+
+msgid "请调整你的目录权限, 或者手动创建一个.htaccess文件."
+msgstr "Please adjust your directory permissions, or manually create an .htaccess file."
+
+msgid "请输入密码访问"
+msgstr "Please enter the password to access"
+
+msgid "请选择需要合并的分类"
+msgstr "Please select the category to merge"
+
+msgid "软件名称"
+msgstr "Software name"
+
+msgid "软件版本"
+msgstr "Software version"
+
+msgid "较新的"
+msgstr "Newer"
+
+msgid "较旧的"
+msgstr "Older"
+
+msgid "返回父级分类"
+msgstr "Back to parent category"
+
+msgid "返回父级页面"
+msgstr "Back to parent page"
+
+msgid "这个目标地址不存在"
+msgstr "This target address does not exist"
+
+msgid "这是一个默认的格式,当你在模板中调用显示评论日期方法时, 如果没有指定日期格式, 将按照此格式输出."
+msgstr "This is a default format; when you call the comment date display method in a template without specifying a date format, it will be output in this format."
+
+msgid "这是标签在站点中显示的名称.可以使用中文,如 \"地球\"."
+msgstr "This is the name displayed for the tag on the site. Chinese is allowed, e.g. \"地球\"."
+
+msgid "选择一种合适的文章静态路径风格, 使得你的网站链接更加友好."
+msgstr "Choose a suitable post permalink style to make your site links more friendly."
+
+msgid "邮件地址"
+msgstr "Email address"
+
+msgid "邮箱地址不合法"
+msgstr "Email address is invalid"
+
+msgid "重写功能检测失败, 请检查你的服务器设置"
+msgstr "Rewrite detection failed; please check your server settings"
+
+msgid "阿拉斯加时间 (GMT -9)"
+msgstr "Alaska time (GMT -9)"
+
+msgid "非法的模板路径"
+msgstr "Illegal template path"
+
+msgid "页面 \"<a href=\"%s\">%s</a>\" 已经发布"
+msgstr "Page \"<a href=\"%s\">%s</a>\" has been published"
+
+msgid "页面已经被删除"
+msgstr "Page deleted"
+
+msgid "页面已经被标记为<strong>%s</strong>"
+msgstr "Page has been marked as <strong>%s</strong>"
+
+msgid "页面排序已经完成"
+msgstr "Page sorting complete"
+
+msgid "页面没找到"
+msgstr "Page not found"
+
+msgid "默认允许"
+msgstr "Default allow"
+
+msgid "默认的用户评论不允许填写任何的HTML标签, 你可以在这里填写允许使用的HTML标签."
+msgstr "By default, user comments cannot include any HTML tags; you can specify the allowed HTML tags here."
+
+msgid "默认风格"
+msgstr "Default style"

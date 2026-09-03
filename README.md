@@ -1,5 +1,7 @@
 # BooAdmin Theme for Typecho
 
+> 🌐 语言：[中文](README.md) · [English](README.EN.md) · [日本語](README.JA.md.md)
+
 > **高效 · 现代 · 极简**
 
 一款使用 TailwindCSS 精心重构的 Typecho 现代化后台主题。完全支持 Typecho 1.3.0，采用 GARFIELDTOM'S NEST CDN 进行资源加速分发，提供稳定且高效的加载体验。
