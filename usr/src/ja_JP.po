@@ -19,7 +19,7 @@ msgstr ""
 "X-Generator: Poedit 3.0\n"
 
 msgid "对应 _e() 当中的正文内容"
-msgstr "_e() 内の本文コンテンツに対応"
+msgstr "_e() 内の本文に対応する"
 
 msgid "符号 \"%s\" 表示标识转义"
 msgstr "記号 \"%s\" はエスケープシーケンスを示します。"
@@ -1458,282 +1458,1259 @@ msgstr "国内リポジトリ"
 msgid "支持 BooAdmin 开源维护"
 msgstr "BooAdmin のオープンソース保守を支援"
 
+msgid "%d年"
+msgstr "%d年"
+
+msgid "%d年%d月"
+msgstr "%d年%d月"
+
+msgid "%d年%d月%d日"
+msgstr "%d年%d月%d日"
+
+msgid "%s 的评论"
+msgstr "%s のコメント"
+
+msgid "%s 设置已经保存"
+msgstr "%s の設定を保存しました"
+
+msgid "%s的文章"
+msgstr "%s の投稿"
+
+msgid "%s的评论"
+msgstr "%sのコメント"
+
+msgid "&laquo;"
+msgstr "&laquo;"
+
+msgid "&raquo;"
+msgstr "&raquo;"
+
+msgid "<a href=\"%s\">%s</a> 已经被设为默认分类"
+msgstr "<a href=\"%s\">%s</a> はデフォルトのカテゴリーに設定されました"
+
+msgid "<a href=\"%s\">%s</a> 无法在此版本的typecho下正常工作"
+msgstr "<a href=\"%s\">%s</a> はこのバージョンの Typecho では正常に動作しません"
+
+msgid "G - 普通"
+msgstr "G - 一般"
+
+msgid "PG - 13岁以上"
+msgstr "PG - 13歳以上"
+
+msgid "PingBack已经存在"
+msgstr "Pingback は既に存在します"
+
+msgid "R - 17岁以上成人"
+msgstr "R - 17歳以上（成人）"
+
+msgid "X - 限制级"
+msgstr "X - 限制级"
+
+msgid "XMLRPC 接口"
+msgstr "XMLRPC インターフェース"
+
+msgid "Y年m月d日"
+msgstr "Y年m月d日"
+
+msgid "lang"
+msgstr "日本語"
+
+msgid "n月j日"
+msgstr "n月j日"
+
+msgid "wordpress风格"
+msgstr "WordPress スタイル"
+
+msgid "zh-CN"
+msgstr "zh-CN"
+
+msgid "一分钟前"
+msgstr "1分前"
+
+msgid "一天前"
+msgstr "1日前"
+
+msgid "一小时前"
+msgstr "1時間前"
+
+msgid "一旦你选择了某种链接风格请不要轻易修改它."
+msgstr "一度リンクスタイルを選択したら、安易に変更しないでください。"
+
+msgid "一秒前"
+msgstr "1秒前"
+
+msgid "不允许"
+msgstr "不許可"
+
+msgid "不同的用户组拥有不同的权限."
+msgstr "異なるユーザーグループは異なる権限を持ちます。"
+
+msgid "不启用"
+msgstr "無効にする"
+
+msgid "东京平壤时间 西伊里安,摩鹿加群岛 (GMT +9)"
+msgstr "東京・平壌時間 西イリアン、モルッカ諸島 (GMT +9)"
+
+msgid "东欧标准时间 布加勒斯特,塞浦路斯,希腊 (GMT +2)"
+msgstr "東欧標準時 ブカレスト、キプロス、ギリシャ (GMT +2)"
+
+msgid "东萨摩亚群岛 (GMT -11)"
+msgstr "東サモア諸島 (GMT -11)"
+
+msgid "两次输入的密码不一致"
+msgstr "入力された2つのパスワードが一致しません"
+
+msgid "个人主页地址"
+msgstr "個人ホームページのアドレス"
+
+msgid "个人主页地址最多包含255个字符"
+msgstr "個人ホームページのアドレスは最大255文字までです"
+
+msgid "个人主页地址格式错误"
+msgstr "個人ホームページのアドレス形式が正しくありません"
+
+msgid "个性化定义"
+msgstr "カスタム"
+
+msgid "中欧标准时间 阿姆斯特丹,荷兰,法国 (GMT +1)"
+msgstr "中央ヨーロッパ標準時 アムステルダム、オランダ、フランス (GMT +1)"
+
+msgid "为了便于记忆, 密码长度请不要超过十八位"
+msgstr "覚えやすいように、パスワードの長さは18文字以内にしてください"
+
+msgid "为了保证账户安全, 请输入至少六位的密码"
+msgstr "アカウントの安全のため、6文字以上のパスワードを入力してください"
+
+msgid "为此用户分配一个密码."
+msgstr "このユーザーにパスワードを割り当てます。"
+
+msgid "仅关闭 Pingback 接口"
+msgstr "Pingback インターフェースのみを閉じる"
+
+msgid "仅显示评论, 不显示 Pingback 和 Trackback"
+msgstr "コメントのみ表示し、Pingback と Trackback を非表示にする"
+
+msgid "仅输出摘要"
+msgstr "抜粋のみ出力"
+
+msgid "佛德尔群岛 亚速尔群岛,葡属几内亚 (GMT -1)"
+msgstr "アゾレス諸島、ポルトガル領ギニア (GMT -1)"
+
+msgid "作者不存在"
+msgstr "投稿者が存在しません"
+
+msgid "你确认删除文件 %s 吗?"
+msgstr "ファイル %s を削除してもよろしいですか？"
+
+msgid "使用 %s 页面作为首页"
+msgstr "%s ページをホームページとして使用する"
+
+msgid "使用 <a href=\"https://daringfireball.net/projects/markdown/\">Markdown</a> 语法能够使您的撰写过程更加简便直观."
+msgstr "Markdown を使用すると、<a href=\"https://daringfireball.net/projects/markdown/\">Markdown</a> 記法によって執筆がより簡単で直感的になります。"
+
+msgid "使用 Markdown 语法编辑和解析内容"
+msgstr "Markdown 記法でコンテンツを編集・解析する"
+
+msgid "保存设置"
+msgstr "設定を保存"
+
+msgid "修评论失败"
+msgstr "コメントの編集に失敗しました"
+
+msgid "允许"
+msgstr "許可"
+
+msgid "允许上传的文件类型"
+msgstr "アップロード可能なファイル形式"
+
+msgid "允许使用的HTML标签和属性"
+msgstr "許可する HTML タグと属性"
+
+msgid "允许访问者注册到你的网站, 默认的注册用户不享有任何写入权限."
+msgstr "訪問者によるサイトへの登録を許可します。登録ユーザーはデフォルトでは書き込み権限を持ちません。"
+
+msgid "全文输出"
+msgstr "全文出力"
+
+msgid "关键词"
+msgstr "キーワード"
+
+msgid "其他格式 %s"
+msgstr "その他の形式 %s"
+
+msgid "具体写法请参考 <a href=\"https://www.php.net/manual/zh/function.date.php\">PHP 日期格式写法</a>."
+msgstr "具体的な書き方は <a href=\"https://www.php.net/manual/zh/function.date.php\">PHP の日付形式</a> を参照してください。"
+
+msgid "具体的权限分配表请<a href=\"https://docs.typecho.org/develop/acl\">参考这里</a>."
+msgstr "権限割り当ての詳細は <a href=\"https://docs.typecho.org/develop/acl\">こちら</a> を参照してください。"
+
+msgid "内容不存在"
+msgstr "コンテンツが存在しません"
+
+msgid "内容被隐藏"
+msgstr "コンテンツは非表示です"
+
+msgid "出现在聚合中"
+msgstr "フィードに表示する"
+
+msgid "分类 <a href=\"%s\">%s</a> 已经被增加"
+msgstr "<a href=\"%s\">%s</a> が追加されました"
+
+msgid "分类 <a href=\"%s\">%s</a> 已经被更新"
+msgstr "<a href=\"%s\">%s</a> が更新されました"
+
+msgid "分类不存在"
+msgstr "カテゴリーが存在しません"
+
+msgid "分类主键不存在"
+msgstr "カテゴリーの主キーが存在しません"
+
+msgid "分类刷新已经完成"
+msgstr "カテゴリーの更新が完了しました"
+
+msgid "分类名称"
+msgstr "カテゴリー名"
+
+msgid "分类名称已经存在"
+msgstr "カテゴリー名は既に存在します"
+
+msgid "分类名称无法被转换为缩略名"
+msgstr "カテゴリー名をスラッグに変換できません"
+
+msgid "分类已经删除"
+msgstr "カテゴリーを削除しました"
+
+msgid "分类已经合并"
+msgstr "カテゴリーを統合しました"
+
+msgid "分类排序已经完成"
+msgstr "カテゴリーの並び替えが完了しました"
+
+msgid "分类描述"
+msgstr "カテゴリーの説明"
+
+msgid "分类缩略名"
+msgstr "カテゴリーのスラッグ"
+
+msgid "分类缩略名用于创建友好的链接形式, 建议使用字母, 数字, 下划线和横杠."
+msgstr "カテゴリーのスラッグはわかりやすいリンクを作成するために使われます。文字、数字、アンダースコア、ハイフンの使用をお勧めします。"
+
+msgid "分类路径"
+msgstr "カテゴリーパス"
+
+msgid "分类路径中没有包含 {mid} 或者 {slug} "
+msgstr "カテゴリーパスに {mid} または {slug} が含まれていません"
+
+msgid "刚刚"
+msgstr "たった今"
+
+msgid "创建新页面"
+msgstr "新規ページを作成"
+
+msgid "删除文件"
+msgstr "ファイルを削除"
+
+msgid "删除评论失败"
+msgstr "コメントの削除に失敗しました"
+
+msgid "删除评论成功"
+msgstr "コメントを削除しました"
+
+msgid "北京时间 香港,新加坡,越南 (GMT +8)"
+msgstr "北京時間 香港、シンガポール、ベトナム (GMT +8)"
+
+msgid "升级"
+msgstr "アップグレード"
+
+msgid "升级已经完成"
+msgstr "アップグレードが完了しました"
+
+msgid "升级程序"
+msgstr "アップグレードプログラム"
+
+msgid "博客关键字"
+msgstr "ブログのキーワード"
+
+msgid "博客地址"
+msgstr "ブログのアドレス"
+
+msgid "博客标题"
+msgstr "ブログのタイトル"
+
+msgid "博客首页地址"
+msgstr "ブログのホームページアドレス"
+
+msgid "取消回复"
+msgstr "返信をキャンセル"
+
+msgid "可以被引用"
+msgstr "引用を許可する"
+
+msgid "可以被评论"
+msgstr "コメントを許可する"
+
+msgid "可用参数: <code>{cid}</code> 日志 ID, <code>{slug}</code> 日志缩略名, <code>{category}</code> 分类, <code>{directory}</code> 多级分类, <code>{year}</code> 年, <code>{month}</code> 月, <code>{day}</code> 日"
+msgstr "利用可能なパラメータ: <code>{cid}</code> 投稿 ID、<code>{slug}</code> 投稿スラッグ、<code>{category}</code> カテゴリー、<code>{directory}</code> 階層カテゴリー、<code>{year}</code> 年、<code>{month}</code> 月、<code>{day}</code> 日"
+
+msgid "可用参数: <code>{cid}</code> 页面 ID, <code>{slug}</code> 页面缩略名, <code>{directory}</code> 多级页面"
+msgstr "利用可能なパラメータ: <code>{cid}</code> ページ ID、<code>{slug}</code> ページスラッグ、<code>{directory}</code> 階層ページ"
+
+msgid "可用参数: <code>{mid}</code> 分类 ID, <code>{slug}</code> 分类缩略名, <code>{directory}</code> 多级分类"
+msgstr "利用可能なパラメータ: <code>{mid}</code> カテゴリー ID、<code>{slug}</code> カテゴリースラッグ、<code>{directory}</code> 階層カテゴリー"
+
+msgid "合并到的标签名不合法"
+msgstr "統合先のタグ名が不正です"
+
+msgid "同一 IP 发布评论的时间间隔限制为 %s 分钟"
+msgstr "同じ IP からのコメント間隔の制限は %s 分です"
+
+msgid "同时将文章列表页路径更改为 %s"
+msgstr "同時に投稿一覧ページのパスを %s に変更する"
+
+msgid "启用 <a href=\"https://gravatar.com\">Gravatar</a> 头像服务, 最高显示评级为 %s 的头像"
+msgstr "Gravatar アバターサービスを有効にし、評価 %s までのアバターを表示します"
+
+msgid "启用分页, 并且每页显示 %s 篇评论, 在列出时将 %s 作为默认显示"
+msgstr "ページネーションを有効にし、1ページあたり %s 件のコメントを表示し、一覧では %s をデフォルト表示とします"
+
+msgid "启用评论回复, 以 %s 层作为每个评论最多的回复层数"
+msgstr "コメントの返信を有効にし、各コメントの最大返信階層を %s 階とします"
+
+msgid "回复评论失败"
+msgstr "コメントへの返信に失敗しました"
+
+msgid "图片文件"
+msgstr "画像ファイル"
+
+msgid "在 XMLRPC 接口中使用 Markdown 语法"
+msgstr "XMLRPC インターフェースで Markdown 記法を使用する"
+
+msgid "在文章发布 %s 天以后自动关闭评论"
+msgstr "投稿の公開から %s 日後にコメントを自動的に締め切る"
+
+msgid "在某些主题中这个格式可能不会生效, 因为主题作者可以自定义日期格式."
+msgstr "テーマ作者が日付形式をカスタマイズできるため、一部のテーマではこの形式が反映されない場合があります。"
+
+msgid "在评论中使用 Markdown 语法"
+msgstr "コメントで Markdown 記法を使用する"
+
+msgid "地址重写即 rewrite 功能是某些服务器软件提供的优化内部连接的功能."
+msgstr "アドレス書き換え（rewrite 機能）は、一部のサーバーソフトウェアが提供する内部リンクを最適化する機能です。"
+
+msgid "增加分类"
+msgstr "カテゴリーを追加"
+
+msgid "增加标签"
+msgstr "タグを追加"
+
+msgid "增加用户"
+msgstr "ユーザーを追加"
+
+msgid "墨西哥城时间 洪都拉斯,危地马拉,哥斯达黎加 (GMT -6)"
+msgstr "メキシコシティ時間 ホンジュラス、グアテマラ、コスタリカ (GMT -6)"
+
+msgid "备份文件上传失败"
+msgstr "バックアップファイルのアップロードに失敗しました"
+
+msgid "备份文件不存在"
+msgstr "バックアップファイルが存在しません"
+
+msgid "备份文件格式错误"
+msgstr "バックアップファイルの形式が正しくありません"
+
+msgid "夏威夷群岛 (GMT -10)"
+msgstr "ハワイ諸島 (GMT -10)"
+
+msgid "外观已经改变"
+msgstr "外観を変更しました"
+
+msgid "外观设置已经保存"
+msgstr "外観の設定を保存しました"
+
+msgid "外观配置功能不存在"
+msgstr "外観設定機能が存在しません"
+
+msgid "多媒体文件"
+msgstr "マルチメディアファイル"
+
+msgid "大西洋中部时间 格陵兰 (GMT -2)"
+msgstr "中部大西洋時間 グリーンランド (GMT -2)"
+
+msgid "如果你不希望在聚合中输出文章全文,请使用仅输出摘要选项."
+msgstr "フィードに投稿の全文を出力したくない場合は、抜粋のみ出力のオプションを使用してください。"
+
+msgid "如果你仍然想启用此功能, 请勾选这里"
+msgstr "それでもこの機能を有効にしたい場合は、こちらにチェックを入れてください"
+
+msgid "如果你将此项留空, 将默认使用用户名."
+msgstr "空欄にした場合は、デフォルトでユーザー名が使用されます。"
+
+msgid "密码已经成功修改"
+msgstr "パスワードを変更しました"
+
+msgid "对不起, 您的发言过于频繁, 请稍候再次发布."
+msgstr "申し訳ありませんが、投稿が頻繁すぎます。しばらくしてから再度投稿してください。"
+
+msgid "对不起,您输入的密码错误"
+msgstr "申し訳ありませんが、入力したパスワードが正しくありません"
+
+msgid "对不起,此内容的反馈被禁止."
+msgstr "申し訳ありませんが、このコンテンツのフィードバックは禁止されています。"
+
+msgid "对不起,此内容的引用被禁止."
+msgstr "申し訳ありませんが、このコンテンツのトラックバックは禁止されています。"
+
+msgid "对于完全支持 <a href=\"https://daringfireball.net/projects/markdown/\">Markdown</a> 语法写作的离线编辑器, 打开此选项后将避免内容被转换为 HTML."
+msgstr "Markdown 記法を完全にサポートするオフラインエディタ向けに、このオプションを有効にするとコンテンツが HTML に変換されるのを防ぎます。"
+
+msgid "对评论者个人主页链接使用 <a href=\"https://en.wikipedia.org/wiki/Nofollow\">nofollow 属性</a>"
+msgstr "コメント投稿者のホームページリンクに <a href=\"https://en.wikipedia.org/wiki/Nofollow\">nofollow 属性</a> を使用する"
+
+msgid "将 %s 的评论显示在前面"
+msgstr "%s のコメントを先頭に表示する"
+
+msgid "已发布"
+msgstr "公開済み"
+
+msgid "布宜诺斯艾利斯 乌拉圭,法属圭亚那 (GMT -3)"
+msgstr "ブエノスアイレス ウルグアイ、仏領ギアナ (GMT -3)"
+
+msgid "常用档案文件"
+msgstr "一般的なアーカイブファイル"
+
+msgid "建议使用特殊字符与字母、数字的混编样式,以增加系统安全性."
+msgstr "特殊文字と英数字を組み合わせることをお勧めします。システムのセキュリティを高めるためです。"
+
+msgid "开启反垃圾保护"
+msgstr "スパム対策を有効にする"
+
+msgid "当前地址 <strong>%s</strong> 与上述设定值不一致"
+msgstr "現在のアドレス <strong>%s</strong> は上記の設定値と一致しません"
+
+msgid "必须填写个人主页"
+msgstr "個人ホームページの入力は必須です"
+
+msgid "必须填写分类名称"
+msgstr "カテゴリー名の入力は必須です"
+
+msgid "必须填写密码"
+msgstr "パスワードの入力は必須です"
+
+msgid "必须填写文件标题"
+msgstr "ファイルのタイトル入力は必須です"
+
+msgid "必须填写标签名称"
+msgstr "タグ名の入力は必須です"
+
+msgid "必须填写用户名"
+msgstr "ユーザー名の入力は必須です"
+
+msgid "必须填写用户名称"
+msgstr "ユーザー表示名の入力は必須です"
+
+msgid "必须填写电子邮箱"
+msgstr "メールアドレスの入力は必須です"
+
+msgid "必须填写电子邮箱地址"
+msgstr "メールアドレスの入力は必須です"
+
+msgid "必须填写网址"
+msgstr "URL の入力は必須です"
+
+msgid "必须填写评论内容"
+msgstr "コメント内容の入力は必須です"
+
+msgid "必须填写邮箱"
+msgstr "メールアドレスの入力は必須です"
+
+msgid "恢复数据出现错误"
+msgstr "データの復元中にエラーが発生しました"
+
+msgid "恢复过程中遇到如下错误: %s"
+msgstr "復元中に次のエラーが発生しました: %s"
+
+msgid "悉尼关岛时间 塔斯马尼亚岛,新几内亚 (GMT +10)"
+msgstr "シドニー・グアム時間 タスマニア島、ニューギニア (GMT +10)"
+
+msgid "您所使用的用户名已经被注册,请登录后再次提交"
+msgstr "使用したユーザー名は既に登録されています。ログインしてから再度送信してください。"
+
+msgid "您的档案已经更新"
+msgstr "プロフィールを更新しました"
+
+msgid "您的评论正等待审核!"
+msgstr "コメントは承認待ちです！"
+
+msgid "您编辑的文件不存在"
+msgstr "編集したファイルが存在しません"
+
+msgid "您选择的风格不存在"
+msgstr "選択したスタイルが存在しません"
+
+msgid "惠灵顿时间 新西兰,斐济群岛 (GMT +12)"
+msgstr "ウェリントン時間 ニュージーランド、フィジー諸島 (GMT +12)"
+
+msgid "我们检测到你使用了apache服务器, 但是程序无法在根目录创建.htaccess文件, 这可能是产生这个错误的原因."
+msgstr "Apache サーバーを使用していることを検出しましたが、プログラムがルートディレクトリに .htaccess ファイルを作成できません。これがエラーの原因と考えられます。"
+
+msgid "所有垃圾评论已经被删除"
+msgstr "すべてのスパムコメントを削除しました"
+
+msgid "所有评论必须经过审核"
+msgstr "すべてのコメントは承認が必要です"
+
+msgid "所罗门群岛 库页岛 (GMT +11)"
+msgstr "ソロモン諸島、サハリン (GMT +11)"
+
+msgid "所选择的语言包不存在"
+msgstr "選択した言語パックが存在しません"
+
+msgid "打开"
+msgstr "開く"
+
+msgid "打开此功能可以让你的链接看上去完全是静态地址."
+msgstr "この機能を有効にすると、リンクが完全な静的アドレスのように見えます。"
+
+msgid "找不到内容"
+msgstr "コンテンツが見つかりません"
+
+msgid "按分类归档"
+msgstr "カテゴリー別アーカイブ"
+
+msgid "按日期归档"
+msgstr "日付別アーカイブ"
+
+msgid "描述"
+msgstr "説明"
+
+msgid "提交"
+msgstr "送信"
+
+msgid "提交修改"
+msgstr "変更を送信"
+
+msgid "插件%s的配置信息没有找到"
+msgstr "プラグイン %s の設定情報が見つかりません"
+
+msgid "插件不存在"
+msgstr "プラグインが存在しません"
+
+msgid "插件已经被启用"
+msgstr "プラグインを有効化しました"
+
+msgid "插件已经被禁用"
+msgstr "プラグインを無効化しました"
+
+msgid "插件设置已经保存"
+msgstr "プラグインの設定を保存しました"
+
+msgid "摘要的文字取决于你在文章中使用分隔符的位置."
+msgstr "抜粋の文字は、投稿内で区切り記号を配置した位置によって決まります。"
+
+msgid "数据恢复完成"
+msgstr "データの復元が完了しました"
+
+msgid "文件 %s 无法被写入"
+msgstr "ファイル %s を書き込めません"
+
+msgid "文件 %s 的更改已经保存"
+msgstr "ファイル %s の変更を保存しました"
+
+msgid "文件 <a href=\"%s\">%s</a> 已经被更新"
+msgstr "<a href=\"%s\">%s</a> が更新されました"
+
+msgid "文件不存在"
+msgstr "ファイルが存在しません"
+
+msgid "文件已经被删除"
+msgstr "ファイルを削除しました"
+
+msgid "文件标题无法被转换为缩略名"
+msgstr "ファイルのタイトルをスラッグに変換できません"
+
+msgid "文件缩略名用于创建友好的链接形式,建议使用字母,数字,下划线和横杠."
+msgstr "ファイルのスラッグはわかりやすいリンクを作成するために使われます。文字、数字、アンダースコア、ハイフンの使用をお勧めします。"
+
+msgid "文章 \"%s\" 等待审核"
+msgstr "投稿 \"%s\" は承認待ちです"
+
+msgid "文章 \"<a href=\"%s\">%s</a>\" 已经发布"
+msgstr "投稿 \"<a href=\"%s\">%s</a>\" を公開しました"
+
+msgid "文章不存在"
+msgstr "投稿が存在しません"
+
+msgid "文章列表数目"
+msgstr "投稿一覧の件数"
+
+msgid "文章已经被删除"
+msgstr "投稿を削除しました"
+
+msgid "文章已经被标记为<strong>%s</strong>"
+msgstr "投稿は <strong>%s</strong> としてマークされました"
+
+msgid "文章日期格式"
+msgstr "投稿の日付形式"
+
+msgid "文章缩略图"
+msgstr "投稿のサムネイル"
+
+msgid "新增 %s 的子分类"
+msgstr "%s の子カテゴリーを追加"
+
+msgid "新增 %s 的子页面"
+msgstr "%s の子ページを追加"
+
+msgid "新增分类"
+msgstr "カテゴリーを追加"
+
+msgid "新增用户"
+msgstr "ユーザーを追加"
+
+msgid "新德里时间 巴基斯坦,马尔代夫 (GMT +5)"
+msgstr "ニューデリー時間 パキスタン、モルディブ (GMT +5)"
+
+msgid "无法启用插件"
+msgstr "プラグインを有効化できません"
+
+msgid "无法登录, 密码错误"
+msgstr "ログインできません。パスワードが正しくありません"
+
+msgid "无法禁用插件"
+msgstr "プラグインを無効化できません"
+
+msgid "无法读取备份文件"
+msgstr "バックアップファイルを読み込めません"
+
+msgid "无法配置插件"
+msgstr "プラグインを設定できません"
+
+msgid "日期格式"
+msgstr "日付の形式"
+
+msgid "时区"
+msgstr "タイムゾーン"
+
+msgid "时间格式"
+msgstr "時刻の形式"
+
+msgid "昨天 %s"
+msgstr "昨日 %s"
+
+msgid "是否使用地址重写功能"
+msgstr "アドレス書き換え機能を使用するか"
+
+msgid "是否允许注册"
+msgstr "登録を許可するか"
+
+msgid "昵称已经存在"
+msgstr "ニックネームは既に存在します"
+
+msgid "显示"
+msgstr "表示"
+
+msgid "显示最新发布的文章"
+msgstr "最新の公開投稿を表示する"
+
+msgid "智利巴西 委内瑞拉,玻利维亚 (GMT -4)"
+msgstr "チリ・ブラジル ベネズエラ、ボリビア (GMT -4)"
+
+msgid "更新密码"
+msgstr "パスワードを更新"
+
+msgid "更新我的档案"
+msgstr "プロフィールを更新"
+
+msgid "曼谷雅加达 柬埔寨,苏门答腊,老挝 (GMT +7)"
+msgstr "バンコク・ジャカルタ カンボジア、スマトラ、ラオス (GMT +7)"
+
+msgid "最后一页"
+msgstr "最後のページ"
+
+msgid "未命名文档"
+msgstr "無題のドキュメント"
+
+msgid "未命名页面"
+msgstr "無題のページ"
+
+msgid "未归档文件 %s 已经被更新"
+msgstr "未分類ファイル %s を更新しました"
+
+msgid "未归档文件已经被清理"
+msgstr "未分類ファイルをクリーンアップしました"
+
+msgid "权限不足"
+msgstr "権限が不足しています"
+
+msgid "标准"
+msgstr "標準"
+
+msgid "标签 <a href=\"%s\">%s</a> 已经被增加"
+msgstr "<a href=\"%s\">%s</a> が追加されました"
+
+msgid "标签 <a href=\"%s\">%s</a> 已经被更新"
+msgstr "<a href=\"%s\">%s</a> が更新されました"
+
+msgid "标签不存在"
+msgstr "タグが存在しません"
+
+msgid "标签主键不存在"
+msgstr "タグの主キーが存在しません"
+
+msgid "标签刷新已经完成"
+msgstr "タグの更新が完了しました"
+
+msgid "标签名称"
+msgstr "タグ名"
+
+msgid "标签名称已经存在"
+msgstr "タグ名は既に存在します"
+
+msgid "标签名称无法被转换为缩略名"
+msgstr "タグ名をスラッグに変換できません"
+
+msgid "标签已经删除"
+msgstr "タグを削除しました"
+
+msgid "标签已经合并"
+msgstr "タグを統合しました"
+
+msgid "标签缩略名"
+msgstr "タグのスラッグ"
+
+msgid "标签缩略名用于创建友好的链接形式, 如果留空则默认使用标签名称."
+msgstr "タグのスラッグはわかりやすいリンクを作成するために使われます。空欄の場合はデフォルトでタグ名が使用されます。"
+
+msgid "格林威治(子午线)标准时间 (GMT)"
+msgstr "グリニッジ（子午線）標準時 (GMT)"
+
+msgid "检查评论来源页 URL 是否与文章链接一致"
+msgstr "コメントの参照元 URL が投稿のリンクと一致するか確認する"
+
+msgid "概要"
+msgstr "概要"
+
+msgid "欢迎"
+msgstr "ようこそ"
+
+msgid "欢迎使用"
+msgstr "ようこそ"
+
+msgid "此内容被密码保护"
+msgstr "このコンテンツはパスワードで保護されています"
+
+msgid "此分类将归档在您选择的父级分类下."
+msgstr "このカテゴリーは選択した親カテゴリーの下にアーカイブされます。"
+
+msgid "此功能开启不会影响以前没有使用 Markdown 语法编辑的内容."
+msgstr "この機能を有効にしても、以前に Markdown 記法を使わずに編集したコンテンツには影響しません。"
+
+msgid "此数目用于指定文章归档输出时每页显示的文章数目."
+msgstr "この数値は投稿アーカイブの1ページあたりの表示件数を指定します。"
+
+msgid "此数目用于指定显示在侧边栏中的文章列表数目."
+msgstr "この数値はサイドバーに表示する投稿一覧の件数を指定します。"
+
+msgid "此数目用于指定显示在侧边栏中的评论列表数目."
+msgstr "この数値はサイドバーに表示するコメント一覧の件数を指定します。"
+
+msgid "此文字用于描述分类, 在有的主题中它会被显示."
+msgstr "この文字はカテゴリーの説明で、一部のテーマで表示されます。"
+
+msgid "此文字用于描述文件,在有的主题中它会被显示."
+msgstr "この文字はファイルの説明で、一部のテーマで表示されます。"
+
+msgid "此格式用于指定显示在文章归档中的日期默认显示格式."
+msgstr "この形式は投稿アーカイブに表示される日付のデフォルト形式を指定します。"
+
+msgid "此用户名将作为用户登录时所用的名称."
+msgstr "このユーザー名はユーザーのログイン時に使用されます。"
+
+msgid "此用户的个人主页地址, 请用 <code>https://</code> 开头."
+msgstr "このユーザーのホームページアドレスは <code>https://</code> で始めてください。"
+
+msgid "每页文章数目"
+msgstr "1ページあたりの投稿数"
+
+msgid "比如: %s"
+msgstr "例: %s"
+
+msgid "没有分类被删除"
+msgstr "カテゴリーは削除されませんでした"
+
+msgid "没有垃圾评论被删除"
+msgstr "スパムコメントは削除されませんでした"
+
+msgid "没有文件被删除"
+msgstr "ファイルは削除されませんでした"
+
+msgid "没有文章被删除"
+msgstr "投稿は削除されませんでした"
+
+msgid "没有文章被标记"
+msgstr "投稿はマークされませんでした"
+
+msgid "没有未归档文件被清理"
+msgstr "未分類ファイルはクリーンアップされませんでした"
+
+msgid "没有标签被删除"
+msgstr "タグは削除されませんでした"
+
+msgid "没有用户被删除"
+msgstr "ユーザーは削除されませんでした"
+
+msgid "没有编辑权限"
+msgstr "編集権限がありません"
+
+msgid "没有草稿被删除"
+msgstr "下書きは削除されませんでした"
+
+msgid "没有获取评论的权限"
+msgstr "コメントを取得する権限がありません"
+
+msgid "没有评论被删除"
+msgstr "コメントは削除されませんでした"
+
+msgid "没有评论被标记为垃圾"
+msgstr "コメントはスパムとしてマークされませんでした"
+
+msgid "没有评论被标记为待审核"
+msgstr "コメントは承認待ちとしてマークされませんでした"
+
+msgid "没有评论被通过"
+msgstr "コメントは承認されませんでした"
+
+msgid "没有选择任何分类"
+msgstr "カテゴリーが選択されていません"
+
+msgid "没有选择任何备份文件"
+msgstr "バックアップファイルが選択されていません"
+
+msgid "没有选择任何标签"
+msgstr "タグが選択されていません"
+
+msgid "没有页面被删除"
+msgstr "ページは削除されませんでした"
+
+msgid "没有页面被标记"
+msgstr "ページはマークされませんでした"
+
+msgid "注册"
+msgstr "登録"
+
+msgid "注册到%s"
+msgstr "%s に登録"
+
+msgid "源地址服务器错误"
+msgstr "送信元アドレスのサーバーエラー"
+
+msgid "父级分类"
+msgstr "親カテゴリー"
+
+msgid "父级分类不存在"
+msgstr "親カテゴリーが存在しません"
+
+msgid "父级评论不存在"
+msgstr "親コメントが存在しません"
+
+msgid "独立页面"
+msgstr "個別ページ"
+
+msgid "独立页面路径"
+msgstr "個別ページのパス"
+
+msgid "独立页面路径中没有包含 {cid} 或者 {slug} "
+msgstr "個別ページのパスに {cid} または {slug} が含まれていません"
+
+msgid "用户 %s 已经被增加"
+msgstr "ユーザー %s を追加しました"
+
+msgid "用户 %s 已经被更新"
+msgstr "ユーザー %s を更新しました"
+
+msgid "用户 <strong>%s</strong> 已经成功注册, 密码为 <strong>%s</strong>"
+msgstr "ユーザー <strong>%s</strong> は正常に登録されました。パスワードは <strong>%s</strong> です"
+
+msgid "用户不存在"
+msgstr "ユーザーが存在しません"
+
+msgid "用户主键不存在"
+msgstr "ユーザーの主キーが存在しません"
+
+msgid "用户名已经存在"
+msgstr "ユーザー名は既に存在します"
+
+msgid "用户名或密码无效"
+msgstr "ユーザー名またはパスワードが無効です"
+
+msgid "用户名最多包含150个字符"
+msgstr "ユーザー名は最大150文字までです"
+
+msgid "用户名最多包含32个字符"
+msgstr "ユーザー名は最大32文字までです"
+
+msgid "用户名至少包含2个字符"
+msgstr "ユーザー名は最低2文字必要です"
+
+msgid "用户密码"
+msgstr "ユーザーパスワード"
+
+msgid "用户密码确认"
+msgstr "ユーザーパスワード（確認）"
+
+msgid "用户已经删除"
+msgstr "ユーザーを削除しました"
+
+msgid "用户昵称"
+msgstr "ユーザーニックネーム"
+
+msgid "用户昵称可以与用户名不同, 用于前台显示."
+msgstr "ユーザーニックネームはユーザー名と異なり、フロントエンドの表示に使われます。"
+
+msgid "用逗号 \",\" 将后缀名隔开, 例如: %s"
+msgstr "拡張子はカンマ \",\" で区切ってください。例: %s"
+
+msgid "电子邮箱地址将作为此用户的主要联系方式."
+msgstr "メールアドレスはこのユーザーの主な連絡手段となります。"
+
+msgid "电子邮箱地址已经存在"
+msgstr "メールアドレスは既に存在します"
+
+msgid "电子邮箱最多包含150个字符"
+msgstr "メールアドレスは最大150文字までです"
+
+msgid "电子邮箱最多包含64个字符"
+msgstr "メールアドレスは最大64文字までです"
+
+msgid "电子邮箱格式错误"
+msgstr "メールアドレスの形式が正しくありません"
+
+msgid "登录"
+msgstr "ログイン"
+
+msgid "登录到%s"
+msgstr "%s にログイン"
+
+msgid "登录地址"
+msgstr "ログインアドレス"
+
+msgid "目标地址禁止Ping"
+msgstr "対象アドレスへの Ping は禁止されています"
+
+msgid "直接调用 %s 模板文件"
+msgstr "%s テンプレートファイルを直接呼び出す"
+
+msgid "禁止访问"
+msgstr "アクセス禁止"
+
+msgid "禁止重复提交"
+msgstr "重複送信は禁止されています"
+
+msgid "科伦坡时间 孟加拉 (GMT +6)"
+msgstr "コロンボ時間 バングラデシュ (GMT +6)"
+
 msgid "站点名称"
 msgstr "サイト名"
 
-msgid "站点的名称将显示在网页的标题处."
-msgstr "サイト名はページのタイトルに表示されます。"
-
 msgid "站点地址"
-msgstr "サイト URL"
+msgstr "サイトアドレス"
 
 msgid "站点地址主要用于生成内容的永久链接."
-msgstr "サイトアドレスは主にコンテンツのパーマリンク生成に使用されます。"
+msgstr "サイトアドレスは主にコンテンツのパーマリンクを生成するために使われます。"
 
 msgid "站点描述"
 msgstr "サイトの説明"
 
 msgid "站点描述将显示在网页代码的头部."
-msgstr "サイトの説明はページのヘッダーに表示されます。"
+msgstr "サイトの説明はページコードの head セクションに表示されます。"
 
-msgid "关键词"
-msgstr "キーワード"
-
-msgid "请以半角逗号 \",\" 分割多个关键字."
-msgstr "複数のキーワードは半角カンマ「,」で区切ってください。"
-
-msgid "是否允许注册"
-msgstr "登録を許可する"
-
-msgid "不允许"
-msgstr "許可しない"
-
-msgid "允许"
-msgstr "許可する"
-
-msgid "允许访问者注册到你的网站, 默认的注册用户不享有任何写入权限."
-msgstr "訪問者がサイトに登録できるよう許可します。登録ユーザーは既定では書き込み権限を持ちません。"
-
-msgid "XMLRPC 接口"
-msgstr "XMLRPC インターフェース"
-
-msgid "仅关闭 Pingback 接口"
-msgstr "Pingback インターフェースのみを無効にする"
-
-msgid "打开"
-msgstr "開く"
-
-msgid "语言"
-msgstr "言語"
-
-msgid "时区"
-msgstr "タイムゾーン"
-
-msgid "允许上传的文件类型"
-msgstr "アップロード許可ファイル形式"
-
-msgid "图片文件"
-msgstr "画像ファイル"
-
-msgid "多媒体文件"
-msgstr "メディアファイル"
-
-msgid "常用档案文件"
-msgstr "一般的な文書ファイル"
-
-msgid "其他格式"
-msgstr "その他の形式"
-
-msgid "用逗号 \",\" 将后缀名隔开, 例如:"
-msgstr "拡張子はカンマ「,」で区切ってください。例:"
-
-msgid "保存设置"
-msgstr "設定を保存"
-
-msgid "北京时间 香港,新加坡,越南 (GMT +8)"
-msgstr "北京時間 香港、シンガポール、ベトナム (GMT +8)"
-
-msgid "评论日期格式"
-msgstr "コメントの日付形式"
-
-msgid "F jS, Y \\a\\t h:i a"
-msgstr "Y年n月j日 G:i"
-
-msgid "这是一个默认的格式,当你在模板中调用显示评论日期方法时, 如果没有指定日期格式, 将按照此格式输出."
-msgstr "これはデフォルトのフォーマットです。テンプレートでコメントの日付表示メソッドを呼び出す際に日付フォーマットを指定しなかった場合、このフォーマットで出力されます。"
-
-msgid "具体写法请参考 PHP 日期格式写法."
-msgstr "具体的な書き方は PHP の日付フォーマットの記法を参照してください。"
-
-msgid "评论列表数目"
-msgstr "コメントリストの件数"
-
-msgid "此数目用于指定显示在侧边栏中的评论列表数目."
-msgstr "この数はサイドバーに表示するコメントリストの件数を指定します。"
-
-msgid "评论显示"
-msgstr "コメント表示"
-
-msgid "仅显示评论, 不显示 Pingback 和 Trackback"
-msgstr "コメントのみを表示し、Pingback と Trackback を非表示にする"
-
-msgid "在评论中使用 Markdown 语法"
-msgstr "コメント内で Markdown 記法を使用する"
-
-msgid "评论者名称显示时自动加上其个人主页链接"
-msgstr "コメント投稿者の名前を表示する際に、自動的にその個人ページへのリンクを付加する"
-
-msgid "对评论者个人主页链接使用 nofollow 属性"
-msgstr "コメント投稿者の個人ページリンクに nofollow 属性を付与する"
-
-msgid "启用 Gravatar 头像服务, 最高显示评级为 %s 的头像"
-msgstr "Gravatar アバターサービスを有効化（最大評価 %s）"
-
-msgid "G - 普通"
-msgstr "G - 一般"
-
-msgid "启用分页, 并且每页显示 %s 篇评论, 在列出时将 %s 作为默认显示"
-msgstr "ページ送りを有効にし、1ページあたり %s 件のコメントを表示、一覧では %s をデフォルト表示とする"
-
-msgid "最后一页"
-msgstr "最後のページ"
-
-msgid "启用评论回复, 以 %s 层作为每个评论最多的回复层数"
-msgstr "コメント返信を有効にし、各コメントの最大返信階層数を %s 階層とする"
-
-msgid "将 %s 的评论显示在前面"
-msgstr "%s のコメントを前に表示する"
-
-msgid "较旧的"
-msgstr "古い"
-
-msgid "评论提交"
-msgstr "コメント送信"
-
-msgid "所有评论必须经过审核"
-msgstr "すべてのコメントは承認が必要です"
-
-msgid "评论者之前须有评论通过了审核"
-msgstr "コメント投稿者はあらかじめ承認されたコメントを持っている必要があります"
-
-msgid "必须填写邮箱"
-msgstr "メールアドレスは必須です"
-
-msgid "必须填写网址"
-msgstr "URL は必須です"
-
-msgid "检查评论来源页 URL 是否与文章链接一致"
-msgstr "コメントの参照元ページ URL が記事のリンクと一致するか確認する"
-
-msgid "开启反垃圾保护"
-msgstr "スパム対策保護を有効にする"
-
-msgid "在文章发布 %s 天以后自动关闭评论"
-msgstr "記事公開から %s 日後にコメントを自動的に締め切る"
-
-msgid "同一 IP 发布评论的时间间隔限制为 %s 分钟"
-msgstr "同一 IP からのコメント投稿間隔を %s 分に制限する"
-
-msgid "允许使用的HTML标签和属性"
-msgstr "使用を許可する HTML タグと属性"
-
-msgid "默认的用户评论不允许填写任何的HTML标签, 你可以在这里填写允许使用的HTML标签."
-msgstr "デフォルトではユーザーのコメントに HTML タグは一切使用できません。ここで使用を許可する HTML タグを指定できます。"
-
-msgid "比如: <a href=\"\"> <img src=\"\"> <blockquote>"
-msgstr "例: <a href=\"\"> <img src=\"\"> <blockquote>"
-
-msgid "文章日期格式"
-msgstr "投稿の日付形式"
-
-msgid "此格式用于指定显示在文章归档中的日期默认显示格式."
-msgstr "このフォーマットは、投稿アーカイブに表示される日付のデフォルトの表示形式を指定します。"
-
-msgid "在某些主题中这个格式可能不会生效, 因为主题作者可以自定义日期格式."
-msgstr "一部のテーマでは、テーマ作成者が日付フォーマットを独自に定義できるため、このフォーマットが反映されない場合があります。"
-
-msgid "请参考"
-msgstr "を参照してください"
-
-msgid "PHP 日期格式写法."
-msgstr "PHP の日付フォーマット記法。"
+msgid "站点的名称将显示在网页的标题处."
+msgstr "サイト名はページのタイトル部分に表示されます。"
 
 msgid "站点首页"
 msgstr "サイトのホームページ"
 
-msgid "显示最新发布的文章"
-msgstr "最新の公開済み投稿を表示する"
+msgid "第一页"
+msgstr "最初のページ"
 
-msgid "使用 %s 作为首页"
-msgstr "ホームページとして %s を使用する"
+msgid "第比利斯时间 阿曼,毛里塔尼亚,留尼汪岛 (GMT +4)"
+msgstr "トビリシ時間 オマーン、モーリタニア、レユニオン (GMT +4)"
 
-msgid "文章列表数目"
-msgstr "投稿リストの件数"
+msgid "管理"
+msgstr "管理"
 
-msgid "此数目用于指定显示在侧边栏中的文章列表数目."
-msgstr "この数はサイドバーに表示する投稿リストの件数を指定します。"
+msgid "管理 %s 的子分类"
+msgstr "%s の子カテゴリーを管理"
 
-msgid "每页文章数目"
-msgstr "1ページあたりの投稿数"
+msgid "管理 %s 的子页面"
+msgstr "%s の子ページを管理"
 
-msgid "此数目用于指定文章归档输出时每页显示的文章数目."
-msgstr "この数は、投稿アーカイブを出力する際に1ページあたりに表示する投稿数を指定します。"
+msgid "管理区域的地址"
+msgstr "管理領域のアドレス"
+
+msgid "纽约渥太华 古巴,哥伦比亚,牙买加 (GMT -5)"
+msgstr "ニューヨーク・オタワ キューバ、コロンビア、ジャマイカ (GMT -5)"
+
+msgid "编辑 %s"
+msgstr "%s を編集"
+
+msgid "编辑分类"
+msgstr "カテゴリーを編集"
+
+msgid "编辑分类 %s"
+msgstr "カテゴリー %s を編集"
+
+msgid "编辑文件 %s"
+msgstr "ファイル %s を編集"
+
+msgid "编辑标签"
+msgstr "タグを編集"
+
+msgid "编辑标签 %s"
+msgstr "タグ %s を編集"
+
+msgid "编辑用户"
+msgstr "ユーザーを編集"
+
+msgid "编辑用户 %s"
+msgstr "ユーザー %s を編集"
+
+msgid "缩略名已经存在"
+msgstr "スラッグは既に存在します"
+
+msgid "网站外观"
+msgstr "サイトの外観"
+
+msgid "网站概要"
+msgstr "サイトの概要"
+
+msgid "美国丹佛时间 (GMT -7)"
+msgstr "アメリカ・デンバー時間 (GMT -7)"
+
+msgid "美国旧金山时间 (GMT -8)"
+msgstr "アメリカ・サンフランシスコ時間 (GMT -8)"
 
 msgid "聚合全文输出"
-msgstr "フィードでの全文出力"
+msgstr "フィード全文出力"
 
-msgid "仅输出摘要"
-msgstr "抜粋のみ"
+msgid "聚合页不存在"
+msgstr "フィードページが存在しません"
 
-msgid "全文输出"
-msgstr "全文"
+msgid "自动保存"
+msgstr "自動保存"
 
-msgid "如果你不希望在聚合中输出文章全文,请使用仅输出摘要选项."
-msgstr "フィードに投稿の全文を出力したくない場合は、抜粋のみのオプションを使用してください。"
-
-msgid "摘要的文字取决于你在文章中使用分隔符的位置."
-msgstr "抜粋の文字は、投稿内で区切り記号を配置した位置によって決まります。"
-
-msgid "是否使用地址重写功能"
-msgstr "アドレス書き換え機能を使用するか"
-
-msgid "不启用"
-msgstr "無効にする"
-
-msgid "地址重写即 rewrite 功能是某些服务器软件提供的优化内部连接的功能."
-msgstr "アドレス書き換え（rewrite 機能）は、一部のサーバーソフトウェアが提供する内部リンクを最適化する機能です。"
-
-msgid "打开此功能可以让你的链接看上去完全是静态地址."
-msgstr "この機能を有効にすると、リンクが完全な静的アドレスのように見えるようになります。"
+msgid "自动保存功能可以更好地保护你的文章不会丢失."
+msgstr "自動保存機能は投稿の消失を防ぐために役立ちます。"
 
 msgid "自定义文章路径"
 msgstr "カスタム投稿パス"
 
-msgid "默认风格"
-msgstr "デフォルトスタイル"
+msgid "自定义链接与现有规则存在冲突! 它可能影响解析效率, 建议你重新分配一个规则."
+msgstr "カスタムリンクが既存のルールと競合しています！解析効率に影響する可能性があるため、別のルールを割り当てることをお勧めします。"
 
-msgid "wordpress风格"
-msgstr "WordPress スタイル"
+msgid "艾尼威托克岛 (GMT -12)"
+msgstr "エニウェトク島 (GMT -12)"
 
-msgid "按日期归档"
-msgstr "日付別アーカイブ"
+msgid "草稿 \"%s\" 已经被保存"
+msgstr "下書き \"%s\" を保存しました"
 
-msgid "按分类归档"
-msgstr "カテゴリ別アーカイブ"
+msgid "草稿已经被删除"
+msgstr "下書きを削除しました"
 
-msgid "个性化定义"
-msgstr "カスタム"
+msgid "莫斯科时间 伊拉克,埃塞俄比亚,马达加斯加 (GMT +3)"
+msgstr "モスクワ時間 イラク、エチオピア、マダガスカル (GMT +3)"
 
-msgid "可用参数: "
-msgstr "利用可能なパラメータ: "
+msgid "获取评论失败"
+msgstr "コメントの取得に失敗しました"
 
-msgid "日志 ID,"
-msgstr "投稿 ID,"
+msgid "设置你经常使用的默认允许权限"
+msgstr "よく使うデフォルトの許可権限を設定する"
 
-msgid "日志缩略名,"
-msgstr "投稿スラッグ,"
+msgid "设置已经保存"
+msgstr "設定を保存しました"
 
-msgid "分类,"
-msgstr "カテゴリー,"
+msgid "设置插件 %s"
+msgstr "プラグイン %s を設定"
 
-msgid "多级分类,"
-msgstr "階層カテゴリ,"
+msgid "评论不存在"
+msgstr "コメントが存在しません"
 
-msgid "年,"
-msgstr "年,"
+msgid "评论列表数目"
+msgstr "コメント一覧の件数"
 
-msgid "月,"
-msgstr "月,"
+msgid "评论已经被删除"
+msgstr "コメントを削除しました"
+
+msgid "评论已经被标记为垃圾"
+msgstr "コメントをスパムとしてマークしました"
+
+msgid "评论已经被标记为待审核"
+msgstr "コメントを承認待ちとしてマークしました"
+
+msgid "评论已经被通过"
+msgstr "コメントを承認しました"
+
+msgid "评论提交"
+msgstr "コメント送信"
+
+msgid "评论日期格式"
+msgstr "コメントの日付形式"
+
+msgid "评论显示"
+msgstr "コメント表示"
+
+msgid "评论来源页错误."
+msgstr "コメントの参照元ページエラー。"
+
+msgid "评论者之前须有评论通过了审核"
+msgstr "コメント投稿者は過去に承認されたコメントが必要です"
+
+msgid "评论者名称显示时自动加上其个人主页链接"
+msgstr "コメント投稿者名の表示時に、そのホームページリンクを自動的に付加する"
+
+msgid "语言"
+msgstr "言語"
+
+msgid "请不要与系统中现有的用户名重复."
+msgstr "システム内の既存のユーザー名と重複しないでください。"
+
+msgid "请不要与系统中现有的电子邮箱地址重复."
+msgstr "システム内の既存のメールアドレスと重複しないでください。"
+
+msgid "请不要在关键词中使用特殊字符"
+msgstr "キーワードに特殊文字を使用しないでください"
+
+msgid "请不要在分类名称中使用特殊字符"
+msgstr "カテゴリー名に特殊文字を使用しないでください"
+
+msgid "请不要在日期格式中使用特殊字符"
+msgstr "日付形式に特殊文字を使用しないでください"
+
+msgid "请不要在昵称中使用特殊字符"
+msgstr "ニックネームに特殊文字を使用しないでください"
+
+msgid "请不要在用户名中使用特殊字符"
+msgstr "ユーザー名に特殊文字を使用しないでください"
+
+msgid "请不要在站点名称中使用特殊字符"
+msgstr "サイト名に特殊文字を使用しないでください"
+
+msgid "请不要在站点描述中使用特殊字符"
+msgstr "サイトの説明に特殊文字を使用しないでください"
+
+msgid "请不要在缩略名中使用特殊字符"
+msgstr "スラッグに特殊文字を使用しないでください"
+
+msgid "请不要标签名称中使用特殊字符"
+msgstr "タグ名に特殊文字を使用しないでください"
+
+msgid "请以半角逗号 \",\" 分割多个关键字."
+msgstr "複数のキーワードは半角カンマ \",\" で区切ってください。"
+
+msgid "请先升级至版本 %s"
+msgstr "まずバージョン %s にアップグレードしてください"
+
+msgid "请参考 <a href=\"https://www.php.net/manual/zh/function.date.php\">PHP 日期格式写法</a>."
+msgstr "次を参照してください <a href=\"https://www.php.net/manual/zh/function.date.php\">PHP の日付形式</a>。"
+
+msgid "请在路径中至少包含上述的一项参数."
+msgstr "パスには上記のパラメータのいずれかを少なくとも1つ含めてください。"
+
+msgid "请填入一个数字"
+msgstr "数値を入力してください"
+
+msgid "请填写一个合法的URL地址"
+msgstr "正しい URL を入力してください"
+
+msgid "请填写站点名称"
+msgstr "サイト名を入力してください"
+
+msgid "请填写站点地址"
+msgstr "サイトアドレスを入力してください"
+
+msgid "请填写需要合并到的标签"
+msgstr "統合先のタグを入力してください"
+
+msgid "请求的地址不存在"
+msgstr "要求されたアドレスが存在しません"
+
+msgid "请确认你的密码, 与上面输入的密码保持一致."
+msgstr "上で入力したパスワードと一致するよう、パスワードを確認してください。"
+
+msgid "请调整你的目录权限, 或者手动创建一个.htaccess文件."
+msgstr "ディレクトリの権限を調整するか、.htaccess ファイルを手動で作成してください。"
+
+msgid "请输入密码访问"
+msgstr "アクセスするにはパスワードを入力してください"
+
+msgid "请选择需要合并的分类"
+msgstr "統合するカテゴリーを選択してください"
+
+msgid "软件名称"
+msgstr "ソフトウェア名"
+
+msgid "软件版本"
+msgstr "ソフトウェアバージョン"
+
+msgid "较新的"
+msgstr "新しい順"
+
+msgid "较旧的"
+msgstr "古い順"
+
+msgid "返回父级分类"
+msgstr "親カテゴリーに戻る"
+
+msgid "返回父级页面"
+msgstr "親ページに戻る"
+
+msgid "这个目标地址不存在"
+msgstr "この対象アドレスは存在しません"
+
+msgid "这是一个默认的格式,当你在模板中调用显示评论日期方法时, 如果没有指定日期格式, 将按照此格式输出."
+msgstr "これはデフォルトの形式です。テンプレートでコメントの日付表示メソッドを呼び出す際に日付形式を指定しなかった場合、この形式で出力されます。"
+
+msgid "这是标签在站点中显示的名称.可以使用中文,如 \"地球\"."
+msgstr "これはサイトに表示されるタグの名前です。中国語（例: \"地球\"）も使用できます。"
 
 msgid "选择一种合适的文章静态路径风格, 使得你的网站链接更加友好."
 msgstr "サイトのリンクをより分かりやすくするため、適切な投稿パーマリンクスタイルを選択してください。"
 
-msgid "一旦你选择了某种链接风格请不要轻易修改它."
-msgstr "一度リンクスタイルを選択したら、安易に変更しないでください。"
+msgid "邮件地址"
+msgstr "メールアドレス"
 
-msgid "独立页面路径"
-msgstr "個別ページパス"
+msgid "邮箱地址不合法"
+msgstr "メールアドレスが不正です"
 
-msgid "分类路径"
-msgstr "カテゴリパス"
+msgid "重写功能检测失败, 请检查你的服务器设置"
+msgstr "リライト機能の検出に失敗しました。サーバー設定を確認してください"
 
+msgid "阿拉斯加时间 (GMT -9)"
+msgstr "アラスカ時間 (GMT -9)"
+
+msgid "非法的模板路径"
+msgstr "不正なテンプレートパス"
+
+msgid "页面 \"<a href=\"%s\">%s</a>\" 已经发布"
+msgstr "ページ \"<a href=\"%s\">%s</a>\" を公開しました"
+
+msgid "页面已经被删除"
+msgstr "ページを削除しました"
+
+msgid "页面已经被标记为<strong>%s</strong>"
+msgstr "ページは <strong>%s</strong> としてマークされました"
+
+msgid "页面排序已经完成"
+msgstr "ページの並び替えが完了しました"
+
+msgid "页面没找到"
+msgstr "ページが見つかりません"
+
+msgid "默认允许"
+msgstr "デフォルト許可"
+
+msgid "默认的用户评论不允许填写任何的HTML标签, 你可以在这里填写允许使用的HTML标签."
+msgstr "デフォルトではユーザーのコメントに HTML タグは含められません。ここで許可する HTML タグを指定できます。"
+
+msgid "默认风格"
+msgstr "デフォルトスタイル"
