@@ -15,11 +15,22 @@
 (function () {
     const textarea = $('#text');
 
+    // 转义 HTML 特殊字符：文件名或 URL 可能含引号、尖括号，
+    // 直接拼接会破坏属性结构并造成注入，插入编辑器前必须先转义
+    function escapeHtmlAttr (str) {
+        return String(str === undefined || str === null ? '' : str)
+            .replace(/&/g, '&amp;')
+            .replace(/</g, '&lt;')
+            .replace(/>/g, '&gt;')
+            .replace(/"/g, '&quot;')
+            .replace(/'/g, '&#39;');
+    }
+
     // 原始的插入图片和文件
     Typecho.insertFileToEditor = function (file, url, isImage) {
         const sel = textarea.getSelection(),
-            html = isImage ? '<img src="' + url + '" alt="' + file + '" />'
-                : '<a href="' + url + '">' + file + '</a>',
+            html = isImage ? '<img src="' + escapeHtmlAttr(url) + '" alt="' + escapeHtmlAttr(file) + '" />'
+                : '<a href="' + escapeHtmlAttr(url) + '">' + escapeHtmlAttr(file) + '</a>',
             offset = (sel ? sel.start : 0) + html.length;
 
         textarea.replaceSelection(html);
@@ -287,6 +298,18 @@ $(document).ready(function () {
         Typecho.savePost();
     });
 
+    // 转义 markdown 链接文本中的方括号，避免被提前闭合
+    function escapeMarkdownText (text) {
+        return String(text === undefined || text === null ? '' : text).replace(/([\\\[\]])/g, '\\$1');
+    }
+
+    // 转义 markdown URL 中的括号与空白，避免破坏链接语法
+    function escapeMarkdownUrl (url) {
+        return String(url === undefined || url === null ? '' : url)
+            .replace(/([\\()])/g, '\\$1')
+            .replace(/\s/g, '%20');
+    }
+
     function initMarkdown() {
         editor.run();
 
@@ -297,7 +320,9 @@ $(document).ready(function () {
             // 如果 skipDialog 为 true，直接插入，不弹出对话框
             if (skipDialog) {
                 const sel = textarea.getSelection(),
-                    markdown = isImage ? '![' + file + '](' + url + ')' : '[' + file + '](' + url + ')',
+                    markdown = isImage
+                        ? '![' + escapeMarkdownText(file) + '](' + escapeMarkdownUrl(url) + ')'
+                        : '[' + escapeMarkdownText(file) + '](' + escapeMarkdownUrl(url) + ')',
                     offset = (sel ? sel.start : 0) + markdown.length;
 
                 // 保存当前滚动位置
