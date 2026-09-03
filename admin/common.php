@@ -4,7 +4,7 @@ if (!defined('__DIR__')) {
 }
 
 define('__TYPECHO_ADMIN__', true);
-define('BOOADMIN_VERSION', '1.3.2');
+define('BOOADMIN_VERSION', '1.3.3-rc1');
 
 /** 载入配置文件 */
 if (!defined('__TYPECHO_ROOT_DIR__') && !@include_once __DIR__ . '/../config.inc.php') {

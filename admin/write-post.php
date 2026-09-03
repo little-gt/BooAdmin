@@ -107,7 +107,7 @@ $post = \Widget\Contents\Post\Edit::alloc()->prepare();
                 </div>
 
                 <!-- Sidebar Options -->
-                <div class="lg:w-96 flex-shrink-0 flex flex-col">
+                <div id="write-sidebar" class="lg:w-96 flex-shrink-0 flex flex-col">
                     <!-- Tabs Header -->
                     <div class="flex items-center space-x-1 mb-4 typecho-option-tabs bg-gray-100 p-1 select-none">
                          <button type="button" class="flex-1 py-2 text-sm font-medium text-discord-text bg-white focus:outline-none transition-all duration-200" data-target="#tab-advance"><?php _e('设置'); ?></button>

@@ -265,18 +265,72 @@ $(document).ready(function () {
     <?php \Typecho\Plugin::factory('admin/editor-js.php')->call('markdownEditor', $content); ?>
 
     let th = textarea.height();
-    const uploadBtn = $('<button type="button" id="btn-fullscreen-upload" class="btn btn-link">'
+    // 全屏模式下的附件侧边栏
+    // 复用页面已有的上传面板（#tab-files），进入全屏时挂到 body 以免受右侧栏隐藏影响，
+    // 退出全屏时放回原位。上传 / 插入逻辑（file-upload-js.php）保持不变。
+    const uploadBtn = $('<button type="button" id="btn-fullscreen-upload" class="btn btn-link" '
+            + 'title="<?php _e('附件'); ?>" aria-label="<?php _e('附件'); ?>">'
             + '<i class="i-upload"><?php _e('附件'); ?></i></button>')
-            .prependTo('.submit .right')
-            .click(function() {
-                $('a', $('.typecho-option-tabs li').not('.active')).trigger('click');
+            .appendTo('#wmd-button-bar')
+            .click(function () {
+                const $files = $('#tab-files');
+                if ($files.length === 0) {
+                    return false;
+                }
+                // 已展开则收起，否则展开为侧边栏
+                if ($files.hasClass('fs-open')) {
+                    closeFullscreenFiles();
+                } else {
+                    openFullscreenFiles();
+                }
                 return false;
             });
 
-    $('.typecho-option-tabs li').click(function () {
-        uploadBtn.find('i').toggleClass('i-upload-active',
-            $('#tab-files-btn', this).length > 0);
-    });
+    function openFullscreenFiles () {
+        $('#tab-files').addClass('fs-open');
+        uploadBtn.find('i').addClass('i-upload-active');
+    }
+
+    function closeFullscreenFiles () {
+        $('#tab-files').removeClass('fs-open');
+        uploadBtn.find('i').removeClass('i-upload-active');
+    }
+
+    // 进入全屏：把附件面板移到 body 成为独立侧边栏，并补一个带关闭按钮的头部
+    function attachFullscreenFiles () {
+        const $files = $('#tab-files');
+        if ($files.length === 0) {
+            return;
+        }
+        // 仅首次记录原位，供退出全屏时还原
+        if (!$files.data('fs-origin')) {
+            $files.data('fs-origin', $files.parent());
+        }
+        if ($files.find('.fs-files-header').length === 0) {
+            $('<div class="fs-files-header"></div>')
+                .append($('<span><?php _e('附件'); ?></span>'))
+                .append($('<button type="button" class="fs-files-close" aria-label="<?php _e('关闭'); ?>">'
+                        + '<i class="fas fa-times"></i></button>')
+                    .click(closeFullscreenFiles))
+                .prependTo($files);
+        }
+        // 挂到 body，避免被右侧栏的隐藏状态影响
+        $files.appendTo(document.body);
+    }
+
+    // 退出全屏：收起侧边栏并放回原位
+    function detachFullscreenFiles () {
+        const $files = $('#tab-files');
+        if ($files.length === 0) {
+            return;
+        }
+        $files.removeClass('fs-open');
+        uploadBtn.find('i').removeClass('i-upload-active');
+        const origin = $files.data('fs-origin');
+        if (origin && origin.length > 0) {
+            $files.appendTo(origin);
+        }
+    }
 
     // 进入全屏：可用高度由调用方决定，两个全屏钩子共用，避免重复实现
     function applyFullscreenHeight (getViewportHeight) {
@@ -295,16 +349,19 @@ $(document).ready(function () {
         applyFullscreenHeight(function () {
             return $(window).height();
         });
+        attachFullscreenFiles();
     });
 
     editor.hooks.chain('enterFullScreen', function () {
         applyFullscreenHeight(function () {
             return window.screen.height;
         });
+        attachFullscreenFiles();
     });
 
     editor.hooks.chain('exitFullScreen', function () {
         $(document.body).removeClass('fullscreen');
+        detachFullscreenFiles();
         textarea.height(th);
         // 清除内联高度，交回样式表控制
         preview.css('height', '');

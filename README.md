@@ -4,9 +4,9 @@
 
 一款使用 TailwindCSS 精心重构的 Typecho 现代化后台主题。完全支持 Typecho 1.3.0，采用 GARFIELDTOM'S NEST CDN 进行资源加速分发，提供稳定且高效的加载体验。
 
-![BooAdmin](https://img.shields.io/badge/BooAdmin-v1.3.2-blue?style=for-the-badge)
+![BooAdmin](https://img.shields.io/badge/BooAdmin-v1.3.3--rc1-blue?style=for-the-badge)
 ![License](https://img.shields.io/badge/License-GPLv3-blue?style=for-the-badge)
-![LTS](https://img.shields.io/badge/Status-Stable-blue?style=for-the-badge)
+![LTS](https://img.shields.io/badge/Status-Preview-blue?style=for-the-badge)
 
 ![登录页面](https://cnb.cool/little-gt/BooAdmin/-/git/raw/main/screenshot/screenshot0.png)
 
@@ -84,6 +84,8 @@
 
 ### 撰写文章
 <img src="https://cnb.cool/little-gt/BooAdmin/-/git/raw/main/screenshot/dark/screenshot2.png" alt="深色模式撰写文章" style="width: 100%;">
+
+<img src="https://cnb.cool/little-gt/BooAdmin/-/git/raw/main/screenshot/dark/screenshot7.png" alt="深色模式全屏模式" style="width: 100%;">
 
 ### 管理文章
 <img src="https://cnb.cool/little-gt/BooAdmin/-/git/raw/main/screenshot/dark/screenshot3.png" alt="深色模式管理文章" style="width: 100%;">
