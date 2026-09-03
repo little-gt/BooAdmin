@@ -273,8 +273,10 @@ $(document).ready(function() {
 
         var $footer = $('<div class="px-6 py-4 border-t border-gray-200 bg-white flex items-center justify-between"></div>');
         var $urlWrap = $('<div class="flex-1 mr-4"></div>');
+        // 必须用 attr 而非 val()：$body.html() 走 innerHTML 序列化，
+        // val() 只改 property 不会被输出，会导致预览里的链接显示为空
         $('<input type="text" class="w-full px-3 py-2 bg-gray-100 border border-gray-300 text-sm text-gray-800 focus:outline-none" readonly>')
-            .val(url)
+            .attr('value', url)
             .appendTo($urlWrap);
         $footer.append($urlWrap);
 
