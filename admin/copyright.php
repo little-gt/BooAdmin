@@ -12,23 +12,23 @@
             <a href="https://github.com/little-gt/BooAdmin" class="font-medium hover:text-discord-accent transition-colors" target="_blank" rel="noopener">BooAdmin</a>
             <div class="booadmin-copyright-popup" id="booadminCopyrightPopup">
                 <button class="close-btn" onclick="closePopup(); event.stopPropagation();">&times;</button>
-                <h3>关于 BooAdmin 程序</h3>
-                <div class="version">版本 <?php echo BOOADMIN_VERSION; ?></div>
+                <h3><?php _e('关于 BooAdmin 程序'); ?></h3>
+                <div class="version"><?php _e('版本'); ?> <?php echo BOOADMIN_VERSION; ?></div>
                 <div class="content">
                     <div class="left">
-                        <p class="main-copy"><strong>BooAdmin 是免费开源项目。</strong>BooAdmin 的开源维护、CDN资源分发与新功能更新都离不开您的捐助。您的支持将帮助我覆盖以下成本：</p>
+                        <p class="main-copy"><strong><?php _e('BooAdmin 是免费开源项目。'); ?></strong><?php _e('BooAdmin 的开源维护、CDN资源分发与新功能更新都离不开您的捐助。您的支持将帮助我覆盖以下成本：'); ?></p>
                         <ul class="support-points">
-                            <li><strong>开源维护成本：</strong>进行版本适配、问题修复、体验优化与 LTS 支持。</li>
-                            <li><strong>服务运行成本：</strong>提供静态资源分发、国际/国内线路与 IPv6 优化保障。</li>
+                            <li><strong><?php _e('开源维护成本：'); ?></strong><?php _e('进行版本适配、问题修复、体验优化与 LTS 支持。'); ?></li>
+                            <li><strong><?php _e('服务运行成本：'); ?></strong><?php _e('提供静态资源分发、国际/国内线路与 IPv6 优化保障。'); ?></li>
                         </ul>
                         <div class="action">
-                            <a href="https://github.com/little-gt/BooAdmin" target="_blank" rel="noopener">访问 GitHub 开源项目</a>
-                            <a href="https://cnb.cool/little-gt/BooAdmin/" class="secondary" target="_blank" rel="noopener">国内仓库</a>
+                            <a href="https://github.com/little-gt/BooAdmin" target="_blank" rel="noopener"><?php _e('访问 GitHub 开源项目'); ?></a>
+                            <a href="https://cnb.cool/little-gt/BooAdmin/" class="secondary" target="_blank" rel="noopener"><?php _e('国内仓库'); ?></a>
                         </div>
                     </div>
                     <div class="right">
                         <div class="donation-card">
-                            <img src="<?php $options->adminUrl('img/supportme.png'); ?>" alt="支持 BooAdmin 开源维护" />
+                            <img src="<?php $options->adminUrl('img/supportme.png'); ?>" alt="<?php _e('支持 BooAdmin 开源维护'); ?>" />
                         </div>
                     </div>
                 </div>

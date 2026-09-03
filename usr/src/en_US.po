@@ -18,6 +18,18 @@ msgstr ""
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 "X-Generator: Poedit 3.0\n"
 
+msgid "对应 _e() 当中的正文内容"
+msgstr "Corresponds to the body content in _e()"
+
+msgid "符号 \"%s\" 表示标识转义"
+msgstr "The symbol \"%s\" indicates an escape sequence."
+
+msgid "基本"
+msgstr "Basic"
+
+msgid "阅读"
+msgstr "Reading"
+
 msgid "页面"
 msgstr "Page"
 
@@ -1413,9 +1425,315 @@ msgstr "Advanced options"
 msgid "默认"
 msgstr "Default"
 
-msgid "对应 _e() 当中的正文内容"
-msgstr "Corresponds to the body content in _e()"
+msgid "关于 BooAdmin 程序"
+msgstr "About BooAdmin"
 
-msgid "符号 \"%s\" 表示标识转义"
-msgstr "The symbol \"%s\" indicates an escape sequence."
+msgid "版本"
+msgstr "Version"
+
+msgid "BooAdmin 是免费开源项目。"
+msgstr "BooAdmin is a free and open-source project."
+
+msgid "BooAdmin 的开源维护、CDN资源分发与新功能更新都离不开您的捐助。您的支持将帮助我覆盖以下成本："
+msgstr "BooAdmin's open-source maintenance, CDN resource delivery, and new feature updates all rely on your donations. Your support helps cover the following costs:"
+
+msgid "开源维护成本："
+msgstr "Open-source maintenance cost:"
+
+msgid "进行版本适配、问题修复、体验优化与 LTS 支持。"
+msgstr "Version compatibility, bug fixes, experience optimization, and LTS support."
+
+msgid "服务运行成本："
+msgstr "Service operation cost:"
+
+msgid "提供静态资源分发、国际/国内线路与 IPv6 优化保障。"
+msgstr "Static resource delivery, international/domestic routing, and IPv6 optimization."
+
+msgid "访问 GitHub 开源项目"
+msgstr "Visit GitHub open-source project"
+
+msgid "国内仓库"
+msgstr "Domestic repository"
+
+msgid "支持 BooAdmin 开源维护"
+msgstr "Support BooAdmin open-source maintenance"
+
+msgid "站点名称"
+msgstr "Site Name"
+
+msgid "站点的名称将显示在网页的标题处."
+msgstr "The site name will be displayed in the page title."
+
+msgid "站点地址"
+msgstr "Site URL"
+
+msgid "站点地址主要用于生成内容的永久链接."
+msgstr "The site address is mainly used to generate permalinks for your content."
+
+msgid "站点描述"
+msgstr "Site Description"
+
+msgid "站点描述将显示在网页代码的头部."
+msgstr "The site description will be displayed in the page header."
+
+msgid "关键词"
+msgstr "Keywords"
+
+msgid "请以半角逗号 \",\" 分割多个关键字."
+msgstr "Separate multiple keywords with a half-width comma \",\"."
+
+msgid "是否允许注册"
+msgstr "Allow Registration"
+
+msgid "不允许"
+msgstr "Disallow"
+
+msgid "允许"
+msgstr "Allow"
+
+msgid "允许访问者注册到你的网站, 默认的注册用户不享有任何写入权限."
+msgstr "Allow visitors to register on your site. Registered users have no writing privileges by default."
+
+msgid "XMLRPC 接口"
+msgstr "XMLRPC Interface"
+
+msgid "仅关闭 Pingback 接口"
+msgstr "Disable Pingback Interface Only"
+
+msgid "打开"
+msgstr "Open"
+
+msgid "语言"
+msgstr "Language"
+
+msgid "时区"
+msgstr "Timezone"
+
+msgid "允许上传的文件类型"
+msgstr "Allowed Upload File Types"
+
+msgid "图片文件"
+msgstr "Image files"
+
+msgid "多媒体文件"
+msgstr "Media files"
+
+msgid "常用档案文件"
+msgstr "Common document files"
+
+msgid "其他格式"
+msgstr "Other formats"
+
+msgid "用逗号 \",\" 将后缀名隔开, 例如:"
+msgstr "Separate extensions with a comma \",\", e.g.:"
+
+msgid "保存设置"
+msgstr "Save Settings"
+
+msgid "北京时间 香港,新加坡,越南 (GMT +8)"
+msgstr "Beijing Time, Hong Kong, Singapore, Vietnam (GMT +8)"
+
+msgid "评论日期格式"
+msgstr "Comment Date Format"
+
+msgid "F jS, Y \\a\\t h:i a"
+msgstr "F jS, Y \\a\\t h:i a"
+
+msgid "这是一个默认的格式,当你在模板中调用显示评论日期方法时, 如果没有指定日期格式, 将按照此格式输出."
+msgstr "This is a default format. When you call the comment date method in your template without specifying a date format, output follows this format."
+
+msgid "具体写法请参考 PHP 日期格式写法."
+msgstr "Refer to the PHP date format syntax for details."
+
+msgid "评论列表数目"
+msgstr "Number of Comments in List"
+
+msgid "此数目用于指定显示在侧边栏中的评论列表数目."
+msgstr "This number specifies how many comments appear in the sidebar list."
+
+msgid "评论显示"
+msgstr "Comment Display"
+
+msgid "仅显示评论, 不显示 Pingback 和 Trackback"
+msgstr "Show comments only, hide Pingbacks and Trackbacks"
+
+msgid "在评论中使用 Markdown 语法"
+msgstr "Use Markdown syntax in comments"
+
+msgid "评论者名称显示时自动加上其个人主页链接"
+msgstr "Automatically add the commenter's homepage link when displaying their name"
+
+msgid "对评论者个人主页链接使用 nofollow 属性"
+msgstr "Apply the nofollow attribute to commenter homepage links"
+
+msgid "启用 Gravatar 头像服务, 最高显示评级为 %s 的头像"
+msgstr "Enable the Gravatar avatar service, with a maximum rating of %s"
+
+msgid "G - 普通"
+msgstr "G - General"
+
+msgid "启用分页, 并且每页显示 %s 篇评论, 在列出时将 %s 作为默认显示"
+msgstr "Enable pagination, showing %s comments per page, with %s displayed by default"
+
+msgid "最后一页"
+msgstr "Last Page"
+
+msgid "启用评论回复, 以 %s 层作为每个评论最多的回复层数"
+msgstr "Enable comment replies, with %s levels as the maximum reply depth per comment"
+
+msgid "将 %s 的评论显示在前面"
+msgstr "Show %s comments first"
+
+msgid "较旧的"
+msgstr "Older"
+
+msgid "评论提交"
+msgstr "Comment Submission"
+
+msgid "所有评论必须经过审核"
+msgstr "All comments must be moderated"
+
+msgid "评论者之前须有评论通过了审核"
+msgstr "Commenters must have a previously approved comment"
+
+msgid "必须填写邮箱"
+msgstr "Email is required"
+
+msgid "必须填写网址"
+msgstr "URL is required"
+
+msgid "检查评论来源页 URL 是否与文章链接一致"
+msgstr "Check whether the comment source page URL matches the article link"
+
+msgid "开启反垃圾保护"
+msgstr "Enable anti-spam protection"
+
+msgid "在文章发布 %s 天以后自动关闭评论"
+msgstr "Automatically close comments %s days after the post is published"
+
+msgid "同一 IP 发布评论的时间间隔限制为 %s 分钟"
+msgstr "Limit the comment posting interval from the same IP to %s minutes"
+
+msgid "允许使用的HTML标签和属性"
+msgstr "Allowed HTML Tags and Attributes"
+
+msgid "默认的用户评论不允许填写任何的HTML标签, 你可以在这里填写允许使用的HTML标签."
+msgstr "By default, user comments do not allow any HTML tags. You can specify the allowed HTML tags here."
+
+msgid "比如: <a href=\"\"> <img src=\"\"> <blockquote>"
+msgstr "For example: <a href=\"\"> <img src=\"\"> <blockquote>"
+
+msgid "文章日期格式"
+msgstr "Post Date Format"
+
+msgid "此格式用于指定显示在文章归档中的日期默认显示格式."
+msgstr "This format specifies the default date display format shown in post archives."
+
+msgid "在某些主题中这个格式可能不会生效, 因为主题作者可以自定义日期格式."
+msgstr "In some themes this format may not take effect, because theme authors can define a custom date format."
+
+msgid "请参考"
+msgstr "Please refer to"
+
+msgid "PHP 日期格式写法."
+msgstr "PHP date format syntax."
+
+msgid "站点首页"
+msgstr "Site Homepage"
+
+msgid "显示最新发布的文章"
+msgstr "Show the latest published posts"
+
+msgid "使用 %s 作为首页"
+msgstr "Use %s as the homepage"
+
+msgid "文章列表数目"
+msgstr "Number of Posts in List"
+
+msgid "此数目用于指定显示在侧边栏中的文章列表数目."
+msgstr "This number specifies how many posts appear in the sidebar list."
+
+msgid "每页文章数目"
+msgstr "Posts Per Page"
+
+msgid "此数目用于指定文章归档输出时每页显示的文章数目."
+msgstr "This number specifies how many posts are displayed per page when outputting post archives."
+
+msgid "聚合全文输出"
+msgstr "Full Text in Feed"
+
+msgid "仅输出摘要"
+msgstr "Summary only"
+
+msgid "全文输出"
+msgstr "Full text"
+
+msgid "如果你不希望在聚合中输出文章全文,请使用仅输出摘要选项."
+msgstr "If you do not want to output the full post text in the feed, use the summary-only option."
+
+msgid "摘要的文字取决于你在文章中使用分隔符的位置."
+msgstr "The excerpt text depends on where you place the split marker in your post."
+
+msgid "是否使用地址重写功能"
+msgstr "Whether to enable URL rewriting"
+
+msgid "不启用"
+msgstr "Disable"
+
+msgid "地址重写即 rewrite 功能是某些服务器软件提供的优化内部连接的功能."
+msgstr "URL rewriting (the rewrite function) is a feature provided by some server software to optimize internal links."
+
+msgid "打开此功能可以让你的链接看上去完全是静态地址."
+msgstr "Enabling this feature makes your links appear as fully static addresses."
+
+msgid "自定义文章路径"
+msgstr "Custom Article Path"
+
+msgid "默认风格"
+msgstr "Default Style"
+
+msgid "wordpress风格"
+msgstr "WordPress Style"
+
+msgid "按日期归档"
+msgstr "Archive by Date"
+
+msgid "按分类归档"
+msgstr "Archive by Category"
+
+msgid "个性化定义"
+msgstr "Custom"
+
+msgid "可用参数: "
+msgstr "Available parameters: "
+
+msgid "日志 ID,"
+msgstr "Post ID,"
+
+msgid "日志缩略名,"
+msgstr "Post slug,"
+
+msgid "分类,"
+msgstr "Category,"
+
+msgid "多级分类,"
+msgstr "Multi-level category,"
+
+msgid "年,"
+msgstr "Year,"
+
+msgid "月,"
+msgstr "Month,"
+
+msgid "选择一种合适的文章静态路径风格, 使得你的网站链接更加友好."
+msgstr "Choose a suitable article permalink style to make your site links more friendly."
+
+msgid "一旦你选择了某种链接风格请不要轻易修改它."
+msgstr "Once you choose a certain link style, do not change it lightly."
+
+msgid "独立页面路径"
+msgstr "Independent Page Path"
+
+msgid "分类路径"
+msgstr "Category Path"
 
