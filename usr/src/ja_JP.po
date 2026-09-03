@@ -1,0 +1,1421 @@
+# BooAdmin Translation.
+# Copyright (C) 2026 BooAdmin
+# This file is distributed under the same license as the BooAdmin package.
+# DEYONG HUANG <coolerxde@gt.ac.cn>, 2026.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: BooAdmin1.3.0\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: \n"
+"PO-Revision-Date: 2026-09-03 10:00+0800\n"
+"Last-Translator: coolerxde@gt.ac.cn <coolerxde@gt.ac.cn>\n"
+"Language-Team: \n"
+"Language: ja_JP\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+"X-Generator: Poedit 3.0\n"
+
+msgid "页面"
+msgstr "ページ"
+
+msgid "文件"
+msgstr "ファイル"
+
+msgid "用户"
+msgstr "ユーザー"
+
+msgid "外观"
+msgstr "外観"
+
+msgid "插件"
+msgstr "プラグイン"
+
+msgid "备份"
+msgstr "バックアップ"
+
+msgid "Passkey 管理"
+msgstr "Passkey 管理"
+
+msgid "%d"
+msgstr "%d"
+
+msgid "%d 个子页面"
+msgstr "%d 個の子ページ"
+
+msgid "%s - %s"
+msgstr "%s - %s"
+
+msgid "%s 上传失败"
+msgstr "%s のアップロードに失敗しました"
+
+msgid "&laquo; 取消筛选"
+msgstr "&laquo; フィルターを解除"
+
+msgid "1"
+msgstr "1"
+
+msgid "1 个子页面"
+msgstr "1 個の子ページ"
+
+msgid "GitHub"
+msgstr "GitHub"
+
+msgid "JSON 结构"
+msgstr "JSON 構造"
+
+msgid "Markdown语法帮助"
+msgstr "Markdown 構文ヘルプ"
+
+msgid "Typecho 官方动态"
+msgstr "Typecho 公式ニュース"
+
+msgid "一"
+msgstr "一"
+
+msgid "一月"
+msgstr "1月"
+
+msgid "七月"
+msgstr "7月"
+
+msgid "三"
+msgstr "三"
+
+msgid "三月"
+msgstr "3月"
+
+msgid "上一月"
+msgstr "前の月"
+
+msgid "上传出现错误"
+msgstr "アップロード中にエラーが発生しました"
+
+msgid "上传并恢复"
+msgstr "アップロードして復元"
+
+msgid "上传文件"
+msgstr "ファイルをアップロード"
+
+msgid "上传者"
+msgstr "アップローダー"
+
+msgid "上午"
+msgstr "午前"
+
+msgid "上次保存时间"
+msgstr "最終保存日時"
+
+msgid "下一月"
+msgstr "次の月"
+
+msgid "下午"
+msgstr "午後"
+
+msgid "下次自动登录"
+msgstr "次回自動ログイン"
+
+msgid "不选择"
+msgstr "選択しない"
+
+msgid "个人主页"
+msgstr "個人ホームページ"
+
+msgid "个人设置"
+msgstr "個人設定"
+
+msgid "个人资料"
+msgstr "プロフィール"
+
+msgid "主页"
+msgstr "ホーム"
+
+msgid "主题列表"
+msgstr "テーマ一覧"
+
+msgid "主题设置"
+msgstr "テーマ設定"
+
+msgid "九月"
+msgstr "9月"
+
+msgid "二"
+msgstr "二"
+
+msgid "二月"
+msgstr "2月"
+
+msgid "互动活跃"
+msgstr "活発なインタラクション"
+
+msgid "五"
+msgstr "五"
+
+msgid "五月"
+msgstr "5月"
+
+msgid "从服务器"
+msgstr "サーバーから"
+
+msgid "代码"
+msgstr "コード"
+
+msgid "以下插件为 BooAdmin 配套插件，可增强后台安全与功能体验。"
+msgstr "以下のプラグインは BooAdmin 専用のプラグインで、管理画面のセキュリティと機能を強化します。"
+
+msgid "作者"
+msgstr "作者"
+
+msgid "作者:"
+msgstr "作者:"
+
+msgid "你正在编辑的是保存于 %s 的修订版, 你也可以 <a href=\"%s\" class=\"underline\">删除它</a>"
+msgstr "編集中のは %s に保存されたリビジョンです。<a href=\"%s\" class=\"underline\">削除</a> もできます。"
+
+msgid "你确认要删除%s的评论吗?"
+msgstr "%s のコメントを削除してもよろしいですか？"
+
+msgid "你确认要删除所有垃圾评论吗?"
+msgstr "すべてのスパムコメントを削除してもよろしいですか？"
+
+msgid "你确认要删除文件 %s 吗?"
+msgstr "ファイル %s を削除してもよろしいですか？"
+
+msgid "你确认要删除这些文件吗?"
+msgstr "これらのファイルを削除してもよろしいですか？"
+
+msgid "你确认要删除这些标签吗?"
+msgstr "これらのタグを削除してもよろしいですか？"
+
+msgid "你确认要删除这些用户吗?"
+msgstr "これらのユーザーを削除してもよろしいですか？"
+
+msgid "你确认要合并这些分类吗?"
+msgstr "これらのカテゴリーを統合してもよろしいですか？"
+
+msgid "你确认要合并这些标签吗?"
+msgstr "これらのタグを統合してもよろしいですか？"
+
+msgid "你确认要执行该操作吗?"
+msgstr "この操作を実行してもよろしいですか？"
+
+msgid "使用 Markdown 撰写"
+msgstr "Markdown で執筆"
+
+msgid "使用 Passkey 登录"
+msgstr "Passkey でログイン"
+
+msgid "使用中"
+msgstr "使用中"
+
+msgid "保存于 %s"
+msgstr "%s に保存されました"
+
+msgid "保存失败, 请重试"
+msgstr "保存に失敗しました。再度お試しください"
+
+msgid "保存失败，请重试"
+msgstr "保存に失敗しました。再度お試しください"
+
+msgid "保存文件"
+msgstr "ファイルを保存"
+
+msgid "保存草稿"
+msgstr "下書きを保存"
+
+msgid "修改后的内容需要保存后才能预览, 是否保存?"
+msgstr "変更を保存してからプレビューできます。保存しますか？"
+
+msgid "修改头像"
+msgstr "アバターを変更"
+
+msgid "允许在聚合中出现"
+msgstr "フィードに表示する"
+
+msgid "允许被引用"
+msgstr "トラックバックを許可"
+
+msgid "允许评论"
+msgstr "コメントを許可"
+
+msgid "全屏"
+msgstr "全画面"
+
+msgid "全选"
+msgstr "すべて選択"
+
+msgid "八月"
+msgstr "8月"
+
+msgid "公开"
+msgstr "公開"
+
+msgid "公开度"
+msgstr "公開範囲"
+
+msgid "六"
+msgstr "六"
+
+msgid "六月"
+msgstr "6月"
+
+msgid "关注者"
+msgstr "フォロワー"
+
+msgid "关闭"
+msgstr "閉じる"
+
+msgid "内容"
+msgstr "コンテンツ"
+
+msgid "内容分布"
+msgstr "コンテンツの分布"
+
+msgid "内容密码"
+msgstr "コンテンツのパスワード"
+
+msgid "内容已经改变尚未保存, 您确认要离开此页面吗?"
+msgstr "内容が変更されていますが保存されていません。このページを離れてもよろしいですか？"
+
+msgid "内容架构"
+msgstr "コンテンツ構造"
+
+msgid "内容趋势"
+msgstr "コンテンツの傾向"
+
+msgid "写作格式"
+msgstr "執筆フォーマット"
+
+msgid "写文章"
+msgstr "投稿を書く"
+
+msgid "出错了"
+msgstr "エラーが発生しました"
+
+msgid "分"
+msgstr "分"
+
+msgid "分割线"
+msgstr "区切り線"
+
+msgid "分类"
+msgstr "カテゴリー"
+
+msgid "分类数量"
+msgstr "カテゴリー数"
+
+msgid "切换全屏"
+msgstr "全画面を切り替え"
+
+msgid "切换全屏预览"
+msgstr "全画面プレビューを切り替え"
+
+msgid "列表项目"
+msgstr "リスト項目"
+
+msgid "创建一个账号"
+msgstr "アカウントを作成"
+
+msgid "创建账号"
+msgstr "アカウント作成"
+
+msgid "创建页面"
+msgstr "ページを作成"
+
+msgid "删除"
+msgstr "削除"
+
+msgid "删除失败，请重试"
+msgstr "削除に失敗しました。再度お試しください"
+
+msgid "删除所有垃圾评论"
+msgstr "すべてのスパムコメントを削除"
+
+msgid "删除此文件"
+msgstr "このファイルを削除"
+
+msgid "刷新"
+msgstr "更新"
+
+msgid "刷新分类可能需要等待较长时间, 你确认要刷新这些分类吗?"
+msgstr "カテゴリーの更新には時間がかかる場合があります。これらのカテゴリーを更新してもよろしいですか？"
+
+msgid "刷新标签可能需要等待较长时间, 你确认要刷新这些标签吗?"
+msgstr "タグの更新には時間がかかる場合があります。これらのタグを更新してもよろしいですか？"
+
+msgid "加密"
+msgstr "暗号化"
+
+msgid "加粗"
+msgstr "太字"
+
+msgid "加粗文字"
+msgstr "太字のテキスト"
+
+msgid "十一月"
+msgstr "11月"
+
+msgid "十二月"
+msgstr "12月"
+
+msgid "十月"
+msgstr "10月"
+
+msgid "升级向导"
+msgstr "アップグレードウィザード"
+
+msgid "卡片"
+msgstr "カード"
+
+msgid "卡片视图"
+msgstr "カード表示"
+
+msgid "即插即用"
+msgstr "プラグアンドプレイ"
+
+msgid "原生预览"
+msgstr "ネイティブプレビュー"
+
+msgid "发布您的第一篇精彩内容"
+msgstr "最初の素晴らしい記事を公開しましょう"
+
+msgid "发布文章"
+msgstr "投稿を公開"
+
+msgid "发布日期"
+msgstr "公開日"
+
+msgid "发布页面"
+msgstr "ページを公開"
+
+msgid "取消"
+msgstr "キャンセル"
+
+msgid "取消筛选"
+msgstr "フィルターを解除"
+
+msgid "取消编辑，返回新增"
+msgstr "編集をキャンセルして新規に戻る"
+
+msgid "只读"
+msgstr "読み取り専用"
+
+msgid "只需几步即可完成注册"
+msgstr "ほんの数ステップで登録完了"
+
+msgid "可以使用的外观"
+msgstr "利用可能な外観"
+
+msgid "可用"
+msgstr "利用可能"
+
+msgid "合并到"
+msgstr "統合先"
+
+msgid "名称"
+msgstr "名前"
+
+msgid "否"
+msgstr "いいえ"
+
+msgid "启用"
+msgstr "有効化"
+
+msgid "周一"
+msgstr "月"
+
+msgid "周三"
+msgstr "水"
+
+msgid "周二"
+msgstr "火"
+
+msgid "周五"
+msgstr "金"
+
+msgid "周六"
+msgstr "土"
+
+msgid "周四"
+msgstr "木"
+
+msgid "周日"
+msgstr "日"
+
+msgid "四"
+msgstr "四"
+
+msgid "四月"
+msgstr "4月"
+
+msgid "回复"
+msgstr "返信"
+
+msgid "回复内容"
+msgstr "返信内容"
+
+msgid "回复失败，请重试"
+msgstr "返信に失敗しました。再度お試しください"
+
+msgid "回复成功"
+msgstr "返信しました"
+
+msgid "回复评论"
+msgstr "コメントに返信"
+
+msgid "国内下载"
+msgstr "国内ダウンロード"
+
+msgid "图片"
+msgstr "画像"
+
+msgid "图片预览"
+msgstr "画像プレビュー"
+
+msgid "在"
+msgstr "場所"
+
+msgid "在升级之前强烈建议先<a href=\"%s\">备份您的数据</a>"
+msgstr "アップグレードする前に、<a href=\"%s\">データのバックアップ</a> を強くお勧めします。"
+
+msgid "在此输入标题"
+msgstr "ここにタイトルを入力"
+
+msgid "垃圾"
+msgstr "スパム"
+
+msgid "基本设置"
+msgstr "基本設定"
+
+msgid "备份与恢复"
+msgstr "バックアップと復元"
+
+msgid "备份帮助文档"
+msgstr "バックアップのヘルプドキュメント"
+
+msgid "备份您的数据"
+msgstr "データをバックアップ"
+
+msgid "复制"
+msgstr "コピー"
+
+msgid "复制成功"
+msgstr "コピーしました"
+
+msgid "外观管理"
+msgstr "外観管理"
+
+msgid "外观设置"
+msgstr "外観設定"
+
+msgid "头像"
+msgstr "アバター"
+
+msgid "如数据量过大，为避免超时，建议直接用数据库工具备份"
+msgstr "データ量が多い場合はタイムアウトを避けるため、データベースツールでの直接バックアップをお勧めします。"
+
+msgid "子分类"
+msgstr "サブカテゴリー"
+
+msgid "子页面"
+msgstr "子ページ"
+
+msgid "字段值"
+msgstr "フィールド値"
+
+msgid "字段名称"
+msgstr "フィールド名"
+
+msgid "字符"
+msgstr "文字"
+
+msgid "完成"
+msgstr "完了"
+
+msgid "完成升级 &raquo;"
+msgstr "アップグレードを完了 &raquo;"
+
+msgid "官方最新版本是 %s"
+msgstr "最新の公式バージョンは %s です"
+
+msgid "密码"
+msgstr "パスワード"
+
+msgid "密码保护"
+msgstr "パスワード保護"
+
+msgid "密码修改"
+msgstr "パスワード変更"
+
+msgid "将备份文件手动上传至服务器的 %s 目录下后，这里会出现文件选项"
+msgstr "バックアップファイルをサーバーの %s ディレクトリに手動アップロードすると、ここにファイルオプションが表示されます。"
+
+msgid "小数"
+msgstr "小数"
+
+msgid "尚未保存"
+msgstr "未保存"
+
+msgid "已保存"
+msgstr "保存済み"
+
+msgid "已启用插件"
+msgstr "有効化済みプラグイン"
+
+msgid "已复制到剪贴板"
+msgstr "クリップボードにコピーしました"
+
+msgid "已有账号？"
+msgstr "すでにアカウントをお持ちですか？"
+
+msgid "已通过"
+msgstr "承認済み"
+
+msgid "帮助文档"
+msgstr "ヘルプドキュメント"
+
+msgid "建议先清理不必要数据以缩小备份体积"
+msgstr "バックアップサイズを小さくするため、まず不要なデータを削除することをお勧めします。"
+
+msgid "开始备份"
+msgstr "バックアップを開始"
+
+msgid "开始您的创作之旅，以下是推荐的首次操作。"
+msgstr "創作の旅を始めましょう。以下はおすすめの最初の操作です。"
+
+msgid "开始撰写..."
+msgstr "執筆を開始…"
+
+msgid "引用"
+msgstr "引用"
+
+msgid "引用文字"
+msgstr "引用テキスト"
+
+msgid "引用通告"
+msgstr "トラックバック"
+
+msgid "强烈建议更改您的默认密码以保障安全"
+msgstr "セキュリティのため、デフォルトのパスワードを変更することを強くお勧めします。"
+
+msgid "当前正在编辑的是未发布的草稿"
+msgstr "現在編集中のは未公開の下書きです。"
+
+msgid "待审"
+msgstr "承認待ち"
+
+msgid "待审核"
+msgstr "承認待ち"
+
+msgid "忘记密码？"
+msgstr "パスワードをお忘れですか？"
+
+msgid "快速开始"
+msgstr "クイックスタート"
+
+msgid "总文章数"
+msgstr "投稿総数"
+
+msgid "总评论数"
+msgstr "コメント総数"
+
+msgid "恢复操作将覆盖所有现有数据, 是否继续?"
+msgstr "復元操作はすべての既存データを上書きします。続行しますか？"
+
+msgid "恢复数据"
+msgstr "データを復元"
+
+msgid "您也可以使用附件功能插入上传的本地图片"
+msgstr "添付機能を使ってアップロードしたローカル画像を挿入することもできます。"
+
+msgid "您已经更新了系统程序, 我们还需要执行一些后续步骤来完成升级"
+msgstr "システムを更新しました。アップグレードを完了するには、いくつかの追加手順が必要です。"
+
+msgid "您当前使用的版本是 %s"
+msgstr "現在ご利用のバージョンは %s です"
+
+msgid "您确定要保存此文件吗？此操作不可逆。"
+msgstr "このファイルを保存してもよろしいですか？この操作は取り消せません。"
+
+msgid "您确认要删除这份草稿吗?"
+msgstr "この下書きを削除してもよろしいですか？"
+
+msgid "您确认要清理未归档的文件吗?"
+msgstr "未アーカイブのファイルをクリーンアップしてもよろしいですか？"
+
+msgid "成功"
+msgstr "成功"
+
+msgid "我们将向此邮箱发送初始密码"
+msgstr "初期パスワードをこのメールアドレスに送信します。"
+
+msgid "我的"
+msgstr "マイ"
+
+msgid "我知道了"
+msgstr "了解"
+
+msgid "或者"
+msgstr "または"
+
+msgid "所属文章"
+msgstr "所属投稿"
+
+msgid "所有"
+msgstr "すべて"
+
+msgid "所有分类"
+msgstr "すべてのカテゴリー"
+
+msgid "打印"
+msgstr "印刷"
+
+msgid "打印 (Ctrl+P)"
+msgstr "印刷 (Ctrl+P)"
+
+msgid "打印预览"
+msgstr "印刷プレビュー"
+
+msgid "扩展"
+msgstr "展開"
+
+msgid "折叠/展开"
+msgstr "折りたたむ/展開"
+
+msgid "报告错误"
+msgstr "エラーを報告"
+
+msgid "拖放文件到这里"
+msgstr "ここにファイルをドラッグ＆ドロップ"
+
+msgid "拖放文件到这里<br>或者 %s选择文件上传%s"
+msgstr "ここにファイルをドラッグ＆ドロップ<br>または %sファイルを選択してアップロード%s"
+
+msgid "持续更新中"
+msgstr "継続的に更新中"
+
+msgid "控制台"
+msgstr "コンソール"
+
+msgid "推荐安装配套插件"
+msgstr "おすすめの専用プラグイン"
+
+msgid "提交回复"
+msgstr "返信を送信"
+
+msgid "提示"
+msgstr "ヒント"
+
+msgid "插件列表"
+msgstr "プラグイン一覧"
+
+msgid "插件管理"
+msgstr "プラグイン管理"
+
+msgid "插件设置"
+msgstr "プラグイン設定"
+
+msgid "插入图片"
+msgstr "画像を挿入"
+
+msgid "插入链接"
+msgstr "リンクを挿入"
+
+msgid "摘要分割线"
+msgstr "抜粋区切り線"
+
+msgid "撤销"
+msgstr "元に戻す"
+
+msgid "撰写"
+msgstr "執筆"
+
+msgid "撰写文章"
+msgstr "投稿を書く"
+
+msgid "撰写新文章"
+msgstr "新規投稿を書く"
+
+msgid "撰写设置"
+msgstr "執筆設定"
+
+msgid "操作"
+msgstr "操作"
+
+msgid "操作成功"
+msgstr "操作成功"
+
+msgid "操作确认"
+msgstr "操作の確認"
+
+msgid "支持 .zip, .dat 等格式"
+msgstr ".zip、.dat などの形式に対応"
+
+msgid "支持论坛"
+msgstr "サポートフォーラム"
+
+msgid "数字列表"
+msgstr "番号付きリスト"
+
+msgid "数字越小越靠前"
+msgstr "数値が小さいほど先頭に表示されます"
+
+msgid "数据备份与恢复"
+msgstr "データのバックアップと復元"
+
+msgid "整数"
+msgstr "整数"
+
+msgid "文件 %s 已经替换"
+msgstr "ファイル %s は置き換えられました"
+
+msgid "文件名"
+msgstr "ファイル名"
+
+msgid "文件大小超过限制"
+msgstr "ファイルサイズが制限を超えています"
+
+msgid "文件已删除"
+msgstr "ファイルを削除しました"
+
+msgid "文件已经上传过"
+msgstr "ファイルはすでにアップロードされています"
+
+msgid "文件扩展名不被支持"
+msgstr "ファイル拡張子はサポートされていません"
+
+msgid "文件链接"
+msgstr "ファイルリンク"
+
+msgid "文件预览"
+msgstr "ファイルプレビュー"
+
+msgid "文章"
+msgstr "投稿"
+
+msgid "文章内容"
+msgstr "投稿内容"
+
+msgid "文章数"
+msgstr "投稿数"
+
+msgid "文章预览"
+msgstr "投稿プレビュー"
+
+msgid "斜体"
+msgstr "斜体"
+
+msgid "斜体文字"
+msgstr "斜体のテキスト"
+
+msgid "新增"
+msgstr "追加"
+
+msgid "新增子页面"
+msgstr "子ページを追加"
+
+msgid "无法保存"
+msgstr "保存できません"
+
+msgid "无法在此版本的 Typecho 下正常工作"
+msgstr "このバージョンの Typecho では正常に動作しません"
+
+msgid "日"
+msgstr "日"
+
+msgid "日期"
+msgstr "日付"
+
+msgid "时"
+msgstr "時"
+
+msgid "时间"
+msgstr "時間"
+
+msgid "星期一"
+msgstr "月曜日"
+
+msgid "星期三"
+msgstr "水曜日"
+
+msgid "星期二"
+msgstr "火曜日"
+
+msgid "星期五"
+msgstr "金曜日"
+
+msgid "星期六"
+msgstr "土曜日"
+
+msgid "星期四"
+msgstr "木曜日"
+
+msgid "星期日"
+msgstr "日曜日"
+
+msgid "是"
+msgstr "はい"
+
+msgid "昵称"
+msgstr "ニックネーム"
+
+msgid "普通列表"
+msgstr "通常リスト"
+
+msgid "暂无"
+msgstr "なし"
+
+msgid "暂无动态"
+msgstr "更新はまだありません"
+
+msgid "暂时没有回复"
+msgstr "返信はまだありません"
+
+msgid "暂时没有文章"
+msgstr "投稿はまだありません"
+
+msgid "更改密码"
+msgstr "パスワードを変更"
+
+msgid "替换文件"
+msgstr "ファイルを置き換え"
+
+msgid "最后更新: %s"
+msgstr "最終更新: %s"
+
+msgid "最后登录"
+msgstr "最終ログイン"
+
+msgid "最新回复"
+msgstr "最新の返信"
+
+msgid "最近文章"
+msgstr "最近の投稿"
+
+msgid "有修订"
+msgstr "リビジョンあり"
+
+msgid "未归档"
+msgstr "未アーカイブ"
+
+msgid "权限控制"
+msgstr "権限管理"
+
+msgid "查看"
+msgstr "表示"
+
+msgid "查看所有评论"
+msgstr "すべてのコメントを表示"
+
+msgid "查看站点"
+msgstr "サイトを表示"
+
+msgid "查看网站"
+msgstr "ウェブサイトを表示"
+
+msgid "标为垃圾"
+msgstr "スパムとしてマーク"
+
+msgid "标签"
+msgstr "タグ"
+
+msgid "标签名"
+msgstr "タグ名"
+
+msgid "标记为公开"
+msgstr "公開としてマーク"
+
+msgid "标记为待审核"
+msgstr "承認待ちとしてマーク"
+
+msgid "标记为隐藏"
+msgstr "非公開としてマーク"
+
+msgid "标记垃圾"
+msgstr "スパムをマーク"
+
+msgid "标题"
+msgstr "タイトル"
+
+msgid "标题文字"
+msgstr "タイトル文字"
+
+msgid "检测到新版本!"
+msgstr "新しいバージョンが見つかりました！"
+
+msgid "检测到新版本，按提示完成升级即可。"
+msgstr "新しいバージョンが見つかりました。指示に従ってアップグレードを完了してください。"
+
+msgid "模板文件"
+msgstr "テンプレートファイル"
+
+msgid "欢迎使用 %s"
+msgstr "%s へようこそ"
+
+msgid "欢迎回来"
+msgstr "おかえりなさい"
+
+msgid "欢迎回来, %s!"
+msgstr "おかえりなさい、%s！"
+
+msgid "欢迎页"
+msgstr "ウェルカムページ"
+
+msgid "正在保存"
+msgstr "保存中"
+
+msgid "正在加载"
+msgstr "読み込み中"
+
+msgid "正在加载预览..."
+msgstr "プレビューを読み込み中…"
+
+msgid "正在验证..."
+msgstr "検証中…"
+
+msgid "此分类下的所有内容将被删除, 你确认要删除这些分类吗?"
+msgstr "このカテゴリー配下のすべてのコンテンツが削除されます。これらのカテゴリーを削除してもよろしいですか？"
+
+msgid "此备份操作仅包含<strong>内容数据</strong>，不会涉及任何<strong>设置信息</strong>"
+msgstr "このバックアップ操作には <strong>コンテンツデータ</strong> のみが含まれ、<strong>設定情報</strong> は含まれません。"
+
+msgid "此插件文件已经损坏或者被不安全移除, 强烈建议你禁用它"
+msgstr "このプラグインファイルは破損しているか安全に削除されていません。無効化することを強くお勧めします。"
+
+msgid "此操作不可逆，删除后无法恢复评论内容。"
+msgstr "この操作は取り消せません。削除後はコメント内容を復元できません。"
+
+msgid "此标签不存在, 按回车创建"
+msgstr "このタグは存在しません。Enter で作成します。"
+
+msgid "此浏览器不支持全屏操作"
+msgstr "このブラウザは全画面操作に対応していません。"
+
+msgid "此程序将把您的系统从 <strong>%s</strong> 升级到 <strong>%s</strong>"
+msgstr "このプログラムはシステムを <strong>%s</strong> から <strong>%s</strong> にアップグレードします。"
+
+msgid "每一行一个引用地址, 用回车隔开"
+msgstr "参照アドレスは 1 行に 1 つ、Enter で区切ります。"
+
+msgid "永久链接"
+msgstr "パーマリンク"
+
+msgid "永久链接设置"
+msgstr "パーマリンク設定"
+
+msgid "没有任何标签"
+msgstr "タグはありません"
+
+msgid "没有可用主题"
+msgstr "利用可能なテーマはありません"
+
+msgid "没有安装插件"
+msgstr "プラグインがインストールされていません"
+
+msgid "没有找到任何分类"
+msgstr "カテゴリーが見つかりません"
+
+msgid "没有找到任何文件"
+msgstr "ファイルが見つかりません"
+
+msgid "没有找到任何文章"
+msgstr "投稿が見つかりません"
+
+msgid "没有找到任何用户"
+msgstr "ユーザーが見つかりません"
+
+msgid "没有找到任何评论"
+msgstr "コメントが見つかりません"
+
+msgid "没有找到任何页面"
+msgstr "ページが見つかりません"
+
+msgid "没有找到备份文件"
+msgstr "バックアップファイルが見つかりません"
+
+msgid "没有账号？"
+msgstr "アカウントをお持ちでないですか？"
+
+msgid "注意"
+msgstr "注意"
+
+msgid "浏览 %s"
+msgstr "%s を参照"
+
+msgid "添加字段"
+msgstr "フィールドを追加"
+
+msgid "清理未归档"
+msgstr "未アーカイブをクリーンアップ"
+
+msgid "点击或拖拽文件至此"
+msgstr "クリックするかここにファイルをドラッグ"
+
+msgid "点击插入文件"
+msgstr "クリックしてファイルを挿入"
+
+msgid "父级页面"
+msgstr "親ページ"
+
+msgid "现在"
+msgstr "現在"
+
+msgid "用于登录和显示的名称"
+msgstr "ログインと表示に使用する名前"
+
+msgid "用户名"
+msgstr "ユーザー名"
+
+msgid "用户名和内容不能为空"
+msgstr "ユーザー名と内容は空にできません"
+
+msgid "用户组"
+msgstr "ユーザーグループ"
+
+msgid "由 <a href=\"https://typecho.org\" class=\"hover:text-discord-accent\" target=\"_blank\" rel=\"noopener\">%s</a> 驱动, 版本 %s"
+msgstr "<a href=\"https://typecho.org\" class=\"hover:text-discord-accent\" target=\"_blank\" rel=\"noopener\">%s</a> で駆動、バージョン %s"
+
+msgid "电子邮件"
+msgstr "メール"
+
+msgid "电子邮箱"
+msgstr "メールアドレス"
+
+msgid "登 录"
+msgstr "ログイン"
+
+msgid "登出"
+msgstr "ログアウト"
+
+msgid "目前有 <strong>%s</strong> 篇文章, 并有 <strong>%s</strong> 条关于你的评论在 <strong>%s</strong> 个分类中."
+msgstr "現在 <strong>%s</strong> 件の投稿があり、<strong>%s</strong> 件のあなたへのコメントが <strong>%s</strong> 個のカテゴリーにあります。"
+
+msgid "确定"
+msgstr "OK"
+
+msgid "确认"
+msgstr "確認"
+
+msgid "确认保存"
+msgstr "保存を確認"
+
+msgid "确认删除"
+msgstr "削除を確認"
+
+msgid "确认删除来自「%s」的评论？"
+msgstr "「%s」からのコメントを削除しますか？"
+
+msgid "确认删除此评论？"
+msgstr "このコメントを削除しますか？"
+
+msgid "确认恢复"
+msgstr "復元を確認"
+
+msgid "确认操作"
+msgstr "操作を確認"
+
+msgid "确认要删除文件 %s 吗?"
+msgstr "ファイル %s を削除しますか？"
+
+msgid "确认要删除此字段吗?"
+msgstr "このフィールドを削除しますか？"
+
+msgid "确认要删除该文件吗?"
+msgstr "そのファイルを削除しますか？"
+
+msgid "确认要执行该操作吗?"
+msgstr "この操作を実行しますか？"
+
+msgid "禁用"
+msgstr "無効化"
+
+msgid "禁用的插件"
+msgstr "無効化されたプラグイン"
+
+msgid "私密"
+msgstr "非公開"
+
+msgid "秒"
+msgstr "秒"
+
+msgid "立即注册"
+msgstr "今すぐ登録"
+
+msgid "筛选"
+msgstr "フィルター"
+
+msgid "管理分类"
+msgstr "カテゴリーを管理"
+
+msgid "管理员"
+msgstr "管理者"
+
+msgid "管理文件"
+msgstr "ファイルを管理"
+
+msgid "管理文章"
+msgstr "投稿を管理"
+
+msgid "管理标签"
+msgstr "タグを管理"
+
+msgid "管理独立页面"
+msgstr "独立ページを管理"
+
+msgid "管理用户"
+msgstr "ユーザーを管理"
+
+msgid "管理评论"
+msgstr "コメントを管理"
+
+msgid "类型"
+msgstr "タイプ"
+
+msgid "系统"
+msgstr "システム"
+
+msgid "系统升级"
+msgstr "システムアップグレード"
+
+msgid "编辑"
+msgstr "編集"
+
+msgid "编辑%s外观"
+msgstr "%s の外観を編集"
+
+msgid "编辑信息"
+msgstr "情報を編集"
+
+msgid "编辑外观文件"
+msgstr "外観ファイルを編集"
+
+msgid "编辑当前主题"
+msgstr "現在のテーマを編集"
+
+msgid "编辑当前外观"
+msgstr "現在の外観を編集"
+
+msgid "编辑评论"
+msgstr "コメントを編集"
+
+msgid "缩略名"
+msgstr "スラッグ"
+
+msgid "网络错误，删除失败"
+msgstr "ネットワークエラー、削除に失敗しました"
+
+msgid "自定义字段"
+msgstr "カスタムフィールド"
+
+msgid "自定义字段可以扩展你的模板功能, 使用方法参见 <a href=\"https://docs.typecho.org/help/custom-fields\" target=\"_blank\" class=\"text-discord-accent hover:underline\">帮助文档</a>"
+msgstr "カスタムフィールドはテンプレートの機能を拡張できます。使い方は <a href=\"https://docs.typecho.org/help/custom-fields\" target=\"_blank\" class=\"text-discord-accent hover:underline\">ヘルプドキュメント</a> を参照してください。"
+
+msgid "自定义模板"
+msgstr "カスタムテンプレート"
+
+msgid "草稿"
+msgstr "下書き"
+
+msgid "获取更多插件"
+msgstr "さらにプラグインを取得"
+
+msgid "表格"
+msgstr "表"
+
+msgid "表格视图"
+msgstr "表表示"
+
+msgid "警告"
+msgstr "警告"
+
+msgid "设为默认"
+msgstr "デフォルトに設定"
+
+msgid "设置"
+msgstr "設定"
+
+msgid "设置外观"
+msgstr "外観を設定"
+
+msgid "访问官网"
+msgstr "公式サイトへアクセス"
+
+msgid "访问您的网站首页"
+msgstr "サイトのホームページへアクセス"
+
+msgid "访问网站首页"
+msgstr "ウェブサイトのホームページへアクセス"
+
+msgid "访问者"
+msgstr "訪問者"
+
+msgid "评论"
+msgstr "コメント"
+
+msgid "评论数"
+msgstr "コメント数"
+
+msgid "评论设置"
+msgstr "コメント設定"
+
+msgid "该用户"
+msgstr "このユーザー"
+
+msgid "请上传主题到 <span class=\"font-mono bg-gray-100 px-1\">/usr/themes</span> 目录"
+msgstr "テーマを <span class=\"font-mono bg-gray-100 px-1\">/usr/themes</span> ディレクトリにアップロードしてください。"
+
+msgid "请先选择至少一个分类。"
+msgstr "まず少なくとも 1 つのカテゴリーを選択してください。"
+
+msgid "请先选择至少一个条目。"
+msgstr "まず少なくとも 1 つの項目を選択してください。"
+
+msgid "请先选择至少一个标签。"
+msgstr "まず少なくとも 1 つのタグを選択してください。"
+
+msgid "请切换到打印预览模式"
+msgstr "印刷プレビューモードに切り替えてください"
+
+msgid "请在下方的输入框内输入要插入的远程图片地址"
+msgstr "挿入するリモート画像のアドレスを下の入力欄に入力してください。"
+
+msgid "请在下方的输入框内输入要插入的链接地址"
+msgstr "挿入するリンクのアドレスを下の入力欄に入力してください。"
+
+msgid "请登录您的账号以继续"
+msgstr "続行するにはアカウントにログインしてください"
+
+msgid "请确认是否继续。"
+msgstr "続行するか確認してください。"
+
+msgid "请输入代码"
+msgstr "コードを入力してください"
+
+msgid "请输入关键字"
+msgstr "キーワードを入力してください"
+
+msgid "请输入回复内容"
+msgstr "返信内容を入力してください"
+
+msgid "请输入图片描述"
+msgstr "画像の説明を入力してください"
+
+msgid "请输入密码"
+msgstr "パスワードを入力してください"
+
+msgid "请输入有效的邮箱地址"
+msgstr "有効なメールアドレスを入力してください"
+
+msgid "请输入标签名"
+msgstr "タグ名を入力してください"
+
+msgid "请输入用户名"
+msgstr "ユーザー名を入力してください"
+
+msgid "请输入用户名或邮箱"
+msgstr "ユーザー名またはメールアドレスを入力してください"
+
+msgid "请输入链接描述"
+msgstr "リンクの説明を入力してください"
+
+msgid "贡献者"
+msgstr "寄稿者"
+
+msgid "账户密码找回插件，完全开源，且支持自定义邮件模版，内置网安标准的行为日志系统，可实现快速、安全的密码找回体验。"
+msgstr "アカウントのパスワード復旧プラグイン。完全オープンソースで、カスタムメールテンプレートに対応。セキュリティ基準に準拠した行動ログシステムを内蔵し、迅速で安全なパスワード復旧を実現します。"
+
+msgid "资源下载"
+msgstr "リソースダウンロード"
+
+msgid "返回"
+msgstr "戻る"
+
+msgid "返回外观列表"
+msgstr "外観一覧に戻る"
+
+msgid "返回控制台"
+msgstr "コンソールに戻る"
+
+msgid "返回插件列表"
+msgstr "プラグイン一覧に戻る"
+
+msgid "返回直接登录"
+msgstr "直接ログインに戻る"
+
+msgid "这篇文章不是由Markdown语法创建的, 继续使用Markdown编辑它吗?"
+msgstr "この投稿は Markdown 構文で作成されていません。Markdown で編集を続けますか？"
+
+msgid "进入后台管理 &raquo;"
+msgstr "管理画面へ &raquo;"
+
+msgid "退出全屏"
+msgstr "全画面を終了"
+
+msgid "选中项"
+msgstr "選択済み項目"
+
+msgid "选择一个备份文件"
+msgstr "バックアップファイルを選択"
+
+msgid "选择并恢复"
+msgstr "選択して復元"
+
+msgid "选择文件上传"
+msgstr "ファイルを選択してアップロード"
+
+msgid "选择时间"
+msgstr "時間を選択"
+
+msgid "通行密钥登录插件，完全开源，且符合 IEEE 安全标准，支持同一账号的多设备通信秘钥绑定，轻松实现同微软等大厂一致快捷、安全的无密码登录体验。"
+msgstr "Passkey ログインプラグイン。完全オープンソースで IEEE セキュリティ基準に準拠。同一アカウントの複数デバイス鍵バインディングに対応し、Microsoft などの大手と同等の素早く安全なパスワードレスログインを実現します。"
+
+msgid "通过"
+msgstr "通過"
+
+msgid "重做"
+msgstr "やり直す"
+
+msgid "链接"
+msgstr "リンク"
+
+msgid "错误"
+msgstr "エラー"
+
+msgid "阅读设置"
+msgstr "表示設定"
+
+msgid "附件"
+msgstr "添付"
+
+msgid "隐藏"
+msgstr "非公開"
+
+msgid "需要处理"
+msgstr "対応が必要"
+
+msgid "页面不存在"
+msgstr "ページが見つかりません"
+
+msgid "页面内容"
+msgstr "ページ内容"
+
+msgid "页面顺序"
+msgstr "ページ順"
+
+msgid "预览"
+msgstr "プレビュー"
+
+msgid "高级选项"
+msgstr "詳細オプション"
+
+msgid "默认"
+msgstr "デフォルト"
+
+msgid "对应 _e() 当中的正文内容"
+msgstr "_e() 内の本文コンテンツに対応"
+
+msgid "符号 \"%s\" 表示标识转义"
+msgstr "記号 \"%s\" はエスケープシーケンスを示します。"
+

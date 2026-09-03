@@ -1,0 +1,1421 @@
+# BooAdmin Translation.
+# Copyright (C) 2026 BooAdmin
+# This file is distributed under the same license as the BooAdmin package.
+# DEYONG HUANG <coolerxde@gt.ac.cn>, 2026.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: BooAdmin1.3.0\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: \n"
+"PO-Revision-Date: 2026-09-03 10:00+0800\n"
+"Last-Translator: coolerxde@gt.ac.cn <coolerxde@gt.ac.cn>\n"
+"Language-Team: \n"
+"Language: en_US\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"X-Generator: Poedit 3.0\n"
+
+msgid "页面"
+msgstr "Page"
+
+msgid "文件"
+msgstr "Files"
+
+msgid "用户"
+msgstr "User"
+
+msgid "外观"
+msgstr "Themes"
+
+msgid "插件"
+msgstr "Plugins"
+
+msgid "备份"
+msgstr "Backup"
+
+msgid "Passkey 管理"
+msgstr "Passkey Management"
+
+msgid "%d"
+msgstr "%d"
+
+msgid "%d 个子页面"
+msgstr "%d subpages"
+
+msgid "%s - %s"
+msgstr "%s - %s"
+
+msgid "%s 上传失败"
+msgstr "Failed to upload %s"
+
+msgid "&laquo; 取消筛选"
+msgstr "&laquo; Clear filter"
+
+msgid "1"
+msgstr "1"
+
+msgid "1 个子页面"
+msgstr "1 subpage"
+
+msgid "GitHub"
+msgstr "GitHub"
+
+msgid "JSON 结构"
+msgstr "JSON structure"
+
+msgid "Markdown语法帮助"
+msgstr "Markdown syntax help"
+
+msgid "Typecho 官方动态"
+msgstr "Typecho official news"
+
+msgid "一"
+msgstr "One"
+
+msgid "一月"
+msgstr "January"
+
+msgid "七月"
+msgstr "July"
+
+msgid "三"
+msgstr "Three"
+
+msgid "三月"
+msgstr "March"
+
+msgid "上一月"
+msgstr "Previous month"
+
+msgid "上传出现错误"
+msgstr "Upload error"
+
+msgid "上传并恢复"
+msgstr "Upload and restore"
+
+msgid "上传文件"
+msgstr "Upload file"
+
+msgid "上传者"
+msgstr "Uploader"
+
+msgid "上午"
+msgstr "AM"
+
+msgid "上次保存时间"
+msgstr "Last saved"
+
+msgid "下一月"
+msgstr "Next month"
+
+msgid "下午"
+msgstr "PM"
+
+msgid "下次自动登录"
+msgstr "Auto login next time"
+
+msgid "不选择"
+msgstr "None"
+
+msgid "个人主页"
+msgstr "Personal homepage"
+
+msgid "个人设置"
+msgstr "Personal settings"
+
+msgid "个人资料"
+msgstr "Profile"
+
+msgid "主页"
+msgstr "Home"
+
+msgid "主题列表"
+msgstr "Theme list"
+
+msgid "主题设置"
+msgstr "Theme settings"
+
+msgid "九月"
+msgstr "September"
+
+msgid "二"
+msgstr "Two"
+
+msgid "二月"
+msgstr "February"
+
+msgid "互动活跃"
+msgstr "Active interactions"
+
+msgid "五"
+msgstr "Five"
+
+msgid "五月"
+msgstr "May"
+
+msgid "从服务器"
+msgstr "From server"
+
+msgid "代码"
+msgstr "Code"
+
+msgid "以下插件为 BooAdmin 配套插件，可增强后台安全与功能体验。"
+msgstr "The following plugins are BooAdmin companion plugins that enhance backend security and functionality."
+
+msgid "作者"
+msgstr "Author"
+
+msgid "作者:"
+msgstr "Author:"
+
+msgid "你正在编辑的是保存于 %s 的修订版, 你也可以 <a href=\"%s\" class=\"underline\">删除它</a>"
+msgstr "You are editing a revision saved at %s. You can also <a href=\"%s\" class=\"underline\">delete it</a>."
+
+msgid "你确认要删除%s的评论吗?"
+msgstr "Are you sure you want to delete the comment from %s?"
+
+msgid "你确认要删除所有垃圾评论吗?"
+msgstr "Are you sure you want to delete all spam comments?"
+
+msgid "你确认要删除文件 %s 吗?"
+msgstr "Are you sure you want to delete file %s?"
+
+msgid "你确认要删除这些文件吗?"
+msgstr "Are you sure you want to delete these files?"
+
+msgid "你确认要删除这些标签吗?"
+msgstr "Are you sure you want to delete these tags?"
+
+msgid "你确认要删除这些用户吗?"
+msgstr "Are you sure you want to delete these users?"
+
+msgid "你确认要合并这些分类吗?"
+msgstr "Are you sure you want to merge these categories?"
+
+msgid "你确认要合并这些标签吗?"
+msgstr "Are you sure you want to merge these tags?"
+
+msgid "你确认要执行该操作吗?"
+msgstr "Are you sure you want to perform this operation?"
+
+msgid "使用 Markdown 撰写"
+msgstr "Write with Markdown"
+
+msgid "使用 Passkey 登录"
+msgstr "Sign in with Passkey"
+
+msgid "使用中"
+msgstr "In use"
+
+msgid "保存于 %s"
+msgstr "Saved at %s"
+
+msgid "保存失败, 请重试"
+msgstr "Save failed, please try again"
+
+msgid "保存失败，请重试"
+msgstr "Save failed, please try again"
+
+msgid "保存文件"
+msgstr "Save file"
+
+msgid "保存草稿"
+msgstr "Save draft"
+
+msgid "修改后的内容需要保存后才能预览, 是否保存?"
+msgstr "The modified content needs to be saved before preview. Save now?"
+
+msgid "修改头像"
+msgstr "Change avatar"
+
+msgid "允许在聚合中出现"
+msgstr "Allow in feed"
+
+msgid "允许被引用"
+msgstr "Allow pingbacks"
+
+msgid "允许评论"
+msgstr "Allow comments"
+
+msgid "全屏"
+msgstr "Fullscreen"
+
+msgid "全选"
+msgstr "Select all"
+
+msgid "八月"
+msgstr "August"
+
+msgid "公开"
+msgstr "Public"
+
+msgid "公开度"
+msgstr "Visibility"
+
+msgid "六"
+msgstr "Six"
+
+msgid "六月"
+msgstr "June"
+
+msgid "关注者"
+msgstr "Followers"
+
+msgid "关闭"
+msgstr "Close"
+
+msgid "内容"
+msgstr "Content"
+
+msgid "内容分布"
+msgstr "Content distribution"
+
+msgid "内容密码"
+msgstr "Content password"
+
+msgid "内容已经改变尚未保存, 您确认要离开此页面吗?"
+msgstr "Content has changed and is not saved. Are you sure you want to leave this page?"
+
+msgid "内容架构"
+msgstr "Content structure"
+
+msgid "内容趋势"
+msgstr "Content trends"
+
+msgid "写作格式"
+msgstr "Writing format"
+
+msgid "写文章"
+msgstr "Write post"
+
+msgid "出错了"
+msgstr "An error occurred"
+
+msgid "分"
+msgstr "min"
+
+msgid "分割线"
+msgstr "Divider"
+
+msgid "分类"
+msgstr "Category"
+
+msgid "分类数量"
+msgstr "Number of categories"
+
+msgid "切换全屏"
+msgstr "Toggle fullscreen"
+
+msgid "切换全屏预览"
+msgstr "Toggle fullscreen preview"
+
+msgid "列表项目"
+msgstr "List item"
+
+msgid "创建一个账号"
+msgstr "Create an account"
+
+msgid "创建账号"
+msgstr "Create account"
+
+msgid "创建页面"
+msgstr "Create page"
+
+msgid "删除"
+msgstr "Delete"
+
+msgid "删除失败，请重试"
+msgstr "Delete failed, please try again"
+
+msgid "删除所有垃圾评论"
+msgstr "Delete all spam comments"
+
+msgid "删除此文件"
+msgstr "Delete this file"
+
+msgid "刷新"
+msgstr "Refresh"
+
+msgid "刷新分类可能需要等待较长时间, 你确认要刷新这些分类吗?"
+msgstr "Refreshing categories may take a while. Are you sure you want to refresh these categories?"
+
+msgid "刷新标签可能需要等待较长时间, 你确认要刷新这些标签吗?"
+msgstr "Refreshing tags may take a while. Are you sure you want to refresh these tags?"
+
+msgid "加密"
+msgstr "Encrypt"
+
+msgid "加粗"
+msgstr "Bold"
+
+msgid "加粗文字"
+msgstr "Bold text"
+
+msgid "十一月"
+msgstr "November"
+
+msgid "十二月"
+msgstr "December"
+
+msgid "十月"
+msgstr "October"
+
+msgid "升级向导"
+msgstr "Upgrade wizard"
+
+msgid "卡片"
+msgstr "Card"
+
+msgid "卡片视图"
+msgstr "Card view"
+
+msgid "即插即用"
+msgstr "Plug and play"
+
+msgid "原生预览"
+msgstr "Native preview"
+
+msgid "发布您的第一篇精彩内容"
+msgstr "Publish your first great post"
+
+msgid "发布文章"
+msgstr "Publish post"
+
+msgid "发布日期"
+msgstr "Publish date"
+
+msgid "发布页面"
+msgstr "Publish page"
+
+msgid "取消"
+msgstr "Cancel"
+
+msgid "取消筛选"
+msgstr "Clear filter"
+
+msgid "取消编辑，返回新增"
+msgstr "Cancel editing, back to new"
+
+msgid "只读"
+msgstr "Read only"
+
+msgid "只需几步即可完成注册"
+msgstr "Complete registration in just a few steps"
+
+msgid "可以使用的外观"
+msgstr "Available appearances"
+
+msgid "可用"
+msgstr "Available"
+
+msgid "合并到"
+msgstr "Merge into"
+
+msgid "名称"
+msgstr "Name"
+
+msgid "否"
+msgstr "No"
+
+msgid "启用"
+msgstr "Enable"
+
+msgid "周一"
+msgstr "Mon"
+
+msgid "周三"
+msgstr "Wed"
+
+msgid "周二"
+msgstr "Tue"
+
+msgid "周五"
+msgstr "Fri"
+
+msgid "周六"
+msgstr "Sat"
+
+msgid "周四"
+msgstr "Thu"
+
+msgid "周日"
+msgstr "Sun"
+
+msgid "四"
+msgstr "Four"
+
+msgid "四月"
+msgstr "April"
+
+msgid "回复"
+msgstr "Reply"
+
+msgid "回复内容"
+msgstr "Reply content"
+
+msgid "回复失败，请重试"
+msgstr "Reply failed, please try again"
+
+msgid "回复成功"
+msgstr "Reply succeeded"
+
+msgid "回复评论"
+msgstr "Reply to comment"
+
+msgid "国内下载"
+msgstr "Domestic download"
+
+msgid "图片"
+msgstr "Image"
+
+msgid "图片预览"
+msgstr "Image preview"
+
+msgid "在"
+msgstr "At"
+
+msgid "在升级之前强烈建议先<a href=\"%s\">备份您的数据</a>"
+msgstr "Before upgrading, we strongly recommend <a href=\"%s\">backing up your data</a>."
+
+msgid "在此输入标题"
+msgstr "Enter title here"
+
+msgid "垃圾"
+msgstr "Spam"
+
+msgid "基本设置"
+msgstr "Basic settings"
+
+msgid "备份与恢复"
+msgstr "Backup and restore"
+
+msgid "备份帮助文档"
+msgstr "Backup help docs"
+
+msgid "备份您的数据"
+msgstr "Back up your data"
+
+msgid "复制"
+msgstr "Copy"
+
+msgid "复制成功"
+msgstr "Copied"
+
+msgid "外观管理"
+msgstr "Appearance management"
+
+msgid "外观设置"
+msgstr "Appearance settings"
+
+msgid "头像"
+msgstr "Avatar"
+
+msgid "如数据量过大，为避免超时，建议直接用数据库工具备份"
+msgstr "If the data volume is large, to avoid timeouts, back up directly with a database tool."
+
+msgid "子分类"
+msgstr "Subcategory"
+
+msgid "子页面"
+msgstr "Subpage"
+
+msgid "字段值"
+msgstr "Field value"
+
+msgid "字段名称"
+msgstr "Field name"
+
+msgid "字符"
+msgstr "Character"
+
+msgid "完成"
+msgstr "Done"
+
+msgid "完成升级 &raquo;"
+msgstr "Finish upgrade &raquo;"
+
+msgid "官方最新版本是 %s"
+msgstr "The latest official version is %s"
+
+msgid "密码"
+msgstr "Password"
+
+msgid "密码保护"
+msgstr "Password protection"
+
+msgid "密码修改"
+msgstr "Change password"
+
+msgid "将备份文件手动上传至服务器的 %s 目录下后，这里会出现文件选项"
+msgstr "After manually uploading the backup file to the %s directory on the server, file options will appear here."
+
+msgid "小数"
+msgstr "Decimal"
+
+msgid "尚未保存"
+msgstr "Not saved yet"
+
+msgid "已保存"
+msgstr "Saved"
+
+msgid "已启用插件"
+msgstr "Enabled plugins"
+
+msgid "已复制到剪贴板"
+msgstr "Copied to clipboard"
+
+msgid "已有账号？"
+msgstr "Already have an account?"
+
+msgid "已通过"
+msgstr "Approved"
+
+msgid "帮助文档"
+msgstr "Help docs"
+
+msgid "建议先清理不必要数据以缩小备份体积"
+msgstr "We recommend cleaning up unnecessary data first to reduce backup size."
+
+msgid "开始备份"
+msgstr "Start backup"
+
+msgid "开始您的创作之旅，以下是推荐的首次操作。"
+msgstr "Start your creative journey. Here are the recommended first actions."
+
+msgid "开始撰写..."
+msgstr "Start writing..."
+
+msgid "引用"
+msgstr "Quote"
+
+msgid "引用文字"
+msgstr "Quoted text"
+
+msgid "引用通告"
+msgstr "Trackback"
+
+msgid "强烈建议更改您的默认密码以保障安全"
+msgstr "We strongly recommend changing your default password for security."
+
+msgid "当前正在编辑的是未发布的草稿"
+msgstr "You are currently editing an unpublished draft."
+
+msgid "待审"
+msgstr "Pending review"
+
+msgid "待审核"
+msgstr "Pending review"
+
+msgid "忘记密码？"
+msgstr "Forgot password?"
+
+msgid "快速开始"
+msgstr "Quick start"
+
+msgid "总文章数"
+msgstr "Total posts"
+
+msgid "总评论数"
+msgstr "Total comments"
+
+msgid "恢复操作将覆盖所有现有数据, 是否继续?"
+msgstr "The restore operation will overwrite all existing data. Continue?"
+
+msgid "恢复数据"
+msgstr "Restore data"
+
+msgid "您也可以使用附件功能插入上传的本地图片"
+msgstr "You can also use the attachment feature to insert uploaded local images."
+
+msgid "您已经更新了系统程序, 我们还需要执行一些后续步骤来完成升级"
+msgstr "You have updated the system. We still need to perform some follow-up steps to complete the upgrade."
+
+msgid "您当前使用的版本是 %s"
+msgstr "The version you are currently using is %s"
+
+msgid "您确定要保存此文件吗？此操作不可逆。"
+msgstr "Are you sure you want to save this file? This operation is irreversible."
+
+msgid "您确认要删除这份草稿吗?"
+msgstr "Are you sure you want to delete this draft?"
+
+msgid "您确认要清理未归档的文件吗?"
+msgstr "Are you sure you want to clean up unarchived files?"
+
+msgid "成功"
+msgstr "Success"
+
+msgid "我们将向此邮箱发送初始密码"
+msgstr "We will send the initial password to this email."
+
+msgid "我的"
+msgstr "My"
+
+msgid "我知道了"
+msgstr "Got it"
+
+msgid "或者"
+msgstr "Or"
+
+msgid "所属文章"
+msgstr "Belonging post"
+
+msgid "所有"
+msgstr "All"
+
+msgid "所有分类"
+msgstr "All categories"
+
+msgid "打印"
+msgstr "Print"
+
+msgid "打印 (Ctrl+P)"
+msgstr "Print (Ctrl+P)"
+
+msgid "打印预览"
+msgstr "Print preview"
+
+msgid "扩展"
+msgstr "Expand"
+
+msgid "折叠/展开"
+msgstr "Collapse/Expand"
+
+msgid "报告错误"
+msgstr "Report error"
+
+msgid "拖放文件到这里"
+msgstr "Drag and drop files here"
+
+msgid "拖放文件到这里<br>或者 %s选择文件上传%s"
+msgstr "Drag and drop files here<br>or %s choose files to upload %s"
+
+msgid "持续更新中"
+msgstr "Continuously updating"
+
+msgid "控制台"
+msgstr "Console"
+
+msgid "推荐安装配套插件"
+msgstr "Recommended companion plugins"
+
+msgid "提交回复"
+msgstr "Submit reply"
+
+msgid "提示"
+msgstr "Tip"
+
+msgid "插件列表"
+msgstr "Plugin list"
+
+msgid "插件管理"
+msgstr "Plugin management"
+
+msgid "插件设置"
+msgstr "Plugin settings"
+
+msgid "插入图片"
+msgstr "Insert image"
+
+msgid "插入链接"
+msgstr "Insert link"
+
+msgid "摘要分割线"
+msgstr "Excerpt divider"
+
+msgid "撤销"
+msgstr "Undo"
+
+msgid "撰写"
+msgstr "Write"
+
+msgid "撰写文章"
+msgstr "Write post"
+
+msgid "撰写新文章"
+msgstr "Write new post"
+
+msgid "撰写设置"
+msgstr "Writing settings"
+
+msgid "操作"
+msgstr "Action"
+
+msgid "操作成功"
+msgstr "Operation successful"
+
+msgid "操作确认"
+msgstr "Operation confirmation"
+
+msgid "支持 .zip, .dat 等格式"
+msgstr "Supports .zip, .dat and other formats"
+
+msgid "支持论坛"
+msgstr "Support forum"
+
+msgid "数字列表"
+msgstr "Numbered list"
+
+msgid "数字越小越靠前"
+msgstr "Smaller numbers appear first"
+
+msgid "数据备份与恢复"
+msgstr "Data backup and restore"
+
+msgid "整数"
+msgstr "Integer"
+
+msgid "文件 %s 已经替换"
+msgstr "File %s has been replaced"
+
+msgid "文件名"
+msgstr "File name"
+
+msgid "文件大小超过限制"
+msgstr "File size exceeds limit"
+
+msgid "文件已删除"
+msgstr "File deleted"
+
+msgid "文件已经上传过"
+msgstr "File has already been uploaded"
+
+msgid "文件扩展名不被支持"
+msgstr "File extension is not supported"
+
+msgid "文件链接"
+msgstr "File link"
+
+msgid "文件预览"
+msgstr "File preview"
+
+msgid "文章"
+msgstr "Post"
+
+msgid "文章内容"
+msgstr "Post content"
+
+msgid "文章数"
+msgstr "Number of posts"
+
+msgid "文章预览"
+msgstr "Post preview"
+
+msgid "斜体"
+msgstr "Italic"
+
+msgid "斜体文字"
+msgstr "Italic text"
+
+msgid "新增"
+msgstr "Add"
+
+msgid "新增子页面"
+msgstr "Add subpage"
+
+msgid "无法保存"
+msgstr "Cannot save"
+
+msgid "无法在此版本的 Typecho 下正常工作"
+msgstr "Cannot work properly under this version of Typecho"
+
+msgid "日"
+msgstr "Day"
+
+msgid "日期"
+msgstr "Date"
+
+msgid "时"
+msgstr "Hour"
+
+msgid "时间"
+msgstr "Time"
+
+msgid "星期一"
+msgstr "Monday"
+
+msgid "星期三"
+msgstr "Wednesday"
+
+msgid "星期二"
+msgstr "Tuesday"
+
+msgid "星期五"
+msgstr "Friday"
+
+msgid "星期六"
+msgstr "Saturday"
+
+msgid "星期四"
+msgstr "Thursday"
+
+msgid "星期日"
+msgstr "Sunday"
+
+msgid "是"
+msgstr "Yes"
+
+msgid "昵称"
+msgstr "Nickname"
+
+msgid "普通列表"
+msgstr "Plain list"
+
+msgid "暂无"
+msgstr "None"
+
+msgid "暂无动态"
+msgstr "No updates yet"
+
+msgid "暂时没有回复"
+msgstr "No replies yet"
+
+msgid "暂时没有文章"
+msgstr "No posts yet"
+
+msgid "更改密码"
+msgstr "Change password"
+
+msgid "替换文件"
+msgstr "Replace file"
+
+msgid "最后更新: %s"
+msgstr "Last updated: %s"
+
+msgid "最后登录"
+msgstr "Last login"
+
+msgid "最新回复"
+msgstr "Latest replies"
+
+msgid "最近文章"
+msgstr "Recent posts"
+
+msgid "有修订"
+msgstr "Has revisions"
+
+msgid "未归档"
+msgstr "Unarchived"
+
+msgid "权限控制"
+msgstr "Permission control"
+
+msgid "查看"
+msgstr "View"
+
+msgid "查看所有评论"
+msgstr "View all comments"
+
+msgid "查看站点"
+msgstr "View site"
+
+msgid "查看网站"
+msgstr "View website"
+
+msgid "标为垃圾"
+msgstr "Mark as spam"
+
+msgid "标签"
+msgstr "Tag"
+
+msgid "标签名"
+msgstr "Tag name"
+
+msgid "标记为公开"
+msgstr "Mark as public"
+
+msgid "标记为待审核"
+msgstr "Mark as pending"
+
+msgid "标记为隐藏"
+msgstr "Mark as hidden"
+
+msgid "标记垃圾"
+msgstr "Mark spam"
+
+msgid "标题"
+msgstr "Title"
+
+msgid "标题文字"
+msgstr "Title text"
+
+msgid "检测到新版本!"
+msgstr "New version detected!"
+
+msgid "检测到新版本，按提示完成升级即可。"
+msgstr "A new version was detected. Follow the prompts to complete the upgrade."
+
+msgid "模板文件"
+msgstr "Template file"
+
+msgid "欢迎使用 %s"
+msgstr "Welcome to %s"
+
+msgid "欢迎回来"
+msgstr "Welcome back"
+
+msgid "欢迎回来, %s!"
+msgstr "Welcome back, %s!"
+
+msgid "欢迎页"
+msgstr "Welcome page"
+
+msgid "正在保存"
+msgstr "Saving"
+
+msgid "正在加载"
+msgstr "Loading"
+
+msgid "正在加载预览..."
+msgstr "Loading preview..."
+
+msgid "正在验证..."
+msgstr "Verifying..."
+
+msgid "此分类下的所有内容将被删除, 你确认要删除这些分类吗?"
+msgstr "All content under this category will be deleted. Are you sure you want to delete these categories?"
+
+msgid "此备份操作仅包含<strong>内容数据</strong>，不会涉及任何<strong>设置信息</strong>"
+msgstr "This backup operation only includes <strong>content data</strong> and does not involve any <strong>settings</strong>."
+
+msgid "此插件文件已经损坏或者被不安全移除, 强烈建议你禁用它"
+msgstr "This plugin file is corrupted or was removed unsafely. We strongly recommend disabling it."
+
+msgid "此操作不可逆，删除后无法恢复评论内容。"
+msgstr "This operation is irreversible. Deleted comment content cannot be recovered."
+
+msgid "此标签不存在, 按回车创建"
+msgstr "This tag does not exist. Press Enter to create it."
+
+msgid "此浏览器不支持全屏操作"
+msgstr "This browser does not support fullscreen."
+
+msgid "此程序将把您的系统从 <strong>%s</strong> 升级到 <strong>%s</strong>"
+msgstr "This program will upgrade your system from <strong>%s</strong> to <strong>%s</strong>."
+
+msgid "每一行一个引用地址, 用回车隔开"
+msgstr "One reference URL per line, separated by Enter."
+
+msgid "永久链接"
+msgstr "Permalink"
+
+msgid "永久链接设置"
+msgstr "Permalink settings"
+
+msgid "没有任何标签"
+msgstr "No tags"
+
+msgid "没有可用主题"
+msgstr "No available themes"
+
+msgid "没有安装插件"
+msgstr "No plugins installed"
+
+msgid "没有找到任何分类"
+msgstr "No categories found"
+
+msgid "没有找到任何文件"
+msgstr "No files found"
+
+msgid "没有找到任何文章"
+msgstr "No posts found"
+
+msgid "没有找到任何用户"
+msgstr "No users found"
+
+msgid "没有找到任何评论"
+msgstr "No comments found"
+
+msgid "没有找到任何页面"
+msgstr "No pages found"
+
+msgid "没有找到备份文件"
+msgstr "No backup files found"
+
+msgid "没有账号？"
+msgstr "No account?"
+
+msgid "注意"
+msgstr "Note"
+
+msgid "浏览 %s"
+msgstr "Browse %s"
+
+msgid "添加字段"
+msgstr "Add field"
+
+msgid "清理未归档"
+msgstr "Clean unarchived"
+
+msgid "点击或拖拽文件至此"
+msgstr "Click or drag files here"
+
+msgid "点击插入文件"
+msgstr "Click to insert file"
+
+msgid "父级页面"
+msgstr "Parent page"
+
+msgid "现在"
+msgstr "Now"
+
+msgid "用于登录和显示的名称"
+msgstr "Name used for login and display"
+
+msgid "用户名"
+msgstr "Username"
+
+msgid "用户名和内容不能为空"
+msgstr "Username and content cannot be empty"
+
+msgid "用户组"
+msgstr "User group"
+
+msgid "由 <a href=\"https://typecho.org\" class=\"hover:text-discord-accent\" target=\"_blank\" rel=\"noopener\">%s</a> 驱动, 版本 %s"
+msgstr "Powered by <a href=\"https://typecho.org\" class=\"hover:text-discord-accent\" target=\"_blank\" rel=\"noopener\">%s</a>, version %s"
+
+msgid "电子邮件"
+msgstr "Email"
+
+msgid "电子邮箱"
+msgstr "Email"
+
+msgid "登 录"
+msgstr "Sign in"
+
+msgid "登出"
+msgstr "Sign out"
+
+msgid "目前有 <strong>%s</strong> 篇文章, 并有 <strong>%s</strong> 条关于你的评论在 <strong>%s</strong> 个分类中."
+msgstr "There are currently <strong>%s</strong> posts, and <strong>%s</strong> comments about you in <strong>%s</strong> categories."
+
+msgid "确定"
+msgstr "OK"
+
+msgid "确认"
+msgstr "Confirm"
+
+msgid "确认保存"
+msgstr "Confirm save"
+
+msgid "确认删除"
+msgstr "Confirm delete"
+
+msgid "确认删除来自「%s」的评论？"
+msgstr "Confirm deleting the comment from \"%s\"?"
+
+msgid "确认删除此评论？"
+msgstr "Confirm deleting this comment?"
+
+msgid "确认恢复"
+msgstr "Confirm restore"
+
+msgid "确认操作"
+msgstr "Confirm operation"
+
+msgid "确认要删除文件 %s 吗?"
+msgstr "Confirm deleting file %s?"
+
+msgid "确认要删除此字段吗?"
+msgstr "Confirm deleting this field?"
+
+msgid "确认要删除该文件吗?"
+msgstr "Confirm deleting that file?"
+
+msgid "确认要执行该操作吗?"
+msgstr "Confirm executing this operation?"
+
+msgid "禁用"
+msgstr "Disable"
+
+msgid "禁用的插件"
+msgstr "Disabled plugins"
+
+msgid "私密"
+msgstr "Private"
+
+msgid "秒"
+msgstr "sec"
+
+msgid "立即注册"
+msgstr "Register now"
+
+msgid "筛选"
+msgstr "Filter"
+
+msgid "管理分类"
+msgstr "Manage categories"
+
+msgid "管理员"
+msgstr "Administrator"
+
+msgid "管理文件"
+msgstr "Manage files"
+
+msgid "管理文章"
+msgstr "Manage posts"
+
+msgid "管理标签"
+msgstr "Manage tags"
+
+msgid "管理独立页面"
+msgstr "Manage pages"
+
+msgid "管理用户"
+msgstr "Manage users"
+
+msgid "管理评论"
+msgstr "Manage comments"
+
+msgid "类型"
+msgstr "Type"
+
+msgid "系统"
+msgstr "System"
+
+msgid "系统升级"
+msgstr "System upgrade"
+
+msgid "编辑"
+msgstr "Edit"
+
+msgid "编辑%s外观"
+msgstr "Edit %s appearance"
+
+msgid "编辑信息"
+msgstr "Edit info"
+
+msgid "编辑外观文件"
+msgstr "Edit appearance file"
+
+msgid "编辑当前主题"
+msgstr "Edit current theme"
+
+msgid "编辑当前外观"
+msgstr "Edit current appearance"
+
+msgid "编辑评论"
+msgstr "Edit comment"
+
+msgid "缩略名"
+msgstr "Slug"
+
+msgid "网络错误，删除失败"
+msgstr "Network error, delete failed"
+
+msgid "自定义字段"
+msgstr "Custom fields"
+
+msgid "自定义字段可以扩展你的模板功能, 使用方法参见 <a href=\"https://docs.typecho.org/help/custom-fields\" target=\"_blank\" class=\"text-discord-accent hover:underline\">帮助文档</a>"
+msgstr "Custom fields can extend your template functionality. See the <a href=\"https://docs.typecho.org/help/custom-fields\" target=\"_blank\" class=\"text-discord-accent hover:underline\">help docs</a> for usage."
+
+msgid "自定义模板"
+msgstr "Custom template"
+
+msgid "草稿"
+msgstr "Draft"
+
+msgid "获取更多插件"
+msgstr "Get more plugins"
+
+msgid "表格"
+msgstr "Table"
+
+msgid "表格视图"
+msgstr "Table view"
+
+msgid "警告"
+msgstr "Warning"
+
+msgid "设为默认"
+msgstr "Set as default"
+
+msgid "设置"
+msgstr "Settings"
+
+msgid "设置外观"
+msgstr "Set appearance"
+
+msgid "访问官网"
+msgstr "Visit official site"
+
+msgid "访问您的网站首页"
+msgstr "Visit your site homepage"
+
+msgid "访问网站首页"
+msgstr "Visit website homepage"
+
+msgid "访问者"
+msgstr "Visitor"
+
+msgid "评论"
+msgstr "Comment"
+
+msgid "评论数"
+msgstr "Number of comments"
+
+msgid "评论设置"
+msgstr "Comment settings"
+
+msgid "该用户"
+msgstr "This user"
+
+msgid "请上传主题到 <span class=\"font-mono bg-gray-100 px-1\">/usr/themes</span> 目录"
+msgstr "Please upload themes to the <span class=\"font-mono bg-gray-100 px-1\">/usr/themes</span> directory."
+
+msgid "请先选择至少一个分类。"
+msgstr "Please select at least one category first."
+
+msgid "请先选择至少一个条目。"
+msgstr "Please select at least one item first."
+
+msgid "请先选择至少一个标签。"
+msgstr "Please select at least one tag first."
+
+msgid "请切换到打印预览模式"
+msgstr "Please switch to print preview mode"
+
+msgid "请在下方的输入框内输入要插入的远程图片地址"
+msgstr "Please enter the remote image URL to insert in the input box below."
+
+msgid "请在下方的输入框内输入要插入的链接地址"
+msgstr "Please enter the link URL to insert in the input box below."
+
+msgid "请登录您的账号以继续"
+msgstr "Please sign in to your account to continue"
+
+msgid "请确认是否继续。"
+msgstr "Please confirm whether to continue."
+
+msgid "请输入代码"
+msgstr "Please enter code"
+
+msgid "请输入关键字"
+msgstr "Please enter keyword"
+
+msgid "请输入回复内容"
+msgstr "Please enter reply content"
+
+msgid "请输入图片描述"
+msgstr "Please enter image description"
+
+msgid "请输入密码"
+msgstr "Please enter password"
+
+msgid "请输入有效的邮箱地址"
+msgstr "Please enter a valid email address"
+
+msgid "请输入标签名"
+msgstr "Please enter tag name"
+
+msgid "请输入用户名"
+msgstr "Please enter username"
+
+msgid "请输入用户名或邮箱"
+msgstr "Please enter username or email"
+
+msgid "请输入链接描述"
+msgstr "Please enter link description"
+
+msgid "贡献者"
+msgstr "Contributor"
+
+msgid "账户密码找回插件，完全开源，且支持自定义邮件模版，内置网安标准的行为日志系统，可实现快速、安全的密码找回体验。"
+msgstr "Account password recovery plugin, fully open source, supports custom email templates, with a built-in security-standard behavior logging system for fast and secure password recovery."
+
+msgid "资源下载"
+msgstr "Resource download"
+
+msgid "返回"
+msgstr "Back"
+
+msgid "返回外观列表"
+msgstr "Back to appearance list"
+
+msgid "返回控制台"
+msgstr "Back to console"
+
+msgid "返回插件列表"
+msgstr "Back to plugin list"
+
+msgid "返回直接登录"
+msgstr "Back to direct login"
+
+msgid "这篇文章不是由Markdown语法创建的, 继续使用Markdown编辑它吗?"
+msgstr "This post was not created with Markdown syntax. Continue editing it with Markdown?"
+
+msgid "进入后台管理 &raquo;"
+msgstr "Enter admin &raquo;"
+
+msgid "退出全屏"
+msgstr "Exit fullscreen"
+
+msgid "选中项"
+msgstr "Selected items"
+
+msgid "选择一个备份文件"
+msgstr "Select a backup file"
+
+msgid "选择并恢复"
+msgstr "Select and restore"
+
+msgid "选择文件上传"
+msgstr "Choose file to upload"
+
+msgid "选择时间"
+msgstr "Select time"
+
+msgid "通行密钥登录插件，完全开源，且符合 IEEE 安全标准，支持同一账号的多设备通信秘钥绑定，轻松实现同微软等大厂一致快捷、安全的无密码登录体验。"
+msgstr "Passkey login plugin, fully open source, IEEE security standard compliant, supports multi-device key binding for the same account, delivering fast and secure passwordless login like major vendors such as Microsoft."
+
+msgid "通过"
+msgstr "Pass"
+
+msgid "重做"
+msgstr "Redo"
+
+msgid "链接"
+msgstr "Link"
+
+msgid "错误"
+msgstr "Error"
+
+msgid "阅读设置"
+msgstr "Reading settings"
+
+msgid "附件"
+msgstr "Attachment"
+
+msgid "隐藏"
+msgstr "Hidden"
+
+msgid "需要处理"
+msgstr "Needs attention"
+
+msgid "页面不存在"
+msgstr "Page not found"
+
+msgid "页面内容"
+msgstr "Page content"
+
+msgid "页面顺序"
+msgstr "Page order"
+
+msgid "预览"
+msgstr "Preview"
+
+msgid "高级选项"
+msgstr "Advanced options"
+
+msgid "默认"
+msgstr "Default"
+
+msgid "对应 _e() 当中的正文内容"
+msgstr "Corresponds to the body content in _e()"
+
+msgid "符号 \"%s\" 表示标识转义"
+msgstr "The symbol \"%s\" indicates an escape sequence."
+
