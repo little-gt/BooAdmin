@@ -6,7 +6,7 @@
 
 一款使用 TailwindCSS 精心重构的 Typecho 现代化后台主题。完全支持 Typecho 1.3.0，采用 GARFIELDTOM'S NEST CDN 进行资源加速分发，提供稳定且高效的加载体验。
 
-![BooAdmin](https://img.shields.io/badge/BooAdmin-v1.3.3--rc2-blue?style=for-the-badge)
+![BooAdmin](https://img.shields.io/badge/BooAdmin-v1.3.4-blue?style=for-the-badge)
 ![License](https://img.shields.io/badge/License-GPLv3-blue?style=for-the-badge)
 ![LTS](https://img.shields.io/badge/Status-Preview-blue?style=for-the-badge)
 
@@ -23,6 +23,7 @@
 | BooAdmin | 后台主题 | https://cnb.cool/little-gt/BooAdmin | https://github.com/little-gt/BooAdmin |
 | Passkey | 配套插件 | https://cnb.cool/little-gt/Passkey | https://github.com/little-gt/Passkey |
 | Passport | 配套插件 | https://cnb.cool/little-gt/Passport | https://github.com/little-gt/Passport |
+| IPLocation | 配套插件 | https://cnb.cool/little-gt/IPLocation | https://github.com/little-gt/IPLocation |
 
 ![TDP](https://cnb.cool/little-gt/BooAdmin/-/git/raw/main/screenshot/cloud-tdp.png)
 

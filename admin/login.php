@@ -20,7 +20,7 @@ include 'header.php';
 ?>
 <div class="min-h-screen flex bg-discord-light text-discord-text">
     <!-- Left Side: Hero Image -->
-    <div class="hidden md:flex md:w-1/2 flex-col justify-center items-center bg-cover bg-center relative" style="background-image: url('https://cdn.garfieldtom.cool/img/wldairy/poster/horizontal/%E9%81%87%E8%A7%81%E4%BD%A0%E7%9A%84%E7%8C%AB_%E9%82%A3%E4%B8%80%E5%A4%A9.jpg');">
+    <div class="hidden md:flex md:w-1/2 flex-col justify-center items-center bg-cover bg-center relative" style="background-image: url('https://cdn.garfieldtom.cool/img/wldairy/poster/illustration/MemoryAdministrationBureau.jpg');">
         <div class="absolute inset-0 pointer-events-none" style="background-color: var(--booadmin-hero-overlay);"></div>
         <div class="relative z-10 text-white p-12 text-center">
             <h1 class="text-4xl font-bold mb-4"><?php $options->title(); ?></h1>

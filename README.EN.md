@@ -6,7 +6,7 @@
 
 A modernized Typecho admin theme rebuilt with TailwindCSS. Fully compatible with Typecho 1.3.0, and accelerated via GARFIELDTOM'S NEST CDN for stable and efficient resource delivery.
 
-![BooAdmin](https://img.shields.io/badge/BooAdmin-v1.3.3--rc2-blue?style=for-the-badge)
+![BooAdmin](https://img.shields.io/badge/BooAdmin-v1.3.4-blue?style=for-the-badge)
 ![License](https://img.shields.io/badge/License-GPLv3-blue?style=for-the-badge)
 ![LTS](https://img.shields.io/badge/Status-Preview-blue?style=for-the-badge)
 
@@ -23,6 +23,7 @@ The following domestic/international mirrors are provided for quick downloads of
 | BooAdmin | Admin Theme | https://cnb.cool/little-gt/BooAdmin | https://github.com/little-gt/BooAdmin |
 | Passkey | Companion Plugin | https://cnb.cool/little-gt/Passkey | https://github.com/little-gt/Passkey |
 | Passport | Companion Plugin | https://cnb.cool/little-gt/Passport | https://github.com/little-gt/Passport |
+| IPLocation | Companion Plugin | https://cnb.cool/little-gt/IPLocation | https://github.com/little-gt/IPLocation |
 
 ![TDP](https://cnb.cool/little-gt/BooAdmin/-/git/raw/main/screenshot/cloud-tdp.png)
 

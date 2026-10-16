@@ -443,11 +443,9 @@ include 'common-js.php';
             'booadmin-news-badge-6'
         ];
 
-        if (!!html) {
-            newsGrid.html(html);
-        } else {
-            html = '';
-            $.get('<?php $options->index('/action/ajax?do=feed'); ?>', function (o) {
+        function renderNews(o) {
+            var html = '';
+            if (o && o.length) {
                 for (var i = 0; i < o.length && i < 6; i++) {
                     var item = o[i];
                     var icon = newsIcons[i % newsIcons.length];
@@ -460,16 +458,34 @@ include 'common-js.php';
                         '<p class="booadmin-news-meta text-xs mt-0.5">' + item.date + '</p>' +
                         '</div>' +
                         '<i class="fas fa-chevron-right booadmin-news-arrow text-xs transition-colors"></i></a>';
-
                 }
-                
-                if (o.length === 0) {
-                    html = '<div class="col-span-full text-center py-4 booadmin-news-empty"><i class="fas fa-inbox mr-2"></i><?php _e('暂无动态'); ?></div>';
-                }
+            } else {
+                html = '<div class="col-span-full text-center py-4 booadmin-news-empty"><i class="fas fa-inbox mr-2"></i><?php _e('暂无动态'); ?></div>';
+            }
+            newsGrid.html(html);
+            return html;
+        }
 
-                newsGrid.html(html);
-                cache.setItem(NEWS_CACHE_KEY, html);
-            }, 'json');
+        if (!!html) {
+            newsGrid.html(html);
+        } else {
+            // 异步获取官方动态：带超时与失败兜底，避免后端慢请求阻塞页面
+            $.ajax({
+                url: '<?php $options->index('/action/ajax?do=feed'); ?>',
+                type: 'GET',
+                dataType: 'json',
+                timeout: 5000,
+                success: function (o) {
+                    var rendered = renderNews(o);
+                    if (cache) {
+                        cache.setItem(NEWS_CACHE_KEY, rendered);
+                    }
+                },
+                error: function () {
+                    // 获取失败（超时 / 网络错误）时直接显示占位，不再长时间停留在骨架
+                    newsGrid.html('<div class="col-span-full text-center py-4 booadmin-news-empty"><i class="fas fa-inbox mr-2"></i><?php _e('暂无动态'); ?></div>');
+                }
+            });
         }
 
         function applyUpdate(update) {
@@ -485,10 +501,20 @@ include 'common-js.php';
         if (!!update) {
             applyUpdate($.parseJSON(update));
         } else {
-            $.get('<?php $options->index('/action/ajax?do=checkVersion'); ?>', function (o, status, resp) {
-                applyUpdate(o);
-                cache.setItem('update', resp.responseText);
-            }, 'json');
+            // 版本检查同样异步并带超时，失败不影响页面其余部分
+            $.ajax({
+                url: '<?php $options->index('/action/ajax?do=checkVersion'); ?>',
+                type: 'GET',
+                dataType: 'json',
+                timeout: 5000,
+                success: function (o, status, resp) {
+                    applyUpdate(o);
+                    if (cache) {
+                        cache.setItem('update', resp.responseText);
+                    }
+                },
+                error: function () { /* 版本检查失败不阻塞页面 */ }
+            });
         }
     });
 </script>

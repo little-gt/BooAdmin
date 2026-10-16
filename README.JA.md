@@ -6,7 +6,7 @@
 
 TailwindCSS を用いて再構築された、Typecho 向けのモダンな管理テーマです。Typecho 1.3.0 に完全対応しており、GARFIELDTOM'S NEST CDN によるリソース配信で、安定した高效な読み込み体験を提供します。
 
-![BooAdmin](https://img.shields.io/badge/BooAdmin-v1.3.3--rc2-blue?style=for-the-badge)
+![BooAdmin](https://img.shields.io/badge/BooAdmin-v1.3.4-blue?style=for-the-badge)
 ![License](https://img.shields.io/badge/License-GPLv3-blue?style=for-the-badge)
 ![LTS](https://img.shields.io/badge/Status-Preview-blue?style=for-the-badge)
 
@@ -23,6 +23,7 @@ TailwindCSS を用いて再構築された、Typecho 向けのモダンな管理
 | BooAdmin | 管理テーマ | https://cnb.cool/little-gt/BooAdmin | https://github.com/little-gt/BooAdmin |
 | Passkey | 専用プラグイン | https://cnb.cool/little-gt/Passkey | https://github.com/little-gt/Passkey |
 | Passport | 専用プラグイン | https://cnb.cool/little-gt/Passport | https://github.com/little-gt/Passport |
+| IPLocation | 専用プラグイン | https://cnb.cool/little-gt/IPLocation | https://github.com/little-gt/IPLocation |
 
 ![TDP](https://cnb.cool/little-gt/BooAdmin/-/git/raw/main/screenshot/cloud-tdp.png)
 
