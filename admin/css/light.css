@@ -216,3 +216,24 @@ body:not(.body-100),
     background-color: var(--booadmin-bg);
     color: var(--booadmin-text);
 }
+
+/* ========================================
+ * 撰写/编辑文章（页面）编辑器
+ * 浅色模式下给予一点底色，与深色模式的书写区一致
+ * 优先级高于 .bg-transparent，但不加 !important 以便深色模式
+ * 下仍由 dark.css 的 textarea 规则（带 !important）接管
+ * 仅作用于主内容编辑器（.editor-container），不影响自定义编辑框
+ * ======================================== */
+.editor-container textarea {
+    background-color: #f9fafb;
+}
+
+/* ========================================
+ * 侧栏选项卡容器（设置/附件）
+ * 浅色模式底色加深，呼应深色模式的设计
+ * 需 !important 以覆盖 Tailwind 的 bg-gray-100；
+ * 深色模式仍由 dark.css 中媒体查询内的 .bg-gray-100 接管
+ * ======================================== */
+.typecho-option-tabs {
+    background-color: #e5e7eb !important;
+}

@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: BooAdmin1.3.0\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: \n"
-"PO-Revision-Date: 2026-09-03 10:00+0800\n"
+"PO-Revision-Date: 2026-10-16 17:46+0800\n"
 "Last-Translator: coolerxde@gt.ac.cn <coolerxde@gt.ac.cn>\n"
 "Language-Team: \n"
 "Language: en_US\n"
@@ -16,19 +16,22 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"X-Generator: Poedit 3.0\n"
+"X-Generator: Poedit 3.9\n"
 
 msgid "对应 _e() 当中的正文内容"
 msgstr "Corresponds to the body content in _e()"
 
 msgid "符号 \"%s\" 表示标识转义"
-msgstr "The symbol \"%s\" indicates an escape sequence."
+msgstr "The symbol \"%s\" indicates an escape character."
 
 msgid "基本"
 msgstr "Basic"
 
 msgid "阅读"
 msgstr "Reading"
+
+msgid "数据"
+msgstr "Data"
 
 msgid "页面"
 msgstr "Page"

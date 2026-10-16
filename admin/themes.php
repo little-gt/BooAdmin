@@ -48,7 +48,7 @@ include 'menu.php';
                         <?php if ($themes->have()): ?>
                             <?php while ($themes->next()): ?>
                                 <div class="bg-gray-50 p-4 border border-gray-200 flex flex-col group transition-transform transform hover:-translate-y-1 <?php if ($themes->activated): ?>ring-2 ring-discord-accent<?php endif; ?>">
-                                    <div class="relative h-44 bg-gray-200 overflow-hidden">
+                                    <div class="relative bg-gray-200 overflow-hidden" style="aspect-ratio: 3 / 2;">
                                         <?php if ($themes->screen): ?>
                                             <img src="<?php $themes->screen(); ?>" alt="<?php $themes->name(); ?>" class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105">
                                         <?php else: ?>
