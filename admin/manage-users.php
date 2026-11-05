@@ -323,3 +323,5 @@ $users = \Widget\Users\Admin::alloc();
 include 'common-js.php';
 include 'table-js.php';
 ?>
+
+<?php include 'footer.php'; ?>

@@ -2,8 +2,10 @@
 <?php \Typecho\Plugin::factory('admin/write-js.php')->call('write'); ?>
 <?php \Widget\Metas\Tag\Cloud::alloc('sort=count&desc=1&limit=200')->to($tags); ?>
 
-<script src="<?php $options->adminStaticUrl('js', 'timepicker.js'); ?>"></script>
-<script src="<?php $options->adminStaticUrl('js', 'tokeninput.js'); ?>"></script>
+<?php
+booadminScriptOnce('timepicker.js');
+booadminScriptOnce('tokeninput.js');
+?>
 <script>
 $(document).ready(function() {
     // 日期时间控件
@@ -533,7 +535,7 @@ $(document).ready(function() {
 
     // 事件已绑定，解除这些操作链接的原生跳转保护
     if (window.booadminArmLinks) {
-        booadminArmLinks('.edit-draft-notice a');
+        booadminArmLinks();
     }
 });
 </script>

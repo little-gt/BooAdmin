@@ -244,7 +244,7 @@ include 'common-js.php';
             actionEl    :   '.dropdown-menu a.js-category-action'
         });
 
-        $('.btn-dropdown-toggle').dropdownMenu({
+        $('.btn-dropdown-toggle').booadminDropdown({
             btnEl       :   '.btn-dropdown-toggle',
             menuEl      :   '.dropdown-menu'
         });
@@ -258,7 +258,7 @@ include 'common-js.php';
 
         // 事件已绑定，解除这些操作链接的原生跳转保护
         if (window.booadminArmLinks) {
-            booadminArmLinks('.js-category-action');
+            booadminArmLinks();
         }
 
         <?php if (isset($request->mid)): ?>
@@ -271,3 +271,5 @@ include 'common-js.php';
 })();
 </script>
 
+
+<?php include 'footer.php'; ?>

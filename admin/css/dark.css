@@ -94,6 +94,16 @@
         --booadmin-danger-disabled: #9e2828;
         --booadmin-error-bg: #2a0c10;
         --booadmin-error-text: #e8aaaa;
+        --booadmin-danger-bg: #2a0c10;
+
+        /* ========================================
+         * 品牌按钮（暗色柔化，与原补丁取值一致）
+         * ======================================== */
+        --booadmin-accent-button: #3a3c6e;
+        --booadmin-accent-button-hover: #46487d;
+        --booadmin-accent-button-border: #484a78;
+        --booadmin-on-accent-button: #c4c8e8;
+        --booadmin-on-accent-button-hover: #ddddef;
 
         /* ========================================
          * 语义色 - Info (低饱和蓝)
@@ -176,6 +186,9 @@
         --booadmin-overlay: rgba(0, 0, 0, 0.75);
         --booadmin-overlay-solid: #000000;
         --booadmin-hero-overlay: rgba(0, 0, 0, 0.65);
+        --booadmin-hero-fallback: #0a0a0a;
+        --booadmin-hero-gradient-a: rgba(10, 10, 10, 0.3);
+        --booadmin-hero-gradient-b: rgba(10, 10, 10, 0.3);
 
         /* ========================================
          * NProgress 加载指示器
@@ -224,130 +237,52 @@
     }
 
     /* ========================================
-     * Tailwind 背景色工具类覆盖
-     * ======================================== */
-    .bg-white {
-        background-color: var(--booadmin-surface) !important;
-    }
-
-    .bg-gray-50 {
-        background-color: var(--booadmin-surface-muted) !important;
-    }
-
-    .bg-gray-100 {
-        background-color: var(--booadmin-highlight-soft) !important;
-    }
-
-    .bg-gray-200 {
-        background-color: var(--booadmin-active) !important;
-    }
-
-    .bg-gray-300 {
-        background-color: var(--booadmin-link-soft-bg) !important;
-    }
+     * Tailwind 颜色工具类
+     * ========================================
+     * 已移除原先对 .bg-white / .text-gray-* / .border-gray-* /
+     * .hover\:bg-* 等字面类的 !important 穷举重映射。
+     *
+     * 原因：config/v3/tailwind.config.js 已把整个 Tailwind 调色板
+     * 映射到 --booadmin-* 语义变量，产物中的颜色类（含所有变体）
+     * 会自动读取本块 :root 中的变量值。新增颜色类无需再补补丁，
+     * 从根源上消除了「穷举覆盖」带来的暗色遗漏与维护负担。
+     */
 
     /* ========================================
-     * Tailwind 文本色工具类覆盖
-     * ======================================== */
-    .text-discord-text,
-    .text-gray-900,
-    .text-gray-800,
-    .text-gray-700,
-    .text-gray-600 {
-        color: var(--booadmin-text) !important;
-    }
-
-    .text-discord-muted,
-    .text-gray-500,
-    .text-gray-400,
-    .text-gray-300 {
-        color: var(--booadmin-muted) !important;
-    }
-
-    /* ========================================
-     * Tailwind 边框色工具类覆盖
-     * ======================================== */
-    .border,
-    .border-gray-100,
-    .border-gray-200,
-    .border-gray-300,
-    .border-dashed {
-        border-color: var(--booadmin-border) !important;
-    }
-
-    /* ========================================
-     * Tailwind Hover 状态覆盖
-     * ======================================== */
-    .hover\:bg-gray-50:hover {
-        background-color: var(--booadmin-highlight-soft) !important;
-    }
-
-    .hover\:bg-gray-100:hover {
-        background-color: var(--booadmin-surface-2) !important;
-    }
-
-    .hover\:bg-gray-300:hover {
-        background-color: var(--booadmin-link-soft-hover) !important;
-    }
-
-    .hover\:text-discord-text:hover {
-        color: var(--booadmin-text) !important;
-    }
-
-    .hover\:text-red-500:hover {
-        color: var(--booadmin-danger) !important;
-    }
-
-    /* ========================================
-     * Discord 主题工具类
-     * ======================================== */
-    .bg-discord-sidebar {
-        background-color: var(--booadmin-sidebar) !important;
-    }
-
-    .bg-discord-active {
-        background-color: var(--booadmin-active) !important;
-    }
-
-    .text-discord-accent,
-    .hover\:text-discord-accent:hover {
-        color: var(--booadmin-accent) !important;
-    }
-
+     * 品牌按钮的暗色柔化
+     * ========================================
+     * 这是刻意的视觉设计（暗底 + 柔字 + 边框），不是颜色类补丁。
+     * 取值同样来自变量，避免任何硬编码色值。
+     */
     .bg-discord-accent,
-    .hover\:bg-discord-accent:hover {
-        /* 统一暗色模式所有按钮背景色 */
-        background-color: #3a3c6e !important;
-    }
-
-    /* 登录页按钮统一：暗底 + 柔字 + 边框 */
+    .hover\:bg-discord-accent:hover,
     .typecho-login-wrap button[type="submit"],
     .typecho-login-wrap button.bg-discord-accent,
     #passkey-login-btn {
-        background-color: #3a3c6e !important;
-        color: #c4c8e8 !important;
-        border-color: #484a78 !important;
+        background-color: var(--booadmin-accent-button) !important;
+        color: var(--booadmin-on-accent-button) !important;
+        border-color: var(--booadmin-accent-button-border) !important;
     }
 
     .typecho-login-wrap button[type="submit"]:hover,
     .typecho-login-wrap button.bg-discord-accent:hover,
-    #passkey-login-btn:hover {
-        background-color: #46487d !important;
-        color: #ddddef !important;
+    #passkey-login-btn:hover,
+    .hover\:bg-discord-accent:hover {
+        background-color: var(--booadmin-accent-button-hover) !important;
+        color: var(--booadmin-on-accent-button-hover) !important;
     }
 
-    /* 全局 bg-discord-accent 按钮：暗模式下统一柔化文字和边框 */
     button.bg-discord-accent.text-white,
     a.bg-discord-accent.text-white,
     input[type="submit"].bg-discord-accent.text-white {
-        color: #c4c8e8 !important;
-        border: 1px solid #484a78 !important;
+        color: var(--booadmin-on-accent-button) !important;
+        border: 1px solid var(--booadmin-accent-button-border) !important;
     }
 
     button.bg-discord-accent.text-white:hover,
     a.bg-discord-accent.text-white:hover,
     input[type="submit"].bg-discord-accent.text-white:hover {
-        color: #ddddef !important;
+        color: var(--booadmin-on-accent-button-hover) !important;
     }
 
     /* ========================================
@@ -1326,6 +1261,19 @@
     }
 
     /* --- 选项卡 (Option Tabs) --- */
+
+    /*
+     * 分段式选项卡容器（撰写/备份页的「设置/附件」等）
+     *
+     * 这些容器同时带 .bg-gray-100，而 .bg-gray-100 的语义是
+     * --booadmin-surface-muted（#080808），在纯黑基底上与页面背景几乎无差别，
+     * 分段控件会「消失」。这里单独给该组件用 --booadmin-highlight-soft
+     * （#111111），与背景有明确层次，且不影响其它 .bg-gray-100 用法。
+     */
+    .typecho-option-tabs {
+        background-color: var(--booadmin-highlight-soft) !important;
+    }
+
     .typecho-option-tabs li a {
         border-color: var(--booadmin-border) !important;
         color: var(--booadmin-muted) !important;

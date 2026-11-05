@@ -45,9 +45,11 @@
 })();
 </script>
 <?php else: ?>
-<script src="<?php $options->adminStaticUrl('js', 'hyperdown.js'); ?>"></script>
-<script src="<?php $options->adminStaticUrl('js', 'pagedown.js'); ?>"></script>
-<script src="<?php $options->adminStaticUrl('js', 'purify.js'); ?>"></script>
+<?php
+booadminScriptOnce('hyperdown.js');
+booadminScriptOnce('pagedown.js');
+?>
+<?php booadminScriptOnce('purify.js'); ?>
 
 <!-- KaTeX Resources -->
 <link rel="stylesheet" href="https://cdn.garfieldtom.cool/resource/libs/KaTeX/0.16.38/katex.min.css">

@@ -1,0 +1,8 @@
+/**
+ * BooAdmin - Tailwind base/preflight 入口
+ * 产物：admin/css/tailwind-base.css
+ *
+ * 只输出 reset/preflight，必须与 utilities 分开加载：
+ * preflight 在所有组件样式之前，组件层在 utilities 之前。
+ */
+@tailwind base;

@@ -9,37 +9,53 @@ $stat = \Widget\Stat::alloc();
 $canWrite = $user->pass('contributor', true);
 $canEdit  = $user->pass('editor', true);
 
-// 获取最近7天的文章和评论数据
+/**
+ * 获取最近 7 天的文章与评论趋势。
+ *
+ * 原实现按天循环执行 7×2=14 次 COUNT 查询，每次控制台加载都要跑一遍。
+ * 现改为「2 次区间查询 + PHP 端按日分桶」：只取 created 一列，
+ * 在内存里归入 7 个桶，结果完全一致，但查询次数从 14 降到 2。
+ * 以服务器本地时区 dayStart 计算，与原 strtotime('Y-m-d ...') 口径一致。
+ */
 $db = \Typecho\Db::get();
 $days = [];
-$postsData = [];
-$commentsData = [];
-
+$dayIndex = [];
 for ($i = 6; $i >= 0; $i--) {
-    $date = date('Y-m-d', strtotime("-{$i} days"));
-    $dayName = date('m/d', strtotime("-{$i} days"));
-    $days[] = $dayName;
-    
-    // 当天文章数
-    $startTime = strtotime($date . ' 00:00:00');
-    $endTime = strtotime($date . ' 23:59:59');
-    
-    $postCount = $db->fetchObject($db->select(['COUNT(cid)' => 'num'])
-        ->from('table.contents')
-        ->where('type = ?', 'post')
-        ->where('status = ?', 'publish')
-        ->where('created >= ?', $startTime)
-        ->where('created <= ?', $endTime))->num;
-    $postsData[] = (int)$postCount;
-    
-    // 当天评论数
-    $commentCount = $db->fetchObject($db->select(['COUNT(coid)' => 'num'])
-        ->from('table.comments')
-        ->where('status = ?', 'approved')
-        ->where('created >= ?', $startTime)
-        ->where('created <= ?', $endTime))->num;
-    $commentsData[] = (int)$commentCount;
+    $ts = strtotime("-{$i} days");
+    $dayKey = date('Y-m-d', $ts);
+    $dayIndex[$dayKey] = count($days);
+    $days[] = date('m/d', $ts);
 }
+
+$postsData = array_fill(0, 7, 0);
+$commentsData = array_fill(0, 7, 0);
+$startTime = strtotime(date('Y-m-d', strtotime('-6 days')) . ' 00:00:00');
+$endTime = strtotime(date('Y-m-d') . ' 23:59:59');
+
+/** 把查询结果按 created 日期累加到对应桶 */
+$bucket = function ($rows, array &$target) use ($dayIndex) {
+    foreach ($rows as $row) {
+        $row = (array) $row;
+        $created = isset($row['created']) ? (int) $row['created'] : 0;
+        $key = date('Y-m-d', $created);
+        if ($created > 0 && isset($dayIndex[$key])) {
+            $target[$dayIndex[$key]]++;
+        }
+    }
+};
+
+$bucket($db->fetchAll($db->select('created')
+    ->from('table.contents')
+    ->where('type = ?', 'post')
+    ->where('status = ?', 'publish')
+    ->where('created >= ?', $startTime)
+    ->where('created <= ?', $endTime)), $postsData);
+
+$bucket($db->fetchAll($db->select('created')
+    ->from('table.comments')
+    ->where('status = ?', 'approved')
+    ->where('created >= ?', $startTime)
+    ->where('created <= ?', $endTime)), $commentsData);
 
 $chartDays = json_encode($days);
 $chartPosts = json_encode($postsData);
@@ -68,7 +84,7 @@ $chartComments = json_encode($commentsData);
 
     <!-- Content Area -->
     <div class="flex-1 overflow-y-auto p-4 md:p-8">
-        <div class="w-full max-w-none mx-auto">
+        <div class="w-full max-w-none mx-auto" id="booadmin-content">
             
             <!-- Welcome Section -->
             <div class="bg-white p-6 mb-6 flex items-center justify-between border-l-4 border-discord-accent">
@@ -294,11 +310,79 @@ $chartComments = json_encode($commentsData);
 include 'common-js.php';
 ?>
 <script>
-    $(document).ready(function () {
-        // 活动图表配置（使用真实数据）
+    /**
+     * 三个彼此独立的模块：图表 / 官方动态 / 版本检查。
+     * 任一模块异常（例如 ECharts CDN 不可达）都不会阻断其余模块，
+     * 避免第三方资源故障导致整个控制台脚本级联失效。
+     */
+    (function () {
+        function module(name, init) {
+            $(function () {
+                try {
+                    init();
+                } catch (e) {
+                    if (window.console && typeof console.error === 'function') {
+                        console.error('[BooAdmin] 控制台模块失败: ' + name, e);
+                    }
+                }
+            });
+        }
+
         var chartDays = <?php echo $chartDays; ?>;
         var chartPosts = <?php echo $chartPosts; ?>;
         var chartComments = <?php echo $chartComments; ?>;
+
+        /** 外部数据统一按纯文本渲染，供各模块共用 */
+        function esc(value) {
+            return $('<div/>').text(value == null ? '' : String(value)).html();
+        }
+
+        /** 链接只允许 http/https，避免 javascript: 注入 */
+        function safeUrl(url) {
+            return /^https?:\/\//i.test(String(url || '')) ? String(url) : '#';
+        }
+
+        /**
+         * 带 TTL 的 sessionStorage 封装。
+         * 缓存一律以 {t: 时间戳, d: 数据} 形式存储，过期自动丢弃；
+         * 旧格式（纯 JSON 数组/对象）没有 t 字段，会被判定为过期并重新拉取。
+         */
+        var CACHE_TTL = 60 * 60 * 1000; // 1 小时
+        function cacheGet(key) {
+            try {
+                if (!window.sessionStorage) { return null; }
+                var raw = sessionStorage.getItem(key);
+                if (!raw) { return null; }
+                var box = JSON.parse(raw);
+                if (!box || typeof box.t !== 'number' || (Date.now() - box.t) > CACHE_TTL) {
+                    sessionStorage.removeItem(key);
+                    return null;
+                }
+                return box.d;
+            } catch (e) {
+                return null;
+            }
+        }
+        function cacheSet(key, data) {
+            try {
+                if (window.sessionStorage) {
+                    sessionStorage.setItem(key, JSON.stringify({ t: Date.now(), d: data }));
+                }
+            } catch (e) {
+                // 配额耗尽 / 隐私模式：忽略，仅失去缓存
+            }
+        }
+
+        module('charts', function () {
+        // ECharts 由 CDN 以 defer 加载；不可用时给出占位而非抛 ReferenceError
+        if (typeof window.echarts === 'undefined') {
+            $('#activity-chart, #distribution-chart').html(
+                '<div class="booadmin-chart-unavailable"><?php _e('图表组件加载失败，请检查网络后刷新。'); ?></div>'
+            );
+            return;
+        }
+
+        // 活动图表配置（使用真实数据）
 
         var css = getComputedStyle(document.documentElement);
         var chartColor = {
@@ -427,12 +511,12 @@ include 'common-js.php';
             activityChart.resize();
             distributionChart.resize();
         });
+        });
 
-        var newsGrid = $('#typecho-news-grid'), cache = window.sessionStorage,
-            NEWS_CACHE_KEY = 'feed_v3',
-            html = cache ? cache.getItem(NEWS_CACHE_KEY) : '',
-            update = cache ? cache.getItem('update') : '';
-        
+        module('news', function () {
+        var newsGrid = $('#typecho-news-grid'),
+            NEWS_CACHE_KEY = 'feed_v5';
+
         var newsIcons = ['fa-newspaper', 'fa-code-branch', 'fa-rocket', 'fa-star', 'fa-bolt', 'fa-gift'];
         var newsBadgeClasses = [
             'booadmin-news-badge-1',
@@ -450,12 +534,12 @@ include 'common-js.php';
                     var item = o[i];
                     var icon = newsIcons[i % newsIcons.length];
                     var badgeClass = newsBadgeClasses[i % newsBadgeClasses.length];
-                    html += '<a href="' + item.link + '" target="_blank" class="booadmin-news-item group flex items-center space-x-3 p-3 transition-all">' +
+                    html += '<a href="' + esc(safeUrl(item.link)) + '" target="_blank" rel="noopener noreferrer" class="booadmin-news-item group flex items-center space-x-3 p-3 transition-all">' +
                         '<div class="booadmin-news-icon w-10 h-10 ' + badgeClass + ' flex items-center justify-center flex-shrink-0 group-hover:scale-105 transition-transform">' +
                         '<i class="fas ' + icon + ' booadmin-news-icon-glyph text-sm"></i></div>' +
                         '<div class="flex-1 min-w-0">' +
-                        '<p class="booadmin-news-title text-sm font-medium truncate transition-colors">' + item.title + '</p>' +
-                        '<p class="booadmin-news-meta text-xs mt-0.5">' + item.date + '</p>' +
+                        '<p class="booadmin-news-title text-sm font-medium truncate transition-colors">' + esc(item.title) + '</p>' +
+                        '<p class="booadmin-news-meta text-xs mt-0.5">' + esc(item.date) + '</p>' +
                         '</div>' +
                         '<i class="fas fa-chevron-right booadmin-news-arrow text-xs transition-colors"></i></a>';
                 }
@@ -466,8 +550,17 @@ include 'common-js.php';
             return html;
         }
 
-        if (!!html) {
-            newsGrid.html(html);
+        var emptyNews = '<div class="col-span-full text-center py-4 booadmin-news-empty"><i class="fas fa-inbox mr-2"></i><?php _e('暂无动态'); ?></div>';
+
+        /**
+         * 缓存只存结构化数据，绝不缓存渲染后的 HTML，
+         * 避免 sessionStorage 被污染时整段 HTML 被直接回放造成 XSS。
+         * cacheGet 带 TTL 与格式校验，非法/过期数据一律重新拉取。
+         */
+        var cached = cacheGet(NEWS_CACHE_KEY);
+
+        if (Array.isArray(cached)) {
+            renderNews(cached);
         } else {
             // 异步获取官方动态：带超时与失败兜底，避免后端慢请求阻塞页面
             $.ajax({
@@ -476,30 +569,47 @@ include 'common-js.php';
                 dataType: 'json',
                 timeout: 5000,
                 success: function (o) {
-                    var rendered = renderNews(o);
-                    if (cache) {
-                        cache.setItem(NEWS_CACHE_KEY, rendered);
+                    renderNews(o);
+                    if (Array.isArray(o)) {
+                        cacheSet(NEWS_CACHE_KEY, o);
                     }
                 },
                 error: function () {
                     // 获取失败（超时 / 网络错误）时直接显示占位，不再长时间停留在骨架
-                    newsGrid.html('<div class="col-span-full text-center py-4 booadmin-news-empty"><i class="fas fa-inbox mr-2"></i><?php _e('暂无动态'); ?></div>');
+                    newsGrid.html(emptyNews);
                 }
             });
         }
+        });
 
-        function applyUpdate(update) {
-            if (update.available) {
-                $('<div class="booadmin-update-banner p-3 mb-4 text-sm"><i class="fas fa-info-circle mr-1"></i> '
-                    + '<?php _e('您当前使用的版本是 %s'); ?>'.replace('%s', update.current) 
-                    + ' <a href="' + update.link + '" target="_blank" class="booadmin-update-link font-bold underline ml-2">'
-                    + '<?php _e('官方最新版本是 %s'); ?>'.replace('%s', update.latest) + '</a></div>')
-                    .insertBefore('.typecho-page-main, .max-w-7xl');
+        module('version', function () {
+        var UPDATE_CACHE_KEY = 'update_v2';
+        var update = cacheGet(UPDATE_CACHE_KEY);
+
+        function applyUpdate(o) {
+            if (!o || !o.available) {
+                return;
+            }
+
+            // 版本号与链接均按纯文本/白名单处理
+            var current = esc(o.current), latest = esc(o.latest), link = esc(safeUrl(o.link));
+            var $banner = $('<div class="booadmin-update-banner p-3 mb-4 text-sm"><i class="fas fa-info-circle mr-1"></i> '
+                + '<?php _e('您当前使用的版本是 %s'); ?>'.replace('%s', current)
+                + ' <a href="' + link + '" target="_blank" rel="noopener noreferrer" class="booadmin-update-link font-bold underline ml-2">'
+                + '<?php _e('官方最新版本是 %s'); ?>'.replace('%s', latest) + '</a></div>');
+
+            // 原实现插入目标是 .typecho-page-main / .max-w-7xl，
+            // 这两个类在 BooAdmin 模板中均不存在，导致横幅永远插不进 DOM。
+            var $target = $('#booadmin-content');
+            if ($target.length) {
+                $target.prepend($banner);
+            } else {
+                $('.w-full.max-w-none.mx-auto').first().prepend($banner);
             }
         }
 
-        if (!!update) {
-            applyUpdate($.parseJSON(update));
+        if (update && typeof update === 'object') {
+            applyUpdate(update);
         } else {
             // 版本检查同样异步并带超时，失败不影响页面其余部分
             $.ajax({
@@ -507,15 +617,16 @@ include 'common-js.php';
                 type: 'GET',
                 dataType: 'json',
                 timeout: 5000,
-                success: function (o, status, resp) {
+                success: function (o) {
                     applyUpdate(o);
-                    if (cache) {
-                        cache.setItem('update', resp.responseText);
+                    if (o && typeof o === 'object') {
+                        cacheSet(UPDATE_CACHE_KEY, o);
                     }
                 },
                 error: function () { /* 版本检查失败不阻塞页面 */ }
             });
         }
-    });
+        });
+    })();
 </script>
 <?php include 'footer.php'; ?>

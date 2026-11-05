@@ -96,6 +96,16 @@
     --booadmin-danger-disabled: #c1605e;
     --booadmin-error-bg: #fde8e8;
     --booadmin-error-text: #9b1c1c;
+    --booadmin-danger-bg: #fde8e8;
+
+    /* ========================================
+     * 品牌按钮（与 discord-accent 工具类配套）
+     * ======================================== */
+    --booadmin-accent-button: #5865f2;
+    --booadmin-accent-button-hover: #4752c4;
+    --booadmin-accent-button-border: #5865f2;
+    --booadmin-on-accent-button: #ffffff;
+    --booadmin-on-accent-button-hover: #ffffff;
 
     /* ========================================
      * 语义色 - Info
@@ -178,6 +188,9 @@
     --booadmin-overlay: rgba(0, 0, 0, 0.5);
     --booadmin-overlay-solid: #000000;
     --booadmin-hero-overlay: rgba(0, 0, 0, 0.58);
+    --booadmin-hero-fallback: #1f2430;
+    --booadmin-hero-gradient-a: rgba(31, 36, 48, 0.28);
+    --booadmin-hero-gradient-b: rgba(31, 36, 48, 0.28);
 
     /* ========================================
      * NProgress 加载指示器
@@ -231,9 +244,13 @@ body:not(.body-100),
 /* ========================================
  * 侧栏选项卡容器（设置/附件）
  * 浅色模式底色加深，呼应深色模式的设计
- * 需 !important 以覆盖 Tailwind 的 bg-gray-100；
- * 深色模式仍由 dark.css 中媒体查询内的 .bg-gray-100 接管
+ * 需 !important 以覆盖 Tailwind 的 bg-gray-100
+ *
+ * 只作用于浅色模式。若放在媒体查询外，这条 !important 会在暗色模式下
+ * 同样生效，把容器钉死成浅灰；暗色下的取值见 dark.css 的同名规则。
  * ======================================== */
-.typecho-option-tabs {
-    background-color: #e5e7eb !important;
+@media (prefers-color-scheme: light) {
+    .typecho-option-tabs {
+        background-color: #e5e7eb !important;
+    }
 }

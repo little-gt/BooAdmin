@@ -412,3 +412,5 @@ $isAllPosts = ('on' == $request->get('__typecho_all_posts') || 'on' == \Typecho\
 include 'common-js.php';
 include 'table-js.php';
 ?>
+
+<?php include 'footer.php'; ?>

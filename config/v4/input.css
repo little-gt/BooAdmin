@@ -1,15 +1,26 @@
+/**
+ * Tailwind CSS v4 配置 —— 兼容声明，非生产构建入口。
+ *
+ * ⚠️ BooAdmin 的唯一权威构建链是 v3（config/v3/ + tailwindcss-3.4.17.exe）。
+ * 原因：v4 的 @theme 按「颜色名」建模，--color-white 会同时驱动
+ * bg-white 与 text-white，无法像 v3 那样把背景色与文字色分别映射到
+ * 不同的语义变量。暗色下 bg-white 需变深、text-white 需保持浅色，
+ * v4 无法满足，直接使用会破坏暗色可读性。
+ *
+ * 本文件仅保留品牌色别名，且一律转发到 --booadmin-* 语义变量，
+ * 确保任何人误用 v4 重建时都不会再把硬编码亮色值写进 :root。
+ * 请勿用它生成 admin/css/tailwind.css。
+ */
 @import "tailwindcss";
 
-/* 内容路径 - 扫描所有 PHP 文件 */
 @source "../../admin/**/*.php";
 @source "../../admin/**/*.js";
 
-/* Discord 主题颜色定义 */
 @theme {
-  --color-discord-light: #f3f4f6;
-  --color-discord-sidebar: #202225;
-  --color-discord-active: #36393f;
-  --color-discord-accent: #5865f2;
-  --color-discord-text: #dcddde;
-  --color-discord-muted: #72767d;
+  --color-discord-light: var(--booadmin-bg);
+  --color-discord-sidebar: var(--booadmin-sidebar);
+  --color-discord-active: var(--booadmin-active);
+  --color-discord-accent: var(--booadmin-accent);
+  --color-discord-text: var(--booadmin-text);
+  --color-discord-muted: var(--booadmin-muted);
 }

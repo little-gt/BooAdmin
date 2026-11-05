@@ -1,3 +1,10 @@
-@tailwind base;
+/**
+ * BooAdmin - Tailwind components/utilities 入口
+ * 产物：admin/css/tailwind.css
+ *
+ * 注意：本文件【不】包含 @tailwind base。
+ * preflight 由 input-base.css 单独构建并在组件层之前加载，
+ * 这样 preflight 不会再覆盖 style.css / light.css / dark.css 的基础元素规则。
+ */
 @tailwind components;
 @tailwind utilities;

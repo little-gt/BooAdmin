@@ -367,3 +367,5 @@ include 'table-js.php';
 
 
 
+
+<?php include 'footer.php'; ?>
