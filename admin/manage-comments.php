@@ -310,9 +310,21 @@ $isAllComments = ('on' == $request->get('__typecho_all_comments') || 'on' == \Ty
                                         <?php endif; ?>
                                     </div>
                                     
-                                    <div class="card-content comment-content prose prose-sm max-w-none text-gray-700">
-                                        <?php echo $commentData['content']; ?>
-                                    </div>
+                                    <?php
+                                    /**
+                                     * 评论正文渲染。
+                                     *
+                                     * 用 $comments->content()（Typecho 内部已做 Markdown 渲染 +
+                                     * 允许标签过滤），与上方表格视图保持同一套安全策略；
+                                     * 捕获其输出后再经 htmlspecialchars 放入 data 属性，
+                                     * 最终由客户端 DOMPurify 二次净化后渲染。
+                                     */
+                                    ob_start();
+                                    $comments->content();
+                                    $safeContent = ob_get_clean();
+                                    ?>
+                                    <div class="card-content comment-content prose prose-sm max-w-none text-gray-700"
+                                         data-comment-content="<?php echo htmlspecialchars($safeContent, ENT_QUOTES, 'UTF-8'); ?>"></div>
                                     
                                     <div class="card-actions">
                                         <a href="#" class="operate-reply" data-coid="<?php echo $commentData['coid']; ?>" data-rel="<?php echo $commentData['replyUrl']; ?>">
@@ -685,6 +697,26 @@ var currentEditCardId = '';
 var currentDeleteUrl = '';
 var currentDeleteTarget = null;
 
+/**
+ * 输出转义工具
+ *
+ * 表单提交回来的 author/mail/url 是用户可控内容，直接拼进 HTML 会被当作标记解析。
+ * 这里统一按「文本」输出，URL 另限制协议白名单。
+ */
+function escapeHtml(value) {
+    return $('<div/>').text(value === undefined || value === null ? '' : String(value)).html();
+}
+
+function escapeAttr(value) {
+    return escapeHtml(value).replace(/`/g, '&#96;');
+}
+
+/** 仅允许 http/https，杜绝 javascript: 等伪协议 */
+function safeHttpUrl(url) {
+    var str = String(url === undefined || url === null ? '' : url).trim();
+    return /^https?:\/\//i.test(str) ? str : '#';
+}
+
 // 模态框控制函数
 function showMessageModal(title, content, isConfirm) {
     $('#messageModalTitle').text(title);
@@ -896,16 +928,20 @@ function submitEdit() {
                     $row.data('comment', oldComment);
                     
                     // 更新作者信息列
+                    // author/mail/url 均来自用户提交的表单，拼接进 HTML 前必须转义；
+                    // url 另需限制协议
                     var authorHtml = '<div class="font-medium text-discord-text">'
-                        + (formData.url ? '<a target="_blank" href="' + formData.url + '" class="hover:underline">' + formData.author + '</a>' : formData.author)
+                        + (formData.url
+                            ? '<a target="_blank" rel="noopener noreferrer" href="' + escapeAttr(safeHttpUrl(formData.url)) + '" class="hover:underline">' + escapeHtml(formData.author) + '</a>'
+                            : escapeHtml(formData.author))
                         + '</div><div class="text-xs text-gray-400 mt-0.5">';
-                    
+
                     if (formData.mail) {
-                        authorHtml += '<a href="mailto:' + formData.mail + '" class="hover:text-discord-accent block">' + formData.mail + '</a>';
+                        authorHtml += '<a href="mailto:' + escapeAttr(formData.mail) + '" class="hover:text-discord-accent block">' + escapeHtml(formData.mail) + '</a>';
                     }
-                    
+
                     if (oldComment.ip) {
-                        authorHtml += '<span class="block mt-0.5">' + oldComment.ip + '</span>';
+                        authorHtml += '<span class="block mt-0.5">' + escapeHtml(oldComment.ip) + '</span>';
                     }
                     
                     authorHtml += '</div>';
@@ -931,20 +967,22 @@ function submitEdit() {
                     $card.attr('data-comment', JSON.stringify(oldComment));
                     
                     // 更新作者信息
-                    var authorHtml = formData.url ? 
-                        '<a href="' + formData.url + '" target="_blank" class="hover:underline">' + formData.author + '</a>' : 
-                        formData.author;
+                    var authorHtml = formData.url ?
+                        '<a href="' + escapeAttr(safeHttpUrl(formData.url)) + '" target="_blank" rel="noopener noreferrer" class="hover:underline">' + escapeHtml(formData.author) + '</a>' :
+                        escapeHtml(formData.author);
                     $card.find('.card-title').html(authorHtml);
-                    
+
                     if (formData.mail) {
-                        $card.find('.card-header .text-xs').html('<a href="mailto:' + formData.mail + '" class="hover:text-discord-accent">' + formData.mail + '</a>');
+                        $card.find('.card-header .text-xs').html('<a href="mailto:' + escapeAttr(formData.mail) + '" class="hover:text-discord-accent">' + escapeHtml(formData.mail) + '</a>');
                     } else {
                         $card.find('.card-header .text-xs').html('');
                     }
                     
                     // 更新内容
                     var content = DOMPurify.sanitize(o.comment.content, {USE_PROFILES: {html: true}});
-                    $card.find('.card-content').html(content).effect('highlight');
+                    $card.find('.card-content').html(content)
+                        .attr('data-comment-content', o.comment.content)
+                        .effect('highlight');
                 }
             }
             
@@ -956,6 +994,30 @@ function submitEdit() {
 }
 
 $(document).ready(function () {
+    /**
+     * 渲染卡片视图的评论正文。
+     *
+     * 服务端只把正文放进 data-comment-content（经 htmlspecialchars 转义），
+     * 真正的 HTML 渲染统一交给 DOMPurify，与 AJAX 编辑路径（916/946 行）
+     * 使用同一套净化策略，避免两处行为不一致。
+     */
+    function renderCommentContents() {
+        if (typeof DOMPurify === 'undefined') {
+            return;
+        }
+        $('.card-content[data-comment-content]').each(function () {
+            var $el = $(this);
+            var raw = $el.attr('data-comment-content');
+            if (typeof raw === 'undefined' || $el.data('rendered')) {
+                return;
+            }
+            $el.html(DOMPurify.sanitize(raw, {USE_PROFILES: {html: true}}));
+            $el.data('rendered', true);
+        });
+    }
+
+    renderCommentContents();
+
     // 记住滚动条
     function rememberScroll () {
         $(window).bind('beforeunload', function () {
