@@ -162,9 +162,18 @@ $isAllComments = ('on' == $request->get('__typecho_all_comments') || 'on' == \Ty
                                     if ('comment' == $comments->type) {
                                         $gravatarHtml = getAvatar($comments->mail, $comments->author, 40);
                                     }
-                                    
+
+                                    // 评论正文：必须在当前行（$comments 指针正确）处捕获 Typecho 过滤后的
+                                    // 安全 HTML，供下方卡片视图使用。若放到卡片视图自己的循环里再调
+                                    // $comments->content()，此时 $comments 指针已离开当前行，会导致每张卡片
+                                    // 都渲染出同一份（最早/最后一行）内容。
+                                    ob_start();
+                                    $comments->content();
+                                    $commentContent = ob_get_clean();
+
                                     // 为卡片视图存储数据
                                     $commentsData[] = [
+                                        'content' => $commentContent,
                                         'coid' => $comments->coid,
                                         'id' => $comments->theId,
                                         'author' => $comments->author,
@@ -173,7 +182,6 @@ $isAllComments = ('on' == $request->get('__typecho_all_comments') || 'on' == \Ty
                                         'ip' => $comments->ip,
                                         'type' => $comments->type,
                                         'text' => $comments->text,
-                                        'content' => $comments->content,
                                         'dateWord' => $comments->dateWord,
                                         'title' => $comments->title,
                                         'permalink' => $comments->permalink,
@@ -314,17 +322,13 @@ $isAllComments = ('on' == $request->get('__typecho_all_comments') || 'on' == \Ty
                                     /**
                                      * 评论正文渲染。
                                      *
-                                     * 用 $comments->content()（Typecho 内部已做 Markdown 渲染 +
-                                     * 允许标签过滤），与上方表格视图保持同一套安全策略；
-                                     * 捕获其输出后再经 htmlspecialchars 放入 data 属性，
-                                     * 最终由客户端 DOMPurify 二次净化后渲染。
+                                     * 正文在上方构建 $commentsData 的循环里（指针正确时）已捕获为安全 HTML
+                                     * 并存入 $commentData['content']；这里经 htmlspecialchars 放入 data 属性，
+                                     * 再由客户端 DOMPurify 二次净化后渲染，与表格视图保持同一套安全策略。
                                      */
-                                    ob_start();
-                                    $comments->content();
-                                    $safeContent = ob_get_clean();
                                     ?>
                                     <div class="card-content comment-content prose prose-sm max-w-none text-gray-700"
-                                         data-comment-content="<?php echo htmlspecialchars($safeContent, ENT_QUOTES, 'UTF-8'); ?>"></div>
+                                         data-comment-content="<?php echo htmlspecialchars($commentData['content'], ENT_QUOTES, 'UTF-8'); ?>"></div>
                                     
                                     <div class="card-actions">
                                         <a href="#" class="operate-reply" data-coid="<?php echo $commentData['coid']; ?>" data-rel="<?php echo $commentData['replyUrl']; ?>">

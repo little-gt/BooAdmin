@@ -20,7 +20,6 @@ include 'header.php';
 ?>
 <div class="min-h-screen flex bg-discord-light text-discord-text">
     <!-- Left Side: Hero Image -->
-    <!-- 图片来自 CDN：额外铺一层渐变底色，CDN 不可达时仍有完整视觉 -->
     <div class="hidden md:flex md:w-1/2 flex-col justify-center items-center bg-cover bg-center relative" style="background-color: var(--booadmin-hero-fallback); background-image: linear-gradient(135deg, var(--booadmin-hero-gradient-a), var(--booadmin-hero-gradient-b)), url('https://cdn.garfieldtom.cool/img/wldairy/poster/illustration/MemoryAdministrationBureau.jpg');">
         <div class="absolute inset-0 pointer-events-none" style="background-color: var(--booadmin-hero-overlay);"></div>
         <div class="relative z-10 text-white p-12 text-center">
