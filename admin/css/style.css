@@ -1,5 +1,24 @@
-/* 字体导入 */
-@import url('https://fonts.googleapis.com/css2?family=Cascadia+Code:ital,wght@0,200..700;1,200..700&family=Noto+Sans+SC:wght@100..900&display=swap');
+/*
+ * Web 字体不再用 @import：CSS 顶部的 @import 会阻塞样式表解析，
+ * 且在部分网络环境下长时间挂起，拖慢整个后台首屏。
+ * 改由 header.php 以 preconnect + 非阻塞 <link> 加载；
+ * 下方 font-family 均已提供完整的系统字体回退，字体加载失败不影响布局。
+ */
+
+/* 图表 CDN 不可用时的占位，避免留下空白方框 */
+.booadmin-chart-unavailable {
+	display:flex;
+	align-items:center;
+	justify-content:center;
+	height:100%;
+	min-height:200px;
+	padding:1rem;
+	text-align:center;
+	color:var(--booadmin-muted);
+	font-size:.9em;
+	background:var(--booadmin-surface-2);
+	border:1px dashed var(--booadmin-border);
+}
 
 html {
 	height:100%
@@ -74,34 +93,41 @@ input.text-l,textarea.text-l {
 	padding:10px;
 	font-size:1.14286em
 }
-.w-10 {
+/*
+ * Typecho 遗留的百分比宽度类。
+ * 注意：命名与 Tailwind 的 w-N 工具类重叠（例如 .w-10 在组件层是 10%，
+ * 在 Tailwind 是 2.5rem）。这里统一用 :where() 把特异性降为 0，
+ * 保证 utilities 层无论加载顺序如何都稳定胜出，同时保留旧标记语义，
+ * 避免与未来新增的 w-N 工具类产生不可预测的层叠结果。
+ */
+:where(.w-10) {
 	width:10%
 }
-.w-20 {
+:where(.w-20) {
 	width:20%
 }
-.w-30 {
+:where(.w-30) {
 	width:30%
 }
-.w-40 {
+:where(.w-40) {
 	width:40%
 }
-.w-50 {
+:where(.w-50) {
 	width:50%
 }
-.w-60 {
+:where(.w-60) {
 	width:60%
 }
-.w-70 {
+:where(.w-70) {
 	width:70%
 }
-.w-80 {
+:where(.w-80) {
 	width:80%
 }
-.w-90 {
+:where(.w-90) {
 	width:90%
 }
-.w-100 {
+:where(.w-100) {
 	width:100%
 }
 select {

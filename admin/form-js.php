@@ -8,17 +8,24 @@
             $('html,body').scrollTop(error.parents('.typecho-option').offset().top);
         }
 
-        $('.main form').submit(function () {
+        /**
+         * 后台主内容区是 <main class="flex-1 ...">，Typecho 原生后台则使用
+         * <div class="main">。旧代码只写了 $('.main form')，在 BooAdmin 下
+         * 恒为空集，导致「提交防重」整段失效。这里同时兼容两种结构。
+         */
+        const $forms = $('main form, .main form');
+
+        $forms.on('submit', function () {
             const self = $(this);
 
             if (self.hasClass('submitting')) {
                 return false;
             } else {
-                $('button[type=submit]', this).attr('disabled', 'disabled');
+                $('button[type=submit], input[type=submit]', this).prop('disabled', true);
                 self.addClass('submitting');
             }
         }).on('submitted', function () {
-            $('button[type=submit]', this).removeAttr('disabled');
+            $('button[type=submit], input[type=submit]', this).prop('disabled', false);
             $(this).removeClass('submitting');
         });
 
@@ -28,7 +35,7 @@
             return false;
         });
 
-        $('.main form input[type="url"]').each(function () {
+        $forms.find('input[type="url"]').each(function () {
             const self = $(this);
             const input = $('<input type="hidden" />').attr('name', self.attr('name'));
 

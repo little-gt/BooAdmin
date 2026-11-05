@@ -96,6 +96,16 @@
     --booadmin-danger-disabled: #c1605e;
     --booadmin-error-bg: #fde8e8;
     --booadmin-error-text: #9b1c1c;
+    --booadmin-danger-bg: #fde8e8;
+
+    /* ========================================
+     * 品牌按钮（与 discord-accent 工具类配套）
+     * ======================================== */
+    --booadmin-accent-button: #5865f2;
+    --booadmin-accent-button-hover: #4752c4;
+    --booadmin-accent-button-border: #5865f2;
+    --booadmin-on-accent-button: #ffffff;
+    --booadmin-on-accent-button-hover: #ffffff;
 
     /* ========================================
      * 语义色 - Info
@@ -178,6 +188,9 @@
     --booadmin-overlay: rgba(0, 0, 0, 0.5);
     --booadmin-overlay-solid: #000000;
     --booadmin-hero-overlay: rgba(0, 0, 0, 0.58);
+    --booadmin-hero-fallback: #1f2430;
+    --booadmin-hero-gradient-a: rgba(31, 36, 48, 0.28);
+    --booadmin-hero-gradient-b: rgba(31, 36, 48, 0.28);
 
     /* ========================================
      * NProgress 加载指示器

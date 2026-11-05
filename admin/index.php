@@ -68,7 +68,7 @@ $chartComments = json_encode($commentsData);
 
     <!-- Content Area -->
     <div class="flex-1 overflow-y-auto p-4 md:p-8">
-        <div class="w-full max-w-none mx-auto">
+        <div class="w-full max-w-none mx-auto" id="booadmin-content">
             
             <!-- Welcome Section -->
             <div class="bg-white p-6 mb-6 flex items-center justify-between border-l-4 border-discord-accent">
@@ -294,11 +294,48 @@ $chartComments = json_encode($commentsData);
 include 'common-js.php';
 ?>
 <script>
-    $(document).ready(function () {
-        // 活动图表配置（使用真实数据）
+    /**
+     * 三个彼此独立的模块：图表 / 官方动态 / 版本检查。
+     * 任一模块异常（例如 ECharts CDN 不可达）都不会阻断其余模块，
+     * 避免第三方资源故障导致整个控制台脚本级联失效。
+     */
+    (function () {
+        function module(name, init) {
+            $(function () {
+                try {
+                    init();
+                } catch (e) {
+                    if (window.console && typeof console.error === 'function') {
+                        console.error('[BooAdmin] 控制台模块失败: ' + name, e);
+                    }
+                }
+            });
+        }
+
         var chartDays = <?php echo $chartDays; ?>;
         var chartPosts = <?php echo $chartPosts; ?>;
         var chartComments = <?php echo $chartComments; ?>;
+
+        /** 外部数据统一按纯文本渲染，供各模块共用 */
+        function esc(value) {
+            return $('<div/>').text(value == null ? '' : String(value)).html();
+        }
+
+        /** 链接只允许 http/https，避免 javascript: 注入 */
+        function safeUrl(url) {
+            return /^https?:\/\//i.test(String(url || '')) ? String(url) : '#';
+        }
+
+        module('charts', function () {
+        // ECharts 由 CDN 以 defer 加载；不可用时给出占位而非抛 ReferenceError
+        if (typeof window.echarts === 'undefined') {
+            $('#activity-chart, #distribution-chart').html(
+                '<div class="booadmin-chart-unavailable"><?php _e('图表组件加载失败，请检查网络后刷新。'); ?></div>'
+            );
+            return;
+        }
+
+        // 活动图表配置（使用真实数据）
 
         var css = getComputedStyle(document.documentElement);
         var chartColor = {
@@ -427,11 +464,12 @@ include 'common-js.php';
             activityChart.resize();
             distributionChart.resize();
         });
+        });
 
+        module('news', function () {
         var newsGrid = $('#typecho-news-grid'), cache = window.sessionStorage,
-            NEWS_CACHE_KEY = 'feed_v3',
-            html = cache ? cache.getItem(NEWS_CACHE_KEY) : '',
-            update = cache ? cache.getItem('update') : '';
+            NEWS_CACHE_KEY = 'feed_v4',
+            html = cache ? cache.getItem(NEWS_CACHE_KEY) : '';
         
         var newsIcons = ['fa-newspaper', 'fa-code-branch', 'fa-rocket', 'fa-star', 'fa-bolt', 'fa-gift'];
         var newsBadgeClasses = [
@@ -450,12 +488,12 @@ include 'common-js.php';
                     var item = o[i];
                     var icon = newsIcons[i % newsIcons.length];
                     var badgeClass = newsBadgeClasses[i % newsBadgeClasses.length];
-                    html += '<a href="' + item.link + '" target="_blank" class="booadmin-news-item group flex items-center space-x-3 p-3 transition-all">' +
+                    html += '<a href="' + esc(safeUrl(item.link)) + '" target="_blank" rel="noopener noreferrer" class="booadmin-news-item group flex items-center space-x-3 p-3 transition-all">' +
                         '<div class="booadmin-news-icon w-10 h-10 ' + badgeClass + ' flex items-center justify-center flex-shrink-0 group-hover:scale-105 transition-transform">' +
                         '<i class="fas ' + icon + ' booadmin-news-icon-glyph text-sm"></i></div>' +
                         '<div class="flex-1 min-w-0">' +
-                        '<p class="booadmin-news-title text-sm font-medium truncate transition-colors">' + item.title + '</p>' +
-                        '<p class="booadmin-news-meta text-xs mt-0.5">' + item.date + '</p>' +
+                        '<p class="booadmin-news-title text-sm font-medium truncate transition-colors">' + esc(item.title) + '</p>' +
+                        '<p class="booadmin-news-meta text-xs mt-0.5">' + esc(item.date) + '</p>' +
                         '</div>' +
                         '<i class="fas fa-chevron-right booadmin-news-arrow text-xs transition-colors"></i></a>';
                 }
@@ -466,8 +504,25 @@ include 'common-js.php';
             return html;
         }
 
-        if (!!html) {
-            newsGrid.html(html);
+        var emptyNews = '<div class="col-span-full text-center py-4 booadmin-news-empty"><i class="fas fa-inbox mr-2"></i><?php _e('暂无动态'); ?></div>';
+
+        /**
+         * 缓存只存 JSON 数据，绝不缓存渲染后的 HTML，
+         * 避免 sessionStorage 被污染时整段 HTML 被直接回放造成 XSS。
+         * 旧版本缓存的 HTML 字符串解析失败时自动丢弃并重新拉取。
+         */
+        var cached = null;
+        if (html) {
+            try {
+                cached = $.parseJSON(html);
+            } catch (e) {
+                cached = null;
+                if (cache) { cache.removeItem(NEWS_CACHE_KEY); }
+            }
+        }
+
+        if (Array.isArray(cached)) {
+            renderNews(cached);
         } else {
             // 异步获取官方动态：带超时与失败兜底，避免后端慢请求阻塞页面
             $.ajax({
@@ -476,30 +531,51 @@ include 'common-js.php';
                 dataType: 'json',
                 timeout: 5000,
                 success: function (o) {
-                    var rendered = renderNews(o);
-                    if (cache) {
-                        cache.setItem(NEWS_CACHE_KEY, rendered);
+                    renderNews(o);
+                    if (cache && Array.isArray(o)) {
+                        cache.setItem(NEWS_CACHE_KEY, JSON.stringify(o));
                     }
                 },
                 error: function () {
                     // 获取失败（超时 / 网络错误）时直接显示占位，不再长时间停留在骨架
-                    newsGrid.html('<div class="col-span-full text-center py-4 booadmin-news-empty"><i class="fas fa-inbox mr-2"></i><?php _e('暂无动态'); ?></div>');
+                    newsGrid.html(emptyNews);
                 }
             });
         }
+        });
 
-        function applyUpdate(update) {
-            if (update.available) {
-                $('<div class="booadmin-update-banner p-3 mb-4 text-sm"><i class="fas fa-info-circle mr-1"></i> '
-                    + '<?php _e('您当前使用的版本是 %s'); ?>'.replace('%s', update.current) 
-                    + ' <a href="' + update.link + '" target="_blank" class="booadmin-update-link font-bold underline ml-2">'
-                    + '<?php _e('官方最新版本是 %s'); ?>'.replace('%s', update.latest) + '</a></div>')
-                    .insertBefore('.typecho-page-main, .max-w-7xl');
+        module('version', function () {
+        var cache = window.sessionStorage;
+        var update = cache ? cache.getItem('update') : '';
+
+        function applyUpdate(o) {
+            if (!o || !o.available) {
+                return;
+            }
+
+            // 版本号与链接均按纯文本/白名单处理
+            var current = esc(o.current), latest = esc(o.latest), link = esc(safeUrl(o.link));
+            var $banner = $('<div class="booadmin-update-banner p-3 mb-4 text-sm"><i class="fas fa-info-circle mr-1"></i> '
+                + '<?php _e('您当前使用的版本是 %s'); ?>'.replace('%s', current)
+                + ' <a href="' + link + '" target="_blank" rel="noopener noreferrer" class="booadmin-update-link font-bold underline ml-2">'
+                + '<?php _e('官方最新版本是 %s'); ?>'.replace('%s', latest) + '</a></div>');
+
+            // 原实现插入目标是 .typecho-page-main / .max-w-7xl，
+            // 这两个类在 BooAdmin 模板中均不存在，导致横幅永远插不进 DOM。
+            var $target = $('#booadmin-content');
+            if ($target.length) {
+                $target.prepend($banner);
+            } else {
+                $('.w-full.max-w-none.mx-auto').first().prepend($banner);
             }
         }
 
         if (!!update) {
-            applyUpdate($.parseJSON(update));
+            try {
+                applyUpdate($.parseJSON(update));
+            } catch (e) {
+                if (cache) { cache.removeItem('update'); }
+            }
         } else {
             // 版本检查同样异步并带超时，失败不影响页面其余部分
             $.ajax({
@@ -516,6 +592,7 @@ include 'common-js.php';
                 error: function () { /* 版本检查失败不阻塞页面 */ }
             });
         }
-    });
+        });
+    })();
 </script>
 <?php include 'footer.php'; ?>

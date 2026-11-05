@@ -20,7 +20,8 @@ include 'header.php';
 ?>
 <div class="min-h-screen flex bg-discord-light text-discord-text">
     <!-- Left Side: Hero Image -->
-    <div class="hidden md:flex md:w-1/2 flex-col justify-center items-center bg-cover bg-center relative" style="background-image: url('https://cdn.garfieldtom.cool/img/wldairy/poster/illustration/MemoryAdministrationBureau.jpg');">
+    <!-- 图片来自 CDN：额外铺一层渐变底色，CDN 不可达时仍有完整视觉 -->
+    <div class="hidden md:flex md:w-1/2 flex-col justify-center items-center bg-cover bg-center relative" style="background-color: var(--booadmin-hero-fallback); background-image: linear-gradient(135deg, var(--booadmin-hero-gradient-a), var(--booadmin-hero-gradient-b)), url('https://cdn.garfieldtom.cool/img/wldairy/poster/illustration/MemoryAdministrationBureau.jpg');">
         <div class="absolute inset-0 pointer-events-none" style="background-color: var(--booadmin-hero-overlay);"></div>
         <div class="relative z-10 text-white p-12 text-center">
             <h1 class="text-4xl font-bold mb-4"><?php $options->title(); ?></h1>
@@ -143,21 +144,24 @@ $(document).ready(function () {
 document.addEventListener('DOMContentLoaded', function () {
     var btn = document.getElementById('passkey-login-btn');
     if (!btn) return;
-    var isDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
-    // Passkey 按钮由外部 JS 注入，需强制修正颜色
-    btn.style.setProperty('background-color', isDark ? '#3a3c6e' : 'var(--booadmin-accent)', 'important');
-    btn.style.setProperty('color', isDark ? '#c4c8e8' : '#ffffff', 'important');
+
+    /**
+     * 颜色统一由主题语义变量提供，不再按 prefers-color-scheme 硬编码色值。
+     * 这样明暗切换、主题调整时按钮始终与 CSS 中的品牌按钮保持一致。
+     */
+    btn.style.setProperty('background-color', 'var(--booadmin-accent-button)', 'important');
+    btn.style.setProperty('color', 'var(--booadmin-on-accent-button)', 'important');
+    btn.style.setProperty('border-color', 'var(--booadmin-accent-button-border)', 'important');
     btn.style.setProperty('font-size', '14px', 'important');
     btn.style.setProperty('font-weight', '500', 'important');
-    if (isDark) {
-        btn.style.setProperty('border-color', '#484a78', 'important');
-    }
-    // 悬停时保持颜色一致
+
     btn.addEventListener('mouseenter', function () {
-        btn.style.setProperty('background-color', isDark ? '#46487d' : 'var(--booadmin-accent-hover)', 'important');
+        btn.style.setProperty('background-color', 'var(--booadmin-accent-button-hover)', 'important');
+        btn.style.setProperty('color', 'var(--booadmin-on-accent-button-hover)', 'important');
     });
     btn.addEventListener('mouseleave', function () {
-        btn.style.setProperty('background-color', isDark ? '#3a3c6e' : 'var(--booadmin-accent)', 'important');
+        btn.style.setProperty('background-color', 'var(--booadmin-accent-button)', 'important');
+        btn.style.setProperty('color', 'var(--booadmin-on-accent-button)', 'important');
     });
 });
 </script>

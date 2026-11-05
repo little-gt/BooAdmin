@@ -1,5 +1,5 @@
 <?php if(!defined('__TYPECHO_ADMIN__')) exit; ?>
-<script src="<?php $options->adminStaticUrl('js', 'purify.js'); ?>"></script>
+<script src="<?php $options->adminStaticUrl('js', 'purify.js'); ?>?v=<?php echo BOOADMIN_VERSION; ?>"></script>
 <script>
 (function () {
     $(document).ready(function () {

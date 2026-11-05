@@ -254,3 +254,5 @@ include 'form-js.php';
 </script>
 
 
+
+<?php include 'footer.php'; ?>

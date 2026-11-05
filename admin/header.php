@@ -3,23 +3,39 @@ if (!defined('__TYPECHO_ADMIN__')) {
     exit;
 }
 
+/**
+ * 样式层叠顺序是确定性的，不要调整：
+ *   reset(preflight) → 组件层(style/light/dark) → utilities(tailwind.css)
+ * preflight 必须在组件层之前，否则会覆盖 body/a/h1-h6 等基础规则；
+ * utilities 必须最后，以保证工具类稳定覆盖组件类。
+ * 两个 Tailwind 产物由 config/v3/input-base.css 与 input.css 分别构建。
+ */
+$assetVersion = '?v=' . BOOADMIN_VERSION;
+$cdn = 'https://cdn.garfieldtom.cool/resource/libs';
+
 $header = '
+<!-- Web Fonts: preconnect + 非阻塞加载，失败时自动回退到系统字体栈 -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cascadia+Code:ital,wght@0,200..700;1,200..700&family=Noto+Sans+SC:wght@100..900&display=swap" media="print" onload="this.media=\'all\'" crossorigin="anonymous" referrerpolicy="no-referrer">
 <!-- CSS Reset & Grid -->
-<link rel="stylesheet" href="' . $options->adminUrl('css/normalize.css?v=' . BOOADMIN_VERSION, true) . '">
-<link rel="stylesheet" href="' . $options->adminUrl('css/grid.css?v=' . BOOADMIN_VERSION, true) . '">
-<!-- Theme Variables -->
-<link rel="stylesheet" href="' . $options->adminUrl('css/style.css?v=' . BOOADMIN_VERSION, true) . '">
-<link rel="stylesheet" href="' . $options->adminUrl('css/light.css?v=' . BOOADMIN_VERSION, true) . '">
-<link rel="stylesheet" href="' . $options->adminUrl('css/dark.css?v=' . BOOADMIN_VERSION, true) . '">
-<!-- TailwindCSS -->
-<link rel="stylesheet" href="' . $options->adminUrl('css/tailwind.css?v=' . BOOADMIN_VERSION, true) . '">
+<link rel="stylesheet" href="' . $options->adminUrl('css/normalize.css' . $assetVersion, true) . '">
+<!-- Tailwind preflight (base only, must precede component styles) -->
+<link rel="stylesheet" href="' . $options->adminUrl('css/tailwind-base.css' . $assetVersion, true) . '">
+<link rel="stylesheet" href="' . $options->adminUrl('css/grid.css' . $assetVersion, true) . '">
+<!-- Theme Variables & Components -->
+<link rel="stylesheet" href="' . $options->adminUrl('css/style.css' . $assetVersion, true) . '">
+<link rel="stylesheet" href="' . $options->adminUrl('css/light.css' . $assetVersion, true) . '">
+<link rel="stylesheet" href="' . $options->adminUrl('css/dark.css' . $assetVersion, true) . '">
+<!-- Tailwind utilities (must load last; palette is fully variable-driven) -->
+<link rel="stylesheet" href="' . $options->adminUrl('css/tailwind.css' . $assetVersion, true) . '">
 <!-- NProgress -->
-<script src="' . $options->adminUrl('js/nprogress.js', true) . '"></script>
-<link rel="stylesheet" href="' . $options->adminUrl('css/nprogress.css', true) . '">
+<script src="' . $options->adminUrl('js/nprogress.js' . $assetVersion, true) . '"></script>
+<link rel="stylesheet" href="' . $options->adminUrl('css/nprogress.css' . $assetVersion, true) . '">
 <!-- Font Awesome -->
-<link href="https://cdn.garfieldtom.cool/resource/libs/fontawesome/7.2.0/css/all.min.css" rel="stylesheet">
+<link href="' . $cdn . '/fontawesome/7.2.0/css/all.min.css" rel="stylesheet">
 <!-- ECharts -->
-<script src="https://cdn.garfieldtom.cool/resource/libs/echarts/5.5.0/echarts.min.js"></script>
+<script defer src="' . $cdn . '/echarts/5.5.0/echarts.min.js"></script>
 ';
 
 /** 注册一个初始化插件 */

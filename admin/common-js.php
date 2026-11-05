@@ -1,15 +1,37 @@
 <?php if(!defined('__TYPECHO_ADMIN__')) exit; ?>
-<script src="<?php $options->adminStaticUrl('js', 'jquery.js'); ?>"></script>
-<script src="<?php $options->adminStaticUrl('js', 'jquery-ui.js'); ?>"></script>
-<script src="<?php $options->adminStaticUrl('js', 'typecho.js'); ?>"></script>
-<script src="<?php $options->adminStaticUrl('js', 'booadmin.js'); ?>"></script>
+<script src="<?php $options->adminStaticUrl('js', 'jquery.js'); ?>?v=<?php echo BOOADMIN_VERSION; ?>"></script>
+<script src="<?php $options->adminStaticUrl('js', 'jquery-ui.js'); ?>?v=<?php echo BOOADMIN_VERSION; ?>"></script>
+<script src="<?php $options->adminStaticUrl('js', 'typecho.js'); ?>?v=<?php echo BOOADMIN_VERSION; ?>"></script>
+<script src="<?php $options->adminStaticUrl('js', 'booadmin.js'); ?>?v=<?php echo BOOADMIN_VERSION; ?>"></script>
 <script>
     (function () {
-        $(document).ready(function() {
-            // ========================================
-            // 页面加载进度条
-            // ========================================
-            (function() {
+        'use strict';
+
+        /**
+         * 每个模块独立注册 ready 回调并自带异常边界。
+         * 任一模块抛错都不会阻断后续模块，也不会导致
+         * window.TypechoNotification / $.fn.dropdownMenu 等关键定义缺失。
+         * 注册顺序即执行顺序，与原单一回调保持一致。
+         */
+        function module(name, init) {
+            $(function () {
+                try {
+                    init();
+                } catch (e) {
+                    if (window.console && typeof console.error === 'function') {
+                        console.error('[BooAdmin] 模块初始化失败: ' + name, e);
+                    }
+                }
+            });
+        }
+
+        // ========================================
+        // 页面加载进度条
+        // ========================================
+        module('nprogress', function () {
+            if (typeof window.NProgress === 'undefined') {
+                return;
+            }
                 // 确保 NProgress 元素存在且结构完整
                 function ensureNProgressStructure() {
                     var $nprogress = $('#nprogress');
@@ -72,20 +94,21 @@
                 $(window).on('beforeunload', function() {
                     // 页面跳转时保持加载状态，不隐藏
                 });
-            })();
+            });
 
             // ========================================
             // 现代化通知系统
             // ========================================
-            (function () {
-                var prefix = '<?php echo \Typecho\Cookie::getPrefix(); ?>',
+            module('notification', function () {
+                // PHP 值统一用 json_encode 注入 JS，避免引号或脚本结束标记破坏本段代码
+                var prefix = <?php echo json_encode(\Typecho\Cookie::getPrefix(), JSON_HEX_TAG | JSON_HEX_AMP | JSON_HEX_APOS | JSON_HEX_QUOT); ?>,
                     cookies = {
                         notice      :   $.cookie(prefix + '__typecho_notice'),
                         noticeType  :   $.cookie(prefix + '__typecho_notice_type'),
                         highlight   :   $.cookie(prefix + '__typecho_notice_highlight')
                     },
-                    path = '<?php echo \Typecho\Cookie::getPath(); ?>',
-                    domain = '<?php echo \Typecho\Cookie::getDomain(); ?>',
+                    path = <?php echo json_encode(\Typecho\Cookie::getPath(), JSON_HEX_TAG | JSON_HEX_AMP | JSON_HEX_APOS | JSON_HEX_QUOT); ?>,
+                    domain = <?php echo json_encode(\Typecho\Cookie::getDomain(), JSON_HEX_TAG | JSON_HEX_AMP | JSON_HEX_APOS | JSON_HEX_QUOT); ?>,
                     secure = <?php echo json_encode(\Typecho\Cookie::getSecure()); ?>;
 
                 // 创建通知容器（如果不存在）
@@ -93,10 +116,18 @@
                     $('body').append('<div id="typecho-notification-container"></div>');
                 }
 
+                /** 通知正文按纯文本渲染，避免 cookie / 调用方内容被当作 HTML 执行 */
+                function escapeHtml(value) {
+                    return $('<div/>').text(value == null ? '' : String(value)).html();
+                }
+
+                var allowedTypes = ['success', 'notice', 'error', 'info', 'warning'];
+
                 // 显示通知函数
                 function showNotification(messages, type) {
-                    type = type || 'info';
-                    
+                    // type 会进入 class 属性，必须精确白名单，防止属性注入
+                    type = allowedTypes.indexOf(type) >= 0 ? type : 'info';
+
                     // 图标映射
                     var icons = {
                         'success': '<i class="fas fa-check-circle"></i>',
@@ -119,16 +150,16 @@
                     var messageHTML = '';
                     if (Array.isArray(messages)) {
                         if (messages.length === 1) {
-                            messageHTML = '<div class="typecho-notification-messages">' + messages[0] + '</div>';
+                            messageHTML = '<div class="typecho-notification-messages">' + escapeHtml(messages[0]) + '</div>';
                         } else {
                             messageHTML = '<ul class="typecho-notification-messages">';
                             messages.forEach(function(msg) {
-                                messageHTML += '<li>' + msg + '</li>';
+                                messageHTML += '<li>' + escapeHtml(msg) + '</li>';
                             });
                             messageHTML += '</ul>';
                         }
                     } else {
-                        messageHTML = '<div class="typecho-notification-messages">' + messages + '</div>';
+                        messageHTML = '<div class="typecho-notification-messages">' + escapeHtml(messages) + '</div>';
                     }
                     
                     // 创建通知元素
@@ -170,8 +201,8 @@
                     }, 300);
                 }
                 
-                // 检查并显示Cookie中的通知
-                if (!!cookies.notice && 'success|notice|error|info|warning'.indexOf(cookies.noticeType) >= 0) {
+                // 检查并显示Cookie中的通知（精确白名单，避免 indexOf 子串误判）
+                if (!!cookies.notice && allowedTypes.indexOf(cookies.noticeType) >= 0) {
                     try {
                         var messages = $.parseJSON(cookies.notice);
                         showNotification(messages, cookies.noticeType);
@@ -184,9 +215,10 @@
                     $.cookie(prefix + '__typecho_notice_type', null, {path : path, domain: domain, secure: secure});
                 }
 
-                // 高亮元素
+                // 高亮元素：cookie 值不拼进选择器，避免特殊字符导致语法异常
                 if (cookies.highlight) {
-                    var $highlightEl = $('#' + cookies.highlight);
+                    var highlightNode = document.getElementById(String(cookies.highlight));
+                    var $highlightEl = $(highlightNode || []);
                     if ($highlightEl.length > 0) {
                         // 使用CSS动画进行高亮
                         $highlightEl.css({
@@ -216,9 +248,16 @@
                     info: function(messages) { showNotification(messages, 'info'); },
                     warning: function(messages) { showNotification(messages, 'warning'); }
                 };
-            })();
+            });
 
-            if ($('.typecho-login').length == 0) {                // 现代化分页样式优化 v2
+            // ========================================
+            // 分页样式优化 + 外链处理
+            // 登录/注册页是独立全屏布局（body.body-100），不参与这些改写
+            // ========================================
+            module('pagination', function () {
+                if ($('body').hasClass('body-100')) {
+                    return;
+                }
                 // 查找所有可能的类型，包括直接的 .typecho-pager，或者是包含分页链接的 div/nav
                 var $pagers = $('.typecho-pager');
                 
@@ -267,21 +306,35 @@
                     });
                 }
                 
+                /**
+                 * 用字符串前缀判断代替原先由 PHP 拼出的正则。
+                 * 旧写法 substr(preg_quote(...), 0, -1) 会截掉末字符，
+                 * 当 URL 以 / 结尾时留下孤立的反斜杠，导致 action 链接误判为外链。
+                 */
+                var adminBase = <?php echo json_encode($options->adminUrl, JSON_UNESCAPED_SLASHES | JSON_HEX_TAG | JSON_HEX_AMP | JSON_HEX_APOS | JSON_HEX_QUOT); ?>;
+                var actionBase = <?php echo json_encode(\Typecho\Common::url('action', $options->index), JSON_UNESCAPED_SLASHES | JSON_HEX_TAG | JSON_HEX_AMP | JSON_HEX_APOS | JSON_HEX_QUOT); ?>;
+
                 $('a').each(function () {
                     var t = $(this), href = t.attr('href');
 
-                    if ((href && href[0] == '#')
-                        || /^<?php echo preg_quote($options->adminUrl, '/'); ?>.*$/.exec(href) 
-                            || /^<?php echo substr(preg_quote(\Typecho\Common::url('s', $options->index), '/'), 0, -1); ?>action\/[_a-zA-Z0-9\/]+.*$/.exec(href)) {
+                    if (!href || href.charAt(0) === '#'
+                        || href.indexOf('javascript:') === 0
+                        || href.indexOf('mailto:') === 0
+                        || href.indexOf(adminBase) === 0
+                        || href.indexOf(actionBase) === 0
+                        || href.indexOf('/action/') !== -1) {
                         return;
                     }
 
                     t.attr('target', '_blank')
                         .attr('rel', 'noopener noreferrer');
                 });
-            }
-            
+            });
+
+            // ========================================
             // 表格滚动指示
+            // ========================================
+            module('table-scroll', function () {
             function updateTableScrollIndicator() {
                 $('.table-wrapper[data-table-scroll]').each(function() {
                     var $wrapper = $(this);
@@ -310,11 +363,12 @@
             $('.table-wrapper[data-table-scroll]').on('scroll', updateTableScrollIndicator);
             $(window).on('resize', updateTableScrollIndicator);
             updateTableScrollIndicator(); // 初始检查
+            });
 
             // ========================================
             // 下拉菜单增强
             // ========================================
-            (function() {
+            module('dropdown', function() {
                 // 覆写 dropdownMenu 插件行为
                 var $doc = $(document);
                 var activeDropdown = null;
@@ -428,24 +482,21 @@
                     activeDropdown = null;
                 });
 
-                // 页面加载时初始化下拉菜单
-                $(function() {
-                    $('.btn-dropdown-toggle').each(function() {
-                        var $btn = $(this);
-                        var $container = $btn.closest('.relative, .group');
-                        var $menu = $container.find('.dropdown-menu');
+                // 初始化菜单可见性的语义状态（已在 ready 内，无需再嵌套 ready）
+                $('.btn-dropdown-toggle').each(function() {
+                    var $btn = $(this);
+                    var $container = $btn.closest('.relative, .group');
+                    var $menu = $container.find('.dropdown-menu');
 
-                        // 初始化菜单可见性的语义状态
-                        $menu.removeClass('is-open').addClass('hidden').attr('aria-hidden', 'true');
-                        $btn.attr('aria-expanded', 'false');
-                    });
+                    $menu.removeClass('is-open').addClass('hidden').attr('aria-hidden', 'true');
+                    $btn.attr('aria-expanded', 'false');
                 });
-            })();
+            });
 
             // ========================================
             // 视图模式切换（表格/卡片）
             // ========================================
-            (function() {
+            module('view-mode', function() {
                 if ($('.view-toggle').length === 0) {
                     return;
                 }
@@ -590,8 +641,7 @@
 
                     $('.content-card .card-checkbox').prop('checked', isChecked);
                 });
-            })();
-        });
+            });
     })();
 </script>
 <script>
@@ -606,6 +656,17 @@
         });
         // 注入版本号
         BooAdmin.setVersion('<?php echo BOOADMIN_VERSION; ?>');
-        BooAdmin.notify = window.TypechoNotification || null;
+        /**
+         * 通知对象在上方 notification 模块（ready 回调）中才创建，
+         * 此处同步赋值会恒为 null。改用 getter，读取时总能拿到最新实例，
+         * 不再依赖脚本执行顺序。
+         */
+        Object.defineProperty(BooAdmin, 'notify', {
+            configurable: true,
+            enumerable: true,
+            get: function () {
+                return window.TypechoNotification || null;
+            }
+        });
     }
 </script>

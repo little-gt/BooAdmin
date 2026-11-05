@@ -271,3 +271,5 @@ include 'common-js.php';
 })();
 </script>
 
+
+<?php include 'footer.php'; ?>

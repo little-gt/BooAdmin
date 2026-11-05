@@ -2,8 +2,8 @@
 <?php \Typecho\Plugin::factory('admin/write-js.php')->call('write'); ?>
 <?php \Widget\Metas\Tag\Cloud::alloc('sort=count&desc=1&limit=200')->to($tags); ?>
 
-<script src="<?php $options->adminStaticUrl('js', 'timepicker.js'); ?>"></script>
-<script src="<?php $options->adminStaticUrl('js', 'tokeninput.js'); ?>"></script>
+<script src="<?php $options->adminStaticUrl('js', 'timepicker.js'); ?>?v=<?php echo BOOADMIN_VERSION; ?>"></script>
+<script src="<?php $options->adminStaticUrl('js', 'tokeninput.js'); ?>?v=<?php echo BOOADMIN_VERSION; ?>"></script>
 <script>
 $(document).ready(function() {
     // 日期时间控件

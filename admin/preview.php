@@ -33,10 +33,13 @@ if ($previewMode === 'print') {
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title><?php $content->title(); ?> - <?php _e('预览'); ?></title>
     <link rel="stylesheet" href="https://cdn.garfieldtom.cool/resource/libs/KaTeX/0.16.38/katex.min.css">
-    <script src="https://cdn.garfieldtom.cool/resource/libs/KaTeX/0.16.38/katex.min.js"></script>
-    <script src="https://cdn.garfieldtom.cool/resource/libs/KaTeX/0.16.38/contrib/auto-render.min.js"></script>
+    <script defer src="https://cdn.garfieldtom.cool/resource/libs/KaTeX/0.16.38/katex.min.js"></script>
+    <script defer src="https://cdn.garfieldtom.cool/resource/libs/KaTeX/0.16.38/contrib/auto-render.min.js"></script>
+    <!-- 字体改为非阻塞加载；系统字体栈已内建回退 -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Noto+Sans+SC:wght@400;500;700;800&family=JetBrains+Mono:wght@400;500;700&display=swap" media="print" onload="this.media='all'" crossorigin="anonymous" referrerpolicy="no-referrer">
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Noto+Sans+SC:wght@400;500;700;800&family=JetBrains+Mono:wght@400;500;700&display=swap');
 
         /* ========================================
          * 色板 - 亮色模式 (默认)
@@ -496,8 +499,14 @@ if ($previewMode === 'print') {
         wrapper.appendChild(table);
     });
 
-    // KaTeX 渲染
-    if (typeof renderMathInElement === 'function') {
+    /**
+     * KaTeX 渲染。外部脚本以 defer 加载，需等到 window load 后再调用；
+     * CDN 不可达时 typeof 守卫直接跳过，公式保留原始文本而不报错。
+     */
+    function renderMath() {
+        if (typeof renderMathInElement !== 'function') {
+            return;
+        }
         renderMathInElement(document.body, {
             delimiters: [
                 { left: "$$", right: "$$", display: true },
@@ -507,6 +516,12 @@ if ($previewMode === 'print') {
             ],
             throwOnError: false
         });
+    }
+
+    if (document.readyState === 'complete') {
+        renderMath();
+    } else {
+        window.addEventListener('load', renderMath);
     }
 
     // 父窗口通信
