@@ -1,5 +1,5 @@
 <?php if(!defined('__TYPECHO_ADMIN__')) exit; ?>
-<script src="<?php $options->adminStaticUrl('js', 'purify.js'); ?>?v=<?php echo BOOADMIN_VERSION; ?>"></script>
+<?php booadminScriptOnce('purify.js'); ?>
 <script>
 (function () {
     $(document).ready(function () {
@@ -27,7 +27,8 @@
 
         // 原生 actionEl 在提交前不校验选中项，这里先于 tableSelectable 绑定，
         // 未选中任何条目时阻止原生提交并给出提示
-        $('.booadmin-dropdown-menu a:not([lang])').on('click.tableConfirm', function (e) {
+        // 统一使用 .dropdown-menu
+        $('.dropdown-menu a:not([lang])').on('click.tableConfirm', function (e) {
             if (hasSelection()) {
                 return true;
             }
@@ -46,7 +47,7 @@
             actionEl    :   '.dropdown-menu a:not([lang])'
         });
 
-        $('.btn-dropdown-toggle').dropdownMenu({
+        $('.btn-dropdown-toggle').booadminDropdown({
             btnEl       :   '.btn-dropdown-toggle',
             menuEl      :   '.dropdown-menu'
         });
@@ -76,7 +77,7 @@
 
         // 事件已绑定（tableSelectable + 确认弹窗），解除这些操作链接的原生跳转保护
         if (window.booadminArmLinks) {
-            booadminArmLinks('.booadmin-dropdown-menu a');
+            booadminArmLinks();
         }
     });
 })();

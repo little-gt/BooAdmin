@@ -226,7 +226,7 @@ include 'form-js.php';
             actionEl    :   '.dropdown-menu a.js-tag-action'
         });
 
-        $('.btn-dropdown-toggle').dropdownMenu({
+        $('.btn-dropdown-toggle').booadminDropdown({
             btnEl       :   '.btn-dropdown-toggle',
             menuEl      :   '.dropdown-menu'
         });
@@ -240,7 +240,7 @@ include 'form-js.php';
 
         // 事件已绑定，解除这些操作链接的原生跳转保护
         if (window.booadminArmLinks) {
-            booadminArmLinks('.js-tag-action');
+            booadminArmLinks();
         }
 
         // 确保表单 JS 正常工作

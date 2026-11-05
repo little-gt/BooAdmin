@@ -33,7 +33,7 @@ $backupFiles = \Widget\Backup::alloc()->listFiles();
     </header>
 
     <div class="flex-1 overflow-y-auto p-4 md:p-8">
-        <div class="w-full max-none mx-auto">
+        <div class="w-full max-w-none mx-auto">
             <div class="bg-white border border-gray-100">
                 <div class="p-6 border-b border-gray-100 flex flex-col md:flex-row md:items-center md:justify-between gap-4">
                     <h2 class="text-xl font-bold text-discord-text flex items-center">

@@ -1083,8 +1083,8 @@ $(document).ready(function () {
             return false;
         }
         
-        // 处理通过/待审核/垃圾标记按钮
-        if ($target.hasClass('operate-approved') || $target.hasClass('operate-waiting') || $target.hasClass('operate-spam')) {
+        // 处理通过/垃圾标记按钮
+        if ($target.hasClass('operate-approved') || $target.hasClass('operate-spam')) {
             e.preventDefault();
             e.stopPropagation();
             e.stopImmediatePropagation();
@@ -1097,7 +1097,7 @@ $(document).ready(function () {
 
     // 事件已绑定，解除这些操作链接的原生跳转保护
     if (window.booadminArmLinks) {
-        booadminArmLinks('a.operate-delete, a.operate-approved, a.operate-waiting, a.operate-spam');
+        booadminArmLinks();
     }
 
     // 点击背景关闭模态框

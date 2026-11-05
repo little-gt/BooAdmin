@@ -1,3 +1,22 @@
+/**
+ * BooAdmin —— Typecho 原生后台兼容皮肤（neo）
+ * ==========================================================================
+ * 本文件不是废弃主题，也不是默认后台皮肤。它是给「扩展插件面板」用的兼容层：
+ * 许多第三方插件沿用 Typecho 原生后台的 DOM 与类名（.typecho-page-title、
+ * .typecho-list-table、.typecho-option-tabs、.btn / .primary / .message、
+ * input/select/textarea 等），这些结构在 BooAdmin 的组件层下会失去样式。
+ * 部分插件甚至自带 .neo-shell / .neo-sidebar 骨架，需要本文件与
+ * js/neo-theme.js 配合才能正常显示。
+ *
+ * 加载条件（见 admin/header.php、admin/common-js.php）：
+ *   仅在扩展页（extending.php）或站点显式 define('BOOADMIN_COMPAT_NEO', true)
+ *   时加载；普通后台页绝不加载，避免这些全局选择器污染 BooAdmin 组件层。
+ *   加载时 <body> 会带上 .neo-admin 类。
+ *
+ * 颜色：--neo-* 是独立命名空间，暗色模式下统一映射到 --booadmin-* 语义变量，
+ * 与主后台保持同一套色彩来源，不在本文件复制第二份色板。
+ */
+
 :root {
     --neo-primary: #2563eb;
     --neo-primary-2: #1d4ed8;
@@ -10,11 +29,28 @@
     --neo-warn: #ea580c;
     --neo-danger: #e11d48;
     --neo-shadow: 0 12px 30px rgba(15, 23, 42, 0.08);
+    --neo-text: #0f172a;
+}
+
+@media (prefers-color-scheme: dark) {
+    :root {
+        --neo-bg: var(--booadmin-bg);
+        --neo-surface: var(--booadmin-surface);
+        --neo-border: var(--booadmin-border);
+        --neo-muted: var(--booadmin-muted);
+        --neo-text: var(--booadmin-text);
+        --neo-primary: var(--booadmin-accent);
+        --neo-primary-2: var(--booadmin-accent-hover);
+        --neo-success: var(--booadmin-success);
+        --neo-warn: var(--booadmin-warning);
+        --neo-danger: var(--booadmin-danger);
+        --neo-shadow: 0 12px 30px rgba(0, 0, 0, 0.45);
+    }
 }
 
 body.neo-admin {
     background: radial-gradient(circle at 20% 20%, rgba(37, 99, 235, 0.08), transparent 40%), radial-gradient(circle at 80% 0%, rgba(249, 115, 22, 0.08), transparent 40%), var(--neo-bg);
-    color: #0f172a;
+    color: var(--neo-text);
     min-height: 100vh;
 }
 
@@ -51,7 +87,7 @@ body.neo-admin {
     align-items: center;
     gap: 10px;
     font-weight: 700;
-    color: #0f172a;
+    color: var(--neo-text);
     letter-spacing: .2px;
 }
 
@@ -59,7 +95,6 @@ body.neo-admin {
     padding: 2px 10px;
     background: rgba(37, 99, 235, 0.12);
     color: var(--neo-primary);
-    ;
     font-size: 12px;
     font-weight: 600;
 }
@@ -70,11 +105,9 @@ body.neo-admin {
     border: none;
     width: 38px;
     height: 38px;
-    ;
     display: grid;
     place-items: center;
     cursor: pointer;
-    
 }
 
 .neo-user-card {
@@ -88,14 +121,12 @@ body.neo-admin {
 .neo-user-card img {
     width: 52px;
     height: 52px;
-    ;
     object-fit: cover;
-    
 }
 
 .neo-user-name {
     font-weight: 700;
-    color: #0f172a;
+    color: var(--neo-text);
     line-height: 1.3;
 }
 
@@ -126,8 +157,7 @@ body.neo-admin {
     align-items: center;
     gap: 10px;
     padding: 10px 12px;
-    ;
-    color: #0f172a;
+    color: var(--neo-text);
     font-weight: 600;
     transition: background .2s ease, color .2s ease, transform .2s ease;
     background: transparent;
@@ -166,9 +196,8 @@ body.neo-admin {
     justify-content: center;
     gap: 8px;
     padding: 10px 12px;
-    ;
-    background: #0f172a;
-    color: #fff;
+    background: var(--booadmin-accent-button);
+    color: var(--booadmin-on-accent-button);
     font-weight: 600;
     text-decoration: none;
 }
@@ -187,9 +216,8 @@ body.neo-admin {
 
 .neo-plugin-nav a {
     padding: 6px 10px;
-    ;
     background: rgba(15, 23, 42, 0.06);
-    color: #0f172a;
+    color: var(--neo-text);
 }
 
 .neo-main {
@@ -226,7 +254,6 @@ body.neo-admin {
     align-items: center;
     gap: 6px;
     padding: 6px 10px;
-    ;
     background: rgba(37, 99, 235, 0.12);
     color: var(--neo-primary);
     font-weight: 600;
@@ -234,18 +261,17 @@ body.neo-admin {
 
 .neo-topbar .neo-quick a {
     padding: 8px 12px;
-    ;
     background: var(--neo-surface);
     border: 1px solid var(--neo-border);
-    color: #0f172a;
+    color: var(--neo-text);
     font-weight: 600;
     text-decoration: none;
     transition: background .2s ease, color .2s ease, transform .2s ease;
 }
 
 .neo-topbar .neo-quick a:hover {
-    background: #0f172a;
-    color: #fff;
+    background: var(--booadmin-accent-button);
+    color: var(--booadmin-on-accent-button);
     transform: translateY(-1px);
 }
 
@@ -256,9 +282,7 @@ main.main {
 .neo-card {
     background: var(--neo-surface);
     border: 1px solid var(--neo-border);
-    ;
     padding: 18px 20px;
-    
 }
 
 .neo-grid {
@@ -281,7 +305,7 @@ main.main {
 .neo-stat .value {
     font-size: 28px;
     font-weight: 800;
-    color: #0f172a;
+    color: var(--neo-text);
 }
 
 .neo-stat .trend {
@@ -295,11 +319,9 @@ main.main {
 .neo-hero {
     background: linear-gradient(120deg, rgba(37, 99, 235, 0.12), rgba(249, 115, 22, 0.12));
     border: 1px solid var(--neo-border);
-    ;
     padding: 20px;
     display: grid;
     gap: 12px;
-    
 }
 
 .neo-hero h3 {
@@ -320,16 +342,15 @@ main.main {
 
 .neo-hero .neo-cta a {
     padding: 10px 14px;
-    ;
-    background: #0f172a;
-    color: #fff;
+    background: var(--booadmin-accent-button);
+    color: var(--booadmin-on-accent-button);
     font-weight: 700;
     text-decoration: none;
 }
 
 .neo-hero .neo-cta a.secondary {
     background: rgba(255, 255, 255, 0.9);
-    color: #0f172a;
+    color: var(--neo-text);
     border: 1px solid var(--neo-border);
 }
 
@@ -347,7 +368,6 @@ main.main {
     justify-content: space-between;
     gap: 10px;
     padding: 10px 12px;
-    ;
     border: 1px solid var(--neo-border);
     background: var(--neo-surface);
 }
@@ -360,7 +380,7 @@ main.main {
 
 .neo-list li a.title {
     font-weight: 700;
-    color: #0f172a;
+    color: var(--neo-text);
     text-decoration: none;
 }
 
@@ -374,7 +394,7 @@ main.main {
     justify-content: space-between;
     margin: 0 0 10px;
     font-weight: 800;
-    color: #0f172a;
+    color: var(--neo-text);
 }
 
 .neo-card h3 {
@@ -394,7 +414,6 @@ main.main {
 .typecho-page-title a {
     background: var(--neo-primary);
     color: #fff;
-    ;
     border: none;
     padding: 8px 12px;
 }
@@ -405,7 +424,6 @@ main.main {
 .primary,
 .primary:hover,
 .primary:active {
-    ;
     transition: transform .15s ease, background-color .15s ease;
 }
 
@@ -413,7 +431,7 @@ main.main {
 .btn:hover,
 .btn:active {
     background: #e2e8f0;
-    color: #0f172a;
+    color: var(--neo-text);
 }
 
 .primary,
@@ -421,7 +439,6 @@ main.main {
 .primary:active {
     background: var(--neo-primary);
     color: #fff;
-    
 }
 
 .btn:hover,
@@ -440,11 +457,9 @@ input[type=email],
 input[type=number],
 textarea,
 select {
-    ;
     border: 1px solid var(--neo-border);
     background: #fff;
     padding: 10px 12px;
-    
 }
 
 .typecho-list-table {
@@ -471,13 +486,10 @@ select {
 }
 
 .typecho-option-tabs li a {
-    ;
     border-color: var(--neo-border);
 }
 
 .message {
-    ;
-    
 }
 
 .typecho-foot {
@@ -494,10 +506,8 @@ select {
 
 .typecho-dashboard .latest-link li {
     padding: 10px 12px;
-    ;
     border: 1px solid var(--neo-border);
     background: var(--neo-surface);
-    
 }
 
 .typecho-dashboard .latest-link span {
@@ -510,7 +520,7 @@ select {
 
 .typecho-dashboard .latest-link .title {
     font-weight: 700;
-    color: #0f172a;
+    color: var(--neo-text);
 }
 
 .typecho-dashboard .latest-link .title:hover {

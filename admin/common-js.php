@@ -1,8 +1,55 @@
 <?php if(!defined('__TYPECHO_ADMIN__')) exit; ?>
-<script src="<?php $options->adminStaticUrl('js', 'jquery.js'); ?>?v=<?php echo BOOADMIN_VERSION; ?>"></script>
-<script src="<?php $options->adminStaticUrl('js', 'jquery-ui.js'); ?>?v=<?php echo BOOADMIN_VERSION; ?>"></script>
-<script src="<?php $options->adminStaticUrl('js', 'typecho.js'); ?>?v=<?php echo BOOADMIN_VERSION; ?>"></script>
-<script src="<?php $options->adminStaticUrl('js', 'booadmin.js'); ?>?v=<?php echo BOOADMIN_VERSION; ?>"></script>
+<?php
+/**
+ * 所有后台脚本统一经 booadminScriptOnce() 输出：
+ * 版本号集中附加、同页重复 include 自动去重。
+ */
+booadminScriptOnce('jquery.js');
+booadminScriptOnce('jquery-ui.js');
+booadminScriptOnce('typecho.js');
+booadminScriptOnce('booadmin.js');
+if ($booadminCompatNeo) {
+    // neo 兼容层仅扩展页加载，且需 defer 等 DOM 就绪
+    booadminScriptOnce('neo-theme.js', true);
+}
+?>
+<script>
+    /**
+     * 核心脚本能力自检
+     *
+     * admin/js/typecho.js 是 Typecho 核心脚本的副本（源见 config/js/typecho.js）。
+     * 核心升级后若与主题副本错配，页面会以「按钮无反应」等难以定位的方式失效。
+     * 这里把错配变成一条明确的控制台诊断。
+     */
+    (function () {
+        var missing = [];
+        var required = [
+            ['$.fn.tableSelectable', function () { return window.jQuery && $.fn.tableSelectable; }],
+            ['$.fn.dropdownMenu',    function () { return window.jQuery && $.fn.dropdownMenu; }],
+            ['$.fn.resizeable',      function () { return window.jQuery && $.fn.resizeable; }],
+            ['$.cookie',             function () { return window.jQuery && $.cookie; }],
+            ['window.Typecho',       function () { return window.Typecho; }],
+            ['window.BooAdmin',      function () { return window.BooAdmin; }]
+        ];
+
+        for (var i = 0; i < required.length; i++) {
+            try {
+                if (!required[i][1]()) {
+                    missing.push(required[i][0]);
+                }
+            } catch (e) {
+                missing.push(required[i][0]);
+            }
+        }
+
+        if (missing.length && window.console && typeof console.error === 'function') {
+            console.error(
+                '[BooAdmin] 核心脚本版本不匹配，缺失 API: ' + missing.join(', ') +
+                '。请用 config/js/ 源文件重新生成 admin/js/ 产物，详见 config/js/README.md。'
+            );
+        }
+    })();
+</script>
 <script>
     (function () {
         'use strict';
@@ -10,7 +57,7 @@
         /**
          * 每个模块独立注册 ready 回调并自带异常边界。
          * 任一模块抛错都不会阻断后续模块，也不会导致
-         * window.TypechoNotification / $.fn.dropdownMenu 等关键定义缺失。
+         * window.TypechoNotification / $.fn.booadminDropdown 等关键定义缺失。
          * 注册顺序即执行顺序，与原单一回调保持一致。
          */
         function module(name, init) {
@@ -32,67 +79,65 @@
             if (typeof window.NProgress === 'undefined') {
                 return;
             }
-                // 确保 NProgress 元素存在且结构完整
-                function ensureNProgressStructure() {
-                    var $nprogress = $('#nprogress');
-                    if ($nprogress.length === 0) {
-                        $nprogress = $('<div id="nprogress"><div class="bar" role="bar"><div class="peg"></div></div><div class="spinner"><div class="spinner-icon"></div><span class="spinner-text"><?php _e('正在加载'); ?></span></div></div>').appendTo('body');
-                    } else {
-                        // NProgress.remove() 会删除整个元素后由此处重建，确保 bar 结构完整
-                        if ($nprogress.find('[role="bar"]').length === 0) {
-                            $nprogress.prepend('<div class="bar" role="bar"><div class="peg"></div></div>');
-                        }
-                        var $spinner = $nprogress.find('.spinner');
-                        if ($spinner.length === 0) {
-                            $spinner = $('<div class="spinner"><div class="spinner-icon"></div><span class="spinner-text"><?php _e('正在加载'); ?></span></div>').appendTo($nprogress);
-                        } else if ($spinner.find('.spinner-text').length === 0) {
-                            $spinner.append('<span class="spinner-text"><?php _e('正在加载'); ?></span>');
-                        }
-                    }
-                    return $nprogress.find('.spinner');
-                }
-                
-                // 配置 NProgress
-                NProgress.configure({
-                    minimum: 0.1,
-                    trickleSpeed: 200,
-                    showSpinner: true,
-                    speed: 300,
-                    easing: 'ease',
-                    parent: 'body'
-                });
-                
-                // 初始化 spinner
-                var $spinner = ensureNProgressStructure();
-                
-                // 启动进度条（默认加载状态）
-                NProgress.start();
-                
-                // 页面完全加载后完成进度条
-                $(window).on('load', function() {
-                    setTimeout(function() {
-                        $spinner.addClass('hide');
-                        NProgress.done();
-                    }, 100);
-                });
-                
-                // 监听页面内的链接点击，显示进度条
-                $(document).on('click', 'a[href]:not([href^="#"]):not([href^="javascript:"]):not([target="_blank"]):not([href^="mailto:"])', function(e) {
+
+            /**
+             * DOM 完全交给 NProgress 自己管理。
+             *
+             * 历史写法在 header.php 里静态输出 #nprogress，再靠
+             * ensureNProgressStructure() 补偿 NProgress.remove() 删掉整个元素；
+             * 这是脆弱耦合：render() 检测到已存在 #nprogress 会跳过 template，
+             * remove() 又会销毁静态 DOM，只能不断打补丁。
+             *
+             * 现改为把自定义 spinner 结构放进 template，由库按生命周期创建/销毁。
+             * 一次配置即可，不需要任何重建逻辑，也不再有静态 DOM。
+             */
+            NProgress.configure({
+                minimum: 0.1,
+                trickleSpeed: 200,
+                showSpinner: true,
+                speed: 300,
+                easing: 'ease',
+                parent: 'body',
+                template:
+                    '<div class="bar" role="bar"><div class="peg"></div></div>' +
+                    '<div class="spinner" role="spinner"><div class="spinner-icon"></div>' +
+                    '<span class="spinner-text"><?php _e('正在加载'); ?></span></div>'
+            });
+
+            /** 取当前生命周期内的 spinner（每次重新查询，避免缓存失效节点） */
+            function spinner() {
+                return $('#nprogress .spinner');
+            }
+
+            NProgress.start();
+
+            // 页面完全加载后收起进度条
+            $(window).on('load', function () {
+                setTimeout(function () {
+                    spinner().addClass('hide');
+                    NProgress.done();
+                }, 100);
+            });
+
+            /**
+             * 只对「确实会导致页面跳转」的同域链接显示进度条。
+             * 被 preventDefault 的 AJAX / 确认弹窗链接不应启动，否则没有配对的
+             * done() 会让进度条永久卡住；这里用 setTimeout 0 检查 defaultPrevented。
+             */
+            $(document).on('click',
+                'a[href]:not([href^="#"]):not([href^="javascript:"]):not([target="_blank"]):not([href^="mailto:"])',
+                function (e) {
                     var href = $(this).attr('href');
-                    
-                    // 只对同域链接启用进度条
-                    if (href && (href.indexOf('http') !== 0 || href.indexOf(window.location.hostname) !== -1)) {
-                        // 确保结构完整
-                        $spinner = ensureNProgressStructure();
-                        // 移除 hide 类以显示加载指示器
-                        $spinner.removeClass('hide');
-                        NProgress.start();
+                    if (!href || (href.indexOf('http') === 0 && href.indexOf(window.location.hostname) === -1)) {
+                        return;
                     }
-                });
-                
-                // 页面卸载时保持加载状态
-                $(window).on('beforeunload', function() {
-                    // 页面跳转时保持加载状态，不隐藏
+                    setTimeout(function () {
+                        if (e.isDefaultPrevented()) {
+                            return;
+                        }
+                        spinner().removeClass('hide');
+                        NProgress.start();
+                    }, 0);
                 });
             });
 
@@ -366,14 +411,18 @@
             });
 
             // ========================================
-            // 下拉菜单增强
+            // 下拉菜单增强（独立插件，不覆写 Typecho 核心 API）
             // ========================================
             module('dropdown', function() {
-                // 覆写 dropdownMenu 插件行为
+                /**
+                 * 历史上这里直接覆写 $.fn.dropdownMenu（Typecho 核心 typecho.js 提供）。
+                 * 替换式架构下，核心升级后主题副本与核心行为可能错配，且第三方插件
+                 * 调用 dropdownMenu 时会意外拿到被改写的行为。
+                 * 现改为独立命名空间 $.fn.booadminDropdown，核心 API 保持原样，
+                 * 仅 BooAdmin 自己的页面显式使用增强版。
+                 */
                 var $doc = $(document);
                 var activeDropdown = null;
-                // 保留原生实现，遇到非 BooAdmin 下拉结构时回退，避免插件按原生方式调用时失效
-                var nativeDropdownMenu = $.fn.dropdownMenu;
 
                 function resolveDropdownParts($el, options) {
                     var $container = $el.closest('.relative, .group');
@@ -405,23 +454,13 @@
                     return { container : $container, btn : $btn, menu : $menu };
                 }
 
-                // 覆写 dropdownMenu 插件
-                $.fn.dropdownMenu = function(options) {
-                    var useNative = false;
-
-                    this.each(function() {
-                        if (!resolveDropdownParts($(this), options)) {
-                            useNative = true;
-                            return false;
-                        }
-                    });
-
-                    if (useNative) {
-                        return nativeDropdownMenu.apply(this, arguments);
-                    }
-
+                // 独立插件：遇到非 BooAdmin 结构时静默跳过，不再回退到核心实现
+                $.fn.booadminDropdown = function(options) {
                     return this.each(function() {
                         var parts = resolveDropdownParts($(this), options);
+                        if (!parts) {
+                            return;
+                        }
                         var $container = parts.container;
                         var $btn = parts.btn;
                         var $menu = parts.menu;

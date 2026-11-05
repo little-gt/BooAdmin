@@ -1,7 +1,21 @@
-# Tailwind CSS 构建配置 / Build Configuration / ビルド構成
+# BooAdmin 构建配置 / Build Configuration / ビルド構成
 
 > ⚠️ **唯一权威构建链是 `config/v3/`**。`config/v4/` 仅为兼容声明，不可用于生成生产产物。
 > 详见下方「构建链说明」。
+>
+> JavaScript 的来源清单、版本与压缩构建流程见 **`config/js/README.md`**。
+> Typecho 原生后台兼容层（neo）的用途与启用方式见 **`admin/css/neo.css` 文件头**。
+
+## config/ 目录总览
+
+| 目录 | 职责 |
+| ---- | ---- |
+| `config/v3/` | ✅ Tailwind CSS v3 权威构建链（生成 `admin/css/tailwind-base.css` 与 `tailwind.css`） |
+| `config/v4/` | ⚠️ v4 兼容声明，变量转发，不用于生成生产产物 |
+| `config/js/` | ✅ 8 个第三方/核心 JS 的**可读源文件** + 来源清单 + 压缩构建约定 |
+
+`admin/` 是 Typecho 原生后台目录的整体替换，所以 CSS/JS 产物必须随主题自带；
+但**只编辑 `config/` 下的源文件**，产物一律由构建生成，避免出现一堆无法审计的单行文件。
 
 ## 构建链说明（重要）
 

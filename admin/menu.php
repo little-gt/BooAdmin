@@ -47,7 +47,7 @@ foreach ($menuConfig as $label => $items) {
 $visibleMenu = array_filter($visibleMenu);
 
 // 是否处于拓展页面
-$isExtendPage = (strpos($_SERVER['REQUEST_URI'], 'extending.php') !== false);
+$isExtendPage = isset($isExtendPage) ? $isExtendPage : false;
 ?>
 <?php if(!$isExtendPage): ?>
 <!-- Sidebar -->
