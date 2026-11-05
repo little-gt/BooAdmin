@@ -1261,6 +1261,19 @@
     }
 
     /* --- 选项卡 (Option Tabs) --- */
+
+    /*
+     * 分段式选项卡容器（撰写/备份页的「设置/附件」等）
+     *
+     * 这些容器同时带 .bg-gray-100，而 .bg-gray-100 的语义是
+     * --booadmin-surface-muted（#080808），在纯黑基底上与页面背景几乎无差别，
+     * 分段控件会「消失」。这里单独给该组件用 --booadmin-highlight-soft
+     * （#111111），与背景有明确层次，且不影响其它 .bg-gray-100 用法。
+     */
+    .typecho-option-tabs {
+        background-color: var(--booadmin-highlight-soft) !important;
+    }
+
     .typecho-option-tabs li a {
         border-color: var(--booadmin-border) !important;
         color: var(--booadmin-muted) !important;

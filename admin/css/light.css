@@ -244,9 +244,13 @@ body:not(.body-100),
 /* ========================================
  * 侧栏选项卡容器（设置/附件）
  * 浅色模式底色加深，呼应深色模式的设计
- * 需 !important 以覆盖 Tailwind 的 bg-gray-100；
- * 深色模式仍由 dark.css 中媒体查询内的 .bg-gray-100 接管
+ * 需 !important 以覆盖 Tailwind 的 bg-gray-100
+ *
+ * 只作用于浅色模式。若放在媒体查询外，这条 !important 会在暗色模式下
+ * 同样生效，把容器钉死成浅灰；暗色下的取值见 dark.css 的同名规则。
  * ======================================== */
-.typecho-option-tabs {
-    background-color: #e5e7eb !important;
+@media (prefers-color-scheme: light) {
+    .typecho-option-tabs {
+        background-color: #e5e7eb !important;
+    }
 }

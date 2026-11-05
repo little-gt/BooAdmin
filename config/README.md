@@ -1,6 +1,5 @@
 # BooAdmin 构建配置 / Build Configuration / ビルド構成
 
-> ⚠️ **唯一权威构建链是 `config/v3/`**。`config/v4/` 仅为兼容声明，不可用于生成生产产物。
 > 详见下方「构建链说明」。
 >
 > JavaScript 的来源清单、版本与压缩构建流程见 **`config/js/README.md`**。
