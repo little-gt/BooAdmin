@@ -72,7 +72,7 @@ include 'header.php';
                     <button type="submit" class="w-full flex justify-center py-3 px-4 border text-sm font-medium text-white bg-discord-accent hover:bg-discord-accent/90 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-discord-accent transition-all">
                         <?php _e('登 录'); ?>
                     </button>
-                    <input type="hidden" name="referer" value="<?php echo htmlspecialchars($request->get('referer')); ?>" />
+                    <input type="hidden" name="referer" value="<?php echo $request->filter('html')->get('referer'); ?>" />
                 </div>
             </form>
 

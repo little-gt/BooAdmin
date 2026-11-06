@@ -6,9 +6,9 @@
 
 TailwindCSS を用いて再構築された、Typecho 向けのモダンな管理テーマです。Typecho 1.3.0 に完全対応しており、GARFIELDTOM'S NEST CDN によるリソース配信で、安定した高效な読み込み体験を提供します。
 
-![BooAdmin](https://img.shields.io/badge/BooAdmin-v1.3.5-blue?style=for-the-badge)
+![BooAdmin](https://img.shields.io/badge/BooAdmin-v1.3.5--RC4-blue?style=for-the-badge)
 ![License](https://img.shields.io/badge/License-GPLv3-blue?style=for-the-badge)
-![LTS](https://img.shields.io/badge/Status-Preview-blue?style=for-the-badge)
+![LTS](https://img.shields.io/badge/Status-Stable-blue?style=for-the-badge)
 
 ![ログインページ](https://cnb.cool/little-gt/BooAdmin/-/git/raw/main/screenshot/global/screenshot_ja.png)
 

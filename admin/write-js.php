@@ -185,7 +185,11 @@ $(document).ready(function() {
 
     $('button[name=do]').click(function () {
         $('input[name=do]').val($(this).val());
-        form.addClass('submitting');
+        // 注意：不要在此处给表单加 submitting 类。
+        // 表单的 submitting 类由 form-js.php 在 submit 事件中统一添加，
+        // 用于「防重复提交」与抑制 beforeunload 提示。若这里提前加上，
+        // form-js 会判定为「正在提交」而 return false 拦截原生提交，
+        // 导致「发布 / 保存草稿」按钮点击无反应（文章无法入库）。
     });
 
     // 自动检测离开页

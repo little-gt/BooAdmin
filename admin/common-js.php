@@ -7,6 +7,7 @@
 booadminScriptOnce('jquery.js');
 booadminScriptOnce('jquery-ui.js');
 booadminScriptOnce('typecho.js');
+booadminScriptOnce('purify.js');
 booadminScriptOnce('booadmin.js');
 if ($booadminCompatNeo) {
     // neo 兼容层仅扩展页加载，且需 defer 等 DOM 就绪
@@ -161,9 +162,20 @@ if ($booadminCompatNeo) {
                     $('body').append('<div id="typecho-notification-container"></div>');
                 }
 
-                /** 通知正文按纯文本渲染，避免 cookie / 调用方内容被当作 HTML 执行 */
-                function escapeHtml(value) {
-                    return $('<div/>').text(value == null ? '' : String(value)).html();
+                /**
+                 * 通知正文净化
+                 *
+                 * 通知内容来自 Typecho 服务端 notice 通道（可信），但 __typecho_notice
+                 * 是同源可读写 cookie，理论上可被改写，故仍需净化：用 DOMPurify 去除
+                 * <script>/on* 等危险标记，但保留 <a>/<b> 等合法富文本，
+                 * 使「文件更新」类通知里的链接能正常渲染。
+                 * 若当前页面 DOMPurify 不可用，则回退为原始 Typecho 行为（直接渲染）。
+                 */
+                function sanitizeNotice(html) {
+                    if (typeof DOMPurify !== 'undefined') {
+                        return DOMPurify.sanitize(html == null ? '' : String(html), {USE_PROFILES: {html: true}});
+                    }
+                    return html == null ? '' : String(html);
                 }
 
                 var allowedTypes = ['success', 'notice', 'error', 'info', 'warning'];
@@ -195,16 +207,16 @@ if ($booadminCompatNeo) {
                     var messageHTML = '';
                     if (Array.isArray(messages)) {
                         if (messages.length === 1) {
-                            messageHTML = '<div class="typecho-notification-messages">' + escapeHtml(messages[0]) + '</div>';
+                            messageHTML = '<div class="typecho-notification-messages">' + sanitizeNotice(messages[0]) + '</div>';
                         } else {
                             messageHTML = '<ul class="typecho-notification-messages">';
                             messages.forEach(function(msg) {
-                                messageHTML += '<li>' + escapeHtml(msg) + '</li>';
+                                messageHTML += '<li>' + sanitizeNotice(msg) + '</li>';
                             });
                             messageHTML += '</ul>';
                         }
                     } else {
-                        messageHTML = '<div class="typecho-notification-messages">' + escapeHtml(messages) + '</div>';
+                        messageHTML = '<div class="typecho-notification-messages">' + sanitizeNotice(messages) + '</div>';
                     }
                     
                     // 创建通知元素
