@@ -136,8 +136,13 @@ include 'file-upload-js.php';
         });
 
         Typecho.uploadComplete = function (attachment) {
+            // 广播给插件，避免第三方只能通过覆写 Typecho.uploadComplete 挂接
+            BooAdmin.hooks.emit('upload:complete', attachment);
+
             if (attachment.isImage) {
-                $('.typecho-attachment-photo').attr('src', attachment.url + '?' + Math.random());
+                // 缓存刷新参数只允许拼到白名单 URL 上，杜绝伪协议进入 src
+                var safeUrl = BooAdmin.html.url(attachment.url, { fallback: '' });
+                $('.typecho-attachment-photo').attr('src', safeUrl + '?' + Math.random());
             }
 
             $('#file-list').append($('<li class="text-sm text-green-600 bg-green-50 p-2"></li>').text('<?php _e('文件 %s 已经替换'); ?>'.replace('%s', attachment.title))

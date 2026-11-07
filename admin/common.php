@@ -4,7 +4,7 @@ if (!defined('__DIR__')) {
 }
 
 define('__TYPECHO_ADMIN__', true);
-define('BOOADMIN_VERSION', '1.3.5-rc4');
+define('BOOADMIN_VERSION', '1.3.6');
 
 /** 载入配置文件 */
 if (!defined('__TYPECHO_ROOT_DIR__') && !@include_once __DIR__ . '/../config.inc.php') {
@@ -99,6 +99,39 @@ function booadminScriptOnce($file, $defer = false) {
 }
 
 /**
+ * 把任意 PHP 值安全地转成内联 <script> 中可直接使用的 JS 字面量。
+ *
+ * JSON_HEX_* 把 < > & ' " 全部转成 \uXXXX，使值不可能提前闭合脚本标签
+ * 或逃逸出字符串/属性上下文；JSON_UNESCAPED_SLASHES 保留 URL 可读性。
+ * 所有 PHP → JS 的注入点都应改用本函数，禁止裸 echo 或 addslashes。
+ *
+ * 用法（PHP 片段）：把 booadminJson($cfg) 的输出放进内联 script 的变量赋值即可。
+ *
+ * @param mixed $value 任意可 JSON 化的值
+ * @return string JS 字面量（失败时返回 null 字面量）
+ */
+function booadminJson($value) {
+    $flags = JSON_HEX_TAG | JSON_HEX_AMP | JSON_HEX_APOS | JSON_HEX_QUOT
+        | JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE;
+
+    $json = json_encode($value, $flags);
+
+    // 非法 UTF-8 等导致编码失败时，降级为 null 而非产生语法错误
+    return $json === false ? 'null' : $json;
+}
+
+/**
+ * 与 booadminJson 配套：输出一个已转义、可直接放进 HTML 属性值的字符串。
+ * 供 data-* 等属性使用，避免手写 htmlspecialchars 时漏掉 ENT_QUOTES。
+ *
+ * @param mixed $value
+ * @return string
+ */
+function booadminAttr($value) {
+    return htmlspecialchars((string) $value, ENT_QUOTES, 'UTF-8');
+}
+
+/**
  * 统一的头像处理函数
  * @param string $mail 邮箱地址
  * @param string $name 用户名（用于降级头像）
@@ -151,15 +184,23 @@ function getAvatar($mail, $name, $size = 48, $className = '') {
     // 生成Gravatar URL
     $gravatarUrl = \Typecho\Common::gravatarUrl($mail, $size, 'X', 'mm', $isSecure);
     
-    // 生成包含错误处理的头像HTML
+    // 生成头像 HTML。
+    // 历史上用内联 onerror 属性拼接 JS + document.cookie，属于内联脚本注入面；
+    // 现改为 data-* 属性，由 common-js.php 里的事件委托统一处理加载失败，
+    // 页面上不再出现任何内联事件处理器。所有属性均经 htmlspecialchars。
+    $cookieKeyAttr = htmlspecialchars($cookieKey, ENT_QUOTES, 'UTF-8');
     $cookieExpire = 30 * 24 * 60 * 60; // 30天
-    // 对cookie键名进行安全转义，避免注入
-    $safeCookieKey = addslashes($cookieKey);
+    $gravatarAttr = htmlspecialchars($gravatarUrl, ENT_QUOTES, 'UTF-8');
+    $nameAttr = htmlspecialchars($name, ENT_QUOTES, 'UTF-8');
+    $charHtml = htmlspecialchars($firstChar, ENT_QUOTES, 'UTF-8');
+
     $html = '<div class="relative ' . $className . ' ' . $sizeClass . ' flex-shrink-0">';
-    $html .= '<img src="' . $gravatarUrl . '" alt="' . htmlspecialchars($name, ENT_QUOTES, 'UTF-8') . '" class="w-full h-full object-cover border border-gray-200" onerror="this.classList.add(\'booadmin-avatar-image-hidden\'); this.nextElementSibling.classList.add(\'is-visible\'); document.cookie=\'' . $safeCookieKey . '=1; path=/; max-age=' . $cookieExpire . '\'" />';
-    $html .= '<div class="booadmin-avatar-fallback w-full h-full items-center justify-center bg-gradient-to-br from-blue-500 to-blue-600 text-white font-bold ' . $textSize . ' border border-gray-200 absolute inset-0">' . htmlspecialchars($firstChar, ENT_QUOTES, 'UTF-8') . '</div>';
+    $html .= '<img src="' . $gravatarAttr . '" alt="' . $nameAttr . '" class="w-full h-full object-cover border border-gray-200 booadmin-avatar-image"'
+        . ' data-avatar-fail-key="' . $cookieKeyAttr . '"'
+        . ' data-avatar-fail-age="' . (int) $cookieExpire . '" />';
+    $html .= '<div class="booadmin-avatar-fallback w-full h-full items-center justify-center bg-gradient-to-br from-blue-500 to-blue-600 text-white font-bold ' . $textSize . ' border border-gray-200 absolute inset-0">' . $charHtml . '</div>';
     $html .= '</div>';
-    
+
     return $html;
 }
 

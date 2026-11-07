@@ -502,9 +502,19 @@ $(document).ready(function() {
         }
         
         if (targetSelector) {
-            $('#tab-advance, #tab-files').addClass('hidden'); 
-            $('.tab-content').addClass('hidden'); 
-            $(targetSelector).removeClass('hidden');
+            // targetSelector 来自 data-target / a[href]，属于不可信字符串。
+            // 只允许「本页已知 tab」或「纯 #id 形式」的选择器，杜绝把
+            // 含 : [ ( 空格 等的内容交给 $() 解析（选择器注入 / 意外全局选中）。
+            // 放宽到纯 #id 是为了兼容沿用原生 li>a 结构的第三方插件。
+            var selector = String(targetSelector);
+            var knownTabs = {'#tab-advance': 1, '#tab-files': 1};
+            var isSafeId = /^#[A-Za-z0-9_-]+$/.test(selector);
+            if (!Object.prototype.hasOwnProperty.call(knownTabs, selector) && !isSafeId) {
+                return false;
+            }
+            $('#tab-advance, #tab-files').addClass('hidden');
+            $('.tab-content').addClass('hidden');
+            $(selector).removeClass('hidden');
         }
 
         return false;

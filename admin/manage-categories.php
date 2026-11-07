@@ -264,7 +264,9 @@ include 'common-js.php';
         <?php if (isset($request->mid)): ?>
         (function () {
             var highlightSoft = getComputedStyle(document.documentElement).getPropertyValue('--booadmin-highlight-soft').trim() || '#F3F4F6';
-            $('#mid-<?php echo $request->mid; ?>').effect('highlight', {color: highlightSoft}, 1500);
+            // 用 byId 取元素，不把请求参数拼进 jQuery 选择器（防止选择器注入）
+            BooAdmin.html.byId(<?php echo booadminJson('mid-' . $request->mid); ?>)
+                .effect('highlight', {color: highlightSoft}, 1500);
         })();
         <?php endif; ?>
     });

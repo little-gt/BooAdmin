@@ -19,11 +19,12 @@ $(document).ready(function() {
 
         if (count > 0) {
             if (!balloon.length) {
-                btn.html($.trim(btn.html()) + ' ');
+                // 用 append 添加空白文本，不回读并重写 btn.html()（DOM-based 再注入）
+                btn.append(document.createTextNode(' '));
                 balloon = $('<span class="balloon"></span>').appendTo(btn);
             }
 
-            balloon.html(count);
+            balloon.text(count);
         } else if (0 === count && balloon.length > 0) {
             balloon.remove();
         }
@@ -174,8 +175,10 @@ $(document).ready(function() {
     }
 
     Typecho.uploadFile = (function () {
-        const types = '<?php echo json_encode($options->allowedAttachmentTypes); ?>';
-        const maxSize = <?php echo $phpMaxFilesize ?>;
+        // 原写法把 json_encode 结果再用单引号包一层，得到的是 JSON 字符串而非数组；
+        // 这里统一用 booadminJson 直接输出 JS 字面量。
+        const types = <?php echo booadminJson($options->allowedAttachmentTypes); ?>;
+        const maxSize = <?php echo booadminJson((int) $phpMaxFilesize); ?>;
         const queue = [];
         let index = 0;
 
@@ -264,10 +267,12 @@ $(document).ready(function() {
     // 避免文件名含引号或尖括号时破坏属性、造成 HTML 注入
     function showImagePreview(url, title, callback) {
         var $body = $('<div></div>');
+        // 附件 URL 来自服务端返回，仍过协议白名单，杜绝 javascript:/data: 进入 src
+        var safeLink = BooAdmin.html.url(url, { fallback: '' });
 
         var $previewWrap = $('<div class="flex-1 flex items-center justify-center p-6 overflow-auto bg-gray-50"></div>');
         $('<img class="max-w-full max-h-[60vh] object-contain shadow-sm">')
-            .attr('src', url)
+            .attr('src', safeLink)
             .attr('alt', title)
             .appendTo($previewWrap);
 
@@ -276,7 +281,7 @@ $(document).ready(function() {
         // 必须用 attr 而非 val()：$body.html() 走 innerHTML 序列化，
         // val() 只改 property 不会被输出，会导致预览里的链接显示为空
         $('<input type="text" class="w-full px-3 py-2 bg-gray-100 border border-gray-300 text-sm text-gray-800 focus:outline-none" readonly>')
-            .attr('value', url)
+            .attr('value', safeLink)
             .appendTo($urlWrap);
         $footer.append($urlWrap);
 

@@ -57,9 +57,9 @@ $bucket($db->fetchAll($db->select('created')
     ->where('created >= ?', $startTime)
     ->where('created <= ?', $endTime)), $commentsData);
 
-$chartDays = json_encode($days);
-$chartPosts = json_encode($postsData);
-$chartComments = json_encode($commentsData);
+$chartDaysJson = booadminJson($days);
+$chartPostsJson = booadminJson($postsData);
+$chartCommentsJson = booadminJson($commentsData);
 ?>
 <main class="flex-1 flex flex-col overflow-hidden">
     <!-- Top Header -->
@@ -328,19 +328,17 @@ include 'common-js.php';
             });
         }
 
-        var chartDays = <?php echo $chartDays; ?>;
-        var chartPosts = <?php echo $chartPosts; ?>;
-        var chartComments = <?php echo $chartComments; ?>;
+        // 图表数据由 booadminJson() 注入，杜绝脚本标签被提前闭合与字符串逃逸
+        var chartDays = <?php echo $chartDaysJson; ?>;
+        var chartPosts = <?php echo $chartPostsJson; ?>;
+        var chartComments = <?php echo $chartCommentsJson; ?>;
 
-        /** 外部数据统一按纯文本渲染，供各模块共用 */
-        function esc(value) {
-            return $('<div/>').text(value == null ? '' : String(value)).html();
-        }
-
-        /** 链接只允许 http/https，避免 javascript: 注入 */
-        function safeUrl(url) {
-            return /^https?:\/\//i.test(String(url || '')) ? String(url) : '#';
-        }
+        // 输出编码统一委托内核，本页不再自带第 N 套实现。
+        // 别名用 sec 而非 html，避免与 renderNews() 里表示「HTML 片段字符串」的
+        // 局部变量 html 混淆（不同作用域，但同名会让维护者误判）。
+        var sec = BooAdmin.html;
+        function esc(value) { return sec.esc(value); }
+        function safeUrl(url) { return sec.httpUrl(url); }
 
         /**
          * 带 TTL 的 sessionStorage 封装。
@@ -411,12 +409,17 @@ include 'common-js.php';
                 borderWidth: 1,
                 textStyle: { color: chartColor.text },
                 formatter: function(params) {
-                    var result = '<div class="booadmin-chart-tooltip-title">' + params[0].axisValue + '</div>';
+                    // ECharts tooltip 按 HTML 渲染，所有动态值必须编码；
+                    // color 进 style 属性，另做严格白名单（仅合法颜色值）。
+                    var result = '<div class="booadmin-chart-tooltip-title">' + esc(params[0].axisValue) + '</div>';
                     params.forEach(function(item) {
+                        var rawColor = String(item.color || '').trim();
+                        var safeColorRe = /^(#[0-9a-fA-F]{3,8}|rgba?\([\d.,%\s]+\)|hsla?\([\d.,%\s]+\)|[a-zA-Z]{1,20})$/;
+                        var color = safeColorRe.test(rawColor) ? rawColor : 'transparent';
                         result += '<div class="booadmin-chart-tooltip-row">' +
-                            '<span class="booadmin-chart-tooltip-dot" style="background:' + item.color + '"></span>' +
-                            '<span class="booadmin-chart-tooltip-label">' + item.seriesName + ':</span>' +
-                            '<strong class="booadmin-chart-tooltip-value">' + item.value + '</strong></div>';
+                            '<span class="booadmin-chart-tooltip-dot" style="background:' + sec.attr(color) + '"></span>' +
+                            '<span class="booadmin-chart-tooltip-label">' + esc(item.seriesName) + ':</span>' +
+                            '<strong class="booadmin-chart-tooltip-value">' + esc(item.value) + '</strong></div>';
                     });
                     return result;
                 }
@@ -491,10 +494,10 @@ include 'common-js.php';
                      },
                      labelLine: { show: false },
                      data: [
-                         { value: <?php echo $stat->myPublishedPostsNum; ?>, name: '<?php _e('文章'); ?>', itemStyle: { color: chartColor.posts } },
-                         { value: <?php echo $stat->myPublishedCommentsNum; ?>, name: '<?php _e('评论'); ?>', itemStyle: { color: chartColor.comments } },
-                         { value: <?php echo $stat->categoriesNum; ?>, name: '<?php _e('分类'); ?>', itemStyle: { color: chartColor.warn } },
-                         { value: <?php echo $stat->waitingCommentsNum; ?>, name: '<?php _e('待审'); ?>', itemStyle: { color: chartColor.danger } }
+                         { value: <?php echo booadminJson((int) $stat->myPublishedPostsNum); ?>, name: <?php echo booadminJson(_t('文章')); ?>, itemStyle: { color: chartColor.posts } },
+                         { value: <?php echo booadminJson((int) $stat->myPublishedCommentsNum); ?>, name: <?php echo booadminJson(_t('评论')); ?>, itemStyle: { color: chartColor.comments } },
+                         { value: <?php echo booadminJson((int) $stat->categoriesNum); ?>, name: <?php echo booadminJson(_t('分类')); ?>, itemStyle: { color: chartColor.warn } },
+                         { value: <?php echo booadminJson((int) $stat->waitingCommentsNum); ?>, name: <?php echo booadminJson(_t('待审')); ?>, itemStyle: { color: chartColor.danger } }
                      ]
                  }
              ]

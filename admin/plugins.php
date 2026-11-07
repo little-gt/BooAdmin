@@ -50,6 +50,7 @@ include 'menu.php';
                             <?php if (!$hasPasskey): ?>
                             <div class="flex flex-col lg:flex-row lg:items-center lg:justify-between p-3 border gap-3" style="background-color: var(--booadmin-surface); border-color: var(--booadmin-border);">
                                 <div class="flex-1 min-w-0">
+                                    <i class="fas fa-fingerprint mr-2" style="color: var(--booadmin-info);" aria-hidden="true"></i>
                                     <span class="font-medium" style="color: var(--booadmin-text);">Passkey</span>
                                     <span class="text-xs ml-2 block sm:inline" style="color: var(--booadmin-info);"><?php _e('通行密钥登录插件，完全开源，且符合 IEEE 安全标准，支持同一账号的多设备通信秘钥绑定，轻松实现同微软等大厂一致快捷、安全的无密码登录体验。'); ?></span>
                                 </div>
@@ -62,6 +63,7 @@ include 'menu.php';
                             <?php if (!$hasPassport): ?>
                             <div class="flex flex-col lg:flex-row lg:items-center lg:justify-between p-3 border gap-3" style="background-color: var(--booadmin-surface); border-color: var(--booadmin-border);">
                                 <div class="flex-1 min-w-0">
+                                    <i class="fas fa-key mr-2" style="color: var(--booadmin-info);" aria-hidden="true"></i>
                                     <span class="font-medium" style="color: var(--booadmin-text);">Passport</span>
                                     <span class="text-xs ml-2 block sm:inline" style="color: var(--booadmin-info);"><?php _e('账户密码找回插件，完全开源，且支持自定义邮件模版，内置网安标准的行为日志系统，可实现快速、安全的密码找回体验。'); ?></span>
                                 </div>
