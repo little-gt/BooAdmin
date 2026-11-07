@@ -8,7 +8,9 @@ booadminScriptOnce('jquery.js');
 booadminScriptOnce('jquery-ui.js');
 booadminScriptOnce('typecho.js');
 booadminScriptOnce('purify.js');
+// 内核必须在所有业务模块之前：模块系统、安全层、钩子总线都由它提供
 booadminScriptOnce('booadmin.js');
+booadminScriptOnce('nprogress.js');
 if ($booadminCompatNeo) {
     // neo 兼容层仅扩展页加载，且需 defer 等 DOM 就绪
     booadminScriptOnce('neo-theme.js', true);
@@ -16,11 +18,12 @@ if ($booadminCompatNeo) {
 ?>
 <script>
     /**
-     * 核心脚本能力自检
+     * 依赖契约自检
      *
-     * admin/js/typecho.js 是 Typecho 核心脚本的副本（源见 config/js/typecho.js）。
-     * 核心升级后若与主题副本错配，页面会以「按钮无反应」等难以定位的方式失效。
-     * 这里把错配变成一条明确的控制台诊断。
+     * admin/js/typecho.js 是 Typecho 核心脚本副本（源见 config/js/typecho.js）；
+     * admin/js/booadmin.js 是主题内核。任一错配都会让页面以「按钮无反应」
+     * 这类难以定位的方式失效，这里把错配变成一条明确的控制台诊断。
+     * 自检只报告，不抛错、不阻断后续脚本。
      */
     (function () {
         var missing = [];
@@ -30,7 +33,11 @@ if ($booadminCompatNeo) {
             ['$.fn.resizeable',      function () { return window.jQuery && $.fn.resizeable; }],
             ['$.cookie',             function () { return window.jQuery && $.cookie; }],
             ['window.Typecho',       function () { return window.Typecho; }],
-            ['window.BooAdmin',      function () { return window.BooAdmin; }]
+            ['BooAdmin.html',        function () { return window.BooAdmin && BooAdmin.html && BooAdmin.html.sanitize; }],
+            ['BooAdmin.module',      function () { return window.BooAdmin && BooAdmin.module && BooAdmin.module.define; }],
+            ['BooAdmin.hooks',       function () { return window.BooAdmin && BooAdmin.hooks && BooAdmin.hooks.emit; }],
+            ['BooAdmin.services',    function () { return window.BooAdmin && BooAdmin.services && BooAdmin.services.register; }],
+            ['BooAdmin.ui',          function () { return window.BooAdmin && BooAdmin.ui && BooAdmin.ui.Modal; }]
         ];
 
         for (var i = 0; i < required.length; i++) {
@@ -45,8 +52,8 @@ if ($booadminCompatNeo) {
 
         if (missing.length && window.console && typeof console.error === 'function') {
             console.error(
-                '[BooAdmin] 核心脚本版本不匹配，缺失 API: ' + missing.join(', ') +
-                '。请用 config/js/ 源文件重新生成 admin/js/ 产物，详见 config/js/README.md。'
+                '[BooAdmin] 脚本依赖契约不满足，缺失 API: ' + missing.join(', ') +
+                '。请确认 admin/js/booadmin.js 已加载，或用 config/js/ 源文件重新生成 admin/js/ 产物，详见 config/js/README.md。'
             );
         }
     })();
@@ -56,27 +63,18 @@ if ($booadminCompatNeo) {
         'use strict';
 
         /**
-         * 每个模块独立注册 ready 回调并自带异常边界。
-         * 任一模块抛错都不会阻断后续模块，也不会导致
-         * window.TypechoNotification / $.fn.booadminDropdown 等关键定义缺失。
-         * 注册顺序即执行顺序，与原单一回调保持一致。
+         * 所有模块统一经内核 BooAdmin.module.define 注册：
+         * 依赖顺序、异常边界、生命周期与命名空间事件由内核统一管理，
+         * 单个模块抛错不会影响其它模块。内核在 DOM ready 时统一 boot。
          */
-        function module(name, init) {
-            $(function () {
-                try {
-                    init();
-                } catch (e) {
-                    if (window.console && typeof console.error === 'function') {
-                        console.error('[BooAdmin] 模块初始化失败: ' + name, e);
-                    }
-                }
-            });
-        }
+        var define = function (name, init) {
+            return BooAdmin.module.define(name, init);
+        };
 
         // ========================================
         // 页面加载进度条
         // ========================================
-        module('nprogress', function () {
+        define('nprogress', function () {
             if (typeof window.NProgress === 'undefined') {
                 return;
             }
@@ -102,7 +100,7 @@ if ($booadminCompatNeo) {
                 template:
                     '<div class="bar" role="bar"><div class="peg"></div></div>' +
                     '<div class="spinner" role="spinner"><div class="spinner-icon"></div>' +
-                    '<span class="spinner-text"><?php _e('正在加载'); ?></span></div>'
+                    '<span class="spinner-text">' + BooAdmin.html.esc(BooAdmin.i18n.t('loading')) + '</span></div>'
             });
 
             /** 取当前生命周期内的 spinner（每次重新查询，避免缓存失效节点） */
@@ -145,17 +143,20 @@ if ($booadminCompatNeo) {
             // ========================================
             // 现代化通知系统
             // ========================================
-            module('notification', function () {
-                // PHP 值统一用 json_encode 注入 JS，避免引号或脚本结束标记破坏本段代码
-                var prefix = <?php echo json_encode(\Typecho\Cookie::getPrefix(), JSON_HEX_TAG | JSON_HEX_AMP | JSON_HEX_APOS | JSON_HEX_QUOT); ?>,
+            define('notification', function () {
+                var html = BooAdmin.html;
+                var cfg = BooAdmin.config;
+
+                // Cookie 参数统一由注入入口写入 config，模块内不再重复注入 PHP 值
+                var prefix = cfg.get('cookiePrefix', ''),
                     cookies = {
                         notice      :   $.cookie(prefix + '__typecho_notice'),
                         noticeType  :   $.cookie(prefix + '__typecho_notice_type'),
                         highlight   :   $.cookie(prefix + '__typecho_notice_highlight')
                     },
-                    path = <?php echo json_encode(\Typecho\Cookie::getPath(), JSON_HEX_TAG | JSON_HEX_AMP | JSON_HEX_APOS | JSON_HEX_QUOT); ?>,
-                    domain = <?php echo json_encode(\Typecho\Cookie::getDomain(), JSON_HEX_TAG | JSON_HEX_AMP | JSON_HEX_APOS | JSON_HEX_QUOT); ?>,
-                    secure = <?php echo json_encode(\Typecho\Cookie::getSecure()); ?>;
+                    path = cfg.get('cookiePath', '/'),
+                    domain = cfg.get('cookieDomain', ''),
+                    secure = cfg.get('cookieSecure', false);
 
                 // 创建通知容器（如果不存在）
                 if ($('#typecho-notification-container').length === 0) {
@@ -163,21 +164,10 @@ if ($booadminCompatNeo) {
                 }
 
                 /**
-                 * 通知正文净化
-                 *
-                 * 通知内容来自 Typecho 服务端 notice 通道（可信），但 __typecho_notice
-                 * 是同源可读写 cookie，理论上可被改写，故仍需净化：用 DOMPurify 去除
-                 * <script>/on* 等危险标记，但保留 <a>/<b> 等合法富文本，
-                 * 使「文件更新」类通知里的链接能正常渲染。
-                 * 若当前页面 DOMPurify 不可用，则回退为原始 Typecho 行为（直接渲染）。
+                 * 通知正文统一走内核 html.sanitize：
+                 * DOMPurify 可用时去除脚本、保留链接等合法富文本；
+                 * 库缺失时 fail-closed 降级为纯文本，绝不原样输出 HTML。
                  */
-                function sanitizeNotice(html) {
-                    if (typeof DOMPurify !== 'undefined') {
-                        return DOMPurify.sanitize(html == null ? '' : String(html), {USE_PROFILES: {html: true}});
-                    }
-                    return html == null ? '' : String(html);
-                }
-
                 var allowedTypes = ['success', 'notice', 'error', 'info', 'warning'];
 
                 // 显示通知函数
@@ -194,36 +184,36 @@ if ($booadminCompatNeo) {
                         'warning': '<i class="fas fa-exclamation-triangle"></i>'
                     };
                     
-                    // 标题映射
+                    // 标题映射：翻译文案经 booadminJson 注入，语言包含引号/尖括号也不破环 JS
                     var titles = {
-                        'success': '<?php _e('操作成功'); ?>',
-                        'error': '<?php _e('出错了'); ?>',
-                        'notice': '<?php _e('注意'); ?>',
-                        'info': '<?php _e('提示'); ?>',
-                        'warning': '<?php _e('警告'); ?>'
+                        'success': <?php echo booadminJson(_t('操作成功')); ?>,
+                        'error': <?php echo booadminJson(_t('出错了')); ?>,
+                        'notice': <?php echo booadminJson(_t('注意')); ?>,
+                        'info': <?php echo booadminJson(_t('提示')); ?>,
+                        'warning': <?php echo booadminJson(_t('警告')); ?>
                     };
                     
                     // 构建消息列表
                     var messageHTML = '';
                     if (Array.isArray(messages)) {
                         if (messages.length === 1) {
-                            messageHTML = '<div class="typecho-notification-messages">' + sanitizeNotice(messages[0]) + '</div>';
+                            messageHTML = '<div class="typecho-notification-messages">' + html.sanitize(messages[0]) + '</div>';
                         } else {
                             messageHTML = '<ul class="typecho-notification-messages">';
                             messages.forEach(function(msg) {
-                                messageHTML += '<li>' + sanitizeNotice(msg) + '</li>';
+                                messageHTML += '<li>' + html.sanitize(msg) + '</li>';
                             });
                             messageHTML += '</ul>';
                         }
                     } else {
-                        messageHTML = '<div class="typecho-notification-messages">' + sanitizeNotice(messages) + '</div>';
+                        messageHTML = '<div class="typecho-notification-messages">' + html.sanitize(messages) + '</div>';
                     }
                     
                     // 创建通知元素
                     var notification = $('<div class="typecho-notification ' + type + '">' +
                         '<div class="typecho-notification-icon">' + icons[type] + '</div>' +
                         '<div class="typecho-notification-content">' +
-                            '<div class="typecho-notification-title">' + titles[type] + '</div>' +
+                            '<div class="typecho-notification-title">' + html.esc(titles[type]) + '</div>' +
                             messageHTML +
                         '</div>' +
                         '<button class="typecho-notification-close" aria-label="关闭">' +
@@ -296,8 +286,9 @@ if ($booadminCompatNeo) {
                     $.cookie(prefix + '__typecho_notice_highlight', null, {path : path, domain: domain, secure: secure});
                 }
                 
-                // 全局通知方法（供其他脚本调用）
-                window.TypechoNotification = {
+                // 注册到内核服务门面（BooAdmin.notify 由此解析）。
+                // 同时保留 window.TypechoNotification 别名，兼容历史调用点与第三方插件。
+                var notificationService = {
                     show: showNotification,
                     success: function(messages) { showNotification(messages, 'success'); },
                     error: function(messages) { showNotification(messages, 'error'); },
@@ -305,13 +296,17 @@ if ($booadminCompatNeo) {
                     info: function(messages) { showNotification(messages, 'info'); },
                     warning: function(messages) { showNotification(messages, 'warning'); }
                 };
+                BooAdmin.services.register('notify', notificationService);
+                window.TypechoNotification = notificationService;
+
+                return notificationService;
             });
 
             // ========================================
             // 分页样式优化 + 外链处理
             // 登录/注册页是独立全屏布局（body.body-100），不参与这些改写
             // ========================================
-            module('pagination', function () {
+            define('pagination', function () {
                 if ($('body').hasClass('body-100')) {
                     return;
                 }
@@ -368,8 +363,8 @@ if ($booadminCompatNeo) {
                  * 旧写法 substr(preg_quote(...), 0, -1) 会截掉末字符，
                  * 当 URL 以 / 结尾时留下孤立的反斜杠，导致 action 链接误判为外链。
                  */
-                var adminBase = <?php echo json_encode($options->adminUrl, JSON_UNESCAPED_SLASHES | JSON_HEX_TAG | JSON_HEX_AMP | JSON_HEX_APOS | JSON_HEX_QUOT); ?>;
-                var actionBase = <?php echo json_encode(\Typecho\Common::url('action', $options->index), JSON_UNESCAPED_SLASHES | JSON_HEX_TAG | JSON_HEX_AMP | JSON_HEX_APOS | JSON_HEX_QUOT); ?>;
+                var adminBase = BooAdmin.config.get('adminBase', '');
+                var actionBase = BooAdmin.config.get('actionBase', '');
 
                 $('a').each(function () {
                     var t = $(this), href = t.attr('href');
@@ -389,9 +384,60 @@ if ($booadminCompatNeo) {
             });
 
             // ========================================
+            // 头像加载失败降级（替代 getAvatar() 历史上的内联 onerror）
+            // ========================================
+            define('avatar', function () {
+                function handleFail(img) {
+                    var $img = $(img);
+                    var key = $img.attr('data-avatar-fail-key');
+                    var age = parseInt($img.attr('data-avatar-fail-age'), 10) || 0;
+
+                    if ($img.data('avatar-failed')) {
+                        return;
+                    }
+                    $img.data('avatar-failed', true);
+
+                    $img.addClass('booadmin-avatar-image-hidden');
+                    $img.next('.booadmin-avatar-fallback').addClass('is-visible');
+
+                    // 记录失败，避免反复请求；键名是 md5 派生值，此处再兜一层白名单
+                    if (key && /^[A-Za-z0-9_]+$/.test(key) && age > 0) {
+                        document.cookie = key + '=1; path=/; max-age=' + age + '; SameSite=Lax';
+                    }
+                }
+
+                /**
+                 * img 的 error 事件不冒泡，jQuery 的委托 (.on('error', selector, fn))
+                 * 无法捕获，必须用原生捕获阶段监听；同时也覆盖后续 AJAX 动态插入的头像。
+                 */
+                function onErrorCapture(e) {
+                    var target = e.target;
+                    if (target && target.tagName === 'IMG'
+                        && $(target).hasClass('booadmin-avatar-image')) {
+                        handleFail(target);
+                    }
+                }
+                document.addEventListener('error', onErrorCapture, true);
+
+                // 图片可能在模块启动前就已失败，先补检查一次
+                $('.booadmin-avatar-image').each(function () {
+                    if (this.complete && this.naturalWidth === 0) {
+                        handleFail(this);
+                    }
+                });
+
+                // 生命周期：模块被卸载时移除监听器
+                return {
+                    destroy: function () {
+                        document.removeEventListener('error', onErrorCapture, true);
+                    }
+                };
+            });
+
+            // ========================================
             // 表格滚动指示
             // ========================================
-            module('table-scroll', function () {
+            define('table-scroll', function () {
             function updateTableScrollIndicator() {
                 $('.table-wrapper[data-table-scroll]').each(function() {
                     var $wrapper = $(this);
@@ -425,7 +471,7 @@ if ($booadminCompatNeo) {
             // ========================================
             // 下拉菜单增强（独立插件，不覆写 Typecho 核心 API）
             // ========================================
-            module('dropdown', function() {
+            define('dropdown', function() {
                 /**
                  * 历史上这里直接覆写 $.fn.dropdownMenu（Typecho 核心 typecho.js 提供）。
                  * 替换式架构下，核心升级后主题副本与核心行为可能错配，且第三方插件
@@ -547,7 +593,7 @@ if ($booadminCompatNeo) {
             // ========================================
             // 视图模式切换（表格/卡片）
             // ========================================
-            module('view-mode', function() {
+            define('view-mode', function() {
                 if ($('.view-toggle').length === 0) {
                     return;
                 }
@@ -696,28 +742,35 @@ if ($booadminCompatNeo) {
     })();
 </script>
 <script>
-    // BooAdmin 共享库 注入翻译与通知别名，统一后台前端"体系层"
-    if (window.BooAdmin) {
-        BooAdmin.setI18n({
-            confirmTitle: '<?php _e('操作确认'); ?>',
-            alertTitle: '<?php _e('提示'); ?>',
-            confirm: '<?php _e('确认'); ?>',
-            cancel: '<?php _e('取消'); ?>',
-            ok: '<?php _e('我知道了'); ?>'
-        });
-        // 注入版本号
-        BooAdmin.setVersion('<?php echo BOOADMIN_VERSION; ?>');
-        /**
-         * 通知对象在上方 notification 模块（ready 回调）中才创建，
-         * 此处同步赋值会恒为 null。改用 getter，读取时总能拿到最新实例，
-         * 不再依赖脚本执行顺序。
-         */
-        Object.defineProperty(BooAdmin, 'notify', {
-            configurable: true,
-            enumerable: true,
-            get: function () {
-                return window.TypechoNotification || null;
-            }
-        });
-    }
+    /**
+     * 服务端 → 前端的唯一注入入口。
+     *
+     * 所有值经 booadminJson() 编码（JSON_HEX_*），翻译文案用 _t() 取值，
+     * 不再有裸 echo / _e() 拼进 JS 字符串的情况。
+     * BooAdmin.notify 的 getter 已由内核 booadmin.js 定义并指向 services，
+     * 这里不再重复 defineProperty（重复定义会覆盖内核的服务门面解析逻辑）。
+     */
+    (function () {
+        if (!window.BooAdmin) {
+            return;
+        }
+        BooAdmin.i18n.set(<?php echo booadminJson([
+            'confirmTitle' => _t('操作确认'),
+            'alertTitle'   => _t('提示'),
+            'confirm'      => _t('确认'),
+            'cancel'       => _t('取消'),
+            'ok'           => _t('我知道了'),
+            'loading'      => _t('正在加载'),
+        ]); ?>);
+        BooAdmin.config.set(<?php echo booadminJson([
+            'version'     => BOOADMIN_VERSION,
+            'cookiePrefix'=> \Typecho\Cookie::getPrefix(),
+            'cookiePath'  => \Typecho\Cookie::getPath(),
+            'cookieDomain'=> \Typecho\Cookie::getDomain(),
+            'cookieSecure'=> \Typecho\Cookie::getSecure(),
+            'adminBase'   => $options->adminUrl,
+            'actionBase'  => \Typecho\Common::url('action', $options->index),
+        ]); ?>);
+        BooAdmin.setVersion(<?php echo booadminJson(BOOADMIN_VERSION); ?>);
+    })();
 </script>

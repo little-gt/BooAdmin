@@ -702,24 +702,17 @@ var currentDeleteUrl = '';
 var currentDeleteTarget = null;
 
 /**
- * 输出转义工具
+ * 输出转义工具（兼容别名）
  *
- * 表单提交回来的 author/mail/url 是用户可控内容，直接拼进 HTML 会被当作标记解析。
- * 这里统一按「文本」输出，URL 另限制协议白名单。
+ * 实现统一收敛到内核 BooAdmin.html，避免各页面各写一套、行为不一致：
+ * 本页历史上曾出现「净化策略自相矛盾」的 XSS 正是源于此。
+ * 保留函数名是为了不改动既有调用点；新代码请直接用 BooAdmin.html.*。
  */
-function escapeHtml(value) {
-    return $('<div/>').text(value === undefined || value === null ? '' : String(value)).html();
-}
+var sec = BooAdmin.html;
 
-function escapeAttr(value) {
-    return escapeHtml(value).replace(/`/g, '&#96;');
-}
-
-/** 仅允许 http/https，杜绝 javascript: 等伪协议 */
-function safeHttpUrl(url) {
-    var str = String(url === undefined || url === null ? '' : url).trim();
-    return /^https?:\/\//i.test(str) ? str : '#';
-}
+function escapeHtml(value) { return sec.esc(value); }
+function escapeAttr(value) { return sec.attr(value); }
+function safeHttpUrl(url) { return sec.httpUrl(url); }
 
 // 模态框控制函数
 function showMessageModal(title, content, isConfirm) {
@@ -743,59 +736,70 @@ function closeMessageModal() {
 }
 function openReplyModal(commentData, actionUrl) {
     currentReplyUrl = actionUrl;
-    
+
+    // 作者 / 邮箱 / IP / 正文均来自访客提交，全部按文本或净化富文本输出
+    var author = sec.esc(commentData.author),
+        authorFirstChar = sec.esc(commentData.author ? commentData.author.charAt(0) : '?');
+
     var gravatarHtml = '';
     if (commentData.type === 'comment') {
-        var authorFirstChar = commentData.author ? commentData.author.charAt(0) : '?';
         var gravatarUrl = '';
-        
-        // 尝试从行中获取 gravatar
-        var $row = $('#' + commentData.id);
+
+        // 用 byId 取行，避免把 id 拼进选择器
+        var $row = sec.byId(commentData.id);
         if ($row.length > 0) {
             var $gravatar = $row.find('td:eq(1) img');
             if ($gravatar.length > 0) {
                 gravatarUrl = $gravatar.attr('src');
             }
         }
-        // 若表格中未找到，则尝试卡片视图
+        // 若表格中未找到，遍历卡片视图并按 data-comment 中的 author 精确比对，
+        // 不再把作者名拼进属性选择器（既防注入也避免特殊字符导致选择器语法错误）。
         if (!gravatarUrl) {
-            var $card = $('.content-card[data-comment*=\'"author":"' + commentData.author + '"\']').first();
-            if ($card.length > 0) {
-                var $cardGravatar = $card.find('.card-header img');
-                if ($cardGravatar.length > 0) {
-                    gravatarUrl = $cardGravatar.attr('src');
-                }
-            }
+            $('.content-card[data-comment]').each(function () {
+                if (gravatarUrl) { return false; }
+                var raw = $(this).attr('data-comment');
+                try {
+                    var data = $.parseJSON(raw);
+                    if (data && data.author === commentData.author) {
+                        var $img = $(this).find('.card-header img').first();
+                        if ($img.length > 0) { gravatarUrl = $img.attr('src'); }
+                    }
+                } catch (e) { /* 忽略损坏的 data 属性 */ }
+            });
         }
-        
-        if (gravatarUrl) {
-            gravatarHtml = '<div class="relative w-8 h-8"><img src="' + gravatarUrl + '" alt="' + commentData.author + '" class="w-full h-full object-cover border border-gray-200" onerror="this.classList.add(\'booadmin-avatar-image-hidden\'); this.nextElementSibling.classList.add(\'is-visible\');" /><div class="booadmin-avatar-fallback w-full h-full items-center justify-center bg-gradient-to-br from-blue-500 to-blue-600 text-white font-bold text-xs border border-gray-200 absolute inset-0">' + authorFirstChar + '</div></div>';
+
+        // URL 走协议白名单，杜绝 javascript:/data: 进入 src
+        var safeGravatar = gravatarUrl ? sec.url(gravatarUrl, {fallback: ''}) : '';
+
+        if (safeGravatar) {
+            gravatarHtml = '<div class="relative w-8 h-8"><img src="' + sec.attr(safeGravatar) + '" alt="' + sec.attr(commentData.author) + '" class="w-full h-full object-cover border border-gray-200" onerror="this.classList.add(\'booadmin-avatar-image-hidden\'); this.nextElementSibling.classList.add(\'is-visible\');" /><div class="booadmin-avatar-fallback w-full h-full items-center justify-center bg-gradient-to-br from-blue-500 to-blue-600 text-white font-bold text-xs border border-gray-200 absolute inset-0">' + authorFirstChar + '</div></div>';
         } else {
             gravatarHtml = '<div class="w-8 h-8 flex items-center justify-center bg-gradient-to-br from-blue-500 to-blue-600 text-white font-bold text-xs border border-gray-200">' + authorFirstChar + '</div>';
         }
     }
-    
+
     if (!gravatarHtml) {
         gravatarHtml = '<div class="flex items-center justify-center w-8 h-8 bg-gray-200 text-gray-500"><i class="fas fa-quote-right"></i></div>';
     }
-    
+
     var originalCommentHtml = '<div class="original-comment-header">'
         + gravatarHtml
         + '<div>'
-        + '<div class="original-comment-author">' + commentData.author + '</div>'
+        + '<div class="original-comment-author">' + author + '</div>'
         + '<div class="original-comment-meta">';
-    
+
     if (commentData.mail) {
-        originalCommentHtml += commentData.mail + ' · ';
+        originalCommentHtml += sec.esc(commentData.mail) + ' · ';
     }
     if (commentData.ip) {
-        originalCommentHtml += commentData.ip;
+        originalCommentHtml += sec.esc(commentData.ip);
     }
-    
+
     originalCommentHtml += '</div></div></div>'
-        + '<div class="original-comment-content">' + DOMPurify.sanitize(commentData.text, {USE_PROFILES: {html: true}}) + '</div>';
-    
-    $('#originalCommentArea').html(originalCommentHtml);
+        + '<div class="original-comment-content">' + sec.sanitize(commentData.text) + '</div>';
+
+    $('#originalCommentArea').html(BooAdmin.hooks.filter('comment:originalHtml', originalCommentHtml, commentData));
     $('#replyText').val('');
     $('#replyModal').addClass('active');
     $('#replyText').focus();
@@ -953,7 +957,7 @@ function submitEdit() {
                     $row.find('td:eq(2)').html(authorHtml).effect('highlight');
                     
                     // 更新内容
-                    var content = DOMPurify.sanitize(o.comment.content, {USE_PROFILES: {html: true}});
+                    var content = sec.sanitize(o.comment.content);
                     $row.find('.comment-content').html(content).effect('highlight');
                 }
             }
@@ -982,10 +986,12 @@ function submitEdit() {
                         $card.find('.card-header .text-xs').html('');
                     }
                     
-                    // 更新内容
-                    var content = DOMPurify.sanitize(o.comment.content, {USE_PROFILES: {html: true}});
+                    // 更新内容。data 属性同样只存净化后的 HTML，
+                    // 避免把 AJAX 返回的原始正文写回属性后成为后续渲染的污染入口。
+                    var content = sec.sanitize(o.comment.content);
                     $card.find('.card-content').html(content)
-                        .attr('data-comment-content', o.comment.content)
+                        .attr('data-comment-content', content)
+                        .data('rendered', true)
                         .effect('highlight');
                 }
             }
@@ -1002,20 +1008,18 @@ $(document).ready(function () {
      * 渲染卡片视图的评论正文。
      *
      * 服务端只把正文放进 data-comment-content（经 htmlspecialchars 转义），
-     * 真正的 HTML 渲染统一交给 DOMPurify，与 AJAX 编辑路径（916/946 行）
-     * 使用同一套净化策略，避免两处行为不一致。
+     * 真正的 HTML 渲染统一交给内核 BooAdmin.html.sanitize，与 AJAX 编辑路径
+     * 使用同一套净化策略；内核在 DOMPurify 缺失时自动降级为纯文本，
+     * 不会出现「库缺失 → 正文空白」或「库缺失 → 原样输出」两种失效模式。
      */
     function renderCommentContents() {
-        if (typeof DOMPurify === 'undefined') {
-            return;
-        }
         $('.card-content[data-comment-content]').each(function () {
             var $el = $(this);
             var raw = $el.attr('data-comment-content');
             if (typeof raw === 'undefined' || $el.data('rendered')) {
                 return;
             }
-            $el.html(DOMPurify.sanitize(raw, {USE_PROFILES: {html: true}}));
+            $el.html(sec.sanitize(raw));
             $el.data('rendered', true);
         });
     }
@@ -1052,114 +1056,83 @@ $(document).ready(function () {
         }
     })();
 
-    // ===== 直接劫持所有操作按钮的点击事件 =====
-    // 使用捕获阶段优先拦截所有点击
-    document.addEventListener('click', function(e) {
-        var target = e.target;
-        
-        // 向上查找a标签
-        while (target && target.tagName !== 'A' && target !== document.body) {
-            target = target.parentElement;
+    // ===== 操作按钮：命名空间化事件委托 =====
+    //
+    // 历史实现用 document.addEventListener('click', fn, true) 在捕获阶段拦截全部点击，
+    // 并对每个分支调用 stopImmediatePropagation()：这会让 Typecho 核心与第三方插件
+    // 挂在同一事件上的监听器全部收不到通知，是可扩展性上的硬阻塞。
+    //
+    // 现改为 jQuery 命名空间化委托（.booadmin.comments），只 preventDefault 本组件的
+    // 默认跳转、不阻断事件传播；并在每个动作点 emit 钩子，插件可安全挂接。
+    var ACTION_NS = '.booadmin.comments';
+
+    /** 从行或卡片读取评论数据，data 属性损坏时返回 null 而非抛错 */
+    function readCommentData($target) {
+        var $tr = $target.closest('tr');
+        if ($tr.length > 0) {
+            var data = $tr.data('comment');
+            if (data) {
+                data = $.extend({}, data, {id: $tr.attr('id')});
+                return data;
+            }
         }
-        
-        if (!target || target.tagName !== 'A') return;
-        
-        var $target = $(target);
-        
-        // 处理回复按钮
-        if ($target.hasClass('operate-reply')) {
-            e.preventDefault();
-            e.stopPropagation();
-            e.stopImmediatePropagation();
-            
-            var actionUrl = $target.attr('rel') || $target.data('rel');
-            var $tr = $target.closest('tr');
-            var $card = $target.closest('.content-card');
-            var commentData = null;
-            
-            if ($tr.length > 0) {
-                commentData = $tr.data('comment');
-                if (commentData) {
-                    commentData.id = $tr.attr('id');
+        var $card = $target.closest('.content-card');
+        if ($card.length > 0) {
+            try {
+                var cardData = $.parseJSON($card.attr('data-comment'));
+                if (cardData) {
+                    return $.extend({}, cardData, {id: $card.attr('id')});
                 }
-            } else if ($card.length > 0) {
-                commentData = JSON.parse($card.attr('data-comment'));
-                commentData.id = $card.attr('id');
+            } catch (err) {
+                return null;
             }
-            
-            if (commentData && actionUrl) {
-                openReplyModal(commentData, actionUrl);
-            }
-            return false;
         }
-        
-        // 处理编辑按钮
-        if ($target.hasClass('operate-edit')) {
-            e.preventDefault();
-            e.stopPropagation();
-            e.stopImmediatePropagation();
-            
-            var actionUrl = $target.attr('rel') || $target.data('rel');
-            var $tr = $target.closest('tr');
-            var $card = $target.closest('.content-card');
-            var commentData = null;
-            var rowId = '';
-            var cardId = '';
-            
-            if ($tr.length > 0) {
-                commentData = $tr.data('comment');
-                rowId = $tr.attr('id');
-            } else if ($card.length > 0) {
-                commentData = JSON.parse($card.attr('data-comment'));
-                cardId = $card.attr('id');
-            }
-            
-            if (commentData && actionUrl) {
-                openEditModal(commentData, actionUrl, rowId, cardId);
-            }
-            return false;
+        return null;
+    }
+
+    $(document).on('click' + ACTION_NS, 'a.operate-reply', function (e) {
+        e.preventDefault();
+        var $target = $(this);
+        var actionUrl = $target.attr('rel') || $target.data('rel');
+        var commentData = readCommentData($target);
+        if (commentData && actionUrl) {
+            BooAdmin.hooks.emit('comment:reply', commentData, actionUrl);
+            openReplyModal(commentData, actionUrl);
         }
-        
-        // 处理删除按钮
-        if ($target.hasClass('operate-delete')) {
-            e.preventDefault();
-            e.stopPropagation();
-            e.stopImmediatePropagation();
-            
-            var href = $target.attr('href');
-            var authorName = '';
-            
-            // 获取作者名称
-            var $tr = $target.closest('tr');
-            var $card = $target.closest('.content-card');
-            
-            if ($tr.length > 0) {
-                var commentData = $tr.data('comment');
-                if (commentData) {
-                    authorName = commentData.author;
-                }
-            } else if ($card.length > 0) {
-                var commentData = JSON.parse($card.attr('data-comment'));
-                if (commentData) {
-                    authorName = commentData.author;
-                }
-            }
-            
-            openDeleteModal(authorName || '<?php _e('该用户'); ?>', href, $target);
-            return false;
+    });
+
+    $(document).on('click' + ACTION_NS, 'a.operate-edit', function (e) {
+        e.preventDefault();
+        var $target = $(this);
+        var actionUrl = $target.attr('rel') || $target.data('rel');
+        var $tr = $target.closest('tr');
+        var $card = $target.closest('.content-card');
+        var commentData = readCommentData($target);
+        if (commentData && actionUrl) {
+            BooAdmin.hooks.emit('comment:edit', commentData, actionUrl);
+            openEditModal(commentData, actionUrl,
+                $tr.length > 0 ? $tr.attr('id') : '',
+                $card.length > 0 ? $card.attr('id') : '');
         }
-        
-        // 处理通过/垃圾标记按钮
-        if ($target.hasClass('operate-approved') || $target.hasClass('operate-spam')) {
-            e.preventDefault();
-            e.stopPropagation();
-            e.stopImmediatePropagation();
-            
-            rememberScroll();
-            window.location.href = $target.attr('href');
-            return false;
-        }
-    }, true); // 使用捕获阶段
+    });
+
+    $(document).on('click' + ACTION_NS, 'a.operate-delete', function (e) {
+        e.preventDefault();
+        var $target = $(this);
+        var commentData = readCommentData($target);
+        var authorName = commentData ? commentData.author : '';
+        BooAdmin.hooks.emit('comment:delete', commentData, $target.attr('href'));
+        openDeleteModal(authorName || <?php echo booadminJson(_t('该用户')); ?>,
+            $target.attr('href'), $target);
+    });
+
+    $(document).on('click' + ACTION_NS, 'a.operate-approved, a.operate-spam', function (e) {
+        e.preventDefault();
+        var $target = $(this);
+        BooAdmin.hooks.emit('comment:moderate', $target.attr('href'), $target.hasClass('operate-spam'));
+        rememberScroll();
+        window.location.href = $target.attr('href');
+    });
 
     // 事件已绑定，解除这些操作链接的原生跳转保护
     if (window.booadminArmLinks) {

@@ -91,31 +91,65 @@ $isExtendPage = isset($isExtendPage) ? $isExtendPage : false;
             ob_start();
             $menu->output();
             $menuOutput = ob_get_clean();
-            
+
+            /**
+             * 扩展菜单图标映射。
+             *
+             * 历史上所有插件面板一律显示 fa-dice-d6，IP 归属与 Passkey 这类
+             * 常用配套插件毫无辨识度。这里按 panel 参数/菜单文案匹配语义图标，
+             * 并提供插件钩子，第三方插件可自行注册图标而无需改动主题。
+             *
+             * 规则值为 [匹配片段(不区分大小写), fontawesome 图标类]。
+             */
+            $panelIconRules = [
+                ['IPLocation',       'fa-location-dot'],
+                ['IP 归属地',        'fa-location-dot'],
+                ['Passkey',          'fa-fingerprint'],
+                ['通行密钥',          'fa-fingerprint'],
+                ['Passport',         'fa-key'],
+                ['密码找回',          'fa-key'],
+            ];
+            /** 允许插件追加/覆盖规则：admin/menu.php:panelIconRules */
+            $panelIconRules = \Typecho\Plugin::factory('admin/menu.php')->filter('panelIconRules', $panelIconRules);
+
+            /** @param string $href @param string $text */
+            $resolvePanelIcon = function ($href, $text) use ($panelIconRules) {
+                $haystack = $href . ' ' . $text;
+                foreach ($panelIconRules as $rule) {
+                    if (isset($rule[0], $rule[1]) && stripos($haystack, (string) $rule[0]) !== false) {
+                        // 图标类只允许字母数字与连字符，避免选择器/属性注入
+                        $icon = preg_replace('/[^a-zA-Z0-9-]/', '', (string) $rule[1]);
+                        return $icon !== '' ? $icon : 'fa-puzzle-piece';
+                    }
+                }
+                return 'fa-puzzle-piece';
+            };
+
             // 使用 DOMDocument 解析菜单
             if (!empty($menuOutput)) {
                 $dom = new DOMDocument();
                 @$dom->loadHTML('<?xml encoding="utf-8" ?>' . $menuOutput, LIBXML_HTML_NOIMPLIED | LIBXML_HTML_NODEFDTD);
                 $xpath = new DOMXPath($dom);
-                
+
                 // 查找所有带有 extending.php 的链接（插件菜单）
                 $pluginLinks = $xpath->query('//a[contains(@href, "extending.php")]');
-                
+
                 if ($pluginLinks->length > 0) {
                     echo '<li class="mt-5 mb-2 px-3 text-xs font-bold text-gray-400 uppercase tracking-wider sidebar-text">';
                     _e('扩展');
                     echo '</li>';
-                    
+
                     foreach ($pluginLinks as $link) {
                         $href = $link->getAttribute('href');
                         $text = trim($link->textContent);
                         $isActive = (!empty($_GET['panel']) && strpos($href, $_GET['panel']) !== false);
-                        
+                        $icon = $resolvePanelIcon($href, $text);
+
                         echo '<li>';
                         echo '<a href="' . htmlspecialchars($href, ENT_QUOTES, 'UTF-8') . '" style="text-decoration:none" class="flex items-center px-3 py-2 text-gray-600 hover:bg-gray-100 hover:text-gray-900 transition-colors';
                         if ($isActive) echo ' bg-blue-50 text-discord-accent';
                         echo '">';
-                        echo '<i class="fas fa-dice-d6 w-5 text-center mr-3 text-sm opacity-80"></i>';
+                        echo '<i class="fas ' . $icon . ' w-5 text-center mr-3 text-sm opacity-80"></i>';
                         echo '<span class="sidebar-text">' . htmlspecialchars($text, ENT_QUOTES, 'UTF-8') . '</span>';
                         echo '</a>';
                         echo '</li>';

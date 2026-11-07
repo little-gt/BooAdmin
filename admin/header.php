@@ -42,8 +42,6 @@ if ($booadminCompatNeo) {
 }
 
 $header .= '
-<!-- NProgress -->
-<script src="' . $options->adminUrl('js/nprogress.js' . $assetVersion, true) . '"></script>
 <link rel="stylesheet" href="' . $options->adminUrl('css/nprogress.css' . $assetVersion, true) . '">
 <!-- Font Awesome -->
 <link href="' . $cdn . '/fontawesome/7.2.0/css/all.min.css" rel="stylesheet">

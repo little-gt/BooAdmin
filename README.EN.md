@@ -6,7 +6,7 @@
 
 A modernized Typecho admin theme rebuilt with TailwindCSS. Fully compatible with Typecho 1.3.0, and accelerated via GARFIELDTOM'S NEST CDN for stable and efficient resource delivery.
 
-![BooAdmin](https://img.shields.io/badge/BooAdmin-v1.3.5--RC4-blue?style=for-the-badge)
+![BooAdmin](https://img.shields.io/badge/BooAdmin-v1.3.6-blue?style=for-the-badge)
 ![License](https://img.shields.io/badge/License-GPLv3-blue?style=for-the-badge)
 ![LTS](https://img.shields.io/badge/Status-Stable-blue?style=for-the-badge)
 

@@ -247,7 +247,9 @@ include 'form-js.php';
         $('.typecho-option input').first().focus();
 
         <?php if (isset($request->mid)): ?>
-        $('#<?php echo $request->mid; ?> div').addClass('ring-2 ring-offset-1 ring-yellow-400 border-yellow-400');
+        // 用 byId 取元素再找子 div，不把请求参数拼进 jQuery 选择器
+        BooAdmin.html.byId(<?php echo booadminJson($request->mid); ?>)
+            .find('div').addClass('ring-2 ring-offset-1 ring-yellow-400 border-yellow-400');
         <?php endif; ?>
     });
 })();

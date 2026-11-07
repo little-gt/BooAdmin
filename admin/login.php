@@ -79,7 +79,7 @@ include 'header.php';
             <!-- Passkey 登录区域 -->
             <?php if ($hasPasskey): ?>
             <link rel="stylesheet" href="<?php echo \Typecho\Common::url('usr/plugins/Passkey/assist/css/style.css?t=' . $cacheTs, $options->rootUrl); ?>">
-            <script>var PASSKEY_ACTION_URL = "<?php echo \Typecho\Common::url('action/passkey', $options->index); ?>";</script>
+            <script>var PASSKEY_ACTION_URL = <?php echo booadminJson(\Typecho\Common::url('action/passkey', $options->index)); ?>;</script>
             <script src="<?php echo \Typecho\Common::url('usr/plugins/Passkey/assist/js/passkey.js?t=' . $cacheTs, $options->rootUrl); ?>"></script>
             <div id="passkey-login-container">
                 <button type="button" id="passkey-login-btn"

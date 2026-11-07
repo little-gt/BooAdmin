@@ -524,12 +524,13 @@ if ($previewMode === 'print') {
         window.addEventListener('load', renderMath);
     }
 
-    // 父窗口通信
-    window.onbeforeunload = function () {
-        if (!!window.parent) {
-            window.parent.postMessage('cancelPreview', '<?php echo addslashes($options->rootUrl()); ?>');
+    // 父窗口通信：用 addEventListener 而非覆盖 onbeforeunload，
+    // 避免与核心/插件的同类处理器互相覆盖；targetOrigin 经 booadminJson 注入
+    window.addEventListener('beforeunload', function () {
+        if (window.parent && window.parent !== window) {
+            window.parent.postMessage('cancelPreview', <?php echo booadminJson($options->rootUrl()); ?>);
         }
-    };
+    });
 })();
 </script>
 </body>
@@ -640,12 +641,13 @@ if ($previewMode === 'print') {
         }
     });
 
-    // 父窗口通信
-    window.onbeforeunload = function () {
-        if (!!window.parent) {
-            window.parent.postMessage('cancelPreview', '<?php echo addslashes($options->rootUrl()); ?>');
+    // 父窗口通信（打印预览分支）：同样使用 addEventListener + 安全注入，
+    // 两处分支互不覆盖，第三方脚本也可安全挂接 beforeunload
+    window.addEventListener('beforeunload', function () {
+        if (window.parent && window.parent !== window) {
+            window.parent.postMessage('cancelPreview', <?php echo booadminJson($options->rootUrl()); ?>);
         }
-    };
+    });
 })();
 </script>
 <?php } ?>

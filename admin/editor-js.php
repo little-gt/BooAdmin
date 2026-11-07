@@ -21,25 +21,27 @@
 (function () {
     const textarea = $('#text');
 
-    // 转义 HTML 特殊字符：文件名或 URL 可能含引号、尖括号，
-    // 直接拼接会破坏属性结构并造成注入，插入编辑器前必须先转义
-    function escapeHtmlAttr (str) {
-        return String(str === undefined || str === null ? '' : str)
-            .replace(/&/g, '&amp;')
-            .replace(/</g, '&lt;')
-            .replace(/>/g, '&gt;')
-            .replace(/"/g, '&quot;')
-            .replace(/'/g, '&#39;');
-    }
+    // 输出编码统一委托内核安全层，本页不再自带一套实现
+    const html = BooAdmin.html;
 
-    // 插入图片 / 文件到正文
+    /**
+     * 插入图片 / 文件到正文。
+     *
+     * URL 先过协议白名单（杜绝 javascript:/data: 进入 src/href），
+     * 再对属性与文本做编码。历史上这里只做属性转义、无协议校验。
+     * 允许第三方插件通过钩子改写最终生成的 HTML 片段。
+     */
     Typecho.insertFileToEditor = function (file, url, isImage) {
-        const sel = textarea.getSelection(),
-            html = isImage ? '<img src="' + escapeHtmlAttr(url) + '" alt="' + escapeHtmlAttr(file) + '" />'
-                : '<a href="' + escapeHtmlAttr(url) + '">' + escapeHtmlAttr(file) + '</a>',
-            offset = (sel ? sel.start : 0) + html.length;
+        const sel = textarea.getSelection();
+        const safeLink = html.url(url, { fallback: '#' });
+        let markup = isImage
+            ? '<img src="' + html.attr(safeLink) + '" alt="' + html.attr(file) + '" />'
+            : '<a href="' + html.attr(safeLink) + '">' + html.esc(file) + '</a>';
 
-        textarea.replaceSelection(html);
+        markup = BooAdmin.hooks.filter('editor:insertMarkup', markup, { file, url, isImage });
+        const offset = (sel ? sel.start : 0) + markup.length;
+
+        textarea.replaceSelection(markup);
         textarea.setSelection(offset, offset);
     };
 })();
@@ -64,7 +66,7 @@ $(document).ready(function () {
     let isFullScreen = false;
 
     const options = {},
-        defaultMarkdown = <?php echo json_encode(!$content->have() || $content->isMarkdown); ?>,
+        defaultMarkdown = <?php echo booadminJson(!$content->have() || $content->isMarkdown); ?>,
         markdownInput = $('input[data-write-markdown="1"]'),
         isMarkdown = markdownInput.length > 0 ? markdownInput.val() === '1' : defaultMarkdown;
 
@@ -145,7 +147,8 @@ $(document).ready(function () {
                 + tag + '</strong> : ' + $.trim(src) + '</div>';
         });
 
-        return DOMPurify.sanitize(html, {USE_PROFILES: {html: true}});
+        // 走内核净化：DOMPurify 缺失时自动降级为纯文本，不会中断预览渲染
+        return BooAdmin.html.sanitize(html);
     });
 
     // ========================================
