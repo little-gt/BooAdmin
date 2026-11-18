@@ -75,8 +75,11 @@ include 'menu.php';
                                 </div>
                             </div>
                             
-                            <form method="post" name="theme" id="theme" action="<?php $security->index('/action/themes-edit'); ?>" class="flex-1 flex flex-col p-0 m-0">
-                                <textarea name="content" id="content" class="flex-1 w-full p-4 font-mono text-sm bg-gray-900 text-gray-200 border-none resize-none focus:outline-none" spellcheck="false" <?php if (!$files->currentIsWriteable()): ?>readonly<?php endif; ?>><?php echo $files->currentContent(); ?></textarea>
+                            <form method="post" name="theme" id="theme" action="<?php $security->index('/action/themes-edit'); ?>" class="flex-1 flex flex-col p-0 m-0 min-h-0">
+                                <div class="booadmin-code-wrap flex-1 min-h-0 overflow-hidden">
+                                    <pre id="php-highlight-backdrop" class="booadmin-code-layer p-4" aria-hidden="true"><code id="php-highlight-code"></code></pre>
+                                    <textarea name="content" id="content" class="booadmin-code-layer p-4 focus:outline-none" spellcheck="false" wrap="off" <?php if (!$files->currentIsWriteable()): ?>readonly<?php endif; ?>><?php echo $files->currentContent(); ?></textarea>
+                                </div>
                                 
                                 <div class="p-4 border-t border-gray-200 bg-gray-100 flex justify-end">
                                     <?php if ($files->currentIsWriteable()): ?>
@@ -107,15 +110,99 @@ include 'menu.php';
 include 'common-js.php';
 ?>
 
+<style>
+/* 主题编辑器：轻量 PHP 高亮（紧急快速编辑用，无外部依赖） */
+.booadmin-code-wrap {
+    position: relative;
+    background: #1f2937;
+}
+@media (prefers-color-scheme: dark) {
+    .booadmin-code-wrap { background: var(--booadmin-bg); }
+}
+.booadmin-code-layer {
+    font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", monospace;
+    font-size: 0.875rem;
+    line-height: 1.5rem;
+    tab-size: 4;
+    white-space: pre;
+    overflow: auto;
+    box-sizing: border-box;
+    margin: 0;
+    border: 0;
+}
+/* dark.css 对 textarea/pre/code 用了 !important，此处必须同级覆盖，否则暗色下出现双份文字与底色块 */
+#php-highlight-backdrop {
+    position: absolute;
+    inset: 0;
+    overflow: hidden;
+    background: transparent !important;
+    color: #d1d5db !important;
+    pointer-events: none;
+    z-index: 0;
+}
+#php-highlight-code {
+    display: block;
+    padding: 0;
+    background: transparent !important;
+    color: inherit !important;
+}
+#content.booadmin-code-layer {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    background: transparent !important;
+    border: 0 !important;
+    line-height: 1.5rem !important;
+    color: #d1d5db !important;
+    caret-color: #f9fafb !important;
+    resize: none;
+    z-index: 1;
+}
+/* 高亮就绪后才隐藏原生文字；脚本异常时退化为普通深色编辑器 */
+.booadmin-code-wrap.php-highlight-ready #content.booadmin-code-layer {
+    color: transparent !important;
+    -webkit-text-fill-color: transparent !important;
+}
+.booadmin-code-wrap.php-highlight-ready #content.booadmin-code-layer::selection {
+    background: rgba(59, 130, 246, 0.45);
+}
+.booadmin-code-layer .tok-tag { color: #c586c0; }
+.booadmin-code-layer .tok-key { color: #569cd6; }
+.booadmin-code-layer .tok-var { color: #9cdcfe; }
+.booadmin-code-layer .tok-str { color: #ce9178; }
+.booadmin-code-layer .tok-com { color: #6a9955; font-style: italic; }
+.booadmin-code-layer .tok-num { color: #b5cea8; }
+</style>
+
 <script>
+// 原生全屏会把元素提升到浏览器顶层，普通 z-index 无法覆盖；
+// 因此全屏期间把共享弹窗临时移入全屏元素，退出全屏后移回 body。
+const SHARED_MODAL_ID = '__booadmin_shared_modal__';
+
+function currentFullscreenElement() {
+    return document.fullscreenElement || document.webkitFullscreenElement || document.mozFullScreenElement || null;
+}
+
+function syncModalLayer() {
+    const modal = document.getElementById(SHARED_MODAL_ID);
+    if (!modal) return;
+    const fs = currentFullscreenElement();
+    if (fs && modal.parentElement !== fs) {
+        fs.appendChild(modal);
+    } else if (!fs && modal.parentElement !== document.body) {
+        document.body.appendChild(modal);
+    }
+}
+
 // 全屏切换功能
 const fullscreenBtn = document.getElementById('fullscreen-btn');
 const editorContainer = document.getElementById('editor-container');
 
 fullscreenBtn.addEventListener('click', function() {
-    const isEditorFullscreen = document.fullscreenElement === editorContainer;
+    const fs = currentFullscreenElement();
 
-    if (!isEditorFullscreen) {
+    if (fs !== editorContainer) {
         if (editorContainer.requestFullscreen) {
             editorContainer.requestFullscreen();
         } else if (editorContainer.mozRequestFullScreen) {
@@ -125,29 +212,26 @@ fullscreenBtn.addEventListener('click', function() {
         } else if (editorContainer.msRequestFullscreen) {
             editorContainer.msRequestFullscreen();
         }
-        fullscreenBtn.innerHTML = '<i class="fas fa-compress"></i>';
-    } else {
-        if (document.exitFullscreen) {
-            document.exitFullscreen();
-        } else if (document.mozCancelFullScreen) {
-            document.mozCancelFullScreen();
-        } else if (document.webkitExitFullscreen) {
-            document.webkitExitFullscreen();
-        } else if (document.msExitFullscreen) {
-            document.msExitFullscreen();
-        }
-        fullscreenBtn.innerHTML = '<i class="fas fa-expand"></i>';
+    } else if (document.exitFullscreen) {
+        document.exitFullscreen();
+    } else if (document.mozCancelFullScreen) {
+        document.mozCancelFullScreen();
+    } else if (document.webkitExitFullscreen) {
+        document.webkitExitFullscreen();
+    } else if (document.msExitFullscreen) {
+        document.msExitFullscreen();
     }
 });
 
-// 监听全屏状态变化
-document.addEventListener('fullscreenchange', function() {
-    if (document.fullscreenElement === editorContainer) {
-        fullscreenBtn.innerHTML = '<i class="fas fa-compress"></i>';
-    } else {
-        fullscreenBtn.innerHTML = '<i class="fas fa-expand"></i>';
-    }
-});
+// 监听全屏状态变化：同步按钮图标与弹窗层级
+function onFullscreenChange() {
+    const active = currentFullscreenElement() === editorContainer;
+    fullscreenBtn.innerHTML = active ? '<i class="fas fa-compress"></i>' : '<i class="fas fa-expand"></i>';
+    syncModalLayer();
+}
+document.addEventListener('fullscreenchange', onFullscreenChange);
+document.addEventListener('webkitfullscreenchange', onFullscreenChange);
+document.addEventListener('mozfullscreenchange', onFullscreenChange);
 
 // 保存确认提示框
 const saveBtn = document.getElementById('save-btn');
@@ -165,7 +249,60 @@ if (saveBtn) {
                 }
             }
         });
+        syncModalLayer();
     });
+}
+
+// ── 轻量 PHP 高亮：textarea 文字透明，背后 pre 同步渲染着色文本 ──
+const contentEl = document.getElementById('content');
+const highlightEl = document.getElementById('php-highlight-code');
+const backdropEl = document.getElementById('php-highlight-backdrop');
+
+function escapeHtml(text) {
+    return text.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+}
+
+const PHP_TOKEN_RE = /(\x3c\x3fphp\b|\x3c\x3f=|\x3f>)|('(?:\\.|[^'\\])*'|"(?:\\.|[^"\\])*")|(\/\*[\s\S]*?\*\/|\/\/[^\n]*|#[^\n]*)|(\$[A-Za-z_]\w*)|\b(abstract|and|array|as|break|case|catch|class|clone|const|continue|declare|default|die|do|echo|else|elseif|empty|enddeclare|endfor|endforeach|endif|endswitch|endwhile|extends|final|finally|fn|for|foreach|function|global|goto|if|implements|include|include_once|instanceof|insteadof|interface|isset|list|match|namespace|new|or|print|private|protected|public|readonly|require|require_once|return|static|switch|throw|trait|try|unset|use|var|while|xor|yield|true|false|null)\b|(\b\d+(?:\.\d+)?\b)/gi;
+
+function highlightPhp(source) {
+    let out = '';
+    let inPhp = false;
+    let last = 0;
+    let match;
+    PHP_TOKEN_RE.lastIndex = 0;
+    while ((match = PHP_TOKEN_RE.exec(source)) !== null) {
+        out += escapeHtml(source.slice(last, match.index));
+        const text = match[0];
+        let cls = '';
+        if (match[1]) {
+            cls = 'tok-tag';
+            inPhp = /^<\?/.test(text);
+        } else if (inPhp) {
+            if (match[2]) cls = 'tok-str';
+            else if (match[3]) cls = 'tok-com';
+            else if (match[4]) cls = 'tok-var';
+            else if (match[5]) cls = 'tok-key';
+            else if (match[6]) cls = 'tok-num';
+        }
+        out += cls ? '<span class="' + cls + '">' + escapeHtml(text) + '</span>' : escapeHtml(text);
+        last = PHP_TOKEN_RE.lastIndex;
+    }
+    return out + escapeHtml(source.slice(last));
+}
+
+function syncHighlight() {
+    if (!contentEl || !highlightEl || !backdropEl) return;
+    const value = contentEl.value;
+    highlightEl.innerHTML = highlightPhp(value) + (value.endsWith('\n') ? '\n' : '');
+    backdropEl.scrollTop = contentEl.scrollTop;
+    backdropEl.scrollLeft = contentEl.scrollLeft;
+    contentEl.parentElement.classList.add('php-highlight-ready');
+}
+
+if (contentEl) {
+    contentEl.addEventListener('input', syncHighlight);
+    contentEl.addEventListener('scroll', syncHighlight);
+    syncHighlight();
 }
 </script>
 
