@@ -84,7 +84,7 @@ include 'menu.php';
                     <h2 class="text-xl font-bold text-discord-text flex items-center">
                         <i class="fas fa-cubes text-discord-accent mr-2"></i> <?php _e('插件列表'); ?>
                     </h2>
-                    <a href="https://docs.typecho.org/plugins/download" target="_blank" class="text-sm text-discord-accent hover:underline flex items-center">
+                    <a href="https://docs.typecho.org/guide/extend/finding-plugins" target="_blank" class="text-sm text-discord-accent hover:underline flex items-center">
                         <i class="fas fa-external-link-alt mr-1"></i> <?php _e('获取更多插件'); ?>
                     </a>
                 </div>

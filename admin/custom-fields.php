@@ -81,6 +81,6 @@ $defaultFields = isset($post) ? $post->getDefaultFieldItems() : $page->getDefaul
     
      <div class="mt-4 text-xs text-gray-400">
         <i class="fas fa-info-circle mr-1"></i>
-        <?php _e('自定义字段可以扩展你的模板功能, 使用方法参见 <a href="https://docs.typecho.org/help/custom-fields" target="_blank" class="text-discord-accent hover:underline">帮助文档</a>'); ?>
+        <?php _e('自定义字段可以扩展你的模板功能, 使用方法参见 <a href="https://docs.typecho.org/guide/content/custom-fields" target="_blank" class="text-discord-accent hover:underline">帮助文档</a>'); ?>
     </div>
 </div>
