@@ -131,6 +131,63 @@ $isAllComments = ('on' == $request->get('__typecho_all_comments') || 'on' == \Ty
                          </div>
                     </div>
 
+                    <?php
+                    /**
+                     * 评论数据源：表格视图与卡片视图共用，归一化后只构建一次。
+                     *
+                     * 历史上表格视图在 while($comments->next()) 里直接输出 HTML，卡片视图
+                     * 另存一份 $commentsData；两处的数据契约随之分叉（rel / data-rel、
+                     * tr[data-comment] / .content-card[data-comment]、jQuery .data() 缓存 /
+                     * 属性解析），导致某一视图的操作会静默失效且难以定位。现在统一为
+                     * 「一次构建、两处消费」，两个视图都只认 $commentsData 这一份数据。
+                     *
+                     * 正文必须在当前行（$comments 指针正确）时捕获 Typecho 过滤后的安全
+                     * HTML，否则所有行都会渲染成同一份内容。
+                     */
+                    $commentsData = [];
+                    while ($comments->next()):
+                        $coid = $comments->coid;
+
+                        ob_start();
+                        $comments->content();
+                        $contentHtml = ob_get_clean();
+
+                        // 交互数据契约：与卡片模式一致，两个视图、所有 JS 读写都只认这一份
+                        $commentData = [
+                            'author' => $comments->author,
+                            'mail'   => $comments->mail,
+                            'url'    => $comments->url,
+                            'ip'     => $comments->ip,
+                            'type'   => $comments->type,
+                            'text'   => $comments->text
+                        ];
+
+                        $commentsData[] = [
+                            'coid'        => $coid,
+                            'author'      => $comments->author,
+                            'mail'        => $comments->mail,
+                            'url'         => $comments->url,
+                            'ip'          => $comments->ip,
+                            'type'        => $comments->type,
+                            'status'      => $comments->status,
+                            'dateWord'    => $comments->dateWord,
+                            'title'       => $comments->title,
+                            'permalink'   => $comments->permalink,
+                            'gravatar'    => ('comment' == $comments->type)
+                                ? getAvatar($comments->mail, $comments->author, 40) : '',
+                            'content'     => $contentHtml,
+                            // booadminJson 用 JSON_HEX_* 全套编码，可安全放进单引号属性
+                            'commentJson' => booadminJson($commentData),
+                            'contentAttr' => booadminAttr($contentHtml),
+                            'replyUrl'    => $security->getIndex('/action/comments-edit?do=reply&coid=' . $coid),
+                            'editUrl'     => $security->getIndex('/action/comments-edit?do=edit&coid=' . $coid),
+                            'approvedUrl' => $security->getIndex('/action/comments-edit?do=approved&coid=' . $coid),
+                            'spamUrl'     => $security->getIndex('/action/comments-edit?do=spam&coid=' . $coid),
+                            'deleteUrl'   => $security->getIndex('/action/comments-edit?do=delete&coid=' . $coid)
+                        ];
+                    endwhile;
+                    ?>
+
                     <div class="table-wrapper" data-table-scroll>
                     <table class="w-full text-left border-collapse typecho-list-table">
                         <thead>
@@ -143,117 +200,66 @@ $isAllComments = ('on' == $request->get('__typecho_all_comments') || 'on' == \Ty
                             </tr>
                         </thead>
                         <tbody class="divide-y divide-gray-100">
-                            <?php if($comments->have()): ?>
-                                <?php 
-                                // 为卡片视图存储评论数据
-                                $commentsData = [];
-                                while($comments->next()): 
-                                    $comment = array(
-                                        'author'    =>  $comments->author,
-                                        'mail'      =>  $comments->mail,
-                                        'url'       =>  $comments->url,
-                                        'ip'        =>  $comments->ip,
-                                        'type'        =>  $comments->type,
-                                        'text'      =>  $comments->text
-                                    );
-                                    
-                                    // 使用 getAvatar 函数统一处理头像
-                                    $gravatarHtml = '';
-                                    if ('comment' == $comments->type) {
-                                        $gravatarHtml = getAvatar($comments->mail, $comments->author, 40);
-                                    }
-
-                                    // 评论正文：必须在当前行（$comments 指针正确）处捕获 Typecho 过滤后的
-                                    // 安全 HTML，供下方卡片视图使用。若放到卡片视图自己的循环里再调
-                                    // $comments->content()，此时 $comments 指针已离开当前行，会导致每张卡片
-                                    // 都渲染出同一份（最早/最后一行）内容。
-                                    ob_start();
-                                    $comments->content();
-                                    $commentContent = ob_get_clean();
-
-                                    // 为卡片视图存储数据
-                                    $commentsData[] = [
-                                        'content' => $commentContent,
-                                        'coid' => $comments->coid,
-                                        'id' => $comments->theId,
-                                        'author' => $comments->author,
-                                        'mail' => $comments->mail,
-                                        'url' => $comments->url,
-                                        'ip' => $comments->ip,
-                                        'type' => $comments->type,
-                                        'text' => $comments->text,
-                                        'dateWord' => $comments->dateWord,
-                                        'title' => $comments->title,
-                                        'permalink' => $comments->permalink,
-                                        'status' => $comments->status,
-                                        'gravatar' => $gravatarHtml,
-                                        'replyUrl' => $security->getIndex('/action/comments-edit?do=reply&coid=' . $comments->coid),
-                                        'editUrl' => $security->getIndex('/action/comments-edit?do=edit&coid=' . $comments->coid),
-                                        'approvedUrl' => $security->getIndex('/action/comments-edit?do=approved&coid=' . $comments->coid),
-                                        'spamUrl' => $security->getIndex('/action/comments-edit?do=spam&coid=' . $comments->coid),
-                                        'deleteUrl' => $security->getIndex('/action/comments-edit?do=delete&coid=' . $comments->coid),
-                                        'comment' => $comment
-                                    ];
-                                ?>
-                                    <tr id="<?php $comments->theId(); ?>" data-comment="<?php echo htmlspecialchars(json_encode($comment));
-                                    ?>" class="group hover:bg-gray-50 transition-colors">
+                            <?php if (!empty($commentsData)): ?>
+                                <?php foreach ($commentsData as $row): ?>
+                                    <tr id="comment-<?php echo booadminAttr($row['coid']); ?>"
+                                        class="group hover:bg-gray-50 transition-colors comment-row"
+                                        data-comment-id="<?php echo booadminAttr($row['coid']); ?>"
+                                        data-comment='<?php echo $row['commentJson']; ?>'>
                                         <td class="pl-4 py-3 align-top">
-                                            <input type="checkbox" value="<?php $comments->coid(); ?>" name="coid[]" class="text-discord-accent focus:ring-discord-accent border-gray-300 mt-1">
+                                            <input type="checkbox" value="<?php echo booadminAttr($row['coid']); ?>" name="coid[]" class="text-discord-accent focus:ring-discord-accent border-gray-300 mt-1">
                                         </td>
                                         <td class="py-3 text-center align-top">
                                             <div class="w-10 h-10 mx-auto flex items-center justify-center">
-                                                <?php if ('comment' == $comments->type): ?>
-                                                    <?php echo getAvatar($comments->mail, $comments->author, 40); ?>
+                                                <?php if ($row['gravatar']): ?>
+                                                    <?php echo $row['gravatar']; ?>
                                                 <?php else: ?>
                                                     <div class="flex items-center justify-center w-full h-full bg-gray-200 text-gray-500"><i class="fas fa-quote-right"></i></div>
                                                 <?php endif; ?>
                                             </div>
                                         </td>
-                                        <td class="py-3 align-top text-sm">
-                                            <div class="font-medium text-discord-text">
-                                                <?php if($comments->url): ?>
-                                                    <a href="<?php $comments->url(); ?>" target="_blank" class="hover:underline"><?php $comments->author(); ?></a>
+                                        <td class="py-3 align-top text-sm comment-author">
+                                            <div class="font-medium text-discord-text comment-author-name">
+                                                <?php if ($row['url']): ?>
+                                                    <a href="<?php echo booadminAttr($row['url']); ?>" target="_blank" rel="noopener noreferrer" class="hover:underline"><?php echo booadminAttr($row['author']); ?></a>
                                                 <?php else: ?>
-                                                    <?php $comments->author(); ?>
+                                                    <?php echo booadminAttr($row['author']); ?>
                                                 <?php endif; ?>
                                             </div>
                                             <div class="text-xs text-gray-400 mt-0.5">
-                                                <?php if($comments->mail): ?>
-                                                    <a href="mailto:<?php $comments->mail(); ?>" class="hover:text-discord-accent block"><?php $comments->mail(); ?></a>
-                                                <?php endif; ?>
-                                                <span class="block mt-0.5"><?php $comments->ip(); ?></span>
+                                                <div class="comment-author-mail">
+                                                    <?php if ($row['mail']): ?>
+                                                        <a href="mailto:<?php echo booadminAttr($row['mail']); ?>" class="hover:text-discord-accent block"><?php echo booadminAttr($row['mail']); ?></a>
+                                                    <?php endif; ?>
+                                                </div>
+                                                <span class="block mt-0.5"><?php echo booadminAttr($row['ip']); ?></span>
                                             </div>
                                         </td>
                                         <td class="py-3 align-top text-sm text-gray-600">
                                             <div class="mb-1 text-xs text-gray-400">
-                                                <?php $comments->dateWord(); ?> 于 <a href="<?php $comments->permalink(); ?>" class="text-discord-accent hover:underline"><?php $comments->title(); ?></a>
+                                                <?php echo booadminAttr($row['dateWord']); ?> 于 <a href="<?php echo booadminAttr($row['permalink']); ?>" target="_blank" rel="noopener noreferrer" class="text-discord-accent hover:underline"><?php echo booadminAttr($row['title']); ?></a>
                                             </div>
-                                            <div class="comment-content prose prose-sm max-w-none text-gray-700">
-                                                <?php $comments->content(); ?>
-                                            </div>
+                                            <div class="comment-content prose prose-sm max-w-none text-gray-700"
+                                                 data-comment-content="<?php echo $row['contentAttr']; ?>"></div>
                                         </td>
                                         <td class="py-3 pr-4 text-left align-top text-sm">
                                             <div class="flex flex-col items-start space-y-1 opacity-0 group-hover:opacity-100 transition-opacity">
-                                                <a href="#<?php $comments->theId(); ?>" rel="<?php $security->index('/action/comments-edit?do=reply&coid=' . $comments->coid); ?>" class="operate-reply text-discord-accent hover:underline"><i class="fas fa-reply mr-1"></i><?php _e('回复'); ?></a>
-                                                <a href="#<?php $comments->theId(); ?>" rel="<?php $security->index('/action/comments-edit?do=edit&coid=' . $comments->coid); ?>" class="operate-edit text-gray-500 hover:text-discord-accent"><i class="fas fa-edit mr-1"></i><?php _e('编辑'); ?></a>
-                                                
-                                                <?php if('approved' == $comments->status): ?>
-                                                    <!-- Current status approved -->
-                                                <?php else: ?>
-                                                    <a href="<?php $security->index('/action/comments-edit?do=approved&coid=' . $comments->coid); ?>" class="operate-approved text-green-600 hover:underline"><i class="fas fa-check mr-1"></i><?php _e('通过'); ?></a>
+                                                <a href="#" class="operate-reply text-discord-accent hover:underline" data-coid="<?php echo booadminAttr($row['coid']); ?>" data-rel="<?php echo booadminAttr($row['replyUrl']); ?>"><i class="fas fa-reply mr-1"></i><?php _e('回复'); ?></a>
+                                                <a href="#" class="operate-edit text-gray-500 hover:text-discord-accent" data-coid="<?php echo booadminAttr($row['coid']); ?>" data-rel="<?php echo booadminAttr($row['editUrl']); ?>"><i class="fas fa-edit mr-1"></i><?php _e('编辑'); ?></a>
+
+                                                <?php if ('approved' != $row['status']): ?>
+                                                    <a href="<?php echo booadminAttr($row['approvedUrl']); ?>" class="operate-approved text-green-600 hover:underline"><i class="fas fa-check mr-1"></i><?php _e('通过'); ?></a>
                                                 <?php endif; ?>
-                                                
-                                                <?php if('spam' == $comments->status): ?>
-                                                    <!-- Current status spam -->
-                                                <?php else: ?>
-                                                    <a href="<?php $security->index('/action/comments-edit?do=spam&coid=' . $comments->coid); ?>" class="operate-spam text-orange-500 hover:underline"><i class="fas fa-ban mr-1"></i><?php _e('标为垃圾'); ?></a>
+
+                                                <?php if ('spam' != $row['status']): ?>
+                                                    <a href="<?php echo booadminAttr($row['spamUrl']); ?>" class="operate-spam text-orange-500 hover:underline"><i class="fas fa-ban mr-1"></i><?php _e('标为垃圾'); ?></a>
                                                 <?php endif; ?>
-                                                
-                                                <a lang="<?php _e('你确认要删除%s的评论吗?', htmlspecialchars($comments->author)); ?>" href="<?php $security->index('/action/comments-edit?do=delete&coid=' . $comments->coid); ?>" class="operate-delete text-red-500 hover:underline"><i class="fas fa-trash-alt mr-1"></i><?php _e('删除'); ?></a>
+
+                                                <a href="<?php echo booadminAttr($row['deleteUrl']); ?>" class="operate-delete text-red-500 hover:underline" lang="<?php echo booadminAttr(_t('你确认要删除%s的评论吗?', $row['author'])); ?>"><i class="fas fa-trash-alt mr-1"></i><?php _e('删除'); ?></a>
                                             </div>
                                         </td>
                                     </tr>
-                                <?php endwhile; ?>
+                                <?php endforeach; ?>
                             <?php else: ?>
                                 <tr>
                                     <td colspan="5" class="px-4 py-8 text-center text-gray-500">
@@ -268,82 +274,77 @@ $isAllComments = ('on' == $request->get('__typecho_all_comments') || 'on' == \Ty
                     </table>
                     </div>
 
-                    <!-- Card View Container -->
+                                        <!-- Card View Container -->
                     <div class="card-view-container">
                         <?php if (!empty($commentsData)): ?>
-                            <?php foreach ($commentsData as $commentData): ?>
-                                <div class="content-card" id="card-<?php echo $commentData['coid']; ?>" data-comment='<?php echo htmlspecialchars(json_encode($commentData['comment'])); ?>'>
-                                    <input type="checkbox" value="<?php echo $commentData['coid']; ?>" name="coid[]" class="card-checkbox text-discord-accent focus:ring-discord-accent border-gray-300">
-                                    
-                                    <div class="card-header">
+                            <?php foreach ($commentsData as $row): ?>
+                                <div class="content-card comment-row"
+                                     id="card-<?php echo booadminAttr($row['coid']); ?>"
+                                     data-comment-id="<?php echo booadminAttr($row['coid']); ?>"
+                                     data-comment='<?php echo $row['commentJson']; ?>'>
+                                    <input type="checkbox" value="<?php echo booadminAttr($row['coid']); ?>" name="coid[]" class="card-checkbox text-discord-accent focus:ring-discord-accent border-gray-300">
+
+                                    <div class="card-header comment-author">
                                         <div class="flex items-center space-x-3 flex-1">
                                             <div class="w-10 h-10 flex-shrink-0 flex items-center justify-center">
-                                                <?php if ('comment' == $commentData['type'] && $commentData['gravatar']): ?>
-                                                    <?php echo getAvatar($commentData['mail'], $commentData['author'], 40); ?>
+                                                <?php if ($row['gravatar']): ?>
+                                                    <?php echo $row['gravatar']; ?>
                                                 <?php else: ?>
                                                     <div class="flex items-center justify-center w-full h-full bg-gray-200 text-gray-500"><i class="fas fa-quote-right"></i></div>
                                                 <?php endif; ?>
                                             </div>
                                             <div class="flex-1 min-w-0">
-                                                <div class="card-title font-medium text-discord-text">
-                                                    <?php if($commentData['url']): ?>
-                                                        <a href="<?php echo $commentData['url']; ?>" target="_blank" class="hover:underline"><?php echo htmlspecialchars($commentData['author']); ?></a>
+                                                <div class="card-title font-medium text-discord-text comment-author-name">
+                                                    <?php if ($row['url']): ?>
+                                                        <a href="<?php echo booadminAttr($row['url']); ?>" target="_blank" rel="noopener noreferrer" class="hover:underline"><?php echo booadminAttr($row['author']); ?></a>
                                                     <?php else: ?>
-                                                        <?php echo htmlspecialchars($commentData['author']); ?>
+                                                        <?php echo booadminAttr($row['author']); ?>
                                                     <?php endif; ?>
                                                 </div>
-                                                <?php if($commentData['mail']): ?>
-                                                    <div class="text-xs text-gray-400 truncate">
-                                                        <a href="mailto:<?php echo $commentData['mail']; ?>" class="hover:text-discord-accent"><?php echo htmlspecialchars($commentData['mail']); ?></a>
-                                                    </div>
-                                                <?php endif; ?>
+                                                <div class="text-xs text-gray-400 truncate comment-author-mail">
+                                                    <?php if ($row['mail']): ?>
+                                                        <a href="mailto:<?php echo booadminAttr($row['mail']); ?>" class="hover:text-discord-accent"><?php echo booadminAttr($row['mail']); ?></a>
+                                                    <?php endif; ?>
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
-                                    
+
                                     <div class="card-meta">
                                         <div class="card-meta-item">
                                             <i class="fas fa-clock text-gray-400"></i>
-                                            <span><?php echo $commentData['dateWord']; ?></span>
+                                            <span><?php echo booadminAttr($row['dateWord']); ?></span>
                                         </div>
                                         <div class="card-meta-item">
                                             <i class="fas fa-file-alt text-gray-400"></i>
-                                            <a href="<?php echo $commentData['permalink']; ?>" class="hover:text-discord-accent truncate" target="_blank"><?php echo htmlspecialchars($commentData['title']); ?></a>
+                                            <a href="<?php echo booadminAttr($row['permalink']); ?>" class="hover:text-discord-accent truncate" target="_blank" rel="noopener noreferrer"><?php echo booadminAttr($row['title']); ?></a>
                                         </div>
-                                        <?php if($commentData['ip']): ?>
+                                        <?php if ($row['ip']): ?>
                                         <div class="card-meta-item">
                                             <i class="fas fa-map-marker-alt text-gray-400"></i>
-                                            <span><?php echo htmlspecialchars($commentData['ip']); ?></span>
+                                            <span><?php echo booadminAttr($row['ip']); ?></span>
                                         </div>
                                         <?php endif; ?>
                                     </div>
-                                    
-                                    <?php
-                                    /**
-                                     * 评论正文渲染。
-                                     *
-                                     * 正文在上方构建 $commentsData 的循环里（指针正确时）已捕获为安全 HTML
-                                     * 并存入 $commentData['content']；这里经 htmlspecialchars 放入 data 属性，
-                                     * 再由客户端 DOMPurify 二次净化后渲染，与表格视图保持同一套安全策略。
-                                     */
-                                    ?>
+
+                                    <!-- 正文与表格视图共用 data-comment-content，由 renderCommentContents() 统一净化渲染 -->
                                     <div class="card-content comment-content prose prose-sm max-w-none text-gray-700"
-                                         data-comment-content="<?php echo htmlspecialchars($commentData['content'], ENT_QUOTES, 'UTF-8'); ?>"></div>
-                                    
+                                         data-comment-content="<?php echo $row['contentAttr']; ?>"></div>
+
                                     <div class="card-actions">
-                                        <a href="#" class="operate-reply" data-coid="<?php echo $commentData['coid']; ?>" data-rel="<?php echo $commentData['replyUrl']; ?>">
+                                        <a href="#" class="operate-reply" data-coid="<?php echo booadminAttr($row['coid']); ?>" data-rel="<?php echo booadminAttr($row['replyUrl']); ?>">
                                             <i class="fas fa-reply"></i> <?php _e('回复'); ?>
                                         </a>
-                                        <a href="#" class="operate-edit" data-coid="<?php echo $commentData['coid']; ?>" data-rel="<?php echo $commentData['editUrl']; ?>">
+                                        <a href="#" class="operate-edit" data-coid="<?php echo booadminAttr($row['coid']); ?>" data-rel="<?php echo booadminAttr($row['editUrl']); ?>">
                                             <i class="fas fa-edit"></i> <?php _e('编辑'); ?>
                                         </a>
-                                        <?php if('approved' != $commentData['status']): ?>
-                                            <a href="<?php echo $commentData['approvedUrl']; ?>" class="operate-approved text-green-600"><i class="fas fa-check"></i> <?php _e('通过'); ?></a>
+                                        <?php if ('approved' != $row['status']): ?>
+                                            <a href="<?php echo booadminAttr($row['approvedUrl']); ?>" class="operate-approved text-green-600"><i class="fas fa-check"></i> <?php _e('通过'); ?></a>
                                         <?php endif; ?>
-                                        <?php if('spam' != $commentData['status']): ?>
-                                            <a href="<?php echo $commentData['spamUrl']; ?>" class="operate-spam text-orange-500"><i class="fas fa-ban"></i> <?php _e('标为垃圾'); ?></a>
+                                        <?php if ('spam' != $row['status']): ?>
+                                            <a href="<?php echo booadminAttr($row['spamUrl']); ?>" class="operate-spam text-orange-500"><i class="fas fa-ban"></i> <?php _e('标为垃圾'); ?></a>
                                         <?php endif; ?>
-                                        <a href="<?php echo $commentData['deleteUrl']; ?>" class="operate-delete text-red-500" lang="<?php _e('你确认要删除%s的评论吗?', htmlspecialchars($commentData['author'])); ?>">
+                                        <a href="<?php echo booadminAttr($row['deleteUrl']); ?>" class="operate-delete text-red-500" lang="<?php echo booadminAttr(_t('你确认要删除%s的评论吗?', $row['author'])); ?>">
                                             <i class="fas fa-trash-alt"></i> <?php _e('删除'); ?>
                                         </a>
                                     </div>
@@ -696,8 +697,8 @@ include 'table-js.php';
 // 模态框状态的全局变量
 var currentReplyUrl = '';
 var currentEditUrl = '';
+// 归一化后表格与卡片都只有一个行容器 id，不再分别维护 rowId / cardId
 var currentEditRowId = '';
-var currentEditCardId = '';
 var currentDeleteUrl = '';
 var currentDeleteTarget = null;
 
@@ -743,37 +744,23 @@ function openReplyModal(commentData, actionUrl) {
 
     var gravatarHtml = '';
     if (commentData.type === 'comment') {
+        // 归一化：表格与卡片都是 .comment-row，头像只需按统一容器查找一次，
+        // 不再有 td:eq(1) / 遍历卡片比对两套逻辑。
         var gravatarUrl = '';
-
-        // 用 byId 取行，避免把 id 拼进选择器
         var $row = sec.byId(commentData.id);
         if ($row.length > 0) {
-            var $gravatar = $row.find('td:eq(1) img');
+            var $gravatar = $row.find('img.booadmin-avatar-image').first();
             if ($gravatar.length > 0) {
                 gravatarUrl = $gravatar.attr('src');
             }
-        }
-        // 若表格中未找到，遍历卡片视图并按 data-comment 中的 author 精确比对，
-        // 不再把作者名拼进属性选择器（既防注入也避免特殊字符导致选择器语法错误）。
-        if (!gravatarUrl) {
-            $('.content-card[data-comment]').each(function () {
-                if (gravatarUrl) { return false; }
-                var raw = $(this).attr('data-comment');
-                try {
-                    var data = $.parseJSON(raw);
-                    if (data && data.author === commentData.author) {
-                        var $img = $(this).find('.card-header img').first();
-                        if ($img.length > 0) { gravatarUrl = $img.attr('src'); }
-                    }
-                } catch (e) { /* 忽略损坏的 data 属性 */ }
-            });
         }
 
         // URL 走协议白名单，杜绝 javascript:/data: 进入 src
         var safeGravatar = gravatarUrl ? sec.url(gravatarUrl, {fallback: ''}) : '';
 
         if (safeGravatar) {
-            gravatarHtml = '<div class="relative w-8 h-8"><img src="' + sec.attr(safeGravatar) + '" alt="' + sec.attr(commentData.author) + '" class="w-full h-full object-cover border border-gray-200" onerror="this.classList.add(\'booadmin-avatar-image-hidden\'); this.nextElementSibling.classList.add(\'is-visible\');" /><div class="booadmin-avatar-fallback w-full h-full items-center justify-center bg-gradient-to-br from-blue-500 to-blue-600 text-white font-bold text-xs border border-gray-200 absolute inset-0">' + authorFirstChar + '</div></div>';
+            // 不打内联 onerror：复用 common-js.php 中 avatar 模块的事件委托契约
+            gravatarHtml = '<div class="relative w-8 h-8"><img src="' + sec.attr(safeGravatar) + '" alt="' + sec.attr(commentData.author) + '" class="w-full h-full object-cover border border-gray-200 booadmin-avatar-image" /><div class="booadmin-avatar-fallback w-full h-full items-center justify-center bg-gradient-to-br from-blue-500 to-blue-600 text-white font-bold text-xs border border-gray-200 absolute inset-0">' + authorFirstChar + '</div></div>';
         } else {
             gravatarHtml = '<div class="w-8 h-8 flex items-center justify-center bg-gradient-to-br from-blue-500 to-blue-600 text-white font-bold text-xs border border-gray-200">' + authorFirstChar + '</div>';
         }
@@ -833,16 +820,16 @@ function submitReply() {
     });
 }
 
-function openEditModal(commentData, actionUrl, rowId, cardId) {
+/** rowId 为统一的 .comment-row 容器 id（表格 / 卡片都是同一个契约） */
+function openEditModal(commentData, actionUrl, rowId) {
     currentEditUrl = actionUrl;
     currentEditRowId = rowId;
-    currentEditCardId = cardId;
-    
+
     $('#editAuthor').val(commentData.author);
     $('#editMail').val(commentData.mail || '');
     $('#editUrl').val(commentData.url || '');
     $('#editText').val(commentData.text);
-    
+
     $('#editModal').addClass('active');
     $('#editAuthor').focus();
 }
@@ -851,7 +838,6 @@ function closeEditModal() {
     $('#editModal').removeClass('active');
     currentEditUrl = '';
     currentEditRowId = '';
-    currentEditCardId = '';
 }
 
 function openDeleteModal(authorName, deleteUrl, $target) {
@@ -876,22 +862,17 @@ function confirmDelete() {
 
     var _currentDeleteUrl = currentDeleteUrl;
     var $target = currentDeleteTarget;
-    var $tr = $target.closest('tr');
-    var $card = $target.closest('.content-card');
-    
+    // 归一化：表格 <tr> 与卡片 .content-card 都是 .comment-row
+    var $row = $target.closest('.comment-row');
+
     function rememberScroll () {
         $(window).bind('beforeunload', function () {
             $.cookie('__typecho_comments_scroll', $('body').scrollTop());
         });
     }
-    
-    if ($tr.length > 0) {
-        $tr.fadeOut(function () {
-            rememberScroll();
-            window.location.href = _currentDeleteUrl;
-        });
-    } else if ($card.length > 0) {
-        $card.fadeOut(function () {
+
+    if ($row.length > 0) {
+        $row.fadeOut(function () {
             rememberScroll();
             window.location.href = _currentDeleteUrl;
         });
@@ -899,7 +880,7 @@ function confirmDelete() {
         rememberScroll();
         window.location.href = _currentDeleteUrl;
     }
-    
+
     closeDeleteModal();
 }
 
@@ -919,83 +900,57 @@ function submitEdit() {
     // 在发起请求前快照目标, 避免异步回调期间被 closeEditModal() 清空
     var _currentEditUrl = currentEditUrl;
     var _currentEditRowId = currentEditRowId;
-    var _currentEditCardId = currentEditCardId;
 
     $.post(_currentEditUrl, formData, function(o) {
         if (o && o.comment) {
-            // 若存在则更新表格行
-            if (_currentEditRowId) {
-                var $row = $('#' + _currentEditRowId);
-                if ($row.length > 0) {
-                    // 更新 data 属性
-                    var oldComment = $row.data('comment');
-                    oldComment.author = formData.author;
-                    oldComment.mail = formData.mail;
-                    oldComment.url = formData.url;
-                    oldComment.text = formData.text;
-                    $row.data('comment', oldComment);
-                    
-                    // 更新作者信息列
-                    // author/mail/url 均来自用户提交的表单，拼接进 HTML 前必须转义；
-                    // url 另需限制协议
-                    var authorHtml = '<div class="font-medium text-discord-text">'
-                        + (formData.url
-                            ? '<a target="_blank" rel="noopener noreferrer" href="' + escapeAttr(safeHttpUrl(formData.url)) + '" class="hover:underline">' + escapeHtml(formData.author) + '</a>'
-                            : escapeHtml(formData.author))
-                        + '</div><div class="text-xs text-gray-400 mt-0.5">';
+            // 归一化：按 coid 找出该评论在「所有视图」中的 .comment-row，
+            // 用同一套逻辑回写，保证表格/卡片切换后数据一致。
+            // 用 byId 取源行、再遍历比对 data-comment-id，避免把 id 拼进选择器。
+            var $origin = sec.byId(_currentEditRowId);
+            var coid = $origin.attr('data-comment-id');
+            // 兜底：若源行丢失或没有 coid，只处理来源行本身，绝不批量误改
+            var $rows = coid
+                ? $('.comment-row').filter(function () {
+                    return $(this).attr('data-comment-id') === coid;
+                })
+                : $origin;
 
-                    if (formData.mail) {
-                        authorHtml += '<a href="mailto:' + escapeAttr(formData.mail) + '" class="hover:text-discord-accent block">' + escapeHtml(formData.mail) + '</a>';
-                    }
+            var authorHtml = formData.url
+                ? '<a href="' + escapeAttr(safeHttpUrl(formData.url)) + '" target="_blank" rel="noopener noreferrer" class="hover:underline">' + escapeHtml(formData.author) + '</a>'
+                : escapeHtml(formData.author);
+            var mailHtml = formData.mail
+                ? '<a href="mailto:' + escapeAttr(formData.mail) + '" class="hover:text-discord-accent">' + escapeHtml(formData.mail) + '</a>'
+                : '';
+            // 正文：data 属性只存净化后的 HTML，避免 AJAX 原文回流成为渲染污染入口
+            var content = sec.sanitize(o.comment.content);
 
-                    if (oldComment.ip) {
-                        authorHtml += '<span class="block mt-0.5">' + escapeHtml(oldComment.ip) + '</span>';
+            $rows.each(function () {
+                var $row = $(this);
+
+                // 统一只回写 data-comment 属性（历史上表格写 .data() 缓存、
+                // 卡片写属性，两套状态会漂移）
+                var comment = {};
+                try {
+                    comment = JSON.parse($row.attr('data-comment')) || {};
+                } catch (e) {
+                    if (window.console && console.warn) {
+                        console.warn('[BooAdmin] 编辑回写时数据解析失败', e);
                     }
-                    
-                    authorHtml += '</div>';
-                    
-                    $row.find('td:eq(2)').html(authorHtml).effect('highlight');
-                    
-                    // 更新内容
-                    var content = sec.sanitize(o.comment.content);
-                    $row.find('.comment-content').html(content).effect('highlight');
                 }
-            }
-            
-            // 若存在则更新卡片
-            if (_currentEditCardId) {
-                var $card = $('#' + _currentEditCardId);
-                if ($card.length > 0) {
-                    // 更新 data 属性
-                    var oldComment = JSON.parse($card.attr('data-comment'));
-                    oldComment.author = formData.author;
-                    oldComment.mail = formData.mail;
-                    oldComment.url = formData.url;
-                    oldComment.text = formData.text;
-                    $card.attr('data-comment', JSON.stringify(oldComment));
-                    
-                    // 更新作者信息
-                    var authorHtml = formData.url ?
-                        '<a href="' + escapeAttr(safeHttpUrl(formData.url)) + '" target="_blank" rel="noopener noreferrer" class="hover:underline">' + escapeHtml(formData.author) + '</a>' :
-                        escapeHtml(formData.author);
-                    $card.find('.card-title').html(authorHtml);
+                comment.author = formData.author;
+                comment.mail = formData.mail;
+                comment.url = formData.url;
+                comment.text = formData.text;
+                $row.attr('data-comment', JSON.stringify(comment));
 
-                    if (formData.mail) {
-                        $card.find('.card-header .text-xs').html('<a href="mailto:' + escapeAttr(formData.mail) + '" class="hover:text-discord-accent">' + escapeHtml(formData.mail) + '</a>');
-                    } else {
-                        $card.find('.card-header .text-xs').html('');
-                    }
-                    
-                    // 更新内容。data 属性同样只存净化后的 HTML，
-                    // 避免把 AJAX 返回的原始正文写回属性后成为后续渲染的污染入口。
-                    var content = sec.sanitize(o.comment.content);
-                    $card.find('.card-content').html(content)
-                        .attr('data-comment-content', content)
-                        .data('rendered', true)
-                        .effect('highlight');
-                }
-            }
-            
+                $row.find('.comment-author-name').html(authorHtml).effect('highlight');
+                $row.find('.comment-author-mail').html(mailHtml);
+                $row.find('.comment-content').html(content)
+                    .attr('data-comment-content', content)
+                    .data('rendered', true)
+                    .effect('highlight');
+            });
+
             closeEditModal();
         }
     }, 'json').fail(function() {
@@ -1005,15 +960,15 @@ function submitEdit() {
 
 $(document).ready(function () {
     /**
-     * 渲染卡片视图的评论正文。
+     * 渲染评论正文（表格与卡片共用同一条路径）。
      *
-     * 服务端只把正文放进 data-comment-content（经 htmlspecialchars 转义），
+     * 归一化后两个视图都只把正文放进 data-comment-content（经 booadminAttr 转义），
      * 真正的 HTML 渲染统一交给内核 BooAdmin.html.sanitize，与 AJAX 编辑路径
      * 使用同一套净化策略；内核在 DOMPurify 缺失时自动降级为纯文本，
      * 不会出现「库缺失 → 正文空白」或「库缺失 → 原样输出」两种失效模式。
      */
     function renderCommentContents() {
-        $('.card-content[data-comment-content]').each(function () {
+        $('.comment-content[data-comment-content]').each(function () {
             var $el = $(this);
             var raw = $el.attr('data-comment-content');
             if (typeof raw === 'undefined' || $el.data('rendered')) {
@@ -1056,84 +1011,122 @@ $(document).ready(function () {
         }
     })();
 
-    // ===== 操作按钮：命名空间化事件委托 =====
+    // ===== 操作按钮：命名空间化事件绑定 =====
     //
     // 历史实现用 document.addEventListener('click', fn, true) 在捕获阶段拦截全部点击，
     // 并对每个分支调用 stopImmediatePropagation()：这会让 Typecho 核心与第三方插件
     // 挂在同一事件上的监听器全部收不到通知，是可扩展性上的硬阻塞。
     //
-    // 现改为 jQuery 命名空间化委托（.booadmin.comments），只 preventDefault 本组件的
+    // 现改为 jQuery 命名空间事件（.booadmin.comments），只 preventDefault 本组件的
     // 默认跳转、不阻断事件传播；并在每个动作点 emit 钩子，插件可安全挂接。
+    //
+    // 注意：这里必须直接绑定在 a.operate-* 链接上，不能委托到 document。
+    // table-js.php 的 tableSelectable 会给 .typecho-list-table 的每个 <tr> 挂 click，
+    // 点击 a/i 时调用 e.stopPropagation() 防止误勾选行；若用 document 级委托，
+    // 表格视图的事件在 <tr> 处就被截断，永远到不了 document —— 这正是「表格模式
+    // 编辑/回复失效、卡片模式正常」的根因（卡片不在 .typecho-list-table 内）。
+    // 直接绑定在 <a> 上，处理器先于 <tr> 的 stopPropagation 执行，两视图行为一致。
     var ACTION_NS = '.booadmin.comments';
 
-    /** 从行或卡片读取评论数据，data 属性损坏时返回 null 而非抛错 */
-    function readCommentData($target) {
-        var $tr = $target.closest('tr');
-        if ($tr.length > 0) {
-            var data = $tr.data('comment');
-            if (data) {
-                data = $.extend({}, data, {id: $tr.attr('id')});
-                return data;
-            }
+    /**
+     * 行容器契约（表格 <tr> 与卡片 .content-card 完全一致）：
+     *   .comment-row[data-comment][data-comment-id]
+     * 两个视图共用同一份 $commentsData，故这里不再有 tr / .content-card 分叉，
+     * 也不再混用 jQuery .data() 缓存与属性解析（历史上正是双轨导致某一视图静默失效）。
+     */
+    var COMMENT_ROW = '.comment-row[data-comment]';
+
+    /** 读取统一的数据契约；失败时给出可见诊断，不再静默吞掉 */
+    function readCommentRow($target) {
+        var $row = $target.closest(COMMENT_ROW);
+        if ($row.length === 0) {
+            return null;
         }
-        var $card = $target.closest('.content-card');
-        if ($card.length > 0) {
-            try {
-                var cardData = $.parseJSON($card.attr('data-comment'));
-                if (cardData) {
-                    return $.extend({}, cardData, {id: $card.attr('id')});
-                }
-            } catch (err) {
+
+        var raw = $row.attr('data-comment');
+        if (typeof raw !== 'string' || raw === '') {
+            return null;
+        }
+
+        try {
+            var data = JSON.parse(raw);
+            if (!data || typeof data !== 'object') {
                 return null;
             }
+            return $.extend({}, data, {
+                id: $row.attr('id'),
+                coid: $row.attr('data-comment-id')
+            });
+        } catch (err) {
+            if (window.console && console.warn) {
+                console.warn('[BooAdmin] 评论数据解析失败', err, $row.attr('id'));
+            }
+            return null;
         }
-        return null;
     }
 
-    $(document).on('click' + ACTION_NS, 'a.operate-reply', function (e) {
-        e.preventDefault();
-        var $target = $(this);
-        var actionUrl = $target.attr('rel') || $target.data('rel');
-        var commentData = readCommentData($target);
-        if (commentData && actionUrl) {
-            BooAdmin.hooks.emit('comment:reply', commentData, actionUrl);
-            openReplyModal(commentData, actionUrl);
+    /**
+     * 动作 URL 统一取 data-rel（两个视图一致）。
+     * 保留 rel 作为兼容兜底，供第三方插件沿用旧 DOM 时仍可工作。
+     */
+    function readActionUrl($target) {
+        return $target.attr('data-rel') || $target.attr('rel') || '';
+    }
+
+    /** 归一化入口：缺数据/缺 URL 时明确告警并提示，避免「点了没反应还不报错」 */
+    function resolveAction($target, actionName) {
+        var commentData = readCommentRow($target);
+        var actionUrl = readActionUrl($target);
+
+        if (!commentData || !actionUrl) {
+            if (window.console && console.warn) {
+                console.warn('[BooAdmin] 无法执行 ' + actionName
+                    + '：commentData=' + (!!commentData) + ' actionUrl=' + (!!actionUrl));
+            }
+            showMessageModal(<?php echo booadminJson(_t('提示')); ?>,
+                <?php echo booadminJson(_t('无法读取该评论的数据，请刷新页面后重试')); ?>);
+            return null;
         }
+        return {data: commentData, url: actionUrl, row: $target.closest(COMMENT_ROW)};
+    }
+
+    // 直接绑定在链接上：表格行的 tableSelectable 会 stopPropagation，
+    // document 级委托在表格视图收不到事件（参考原版 manage-comments.php 的绑定方式）。
+    $('a.operate-reply').on('click' + ACTION_NS, function (e) {
+        e.preventDefault();
+        var ctx = resolveAction($(this), 'reply');
+        if (!ctx) { return; }
+
+        BooAdmin.hooks.emit('comment:reply', ctx.data, ctx.url);
+        openReplyModal(ctx.data, ctx.url);
     });
 
-    $(document).on('click' + ACTION_NS, 'a.operate-edit', function (e) {
+    $('a.operate-edit').on('click' + ACTION_NS, function (e) {
         e.preventDefault();
-        var $target = $(this);
-        var actionUrl = $target.attr('rel') || $target.data('rel');
-        var $tr = $target.closest('tr');
-        var $card = $target.closest('.content-card');
-        var commentData = readCommentData($target);
-        if (commentData && actionUrl) {
-            BooAdmin.hooks.emit('comment:edit', commentData, actionUrl);
-            openEditModal(commentData, actionUrl,
-                $tr.length > 0 ? $tr.attr('id') : '',
-                $card.length > 0 ? $card.attr('id') : '');
-        }
+        var ctx = resolveAction($(this), 'edit');
+        if (!ctx) { return; }
+
+        BooAdmin.hooks.emit('comment:edit', ctx.data, ctx.url);
+        openEditModal(ctx.data, ctx.url, ctx.row.attr('id'));
     });
 
-    $(document).on('click' + ACTION_NS, 'a.operate-delete', function (e) {
+    $('a.operate-delete').on('click' + ACTION_NS, function (e) {
         e.preventDefault();
         var $target = $(this);
-        var commentData = readCommentData($target);
+        var commentData = readCommentRow($target);
         var authorName = commentData ? commentData.author : '';
         BooAdmin.hooks.emit('comment:delete', commentData, $target.attr('href'));
         openDeleteModal(authorName || <?php echo booadminJson(_t('该用户')); ?>,
             $target.attr('href'), $target);
     });
 
-    $(document).on('click' + ACTION_NS, 'a.operate-approved, a.operate-spam', function (e) {
+    $('a.operate-approved, a.operate-spam').on('click' + ACTION_NS, function (e) {
         e.preventDefault();
         var $target = $(this);
         BooAdmin.hooks.emit('comment:moderate', $target.attr('href'), $target.hasClass('operate-spam'));
         rememberScroll();
         window.location.href = $target.attr('href');
     });
-
     // 事件已绑定，解除这些操作链接的原生跳转保护
     if (window.booadminArmLinks) {
         booadminArmLinks();

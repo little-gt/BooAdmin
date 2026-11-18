@@ -290,6 +290,11 @@ $(document).ready(function() {
         frame: null,
         loading: null,
         fullScreenButton: null,
+        // 预览模式切换工具栏挂在父页面弹层 header，不注入 iframe
+        modeGroup: null,
+        printButton: null,
+        cid: 0,
+        mode: 'native',
         isOpen: false,
         isFullScreen: false,
         saveCallback: null
@@ -312,8 +317,88 @@ $(document).ready(function() {
         return 0;
     }
 
-    function getPreviewUrl(previewCid) {
-        return './preview.php?cid=' + encodeURIComponent(previewCid);
+    function getPreviewUrl(previewCid, previewMode) {
+        // embed=1：告知 preview.php 工具栏已由父页面接管，无需在 iframe 内再注入
+        return './preview.php?cid=' + encodeURIComponent(previewCid)
+            + '&embed=1&preview_mode=' + encodeURIComponent(previewMode || 'native');
+    }
+
+    /** 同步模式按钮高亮与打印按钮可用态；按钮样式用内联色值，不依赖主题 CSS */
+    function syncPreviewModeButtons() {
+        if (!previewState.modeGroup) {
+            return;
+        }
+
+        previewState.modeGroup.find('[data-preview-mode]').each(function () {
+            const $btn = $(this);
+            const active = $btn.attr('data-preview-mode') === previewState.mode;
+            $btn.toggleClass('active', active)
+                .attr('aria-pressed', active ? 'true' : 'false')
+                .css({
+                    backgroundColor: active ? 'var(--booadmin-accent, #5865f2)' : 'transparent',
+                    color: active ? '#fff' : 'var(--booadmin-text, #2e3338)',
+                    fontWeight: active ? '600' : '500'
+                });
+        });
+
+        if (previewState.printButton) {
+            const canPrint = previewState.mode === 'print';
+            previewState.printButton
+                .prop('disabled', !canPrint)
+                .css({
+                    opacity: canPrint ? 1 : 0.5,
+                    cursor: canPrint ? 'pointer' : 'not-allowed'
+                })
+                .attr('title', canPrint
+                    ? '<?php _e('打印 (Ctrl+P)'); ?>'
+                    : '<?php _e('请切换到打印预览模式'); ?>');
+        }
+    }
+
+    /** 切换预览模式：淡出当前 iframe → 换 src → 加载完成后淡入，不发生父页面跳转 */
+    function setPreviewMode(previewMode) {
+        if (!previewState.isOpen || !previewState.frame) {
+            return;
+        }
+
+        const mode = previewMode === 'print' ? 'print' : 'native';
+        if (mode === previewState.mode) {
+            return;
+        }
+
+        previewState.mode = mode;
+        syncPreviewModeButtons();
+
+        // 淡出 iframe、显示加载遮罩，避免切换瞬间看到旧内容或空白
+        const $frame = previewState.frame;
+        $frame.addClass('preview-frame-loading');
+        if (previewState.loading) {
+            previewState.loading.stop(true, true).fadeIn(120);
+        }
+        $frame.attr('src', getPreviewUrl(previewState.cid, mode));
+    }
+
+    /** 注入预览专用动画样式，作用域限定在 .preview-overlay 内，不污染页面其它元素 */
+    function ensurePreviewStyles() {
+        if (document.getElementById('booadmin-preview-anim')) {
+            return;
+        }
+        const style = document.createElement('style');
+        style.id = 'booadmin-preview-anim';
+        style.textContent = [
+            '.preview-overlay .preview-iframe{opacity:1;transition:opacity .18s ease}',
+            '.preview-overlay .preview-iframe.preview-frame-loading{opacity:0}',
+            '.preview-overlay .preview-loading{transition:opacity .18s ease}',
+            '.preview-overlay .preview-spinner{width:22px;height:22px;border:2px solid rgba(0,0,0,.12);',
+            'border-top-color:var(--booadmin-accent,#5865f2);border-radius:50%;',
+            'animation:booadmin-preview-spin .7s linear infinite}',
+            '@keyframes booadmin-preview-spin{to{transform:rotate(360deg)}}',
+            '@media(prefers-reduced-motion:reduce){',
+            '.preview-overlay .preview-iframe,.preview-overlay .preview-loading{transition:none}',
+            '.preview-overlay .preview-spinner{animation:none}',
+            '}'
+        ].join('');
+        document.head.appendChild(style);
     }
 
     function togglePreviewFullScreen() {
@@ -363,6 +448,10 @@ $(document).ready(function() {
         previewState.frame = null;
         previewState.loading = null;
         previewState.fullScreenButton = null;
+        previewState.modeGroup = null;
+        previewState.printButton = null;
+        previewState.cid = 0;
+        previewState.mode = 'native';
         previewState.isOpen = false;
         previewState.isFullScreen = false;
 
@@ -383,6 +472,9 @@ $(document).ready(function() {
                 } else {
                     closePreview();
                 }
+            } else if (e.key === 'M' && (e.ctrlKey || e.metaKey) && e.shiftKey) {
+                e.preventDefault();
+                setPreviewMode(previewState.mode === 'native' ? 'print' : 'native');
             } else if (e.key === 'F11' && !isNarrowPreviewViewport()) {
                 e.preventDefault();
                 togglePreviewFullScreen();
@@ -408,6 +500,7 @@ $(document).ready(function() {
         }
 
         closePreview();
+        ensurePreviewStyles();
         previewState.isOpen = true;
         previewState.isFullScreen = isNarrowPreviewViewport();
 
@@ -416,37 +509,67 @@ $(document).ready(function() {
         const header = $('<div class="h-12 bg-gray-100 border-b border-gray-200 flex items-center justify-between px-4 flex-shrink-0"></div>');
         const title = $('<h3 class="font-bold text-gray-700 text-sm"><i class="fas fa-eye mr-2"></i><?php _e('文章预览'); ?></h3>');
         const headerButtons = $('<div class="flex items-center space-x-2"></div>');
+
+        // 模式切换工具栏挂在父页面：后台样式与前台主题完全隔离，不受主题 CSS/CSP 干扰
+        const modeGroup = $('<div class="inline-flex items-center border border-gray-300 bg-white overflow-hidden" role="group" aria-label="<?php _e('预览模式'); ?>"></div>');
+        const nativeModeButton = $('<button type="button" class="px-3 py-1 text-xs transition-colors" data-preview-mode="native" aria-pressed="false"><?php _e('原生预览'); ?></button>');
+        const printModeButton = $('<button type="button" class="px-3 py-1 text-xs transition-colors" data-preview-mode="print" aria-pressed="false"><?php _e('打印预览'); ?></button>');
+        modeGroup.append(nativeModeButton, printModeButton);
+
+        const printButton = $('<button type="button" class="px-3 py-1 text-xs border border-gray-300 bg-white text-gray-600 flex items-center transition-colors"><i class="fas fa-print mr-1"></i><?php _e('打印'); ?></button>');
         const fullScreenButton = $('<button type="button" class="preview-fullscreen-btn text-gray-500 hover:text-discord-accent focus:outline-none" title="<?php _e('切换全屏预览'); ?>" aria-label="<?php _e('切换全屏预览'); ?>"><i class="fas fa-expand"></i></button>');
         const closeButton = $('<button type="button" class="text-gray-500 hover:text-red-500 focus:outline-none" title="<?php _e('关闭'); ?>" aria-label="<?php _e('关闭'); ?>"><i class="fas fa-times"></i></button>');
         const body = $('<div class="relative flex-1 min-h-0 bg-white"></div>');
-        const loading = $('<div class="absolute inset-0 flex items-center justify-center bg-white text-sm text-gray-500"><span><?php _e('正在加载预览...'); ?></span></div>');
-        const frame = $('<iframe frameborder="0" class="w-full h-full bg-white" loading="eager"></iframe>');
+        const loading = $('<div class="preview-loading absolute inset-0 flex flex-col items-center justify-center bg-white text-sm text-gray-500"><div class="preview-spinner mb-3"></div><span><?php _e('正在加载预览...'); ?></span></div>');
+        const frame = $('<iframe frameborder="0" class="preview-iframe preview-frame-loading w-full h-full bg-white" loading="eager"></iframe>');
 
+        nativeModeButton.on('click', function () { setPreviewMode('native'); });
+        printModeButton.on('click', function () { setPreviewMode('print'); });
+        printButton.on('click', function () {
+            const frameWindow = previewState.frame && previewState.frame[0]
+                ? previewState.frame[0].contentWindow : null;
+            if (!frameWindow) {
+                return;
+            }
+            try {
+                frameWindow.focus();
+                frameWindow.print();
+            } catch (err) {
+                window.print();
+            }
+        });
         fullScreenButton.on('click', togglePreviewFullScreen);
         closeButton.on('click', closePreview);
         frame.on('load', function () {
+            // 加载完成：淡出遮罩、淡入 iframe（遮罩保留在 DOM 中供模式切换复用）
             if (previewState.loading) {
-                previewState.loading.remove();
-                previewState.loading = null;
+                previewState.loading.stop(true, true).fadeOut(180);
             }
+            previewState.frame.removeClass('preview-frame-loading');
         });
 
-        headerButtons.append(fullScreenButton, closeButton);
+        headerButtons.append(modeGroup, printButton, fullScreenButton, closeButton);
         header.append(title, headerButtons);
         body.append(loading, frame);
         container.append(header, body);
         overlay.append(container).appendTo(document.body);
+        overlay.hide().fadeIn(160);
 
         previewState.overlay = overlay;
         previewState.container = container;
         previewState.frame = frame;
         previewState.loading = loading;
         previewState.fullScreenButton = fullScreenButton;
+        previewState.modeGroup = modeGroup;
+        previewState.printButton = printButton;
+        previewState.cid = previewCid;
+        previewState.mode = 'native';
 
         syncPreviewLayout();
+        syncPreviewModeButtons();
         bindPreviewEvents();
 
-        frame.attr('src', getPreviewUrl(previewCid));
+        frame.attr('src', getPreviewUrl(previewCid, previewState.mode));
     }
 
     btnPreview.on('click', function () {

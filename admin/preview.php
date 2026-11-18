@@ -21,9 +21,11 @@ if (!in_array($previewMode, ['native', 'print'])) {
     $previewMode = 'native';
 }
 
-/** ========================================
- *  打印预览模式 (BooAdmin 自定义排版)
- *  ======================================== */
+/**
+ * 预览工具栏（原生 / 打印模式切换、打印）已统一由父页面 write-js.php 的
+ * 预览弹层提供。本页只负责内容渲染，不再注入任何浮动工具栏，
+ * 从根源上避免与前台主题样式 / CSP 相互干扰。
+ */
 if ($previewMode === 'print') {
 ?>
 <!DOCTYPE html>
@@ -74,18 +76,6 @@ if ($previewMode === 'print') {
             --pv-hr: #dbe3ee;
             --pv-kbd-bg: #ffffff;
             --pv-kbd-text: #27384f;
-
-            --pv-toolbar-bg: #ffffff;
-            --pv-toolbar-border: #e5e7eb;
-            --pv-toolbar-surface: #f0f0f3;
-            --pv-toolbar-text: #2e3338;
-            --pv-toolbar-muted: #6b6b76;
-            --pv-toolbar-hover: rgba(0, 0, 0, 0.05);
-            --pv-toolbar-accent: #5865f2;
-            --pv-toolbar-active-text: #ffffff;
-            --pv-toolbar-print-bg: #5865f2;
-            --pv-toolbar-print-text: #ffffff;
-            --pv-toolbar-print-hover: #4752c4;
         }
 
         /* ========================================
@@ -122,18 +112,6 @@ if ($previewMode === 'print') {
                 --pv-hr: #222222;
                 --pv-kbd-bg: #1a1a1d;
                 --pv-kbd-text: #e4e4e7;
-
-                --pv-toolbar-bg: #141416;
-                --pv-toolbar-border: #2a2a2e;
-                --pv-toolbar-surface: #1c1c20;
-                --pv-toolbar-text: #e4e4e7;
-                --pv-toolbar-muted: #8a8a99;
-                --pv-toolbar-hover: rgba(255, 255, 255, 0.08);
-                --pv-toolbar-accent: #6366c7;
-                --pv-toolbar-active-text: #c4c8e8;
-                --pv-toolbar-print-bg: #3a3c6e;
-                --pv-toolbar-print-text: #c4c8e8;
-                --pv-toolbar-print-hover: #46487d;
             }
         }
 
@@ -267,102 +245,11 @@ if ($previewMode === 'print') {
         }
 
         /* ========================================
-         * 浮动工具栏 (矩形化设计)
-         * ======================================== */
-        .booadmin-preview-toolbar {
-            position: fixed;
-            top: 16px;
-            right: 16px;
-            z-index: 99999;
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            padding: 6px 10px;
-            background-color: var(--pv-toolbar-bg);
-            border: 1px solid var(--pv-toolbar-border);
-            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Noto Sans SC", sans-serif;
-            font-size: 13px;
-            user-select: none;
-            transition: opacity 0.2s ease, transform 0.2s ease, background-color 0.3s ease, border-color 0.3s ease;
-        }
-        .booadmin-preview-toolbar.collapsed { padding: 6px 10px; }
-
-        .booadmin-preview-btn {
-            display: inline-flex;
-            align-items: center;
-            gap: 5px;
-            padding: 5px 12px;
-            border: 1px solid transparent;
-            cursor: pointer;
-            font-size: 13px;
-            font-weight: 500;
-            line-height: 1.4;
-            white-space: nowrap;
-            transition: all 0.15s ease;
-            outline: none;
-            text-decoration: none;
-        }
-        .booadmin-preview-btn:hover { transform: translateY(-1px); }
-        .booadmin-preview-btn:active { transform: translateY(0); }
-
-        .booadmin-preview-divider { width: 1px; height: 20px; flex-shrink: 0; background-color: var(--pv-border); }
-
-        .booadmin-preview-mode-group {
-            display: flex;
-            align-items: center;
-            background-color: var(--pv-toolbar-surface);
-            padding: 2px;
-            gap: 2px;
-        }
-        .booadmin-preview-mode-btn {
-            padding: 4px 12px;
-            border: 1px solid transparent;
-            cursor: pointer;
-            font-size: 13px;
-            font-weight: 500;
-            color: var(--pv-toolbar-muted);
-            background: transparent;
-            transition: all 0.15s ease;
-            outline: none;
-            white-space: nowrap;
-        }
-        .booadmin-preview-mode-btn:hover { color: var(--pv-toolbar-text); background-color: var(--pv-toolbar-hover); }
-        .booadmin-preview-mode-btn.active {
-            color: var(--pv-toolbar-active-text);
-            background-color: var(--pv-toolbar-accent);
-        }
-
-        .booadmin-preview-toolbar.collapsed .booadmin-preview-mode-group,
-        .booadmin-preview-toolbar.collapsed .booadmin-preview-divider,
-        .booadmin-preview-toolbar.collapsed .booadmin-preview-btn.print-btn { display: none; }
-
-        .booadmin-preview-toggle-icon {
-            width: 20px; height: 20px;
-            display: flex; align-items: center; justify-content: center;
-            cursor: pointer;
-            color: var(--pv-toolbar-muted);
-            transition: all 0.15s ease; flex-shrink: 0;
-        }
-        .booadmin-preview-toggle-icon:hover { color: var(--pv-toolbar-text); background-color: var(--pv-toolbar-hover); }
-        .booadmin-preview-toggle-icon svg, .booadmin-preview-btn.print-btn svg { stroke: currentColor; fill: none; }
-
-        .booadmin-preview-btn.print-btn {
-            color: var(--pv-toolbar-print-text);
-            background-color: var(--pv-toolbar-print-bg);
-            border-color: var(--pv-accent);
-        }
-        .booadmin-preview-btn.print-btn:hover { background-color: var(--pv-toolbar-print-hover); }
-
-        @media (prefers-color-scheme: dark) {
-        }
-
-        /* ========================================
          * 打印样式 - 强制白底黑字
          * ======================================== */
         @media print {
             :root { color-scheme: light; }
             @page { margin: 12mm 14mm; size: A4; }
-            .booadmin-preview-toolbar { display: none !important; }
             body { background: #fff !important; color: #1a1a1a !important; }
             .preview-shell { width: 100% !important; max-width: 100% !important; margin: 0 !important; padding: 0 !important; }
             .preview-header, .preview-article { box-shadow: none !important; border: 0 !important; background: transparent !important; }
@@ -412,27 +299,6 @@ if ($previewMode === 'print') {
 </head>
 <body>
 
-<!-- 浮动工具栏 -->
-<div class="booadmin-preview-toolbar" id="previewToolbar">
-    <div class="booadmin-preview-toggle-icon" id="previewToggle" title="<?php _e('折叠/展开'); ?>">
-        <svg width="14" height="14" viewBox="0 0 24 24" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 6h16M4 12h16M4 18h16"/></svg>
-    </div>
-    <div class="booadmin-preview-divider"></div>
-    <div class="booadmin-preview-mode-group">
-        <button class="booadmin-preview-mode-btn" id="modeNative" data-mode="native"><?php _e('原生预览'); ?></button>
-        <button class="booadmin-preview-mode-btn active" id="modePrint" data-mode="print"><?php _e('打印预览'); ?></button>
-    </div>
-    <div class="booadmin-preview-divider"></div>
-    <button class="booadmin-preview-btn print-btn" id="printBtn" type="button" title="<?php _e('打印 (Ctrl+P)'); ?>">
-        <svg width="14" height="14" viewBox="0 0 24 24" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-            <polyline points="6 9 6 2 18 2 18 9"/>
-            <path d="M6 18H4a2 2 0 01-2-2v-5a2 2 0 012-2h16a2 2 0 012 2v5a2 2 0 01-2 2h-2"/>
-            <rect x="6" y="14" width="12" height="8"/>
-        </svg>
-        <?php _e('打印'); ?>
-    </button>
-</div>
-
 <!-- 预览内容 -->
 <main class="preview-shell" id="previewContent">
     <header class="preview-header">
@@ -451,45 +317,6 @@ if ($previewMode === 'print') {
 
 <script>
 (function () {
-    var toolbar = document.getElementById('previewToolbar');
-    var toggle = document.getElementById('previewToggle');
-    var content = document.getElementById('previewContent');
-    var modeNative = document.getElementById('modeNative');
-    var modePrint = document.getElementById('modePrint');
-    var printBtn = document.getElementById('printBtn');
-
-    // 当前页面 URL（用于构建切换链接）
-    var baseUrl = window.location.pathname + window.location.search.replace(/[&?]preview_mode=[^&]*/, '').replace(/^\?$/, '');
-    if (baseUrl.indexOf('?') === -1) { baseUrl += '?'; } else { baseUrl += '&'; }
-
-    // 折叠状态
-    var savedCollapsed = localStorage.getItem('booadmin_preview_collapsed') === 'true';
-    if (savedCollapsed) toolbar.classList.add('collapsed');
-    toggle.addEventListener('click', function () {
-        toolbar.classList.toggle('collapsed');
-        localStorage.setItem('booadmin_preview_collapsed', toolbar.classList.contains('collapsed'));
-    });
-
-    // 模式切换 → 页面跳转
-    modeNative.addEventListener('click', function () {
-        window.location.href = baseUrl + 'preview_mode=native';
-    });
-    modePrint.addEventListener('click', function () {
-        window.location.href = baseUrl + 'preview_mode=print';
-    });
-
-    // 打印
-    printBtn.addEventListener('click', function () { window.print(); });
-
-    // 键盘快捷键
-    document.addEventListener('keydown', function (e) {
-        if ((e.ctrlKey || e.metaKey) && e.key === 'p') { e.preventDefault(); window.print(); }
-        if ((e.ctrlKey || e.metaKey) && e.shiftKey && e.key === 'M') {
-            e.preventDefault();
-            window.location.href = baseUrl + 'preview_mode=native';
-        }
-    });
-
     // 表格自适应包装
     document.querySelectorAll('.post-content table').forEach(function (table) {
         if (table.parentElement && table.parentElement.classList.contains('table-wrap')) return;
@@ -523,131 +350,12 @@ if ($previewMode === 'print') {
     } else {
         window.addEventListener('load', renderMath);
     }
-
-    // 父窗口通信：用 addEventListener 而非覆盖 onbeforeunload，
-    // 避免与核心/插件的同类处理器互相覆盖；targetOrigin 经 booadminJson 注入
-    window.addEventListener('beforeunload', function () {
-        if (window.parent && window.parent !== window) {
-            window.parent.postMessage('cancelPreview', <?php echo booadminJson($options->rootUrl()); ?>);
-        }
-    });
 })();
 </script>
 </body>
 </html>
-
 <?php
-/** ========================================
- *  原生预览模式 - 使用 $content->render()
- *  通过 JS 注入浮动工具栏
- *  ======================================== */
 } elseif ($previewMode === 'native') {
-
-    /** 输出内容（主题完整渲染） */
+    /** 原生预览：主题完整渲染，工具栏由父页面弹层提供 */
     $content->render();
-
-    /** 注入工具栏脚本 */
-?>
-<script>
-(function () {
-    var isDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
-
-    // 工具栏样式（无阴影）
-    var styleEl = document.createElement('style');
-    styleEl.textContent =
-        '.booadmin-preview-toolbar{' +
-            'position:fixed;top:16px;right:16px;z-index:99999;' +
-            'display:flex;align-items:center;gap:8px;padding:6px 10px;' +
-            'background:' + (isDark ? '#141416' : '#ffffff') + ';' +
-            'border:1px solid ' + (isDark ? '#2a2a2e' : '#e5e7eb') + ';' +
-            'font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","Noto Sans SC",sans-serif;font-size:13px;' +
-            'user-select:none;transition:background-color .3s,border-color .3s' +
-        '}' +
-        '.booadmin-preview-toolbar.collapsed{padding:6px 10px}' +
-        '.booadmin-preview-toolbar.collapsed .booadmin-preview-mode-group,' +
-        '.booadmin-preview-toolbar.collapsed .booadmin-preview-divider,' +
-        '.booadmin-preview-toolbar.collapsed .booadmin-preview-btn.print-btn{display:none}' +
-        '.booadmin-preview-toggle-icon{width:20px;height:20px;display:flex;align-items:center;justify-content:center;' +
-            'cursor:pointer;color:' + (isDark ? '#8a8a99' : '#6b6b76') + ';transition:.15s;flex-shrink:0}' +
-        '.booadmin-preview-toggle-icon:hover{color:' + (isDark ? '#e4e4e7' : '#2e3338') + ';background:' + (isDark ? 'rgba(255,255,255,.08)' : 'rgba(0,0,0,.05)') + '}' +
-        '.booadmin-preview-toggle-icon svg{stroke:currentColor;fill:none}' +
-        '.booadmin-preview-divider{width:1px;height:20px;flex-shrink:0;background:' + (isDark ? '#2a2a2e' : '#e5e7eb') + '}' +
-        '.booadmin-preview-mode-group{display:flex;align-items:center;background:' + (isDark ? '#1c1c20' : '#f0f0f3') + ';padding:2px;gap:2px}' +
-        '.booadmin-preview-mode-btn{padding:4px 12px;border:1px solid transparent;cursor:pointer;font-size:13px;font-weight:500;' +
-            'color:' + (isDark ? '#8a8a99' : '#6b6b76') + ';background:transparent;transition:.15s;outline:none;white-space:nowrap}' +
-        '.booadmin-preview-mode-btn:hover{color:' + (isDark ? '#e4e4e7' : '#2e3338') + ';background:' + (isDark ? 'rgba(255,255,255,.08)' : 'rgba(0,0,0,.05)') + '}' +
-        '.booadmin-preview-mode-btn.active{color:' + (isDark ? '#c4c8e8' : '#ffffff') + ';background:' + (isDark ? '#6366c7' : '#5865f2') + '}' +
-        '.booadmin-preview-btn{display:inline-flex;align-items:center;gap:5px;padding:5px 12px;border:1px solid transparent;' +
-            'cursor:pointer;font-size:13px;font-weight:500;line-height:1.4;white-space:nowrap;transition:.15s;outline:none;text-decoration:none}' +
-        '.booadmin-preview-btn:hover{transform:translateY(-1px)}' +
-        '.booadmin-preview-btn.print-btn.disabled{color:' + (isDark ? '#555' : '#aaa') + ';background:' + (isDark ? '#222' : '#f0f0f3') + ';' +
-            'border-color:' + (isDark ? '#333' : '#ddd') + ';cursor:not-allowed;pointer-events:none}' +
-        '.booadmin-preview-btn.print-btn svg{stroke:currentColor;fill:none}' +
-        '@media print{.booadmin-preview-toolbar{display:none!important}}';
-    document.head.appendChild(styleEl);
-
-    // 构建工具栏 DOM
-    var toolbar = document.createElement('div');
-    toolbar.className = 'booadmin-preview-toolbar';
-    toolbar.id = 'previewToolbar';
-    toolbar.innerHTML =
-        '<div class="booadmin-preview-toggle-icon" id="previewToggle" title="<?php _e('折叠/展开'); ?>">' +
-            '<svg width="14" height="14" viewBox="0 0 24 24" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 6h16M4 12h16M4 18h16"/></svg>' +
-        '</div>' +
-        '<div class="booadmin-preview-divider"></div>' +
-        '<div class="booadmin-preview-mode-group">' +
-            '<button class="booadmin-preview-mode-btn active" id="modeNative" data-mode="native"><?php _e('原生预览'); ?></button>' +
-            '<button class="booadmin-preview-mode-btn" id="modePrint" data-mode="print"><?php _e('打印预览'); ?></button>' +
-        '</div>' +
-        '<div class="booadmin-preview-divider"></div>' +
-        '<button class="booadmin-preview-btn print-btn disabled" id="printBtn" type="button" title="<?php _e('请切换到打印预览模式'); ?>" disabled>' +
-            '<svg width="14" height="14" viewBox="0 0 24 24" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">' +
-                '<polyline points="6 9 6 2 18 2 18 9"/>' +
-                '<path d="M6 18H4a2 2 0 01-2-2v-5a2 2 0 012-2h16a2 2 0 012 2v5a2 2 0 01-2 2h-2"/>' +
-                '<rect x="6" y="14" width="12" height="8"/>' +
-            '</svg>' +
-            '<?php _e('打印'); ?>' +
-        '</button>';
-    document.body.appendChild(toolbar);
-
-    // 切换逻辑
-    var toggle = document.getElementById('previewToggle');
-    var modeNative = document.getElementById('modeNative');
-    var modePrint = document.getElementById('modePrint');
-
-    var baseUrl = window.location.pathname + window.location.search.replace(/[&?]preview_mode=[^&]*/, '').replace(/^\?$/, '');
-    if (baseUrl.indexOf('?') === -1) { baseUrl += '?'; } else { baseUrl += '&'; }
-
-    var savedCollapsed = localStorage.getItem('booadmin_preview_collapsed') === 'true';
-    if (savedCollapsed) toolbar.classList.add('collapsed');
-    toggle.addEventListener('click', function () {
-        toolbar.classList.toggle('collapsed');
-        localStorage.setItem('booadmin_preview_collapsed', toolbar.classList.contains('collapsed'));
-    });
-
-    // 模式切换 → 页面跳转
-    modeNative.addEventListener('click', function () {
-        window.location.href = baseUrl + 'preview_mode=native';
-    });
-    modePrint.addEventListener('click', function () {
-        window.location.href = baseUrl + 'preview_mode=print';
-    });
-
-    // 键盘快捷键：Ctrl+Shift+M 切换到打印预览
-    document.addEventListener('keydown', function (e) {
-        if ((e.ctrlKey || e.metaKey) && e.shiftKey && e.key === 'M') {
-            e.preventDefault();
-            window.location.href = baseUrl + 'preview_mode=print';
-        }
-    });
-
-    // 父窗口通信（打印预览分支）：同样使用 addEventListener + 安全注入，
-    // 两处分支互不覆盖，第三方脚本也可安全挂接 beforeunload
-    window.addEventListener('beforeunload', function () {
-        if (window.parent && window.parent !== window) {
-            window.parent.postMessage('cancelPreview', <?php echo booadminJson($options->rootUrl()); ?>);
-        }
-    });
-})();
-</script>
-<?php } ?>
+}

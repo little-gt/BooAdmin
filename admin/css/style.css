@@ -534,12 +534,6 @@ a.button,a.button:hover,
 .typecho-option-tabs.fix-tabs {
 	margin:1em 0
 }
-.typecho-option-tabs li:first-child a {
-	border-radius:2px 0 0 2px
-}
-.typecho-option-tabs li:last-child a {
-	border-radius:0 2px 2px 0
-}
 .typecho-option-tabs li.current a,.typecho-option-tabs li.active a {
 	background-color:var(--booadmin-surface-2)
 }
@@ -2389,7 +2383,6 @@ body:has(.menu-bar[open]) {
 	font-size:16px;
 	line-height:1;
 	padding:4px 8px;
-	border-radius:4px
 }
 .fullscreen #tab-files .fs-files-close:hover {
 	background:var(--booadmin-surface-2);
@@ -2523,7 +2516,6 @@ ul.token-input-list {
 	padding:0 4px;
 	min-height:32px;
 	border:1px solid var(--booadmin-border);
-	border-radius:4px;
 	cursor:text;
 	z-index:999;
 	background-color:var(--booadmin-surface);
@@ -2560,7 +2552,6 @@ li.token-input-token {
 	line-height:27px;
 	background-color:var(--booadmin-token-bg);
 	border:1px solid var(--booadmin-border);
-	border-radius:3px;
 	color:var(--booadmin-token-text);
 	cursor:default;
 	font-size:.92857em;
@@ -2815,7 +2806,6 @@ main.write-screen #wmd-preview td a {
 	width:2rem;
 	height:2rem;
 	color:var(--booadmin-muted);
-	border-radius:50%;
 	transition:all 0.2s ease;
 }
 .extend-topbar-back:hover {
@@ -2843,7 +2833,6 @@ main.write-screen #wmd-preview td a {
 .extend-topbar-avatar {
 	width:1.75rem;
 	height:1.75rem;
-	border-radius:50%;
 	border:2px solid var(--booadmin-border);
 }
 .extend-topbar-user-info {
@@ -2868,7 +2857,6 @@ main.write-screen #wmd-preview td a {
 	width:2rem;
 	height:2rem;
 	color:var(--booadmin-muted);
-	border-radius:50%;
 	transition:all 0.2s ease;
 }
 .extend-topbar-logout:hover {

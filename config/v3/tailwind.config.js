@@ -145,6 +145,19 @@ module.exports = {
     theme: {
         // 不覆盖 theme.colors：保留 Tailwind 原始色板供未列出的工具类回退。
         // 本项目所有颜色类由下面三个「用途独立」的调色板生成。
+        // 全站矩形化：所有圆角工具类一律归零（加载指示器的圆形不依赖这些类，
+        // 直接由 nprogress.css / manage-medias.php 自身的 border-radius 实现）。
+        borderRadius: {
+            none: '0px',
+            sm: '0px',
+            DEFAULT: '0px',
+            md: '0px',
+            lg: '0px',
+            xl: '0px',
+            '2xl': '0px',
+            '3xl': '0px',
+            full: '0px'
+        },
         extend: {
             backgroundColor: backgroundColor,
             textColor: textColor,
